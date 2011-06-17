@@ -1,0 +1,25 @@
+#!/usr/bin/make -f 
+
+%:
+	dh $@ --with autoreconf
+
+override_dh_autoreconf: m4
+	dh_autoreconf --as-needed
+
+m4:
+	mkdir $@
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f *.spec
+
+override_dh_install:
+	dh_install
+	
+	#Compress the PPD files with Vitor Baptista's pyppd PPD
+	# archiving tool. This makes the space needed for PPDs at least
+	# 10 times smaller.
+	( mkdir -p $(CURDIR)/debian/epson-escpr/usr/lib/cups/driver/ && \
+	  pyppd --output=$(CURDIR)/debian/epson-escpr/usr/lib/cups/driver/epson-escpr \
+		$(CURDIR)/debian/tmp/usr/share/cups/ \
+	)

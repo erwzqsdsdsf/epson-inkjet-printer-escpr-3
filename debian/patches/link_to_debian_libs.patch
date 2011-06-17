@@ -1,0 +1,18 @@
+Description: Link against libraries in Debian, not against the LSB-2.3 ones.
+Author: Didier Raboud <odyx@debian.org>
+Last-Update: 2011-06-17
+--- a/configure.ac
++++ b/configure.ac
+@@ -60,10 +60,8 @@
+ 	LSB_ARCH=64
+ fi
+ 
+-dnl CUPS_LIBS='-lcups -lm'
+-dnl CUPS_IMAGE_LIBS='-lcupsimage -lcups -ljpeg -lm'
+-CUPS_LIBS="/opt/lsb/lib"$LSB_ARCH"/libcups.so /opt/lsb/lib"$LSB_ARCH"/libm.so"
+-CUPS_IMAGE_LIBS="/opt/lsb/lib"$LSB_ARCH"/libcupsimage.so /opt/lsb/lib"$LSB_ARCH"/libcups.so /opt/lsb/lib"$LSB_ARCH"/libjpeg.so"
++CUPS_LIBS='-lcups'
++CUPS_IMAGE_LIBS='-lcupsimage -lcups'
+ 
+ AC_SUBST(CUPS_LIBS)
+ AC_SUBST(CUPS_IMAGE_LIBS)
