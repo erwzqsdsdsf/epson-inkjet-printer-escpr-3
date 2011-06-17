@@ -1,0 +1,56 @@
+NEWS -- an overview of user-visible changes with each release
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.0.3                          (2011-05-24)
+----------------------------------------------------------------------
+ * Remove GraphicsMagick Image Processing System
+
+ * Add ppd files of following model
+     - Epson Stylus SX230
+     - Epson ME OFFICE 530
+     - Epson Stylus TX235
+     - Epson Stylus NX230
+     - Epson Stylus TX230
+     - Epson Stylus SX235
+     - NX230 TX230
+     - PX-7V
+     - Epson Stylus Photo R2000
+     - K300
+     - Epson Stylus NX330
+     - Epson Stylus SX430
+     - Epson ME OFFICE 570
+     - Epson Stylus TX430
+     - Epson Stylus NX430
+     - Epson Stylus SX440
+     - NX430 TX435
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.0.2                          (2011-03-08)
+----------------------------------------------------------------------
+ * Add ppd files of following model
+     - PX-5V
+     - Epson Stylus Photo R3000
+     - E-340
+     - K200
+
+ * Update all ppd files because of missing "*CloseUI: *Ink" 
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.0.1                          (2010-09-03)
+----------------------------------------------------------------------
+ * Change Paper ID
+	LGL --> Legal
+	Index8 --> 8x10
+
+ * Include ppd files of following model
+    - 2005 - 2007 model
+    - 2010 model
+
+ * Update ppd files of following model
+    - 2008 2009 model 
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.0.0                          (2009-03-13)
+----------------------------------------------------------------------
+ * Release new version
+
