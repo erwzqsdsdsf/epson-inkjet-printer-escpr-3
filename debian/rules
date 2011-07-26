@@ -23,3 +23,10 @@ override_dh_install:
 	  pyppd --output=$(CURDIR)/debian/epson-escpr/usr/lib/cups/driver/epson-escpr \
 		$(CURDIR)/debian/tmp/usr/share/cups/ \
 	)
+
+get-orig-source:
+	uscan --verbose --no-symlink
+	rpm2cpio ../epson-inkjet-printer-escpr-$(VERSION)-1lsb3.2.src.rpm \
+		| cpio --to-stdout --extract epson-inkjet-printer-escpr-$(VERSION)-1lsb3.2.tar.gz > \
+		../epson-inkjet-printer-escpr_$(VERSION).orig.tar.gz
+	git-import-orig --pristine-tar ../epson-inkjet-printer-escpr_$(VERSION).orig.tar.gz
