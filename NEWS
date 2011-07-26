@@ -1,6 +1,13 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.0.4                          (2011-06-21)
+----------------------------------------------------------------------
+ * Fixed a problem which streched printout when switching 
+   to monochrome mode.
+ 
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.0.3                          (2011-05-24)
 ----------------------------------------------------------------------
  * Remove GraphicsMagick Image Processing System

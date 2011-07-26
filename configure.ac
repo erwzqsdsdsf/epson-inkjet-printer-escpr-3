@@ -18,7 +18,7 @@ dnl Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 AC_PREREQ(2.53)
 AC_INIT([Epson Inkjet Printer Driver (ESC/P-R) for Linux],
-	[1.0.3], [Seiko Epson Corporation <linux-epson-inkjet@avasys.jp>], [epson-inkjet-printer-escpr])
+	[1.0.4], [Seiko Epson Corporation <linux-epson-inkjet@avasys.jp>], [epson-inkjet-printer-escpr])
 AC_SUBST(PACKAGE_RELEASE, 1)            dnl  keep ALL versioning info in
                                         dnl  one location
 AM_INIT_AUTOMAKE([gnu 1.7])
