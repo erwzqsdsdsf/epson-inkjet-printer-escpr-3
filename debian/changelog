@@ -1,3 +1,13 @@
+epson-inkjet-printer-escpr (1.0.4-1) unstable; urgency=low
+
+  * New 1.0.4 upstream release:
+    - Fixed a problem which streched printout when switching to monochrome
+      mode.
+  * Implement get-orig-source target in debian/rules to cope with upstream
+    source rpms.
+
+ -- Didier Raboud <odyx@debian.org>  Tue, 26 Jul 2011 19:59:21 +0200
+
 epson-inkjet-printer-escpr (1.0.3-1) unstable; urgency=low
 
   * Initial release. (Closes: #630810, LP: #555200)
