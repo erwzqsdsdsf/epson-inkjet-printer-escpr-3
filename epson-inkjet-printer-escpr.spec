@@ -16,8 +16,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-%define drivername @PACKAGE_TARNAME@
-%define driverstr @PACKAGE_TARNAME@
+%define drivername epson-inkjet-printer-escpr
+%define driverstr epson-inkjet-printer-escpr
 %define distribution LSB
 %define manufacturer EPSON
 %define supplier %{drivername}
@@ -26,9 +26,9 @@
 %define extraversion -1lsb%{lsbver}
 %define supplierstr Seiko Epson Corporation
 
-Name: @PACKAGE_TARNAME@
-Version: @PACKAGE_VERSION@
-Release: @PACKAGE_RELEASE@lsb%{lsbver}
+Name: epson-inkjet-printer-escpr
+Version: 1.0.4
+Release: 1lsb%{lsbver}
 Source0: %{name}-%{version}-%{release}.tar.gz
 License: GPL
 Vendor: Seiko Epson Corporation
@@ -39,7 +39,7 @@ Group: Applications/System
 Requires: lsb >= %{lsbver}
 BuildRequires: lsb-build-cc, lsb-build-c++, lsb-appchk
 BuildRequires: perl, gzip
-Summary: @PACKAGE_NAME@
+Summary: Epson Inkjet Printer Driver (ESC/P-R) for Linux
 
 %description
 This software is a filter program used with Common UNIX Printing
