@@ -15,6 +15,7 @@ override_dh_auto_clean:
 
 override_dh_install:
 	dh_install
+	install -D -m 755 debian/epson-escpr.ppd-updater $(CURDIR)/debian/epson-escpr/usr/share/cups/ppd-updaters/epson-escpr
 	
 	#Compress the PPD files with Vitor Baptista's pyppd PPD
 	# archiving tool. This makes the space needed for PPDs at least

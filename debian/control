@@ -17,6 +17,7 @@ Depends: ${misc:Depends},
  xz-utils
 Recommends: cups,
  cups-client
+Breaks: cups (<< 1.5.0-2~)
 Suggests: psutils
 Description: Epson Inkjet Printer Driver (ESC/P-R)
  ESC/P-R is a common language for selected Epson printers that supports every
