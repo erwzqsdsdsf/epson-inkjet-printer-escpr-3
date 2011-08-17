@@ -1,7 +1,7 @@
 #!/usr/bin/make -f 
 
 %:
-	dh $@ --with autoreconf
+	dh $@ --with autoreconf --with pyppd
 
 override_dh_autoreconf: m4
 	dh_autoreconf --as-needed
@@ -17,14 +17,6 @@ override_dh_install:
 	dh_install
 	install -D -m 755 debian/epson-escpr.ppd-updater $(CURDIR)/debian/epson-escpr/usr/share/cups/ppd-updaters/epson-escpr
 	
-	#Compress the PPD files with Vitor Baptista's pyppd PPD
-	# archiving tool. This makes the space needed for PPDs at least
-	# 10 times smaller.
-	( mkdir -p $(CURDIR)/debian/epson-escpr/usr/lib/cups/driver/ && \
-	  pyppd --output=$(CURDIR)/debian/epson-escpr/usr/lib/cups/driver/epson-escpr \
-		$(CURDIR)/debian/tmp/usr/share/cups/ \
-	)
-
 get-orig-source:
 	uscan --verbose --no-symlink
 	rpm2cpio ../epson-inkjet-printer-escpr-$(VERSION)-1lsb3.2.src.rpm \

@@ -3,7 +3,7 @@ Section: text
 Priority: optional
 Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 Uploaders: Didier Raboud <odyx@debian.org>
-Build-Depends: debhelper (>= 8.1.3~), dh-autoreconf, libcups2-dev, libcupsimage2-dev, pyppd
+Build-Depends: debhelper (>= 8.1.3~), dh-autoreconf, libcups2-dev, libcupsimage2-dev, pyppd (>= 0.4.9-3~)
 Vcs-Git: git://anonscm.debian.org/collab-maint/epson-inkjet-printer-escpr.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/epson-inkjet-printer-escpr.git
 Homepage: http://avasys.jp/eng/linux_driver/download/lsb/epson-inkjet/escpr/
@@ -11,10 +11,7 @@ Standards-Version: 3.9.2
 
 Package: epson-escpr
 Architecture: any
-Depends: ${misc:Depends},
- ${shlibs:Depends},
- python,
- xz-utils
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: cups,
  cups-client
 Breaks: cups (<< 1.5.0-2~)
