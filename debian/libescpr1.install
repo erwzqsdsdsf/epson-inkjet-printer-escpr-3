@@ -1,1 +1,1 @@
-usr/lib/libescpr.so.*
+usr/lib/*/libescpr.so.*

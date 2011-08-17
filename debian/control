@@ -3,7 +3,7 @@ Section: text
 Priority: optional
 Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 Uploaders: Didier Raboud <odyx@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), dh-autoreconf, libcups2-dev, libcupsimage2-dev, pyppd
+Build-Depends: debhelper (>= 8.1.3~), dh-autoreconf, libcups2-dev, libcupsimage2-dev, pyppd
 Vcs-Git: git://anonscm.debian.org/collab-maint/epson-inkjet-printer-escpr.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/epson-inkjet-printer-escpr.git
 Homepage: http://avasys.jp/eng/linux_driver/download/lsb/epson-inkjet/escpr/
@@ -36,6 +36,8 @@ Architecture: any
 Section: libs
 Depends: ${misc:Depends},
  ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
 Description: Epson Inkjet Printer Driver (ESC/P-R) - Shared library
  ESC/P-R is a common language for selected Epson printers that supports every
  media type, paper size and associated printing mode available on those
