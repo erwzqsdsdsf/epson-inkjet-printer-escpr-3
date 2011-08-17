@@ -1,3 +1,23 @@
+epson-inkjet-printer-escpr (1.0.4-2) unstable; urgency=low
+
+  * Replace the PPD-updater postinst by CUPS' trigger.
+    - Breaks against too old cups versions.
+    - Add a ppd-updater file, to trigger with parameters.
+  * Convert libescpr1 library to multiarch.
+    - Bump B-D on debhelper to 8.9.3~.
+    - Bump debhelper compatibility level to 9..
+    - Override lintian warning about debhelper being too young.
+    - Update *.install files to cope with new library paths.
+    - Add a Pre-Depends on multiarch-support to the libescpr1 package.
+    - Add Multi-Arch: same to the libescpr1 package.
+  * Use dh_pyppd.
+    - Version B-D on pyppd.
+    - Install the PPD files before running pyppd.
+    - Use --with pyppd and drop the hand-launch of pyppd.
+    - Drop the explicit depends needed by pyppd.
+
+ -- Didier Raboud <odyx@debian.org>  Wed, 17 Aug 2011 22:22:58 +0200
+
 epson-inkjet-printer-escpr (1.0.4-1) unstable; urgency=low
 
   * New 1.0.4 upstream release:
