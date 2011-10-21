@@ -18,10 +18,6 @@ override_dh_auto_clean:
 	rm -f *.spec
 	- mv debian/m4-macros.backup m4-macros
 
-override_dh_install:
-	dh_install
-	install -D -m 755 debian/epson-escpr.ppd-updater $(CURDIR)/debian/epson-escpr/usr/share/cups/ppd-updaters/epson-escpr
-	
 get-orig-source:
 	uscan --verbose --no-symlink
 	rpm2cpio ../epson-inkjet-printer-escpr-$(VERSION)-1lsb3.2.src.rpm \
