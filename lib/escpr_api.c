@@ -83,7 +83,7 @@ ESCPR_ERR_CODE escprInitJob(const ESCPR_OPT *pRGB_opt,
     spPrintJob     = *pPrintJob;
 
     /* ChangeSpec : Known issue (2005/10/14 #2) */
-    ESCPR_RequestServicePack(SP_REQ_FIX_720DPI, (void*)&spPrintJob, 
+    ESCPR_RequestServicePack(SP_REQ_FIX_600_720DPI, (void*)&spPrintJob, 
         /* reserved */ NULL, NULL, NULL);
 
     /* ChangeSpec : Known issue (2005/10/14 #3) */

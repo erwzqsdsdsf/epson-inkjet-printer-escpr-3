@@ -144,14 +144,14 @@ typedef ESCPR_BYTE4 (* ESCPR_PFNSP)(void *, void *, void*, void*);
 
 /* Each one do to fix 'Known Issue' about ESC/P-R printer */
 static ESCPR_BYTE4 _SP_ChangeSpec_UpdatePMReply(void*, void*, void*, void*);
-static ESCPR_BYTE4 _SP_ChangeSpec_720DPI(void* , void*, void*,void*);
+static ESCPR_BYTE4 _SP_ChangeSpec_600_720DPI(void* , void*, void*,void*);
 static ESCPR_BYTE4 _SP_ChangeSpec_CompositeBlack(void*, void*, void*, void*);
 static ESCPR_BYTE4 _SP_ChangeSpec_DraftOnly(void*, void*, void*, void*);
 
 /* Functions should be ordered in the same index with SP_REQ_CODE */
 ESCPR_PFNSP fpChangeSpec [] = {
                               _SP_ChangeSpec_UpdatePMReply,   /* SP_REQ_FIX_UPDATE_PMREPLY */
-                              _SP_ChangeSpec_720DPI,          /* SP_REQ_FIX_720DPI */
+                              _SP_ChangeSpec_600_720DPI,      /* SP_REQ_FIX_600_720DPI */
                               _SP_ChangeSpec_CompositeBlack,  /* SP_REQ_FIX_COMPOSITE_BLACK */
                               _SP_ChangeSpec_DraftOnly        /* SP_REQ_FIX_DRAFTONLY */
                           };
@@ -266,61 +266,63 @@ ESCPR_PFNSP fpChangeSpec [] = {
 /* Support media size id table */
 static struct _tag_PM_PAPER_SIZE {
     ESCPR_UBYTE1   id;      /* PM_MTID_xx */
-    ESCPR_BYTE4    width;   /* pixels for 360 DPI */
-    ESCPR_BYTE4    length;  /* pixels for 360 DPI */
+    ESCPR_BYTE4    width360;   /* pixels for 360 DPI */
+    ESCPR_BYTE4    length360;  /* pixels for 360 DPI */
+    ESCPR_BYTE4    width300;   /* pixels for 300 DPI */
+    ESCPR_BYTE4    length300;  /* pixels for 300 DPI */
 } PM_PAPER_SIZE [] = {
-    /* ID                   Width   Length */
-    {PM_MSID_A4,            2976,   4209},
-    {PM_MSID_LETTER,        3060,   3960},
-    {PM_MSID_LEGAL,         3060,   5040},
-    {PM_MSID_A5,            2098,   2976},
-    {PM_MSID_A6,            1488,   2098},
-    {PM_MSID_B5,            2580,   3643},
-    {PM_MSID_EXECUTIVE,     2610,   3780},
-    {PM_MSID_HALFLETTER,    1980,   3060},
-    {PM_MSID_PANORAMIC,     2976,   8419},
-    {PM_MSID_TRIM_4X6,      1610,   2330},
-    {PM_MSID_4X6,           1440,   2160},
-    {PM_MSID_5X8,           1800,   2880},
-    {PM_MSID_8X10,          2880,   3600},
-    {PM_MSID_10X15,         1417,   2125},
-    {PM_MSID_200X300,       3061,   4790},
-    {PM_MSID_L,             1260,   1800},
-    {PM_MSID_POSTCARD,      1417,   2098},
-    {PM_MSID_DBLPOSTCARD,   2835,   2098},
-    {PM_MSID_ENV_10_L,      3420,   1485},
-    {PM_MSID_ENV_C6_L,      2296,   1616},
-    {PM_MSID_ENV_DL_L,      3118,   1559},
-    {PM_MSID_NEWEVN_L,      3118,   1871},
-    {PM_MSID_CHOKEI_3,      1701,   3685},
-    {PM_MSID_CHOKEI_4,      1276,   3161},
-    {PM_MSID_YOKEI_1,       1701,   2494},
-    {PM_MSID_YOKEI_2,       1616,   2296},
-    {PM_MSID_YOKEI_3,       1389,   2098},
-    {PM_MSID_YOKEI_4,       1488,   3331},
-    {PM_MSID_2L,            1800,   2522},
-    {PM_MSID_ENV_10_P,      1485,   3420},
-    {PM_MSID_ENV_C6_P,      1616,   2296},
-    {PM_MSID_ENV_DL_P,      1559,   3118},
-    {PM_MSID_NEWENV_P,      1871,   3118},
-    {PM_MSID_MEISHI,        1261,    779},
-    {PM_MSID_BUZCARD_89X50, 1261,    709},
-    {PM_MSID_CARD_54X86,     765,   1219},
-    {PM_MSID_BUZCARD_55X91,  780,   1290},
-    {PM_MSID_ALBUM_L,       1800,   2607},
-    {PM_MSID_ALBUM_A5,      2976,   4294},
-    {PM_MSID_PALBUM_L_L,    1800,   1260},
-    {PM_MSID_PALBUM_2L,     1800,   2521},
-    {PM_MSID_PALBUM_A5_L,   2976,   2101},
-    {PM_MSID_PALBUM_A4,     2976,   4203},
-    {PM_MSID_A3NOBI,        4663,   6846},
-    {PM_MSID_A3,            4209,   5953},
-    {PM_MSID_B4,            3643,   5159},
-    {PM_MSID_USB,           3960,   6120},
-    {PM_MSID_11X14,         3960,   5040},
-    {PM_MSID_B3,            5159,   7285},
-    {PM_MSID_A2,            5953,   8419},
-    {PM_MSID_USC,           6120,   7920},
+    /* ID                  Width  Length   Width  Length*/
+    {PM_MSID_A4,            2976,   4209,  2480,  3507},
+    {PM_MSID_LETTER,        3060,   3960,  2550,  3300},
+    {PM_MSID_LEGAL,         3060,   5040,  2550,  4200},
+    {PM_MSID_A5,            2098,   2976,  1748,  2480},
+    {PM_MSID_A6,            1488,   2098,  1240,  1748},
+    {PM_MSID_B5,            2580,   3643,  2149,  3035},
+    {PM_MSID_EXECUTIVE,     2610,   3780,  2175,  3150},
+    {PM_MSID_HALFLETTER,    1980,   3060,  1650,  2550},
+    {PM_MSID_PANORAMIC,     2976,   8419,  2480,  7016},
+    {PM_MSID_TRIM_4X6,      1610,   2330,  1342,  1942},
+    {PM_MSID_4X6,           1440,   2160,  1200,  1800},
+    {PM_MSID_5X8,           1800,   2880,  1500,  2400},
+    {PM_MSID_8X10,          2880,   3600,  2400,  3000},
+    {PM_MSID_10X15,         1417,   2125,  1181,  1771},
+    {PM_MSID_200X300,       3061,   4790,  2551,  3992},
+    {PM_MSID_L,             1260,   1800,  1050,  1500},
+    {PM_MSID_POSTCARD,      1417,   2098,  1181,  1748},
+    {PM_MSID_DBLPOSTCARD,   2835,   2098,  2363,  1748},
+    {PM_MSID_ENV_10_L,      3420,   1485,  2850,  1238},
+    {PM_MSID_ENV_C6_L,      2296,   1616,  1913,  1347},
+    {PM_MSID_ENV_DL_L,      3118,   1559,  2598,  1299},
+    {PM_MSID_NEWEVN_L,      3118,   1871,  2598,  1559},
+    {PM_MSID_CHOKEI_3,      1701,   3685,  1418,  3071},
+    {PM_MSID_CHOKEI_4,      1276,   3161,  1063,  2634},
+    {PM_MSID_YOKEI_1,       1701,   2494,  1418,  2078},
+    {PM_MSID_YOKEI_2,       1616,   2296,  1347,  1913},
+    {PM_MSID_YOKEI_3,       1389,   2098,  1158,  1748},
+    {PM_MSID_YOKEI_4,       1488,   3331,  1240,  2776},
+    {PM_MSID_2L,            1800,   2522,  1500,  2100},
+    {PM_MSID_ENV_10_P,      1485,   3420,  1238,  2850},
+    {PM_MSID_ENV_C6_P,      1616,   2296,  1347,  1913},
+    {PM_MSID_ENV_DL_P,      1559,   3118,  1299,  2598},
+    {PM_MSID_NEWENV_P,      1871,   3118,  1559,  2598},
+    {PM_MSID_MEISHI,        1261,    779,  1051,   649},
+    {PM_MSID_BUZCARD_89X50, 1261,    709,  1051,   591},
+    {PM_MSID_CARD_54X86,     765,   1219,   638,  1016},
+    {PM_MSID_BUZCARD_55X91,  780,   1290,   650,  1075},
+    {PM_MSID_ALBUM_L,       1800,   2607,  1200,  2133},
+    {PM_MSID_ALBUM_A5,      2976,   4294,  2480,  3578},
+    {PM_MSID_PALBUM_L_L,    1800,   1260,  1500,  1050},
+    {PM_MSID_PALBUM_2L,     1800,   2521,  1500,  2101},
+    {PM_MSID_PALBUM_A5_L,   2976,   2101,  2480,  1751},
+    {PM_MSID_PALBUM_A4,     2976,   4203,  2480,  3503},
+    {PM_MSID_A3NOBI,        4663,   6846,  3886,  5705},
+    {PM_MSID_A3,            4209,   5953,  3507,  4960},
+    {PM_MSID_B4,            3643,   5159,  3036,  4299},
+    {PM_MSID_USB,           3960,   6120,  3300,  5100},
+    {PM_MSID_11X14,         3960,   5040,  3300,  4200},
+    {PM_MSID_B3,            5159,   7285,  4299,  6071},
+    {PM_MSID_A2,            5953,   8419,  4961,  7016},
+    {PM_MSID_USC,           6120,   7920,  5100,  6600},
     {PM_MSID_USER,             0,      0},
 };
 
@@ -997,7 +999,7 @@ static ESCPR_BYTE4 _SP_ChangeSpec_UpdatePMReply(void* pData, void* pReserved1, v
  Last Modification : 2005/10/14
  Revision : 1.0
 =======================================================================================*/
-static ESCPR_BYTE4 _SP_ChangeSpec_720DPI(void* pData, void* pReserved1, void* pReserved2, void* pReserved3)
+static ESCPR_BYTE4 _SP_ChangeSpec_600_720DPI(void* pData, void* pReserved1, void* pReserved2, void* pReserved3)
 {
     ESCPR_PRINT_JOB* pPrintJob = (ESCPR_PRINT_JOB*)pData;
 
@@ -1012,13 +1014,17 @@ static ESCPR_BYTE4 _SP_ChangeSpec_720DPI(void* pData, void* pReserved1, void* pR
     verbose_dbprint(("pPrintJob->InResolution         = %d\n", pPrintJob->InResolution));
     verbose_dbprint(("pPrintJob->PrintDirection       = %d\n", pPrintJob->PrintDirection));
 
-    /* Support Input Resolution 360x360dpi only */
-    if(pPrintJob->InResolution == ESCPR_IR_7272){
+    /* Support Input Resolution 360x360dpi/300x300dpi only */
+    if(pPrintJob->InResolution == ESCPR_IR_7272 || pPrintJob->InResolution == ESCPR_IR_6060){
     pPrintJob->TopMargin           /= 2;
     pPrintJob->LeftMargin          /= 2;
     pPrintJob->PrintableAreaWidth  /= 2;
     pPrintJob->PrintableAreaLength /= 2;
-    pPrintJob->InResolution         = ESCPR_IR_3636;
+    if(pPrintJob->InResolution == ESCPR_IR_7272){
+	pPrintJob->InResolution         = ESCPR_IR_3636;
+    }else{
+       pPrintJob->InResolution         = ESCPR_IR_3030;
+     }
 
     verbose_dbprint((">> ESC/P-R input resolution has been changed to 360x360 from 720x720 dpi\n"));
     verbose_dbprint(("pPrintJob->PaperWidth           = %d\n", pPrintJob->PaperWidth));
@@ -1112,17 +1118,17 @@ static ESCPR_BYTE4 _SP_ChangeSpec_DraftOnly(void* pPrintQuality, void* pPrintJob
     width  = pJob->PaperWidth;
     length = pJob->PaperLength;
 
-    /* use 360 dpi unit */
-    if(pJob->InResolution == ESCPR_IR_7272) {
+    /* use 360/300 dpi unit */
+    if(pJob->InResolution == ESCPR_IR_7272 || pJob->InResolution == ESCPR_IR_6060) {
         width  /= 2;
         length /= 2;
     }
 
     for(i = 0; i < NUM_PAPER_SIZE; i++) {
-    if(PM_PAPER_SIZE[i].width == width &&
-        PM_PAPER_SIZE[i].length == length) {
-        s_id = PM_PAPER_SIZE[i].id;
-    }
+        if((PM_PAPER_SIZE[i].width360 == width || PM_PAPER_SIZE[i].width300 == width)
+        && (PM_PAPER_SIZE[i].length360 == length || PM_PAPER_SIZE[i].length300 == length)) {
+            s_id = PM_PAPER_SIZE[i].id;
+        }
     }
     verbose_dbprint(("ChangeSpec_DrfatOnly : size id(%d), width(%d), length(%d)\n", s_id, width, length));
 
@@ -1214,7 +1220,7 @@ ESCPR_ERR_CODE ESCPR_RequestServicePack(SP_REQ_CODE request,
     /* Validation request code */
     switch(request) {
         case SP_REQ_FIX_UPDATE_PMREPLY:
-        case SP_REQ_FIX_720DPI:
+        case SP_REQ_FIX_600_720DPI:
         case SP_REQ_FIX_COMPOSITE_BLACK:
         case SP_REQ_FIX_DRAFTONLY:
             break;

@@ -24,14 +24,16 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
+#ifndef DEBUG_H
+#define DEBUG_H
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-#ifndef DEBUG_H
-#define DEBUG_H
+
 #include <stdarg.h>
 
-#include <def.h>
+#include "def.h"
 
 #if !DEBUG   /* not DEBUG */
 #define DEBUG_START

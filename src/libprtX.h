@@ -24,12 +24,12 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
+#ifndef LIB_PRT_X_H
+#define LIB_PRT_X_H
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-
-#ifndef __LIB_PRT_X_H__
-#define __LIB_PRT_X_H__
 
 #include "pipsDef.h"
 #include "escpr_def.h"
@@ -64,4 +64,4 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif /* __LIB_PRT_X_H__ */
+#endif /* LIB_PRT_X_H */

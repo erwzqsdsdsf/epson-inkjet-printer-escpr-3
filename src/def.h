@@ -24,15 +24,11 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-
 #ifndef DEF_H
 #define DEF_H
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#  include <config.h>
 #endif
 
 #include <sys/types.h>

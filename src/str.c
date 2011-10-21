@@ -31,9 +31,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <err.h>
-#include <mem.h>
-#include <str.h>
+#include "err.h"
+#include "mem.h"
+#include "str.h"
 
 char *
 str_clone (char *str, size_t size)

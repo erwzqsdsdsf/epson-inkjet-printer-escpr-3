@@ -24,12 +24,12 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
+#ifndef PIPS_H
+#define PIPS_H
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-
-#ifndef __UI_H__
-#define __UI_H__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -156,4 +156,4 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif /* __UI_H__ */
+#endif /* PIPS_H */

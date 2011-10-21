@@ -1,6 +1,68 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.1.0                          (2011-09-01)
+----------------------------------------------------------------------
+ * Enabled to build on non-LSB environment
+
+ * Supported 300dpi resolution
+
+ * Added ppd files of following model
+      - E-350
+      - E-820
+      - EP-704A
+      - EP-774A
+      - EP-804A
+      - EP-904A
+      - EP-904F
+      - PX-404A
+      - PX-434A
+      - PX-504A
+      - PX-B700
+      - PX-B750F
+      - PX-1600F
+      - PX-1700F
+      - PictureMate PM 245
+      - Artisan 635
+      - Artisan 730
+      - Artisan 837
+      - WorkForce 435
+      - WorkForce 545
+      - WorkForce 845
+      - WorkForce 645
+      - Epson Stylus Office BX305 Plus
+      - Epson Stylus Office BX535WD
+      - Epson Stylus Office BX935FWD
+      - Epson Stylus Office BX630FW
+      - Epson Stylus Office BX635FWD
+      - Epson Stylus Photo PX830
+      - Epson Stylus Photo TX730
+      - Epson Stylus Photo PX730
+      - Epson Stylus NX530
+      - Epson Stylus NX635
+      - Epson Stylus SX535WD
+      - Epson ME OFFICE 940FW
+      - WP-4011 Series
+      - WP-4015 Series
+      - WP-4020 Series
+      - WP-4025 Series
+      - WP-4511 Series
+      - WP-4515 Series
+      - WP-4521 Series
+      - WP-4525 Series
+      - WP-4530 Series
+      - WP-4531 Series
+      - WP-4535 Series
+      - WP-4540 Series
+      - WP-4545 Series
+      - WF-7510 Series
+      - WF-7511 Series
+      - WF-7515 Series
+      - WF-7520 Series
+      - WF-7521 Series
+      - WF-7525 Series
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.0.4                          (2011-06-21)
 ----------------------------------------------------------------------
  * Fixed a problem which streched printout when switching 

@@ -92,7 +92,7 @@ OPTION_DATA mediaSizeData[] = {
     {PM_MSID_10X15,         "PP100",    N_("Photo Paper 100x150 mm")            },
     {PM_MSID_200X300,       "PP200",    N_("Photo Paper 200x300 mm")            },
     {PM_MSID_L,             "L",        N_("3.5x5 in  89x127 mm")               },
-    {PM_MSID_POSTCARD,      "PC",       N_("Post Card  100x148 mm")             },
+    {PM_MSID_POSTCARD,      "PostCard", N_("Post Card  100x148 mm")             },
     {PM_MSID_DBLPOSTCARD,   "DPC",      N_("Double Post Card  200x148 mm")      },
     {PM_MSID_ENV_10_L,      "ENV10_L",  N_("Envelope #10(Landscape) 4 1/8x9 1/2 in")      },
     {PM_MSID_ENV_C6_L,      "ENVC6_L",  N_("Envelope C6(Landscape) 114x162 mm")           },

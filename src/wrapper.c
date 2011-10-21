@@ -92,6 +92,7 @@ main (int argc, char *argv[])
 	while (flag) sleep (3);
 #endif /* USE_DEBUGGER */
 
+
 	cancel_flg = 0;
 	memset (&fopt, 0, sizeof (filter_option_t));
 	/* added 22-04-2004 */
@@ -161,12 +162,13 @@ main (int argc, char *argv[])
 		{
 			char tmpbuf[256];
 
-			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %s %s %s",
+			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %d %s %s %s",
 				 CUPS_FILTER_PATH,
 				 CUPS_FILTER_NAME,
 				 fopt.model,
 				 header.cupsWidth,
 				 header.cupsHeight,
+				 header.HWResolution[0],
 				 fopt.ink,
 				 fopt.media,
 				 fopt.quality);

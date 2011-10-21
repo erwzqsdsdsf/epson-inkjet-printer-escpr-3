@@ -34,8 +34,8 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include <err.h>
-#include <debug.h>
+#include "err.h"
+#include "debug.h"
 
 static char *debug_path = "/tmp/epson-escpr-wrapper-dump";
 static FILE *debug_fp = NULL;

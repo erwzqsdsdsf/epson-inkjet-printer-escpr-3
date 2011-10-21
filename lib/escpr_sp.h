@@ -36,7 +36,7 @@
 /* Service Pack request code */
 typedef enum _SP_REQ {
     SP_REQ_FIX_UPDATE_PMREPLY= 0,
-    SP_REQ_FIX_720DPI,
+    SP_REQ_FIX_600_720DPI,
     SP_REQ_FIX_COMPOSITE_BLACK,
     SP_REQ_FIX_DRAFTONLY
 } SP_REQ_CODE;
