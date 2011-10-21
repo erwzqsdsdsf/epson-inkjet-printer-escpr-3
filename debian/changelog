@@ -1,3 +1,24 @@
+epson-inkjet-printer-escpr (1.1.0-1) unstable; urgency=low
+
+  * New 1.1.0 upstream release.
+    - Cope with the PPDs file move.
+    - Split SetGlobalBasePointData in two exported symbols.
+    - Make sure package is buildable twice in a row by preserving m4-macros.
+
+  * Refactoring, action 1:
+    - Rename epson-escpr to printer-driver-escpr, add transitional package.
+
+  * Patches update:
+    - Drop link_to_debian_libs.patch: not needed anymore.
+    + Add dont_touch_debian_files.patch: needed with the new upstream.
+
+  * Drop superfluous shebang from ppd-updater snippet.
+  * Correct debian/copyright syntax.
+  * Slightly rewrite short descriptions.
+  * Only recommend cups-ppdc.
+
+ -- Didier Raboud <odyx@debian.org>  Fri, 21 Oct 2011 16:11:28 +0200
+
 epson-inkjet-printer-escpr (1.0.4-2) unstable; urgency=low
 
   * Replace the PPD-updater postinst by CUPS' trigger.
