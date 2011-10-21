@@ -24,7 +24,8 @@ libescpr.so.1 libescpr1 #MINVER#
  NUM_PAPER_SIZE@Base 1.0.3
  NUM_TYPE_IDS@Base 1.0.3
  PM_TYPE_IDS@Base 1.0.3
- SetGlobalBasePointData@Base 1.0.3
+ SetGlobalBasePointData_300dpi@Base 1.1.0
+ SetGlobalBasePointData_360dpi@Base 1.1.0
  escprBandOut@Base 1.0.3
  escprDestroyJob@Base 1.0.3
  escprFilterPMReply@Base 1.0.3
