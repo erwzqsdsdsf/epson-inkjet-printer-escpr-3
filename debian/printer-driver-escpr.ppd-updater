@@ -1,4 +1,2 @@
-#!/bin/sh
-set -e
 DRIVER_REGEXP='epson-escpr'
 GENNICKNAME_REGEXP=''
