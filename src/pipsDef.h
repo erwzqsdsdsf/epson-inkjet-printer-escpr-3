@@ -24,12 +24,12 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
+#ifndef PIPSDEF_H
+#define PIPSDEF_H
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
-
-#ifndef __PIPSDEF_H__
-#define __PIPSDEF_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -258,4 +258,4 @@ enum eBORDERLESS_PRINT
 typedef int (*func_t)(UCHAR *, void *, void *, void *);
 
 
-#endif /* __PIPSDEF_H__ */
+#endif /* PIPSDEF_H */

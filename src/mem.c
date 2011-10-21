@@ -29,8 +29,8 @@
 #endif
 
 #include <stdlib.h>
-#include <mem.h>
-#include <err.h>
+#include "mem.h"
+#include "err.h"
 
 
 void *

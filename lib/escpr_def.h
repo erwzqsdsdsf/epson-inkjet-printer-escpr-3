@@ -180,6 +180,8 @@ typedef struct {
 /* InResolution */
 #define ESCPR_IR_3636                   0   /* 360 x 360 dpi            */
 #define ESCPR_IR_7272                   1   /* 720 x 720 dpi            */
+#define ESCPR_IR_3030                   2   /* 300 x 300 dpi            */
+#define ESCPR_IR_6060                   3   /* 600 x 600 dpi            */
 
 /* PrintDirection */
 #define ESCPR_PD_BIDIREC                0   /* Bi-direction             */

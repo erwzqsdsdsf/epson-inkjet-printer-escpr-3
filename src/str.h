@@ -24,13 +24,14 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
+#ifndef STR_H
+#define STR_H
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
 
-#ifndef STR_H
-#define STR_H
-#include <def.h>
+#include "def.h"
 
 BEGIN_C
 

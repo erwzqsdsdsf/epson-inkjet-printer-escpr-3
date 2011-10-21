@@ -32,11 +32,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <def.h>
-#include <str.h>
-#include <err.h>
-#include <mem.h>
-#include <csv.h>
+#include "def.h"
+#include "str.h"
+#include "err.h"
+#include "mem.h"
+#include "csv.h"
 
 BEGIN_C
 static int csvlist_makelist (csvlist_t *, long);

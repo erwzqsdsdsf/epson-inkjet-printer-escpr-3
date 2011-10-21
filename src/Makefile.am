@@ -16,38 +16,33 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-cupsfilterdir = $(CUPS_SERVER_DIR)/filter
-cupsfilter_PROGRAMS = epson-escpr epson-escpr-wrapper
+cupsfilterdir = $(CUPS_FILTER_DIR)
+cupsfilter_PROGRAMS = \
+	epson-escpr \
+	epson-escpr-wrapper
 
-noinst_LTLIBRARIES = libcutils.la
-
-AM_CFLAGS = -I$(top_srcdir)/lib
-AM_CFLAGS += -DPAPER_PATH=\"$(pkgdatadir)/paper_list.csv\"
-AM_CFLAGS += -DCUPS_FILTER_NAME=\"epson-escpr\"
-AM_CFLAGS += -DCUPS_FILTER_PATH=\"$(cupsfilterdir)\"
-
-libcutils_la_SOURCES = \
-	str.c str.h \
-	err.c err.h \
-	csv.c csv.h \
-	mem.c mem.h \
-	def.h
-
-epson_escpr_wrapper_LDFLAGS = \
-	@CUPS_IMAGE_LIBS@
+epson_escpr_wrapper_CFLAGS = \
+	-DCUPS_FILTER_NAME=\"epson-escpr\" \
+	-DCUPS_FILTER_PATH=\"$(CUPS_FILTER_DIR)\"
 epson_escpr_wrapper_SOURCES = \
 	wrapper.c
 
-epson_escpr_LDFLAGS = \
-	libcutils.la
+epson_escpr_CFLAGS = \
+	-I$(top_srcdir)/lib \
+	-DPAPER_PATH=\"$(pkgdatadir)/paper_list.csv\"
 epson_escpr_SOURCES = \
 	filter.c \
 	libprtX.h \
 	debug.c debug.h \
 	pips.h \
 	pipsDef.h \
-	optBase.h
+	optBase.h \
+	str.c str.h \
+	err.c err.h \
+	csv.c csv.h \
+	mem.c mem.h \
+	def.h
+
 epson_escpr_LDADD = \
-	@CUPS_LIBS@ \
 	$(top_builddir)/lib/libescpr.la
 

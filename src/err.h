@@ -24,16 +24,16 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
+#ifndef ERR_H
+#define ERR_H
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
 
-#ifndef ERR_H
-#define ERR_H
-
 #include <stdarg.h>
 
-#include <def.h>
+#include "def.h"
 
 enum msgtype {
 	MSGTYPE_ERROR = 0,

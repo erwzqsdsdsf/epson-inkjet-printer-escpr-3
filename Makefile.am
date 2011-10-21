@@ -1,7 +1,7 @@
 ## Makefile.am -- an automake template for a Makefile.in file
 ## EPSON ESC/P-R Printer Driver for Linux
 ## Copyright (C) 2000-2008 AVASYS CORPORATION.
-## Copyright (C) Seiko Epson Corporation 2000-2010.
+## Copyright (C) Seiko Epson Corporation 2000-2011.
 ##  This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2 of the License, or
@@ -16,11 +16,34 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-SUBDIRS = lib src \
-          layout_script ppd
+SUBDIRS = \
+	layout_script \
+	lib \
+	ppd \
+	src
 
 ACLOCAL_AMFLAGS = -I m4
 
+noinst_DATA = \
+	debian/control \
+	debian/rules
+
+debian/control: $(srcdir)/Makefile $(srcdir)/debian/control.in
+	rm -f $@ $@.tmp; \
+	sed -e 's|[@]PACKAGE_BUGREPORT[@]|$(PACKAGE_BUGREPORT)|' \
+	    -e 's|[@]PACKAGE_NAME[@]|$(PACKAGE_NAME)|' \
+	    -e 's|[@]PACKAGE_TARNAME[@]|$(PACKAGE_TARNAME)|' \
+	    '$(top_srcdir)/$@.in' > $@.tmp; \
+	mv $@.tmp $@
+
+debian/rules: $(srcdir)/Makefile $(srcdir)/debian/rules.in
+	rm -f $@ $@.tmp; \
+	sed -e 's|[@]CUPS_FILTER_DIR[@]|$(CUPS_FILTER_DIR)|' \
+	    -e 's|[@]CUPS_PPD_DIR[@]|$(CUPS_PPD_DIR)|' \
+	    -e 's|[@]PACKAGE_TARNAME[@]|$(PACKAGE_TARNAME)|' \
+	    '$(top_srcdir)/$@.in' > $@.tmp; \
+	mv $@.tmp $@; \
+	chmod +x $@
 
 #  Automate maintenance of the list of shipped M4 macros.
 #  Do not change the list unnecessarily.  As a side effect, this also
@@ -35,8 +58,27 @@ include m4-macros
 
 
 EXTRA_DIST = \
-	README.ja \
-	m4 \
 	$(M4_MACROS) \
-	$(PACKAGE_TARNAME).spec.in \
-	$(PACKAGE_TARNAME).spec
+	$(noinst_DATA) \
+	AUTHORS \
+	COPYING \
+	NEWS \
+	README \
+	README.ja \
+	bootstrap \
+	debian/changelog \
+	debian/compat \
+	debian/control.in \
+	debian/copyright \
+	debian/docs \
+	debian/postinst \
+	debian/postrm \
+	debian/rules.in \
+	epson-inkjet-printer-escpr.spec \
+	epson-inkjet-printer-escpr.spec.in \
+	lsb/lsb-rpm.spec \
+	lsb/lsb-rpm.spec.in \
+	lsb/makelsbpkg-perms.xml \
+	lsb/makelsbpkg-tags.xml \
+	lsb/makelsbpkg-tags.xml.in \
+	m4

@@ -24,12 +24,12 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #ifndef MEM_H
 #define MEM_H
+
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
 
 #include "def.h"
 

@@ -24,14 +24,14 @@
  * respects for all of the code used other than the libraries which
  * are covered by AVASYS Public License.
  */
+#ifndef CSV_H
+#define CSV_H
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
 
-#ifndef CSV_H
-#define CSV_H
-
-#include <def.h>
+#include "def.h"
 
 typedef struct csvlist_str
 {

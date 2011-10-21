@@ -36,12 +36,12 @@
 #include <ctype.h>
 #include <errno.h>
 
-#include <err.h>
-#include <mem.h>
-#include <str.h>
-#include <csv.h>
-#include <debug.h>
-#include <libprtX.h>
+#include "err.h"
+#include "mem.h"
+#include "str.h"
+#include "csv.h"
+#include "debug.h"
+#include "libprtX.h"
 #include "optBase.h"
 
 #define PATH_MAX 256
@@ -79,6 +79,7 @@ main (int argc, char *argv[])
 	char libfile[PATH_MAX + 1]; 
 
 	long width_pixel, height_pixel;
+	long HWResolution;
 	long bytes_per_line;
 	int byte_par_pixel;
 	double x_mag, y_mag;
@@ -107,7 +108,6 @@ main (int argc, char *argv[])
 	ESCPR_BANDBMP bandBmp;
 	ESCPR_RECT bandRect;
 
-
 /* attach point */
 #ifdef USE_DEBUGGER
 	int flag = 1;
@@ -117,7 +117,7 @@ main (int argc, char *argv[])
 	DEBUG_START;
 	err_init (argv[0]);
 
-	if (argc != 7)
+	if (argc != 8)
 	{
 		for ( i = 1; i < argc; i++ ) {
 			if ( (0 == strncmp(argv[i], "-v", (strlen("-v")+1)) )
@@ -156,10 +156,11 @@ main (int argc, char *argv[])
 
 	width_pixel = atol (argv[2]);
 	height_pixel = atol (argv[3]);
+	HWResolution = atol (argv[4]);
 
-	strncpy (fopt.ink, argv[4], NAME_MAX);
-	strncpy (fopt.media, argv[5], NAME_MAX);
-	strncpy (fopt.quality, argv[6], NAME_MAX);
+	strncpy (fopt.ink, argv[5], NAME_MAX);
+	strncpy (fopt.media, argv[6], NAME_MAX);
+	strncpy (fopt.quality, argv[7], NAME_MAX);
 
 	outfp = stdout;
 	printOpt.fpspoolfunc = (ESCPR_FPSPOOLFUNC)print_spool_fnc;
@@ -179,6 +180,22 @@ main (int argc, char *argv[])
 		bin_id="BORDER";
 	}
 
+	switch(HWResolution){
+	case 360:
+		printJob.InResolution = ESCPR_IR_3636;
+		break;
+	case 720:
+		printJob.InResolution = ESCPR_IR_7272;
+		break;
+	case 300:
+		printJob.InResolution = ESCPR_IR_3030;
+		break;
+	case 600:
+		printJob.InResolution = ESCPR_IR_6060;
+		break;							
+	}
+
+	
 	if (get_page_size (&printJob, paper, bin_id))
 		err_fatal ("Cannot get page size of PIPS.");
 
@@ -436,16 +453,28 @@ get_page_size (ESCPR_PRINT_JOB *printJob, const char *paper, const char *bin_id)
 
 	pos = csvlist_search_keyword (csv_p, 0, paper);
 	if (pos < 0)
-		err_fatal ("%s : List file is broken.", path);
+		err_fatal ("%s : Unknown PageSize.", paper);
 
 
-	printJob->PaperWidth = atol (csvlist_get_word (csv_p, pos + 2));
-	printJob->PaperLength = atol (csvlist_get_word (csv_p, pos + 3));
+	if(printJob->InResolution == ESCPR_IR_3636 || printJob->InResolution == ESCPR_IR_7272){
+		printJob->PaperWidth = atol (csvlist_get_word (csv_p, pos + 2));
+		printJob->PaperLength = atol (csvlist_get_word (csv_p, pos + 3));
 
-	l_margin = atol (csvlist_get_word (csv_p, pos + 4));
-	r_margin = atol (csvlist_get_word (csv_p, pos + 5));
-	t_margin = atol (csvlist_get_word (csv_p, pos + 6));
-	b_margin = atol (csvlist_get_word (csv_p, pos + 7));
+		l_margin = atol (csvlist_get_word (csv_p, pos + 4));
+		r_margin = atol (csvlist_get_word (csv_p, pos + 5));
+		t_margin = atol (csvlist_get_word (csv_p, pos + 6));
+		b_margin = atol (csvlist_get_word (csv_p, pos + 7));
+	}else{
+		printJob->PaperWidth = atol (csvlist_get_word (csv_p, pos + 8));
+		printJob->PaperLength = atol (csvlist_get_word (csv_p, pos + 9));
+
+		l_margin = atol (csvlist_get_word (csv_p, pos + 10));
+		r_margin = atol (csvlist_get_word (csv_p, pos + 11));
+		t_margin = atol (csvlist_get_word (csv_p, pos + 12));
+		b_margin = atol (csvlist_get_word (csv_p, pos + 13));
+
+	}
+
 
 	if (!strcmp (bin_id, "BORDER"))
 	{
@@ -457,13 +486,24 @@ get_page_size (ESCPR_PRINT_JOB *printJob, const char *paper, const char *bin_id)
 
 	else if (!strcmp (bin_id, "BORDERLESS"))
 	{
- 		printJob->PrintableAreaWidth = printJob->PaperWidth + 72;
-		printJob->PrintableAreaLength = printJob->PaperLength + 112;
-		printJob->TopMargin = -42;
-		if ( printJob->PaperWidth < 4209 ) 
-			printJob->LeftMargin = -36;
-		else
-			printJob->LeftMargin = -48;
+		if(printJob->InResolution == ESCPR_IR_3636 || printJob->InResolution == ESCPR_IR_7272){
+	 		printJob->PrintableAreaWidth = printJob->PaperWidth + 72;
+			printJob->PrintableAreaLength = printJob->PaperLength + 112;
+			printJob->TopMargin = -42;
+			if ( printJob->PaperWidth < 4209 ) 
+				printJob->LeftMargin = -36;
+			else
+				printJob->LeftMargin = -48;
+		}else{
+	 		printJob->PrintableAreaWidth = printJob->PaperWidth + 60;
+			printJob->PrintableAreaLength = printJob->PaperLength + 93;
+			printJob->TopMargin = -35;
+			if ( printJob->PaperWidth < 3507 ) 
+				printJob->LeftMargin = -30;
+			else
+				printJob->LeftMargin = -40;
+
+		}
 
 	}
 
@@ -472,7 +512,6 @@ get_page_size (ESCPR_PRINT_JOB *printJob, const char *paper, const char *bin_id)
 		err_fatal ("%s : This sheet feeder is not supported.");
 	}
 
-	printJob->InResolution = ESCPR_IR_3636;
 	printJob->PrintDirection =  0; 
 
 	/* free alloced memory */

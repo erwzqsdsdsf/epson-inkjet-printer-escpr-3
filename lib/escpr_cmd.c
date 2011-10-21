@@ -58,7 +58,8 @@ typedef struct tagBASEPOINT {
 #endif
 } ESCPR_BASEPT;
 
-void SetGlobalBasePointData(const int PaperWidth);
+void SetGlobalBasePointData_300dpi(const int PaperWidth);
+void SetGlobalBasePointData_360dpi(const int PaperWidth);
 
 #define PAPERWIDTH_A3 4209
 
@@ -615,13 +616,17 @@ ESCPR_ERR_CODE ESCPR_MakePrintJobCmd(const ESCPR_PRINT_JOB *pPrintJob)
     ESCPR_PRINT_JOB cpyPrintJob;
 
     /* fill out globals */
-    if (pPrintJob->InResolution == ESCPR_IR_7272) {
+    if (pPrintJob->InResolution == ESCPR_IR_7272 || pPrintJob->InResolution == ESCPR_IR_6060) {
         gESCPR_DPI_Multiplier = 2;
     } else {
         gESCPR_DPI_Multiplier = 1;
     }
 
-    SetGlobalBasePointData(pPrintJob->PaperWidth);
+    if (pPrintJob->InResolution == ESCPR_IR_3030 || pPrintJob->InResolution == ESCPR_IR_6060) {
+        SetGlobalBasePointData_300dpi(pPrintJob->PaperWidth);
+    } else {
+        SetGlobalBasePointData_360dpi(pPrintJob->PaperWidth);
+    }
 
     if (pPrintJob->TopMargin < gESCPR_BasePt.Borderless.Top ||
             pPrintJob->LeftMargin < gESCPR_BasePt.Borderless.Left) {
@@ -637,6 +642,22 @@ ESCPR_ERR_CODE ESCPR_MakePrintJobCmd(const ESCPR_PRINT_JOB *pPrintJob)
     cpyPrintJob.PrintableAreaLength = pPrintJob->PrintableAreaLength;
     cpyPrintJob.InResolution = pPrintJob->InResolution;
     cpyPrintJob.PrintDirection = pPrintJob->PrintDirection;
+
+
+
+{
+	FILE *fp;
+	fp=fopen("/tmp/test.txt", "a+");
+	fprintf(fp, "pPrintJob->PaperWidth=%d\n",pPrintJob->PaperWidth);
+	fprintf(fp, "pPrintJob->PaperLength=%d\n",pPrintJob->PaperLength);
+	fprintf(fp, "pPrintJob->TopMargin=%d\n",pPrintJob->TopMargin);
+	fprintf(fp, "pPrintJob->LeftMargin=%d\n",pPrintJob->LeftMargin);
+	fprintf(fp, "pPrintJob->PrintableAreaWidth=%d\n",pPrintJob->PrintableAreaWidth);
+	fprintf(fp, "pPrintJob->PrintableAreaLength=%d\n",pPrintJob->PrintableAreaLength);
+	fprintf(fp, "pPrintJob->InResolution=%d\n",pPrintJob->InResolution);
+	fclose(fp);
+}	
+
 
 #if defined(_ZERO_MARGIN_REPLICATE) || defined(_ZERO_MARGIN_MIRROR)
 
@@ -1776,7 +1797,7 @@ ESCPR_ERR_CODE ESCPR_MakeEndJobCmd(void)
     return ESCPR_ERR_NOERROR;
 }
 
-void SetGlobalBasePointData(const int PaperWidth) {
+void SetGlobalBasePointData_360dpi(const int PaperWidth) {
 
     /* BORDER */
     gESCPR_BasePt.Border.Top = 
@@ -1805,6 +1826,49 @@ void SetGlobalBasePointData(const int PaperWidth) {
             (-48)*gESCPR_DPI_Multiplier;
         gESCPR_BasePt.Borderless.Right =
             (-48)*gESCPR_DPI_Multiplier;
+    }
+#if defined(_ZERO_MARGIN_REPLICATE) || defined(_ZERO_MARGIN_MIRROR)
+    /* PAD */
+    gESCPR_BasePt.Pad.Top = 
+        (-1)*gESCPR_BasePt.Borderless.Top;
+    gESCPR_BasePt.Pad.Bottom =
+        (-1)*gESCPR_BasePt.Borderless.Bottom;
+    gESCPR_BasePt.Pad.Left =
+        (-1)*gESCPR_BasePt.Borderless.Left;
+    gESCPR_BasePt.Pad.Right =
+        (-1)*gESCPR_BasePt.Borderless.Right;
+#endif
+}
+
+void SetGlobalBasePointData_300dpi(const int PaperWidth) {
+
+    /* BORDER */
+    gESCPR_BasePt.Border.Top = 
+        (35)*gESCPR_DPI_Multiplier;
+    gESCPR_BasePt.Border.Bottom =
+        (35)*gESCPR_DPI_Multiplier;
+    gESCPR_BasePt.Border.Left =
+        (35)*gESCPR_DPI_Multiplier;
+    gESCPR_BasePt.Border.Right =
+        (35)*gESCPR_DPI_Multiplier;
+
+    /* BORDERLESS */
+    gESCPR_BasePt.Borderless.Top = 
+        (-35)*gESCPR_DPI_Multiplier;
+    gESCPR_BasePt.Borderless.Bottom = 
+        (-58)*gESCPR_DPI_Multiplier;
+
+    if (PaperWidth < PAPERWIDTH_A3) {
+        gESCPR_BasePt.Borderless.Left =
+            (-30)*gESCPR_DPI_Multiplier;
+        gESCPR_BasePt.Borderless.Right =
+            (-30)*gESCPR_DPI_Multiplier;
+
+    } else {
+        gESCPR_BasePt.Borderless.Left =
+            (-35)*gESCPR_DPI_Multiplier;
+        gESCPR_BasePt.Borderless.Right =
+            (-35)*gESCPR_DPI_Multiplier;
     }
 #if defined(_ZERO_MARGIN_REPLICATE) || defined(_ZERO_MARGIN_MIRROR)
     /* PAD */
