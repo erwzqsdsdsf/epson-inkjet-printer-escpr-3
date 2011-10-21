@@ -9,9 +9,14 @@ override_dh_autoreconf: m4
 m4:
 	mkdir $@
 
+override_dh_auto_configure:
+	cp m4-macros debian/m4-macros.backup
+	dh_auto_configure
+
 override_dh_auto_clean:
 	dh_auto_clean
 	rm -f *.spec
+	- mv debian/m4-macros.backup m4-macros
 
 override_dh_install:
 	dh_install
