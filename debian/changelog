@@ -1,7 +1,6 @@
 epson-inkjet-printer-escpr (1.1.0-1) unstable; urgency=low
 
   * New 1.1.0 upstream release.
-    - Cope with the PPDs file move.
     - Split SetGlobalBasePointData in two exported symbols.
     - Make sure package is buildable twice in a row by preserving m4-macros.
 
@@ -17,7 +16,7 @@ epson-inkjet-printer-escpr (1.1.0-1) unstable; urgency=low
   * Slightly rewrite short descriptions.
   * Only recommend cups-ppdc.
 
- -- Didier Raboud <odyx@debian.org>  Fri, 21 Oct 2011 16:11:28 +0200
+ -- Didier Raboud <odyx@debian.org>  Fri, 21 Oct 2011 16:27:09 +0200
 
 epson-inkjet-printer-escpr (1.0.4-2) unstable; urgency=low
 
