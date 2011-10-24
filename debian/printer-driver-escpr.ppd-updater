@@ -1,2 +1,2 @@
-DRIVER_REGEXP='epson-escpr'
+DRIVER_REGEXP='^escpr:'
 GENNICKNAME_REGEXP=''
