@@ -1,6 +1,23 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.1.1                          (2011-11-11)
+----------------------------------------------------------------------
+ * Fixed a problem which the following printer cannot print out normally.
+      - PX-B700
+      - PX-B750F
+
+ * Fixed the FSF address in the boilerplate comments
+
+ * Provided '1284DeviceID' attributes in the PPD files
+
+ * Added ppd files of following model
+      - WP-4010 Series
+      - WP-4023 Series
+      - WP-4520 Series
+      - WP-4533 Series
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.1.0                          (2011-09-01)
 ----------------------------------------------------------------------
  * Enabled to build on non-LSB environment

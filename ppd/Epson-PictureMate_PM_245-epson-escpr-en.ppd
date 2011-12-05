@@ -5,7 +5,7 @@
 *% Epson Inkjet Printer Driver (ESC/P-R) for Linux is presented by Seiko Epson.
 *% Copyright (C) Seiko Epson Corporation 2005-2011.
 *%
-*% LastUpdate: 2011/08/03
+*% LastUpdate: 2011/11/07
 *%
 *% This program is free software: you can redistribute it and/or modify
 *% it under the terms of the GNU General Public License as published by
@@ -33,9 +33,9 @@
 *cupsModelNumber:       1
 *cupsFilter:            "application/vnd.cups-raster 0 epson-escpr-wrapper"
 *cupsLanguages:         "en ja nl fr de it pt es ko zh_CN zh_TW"
-*ModelName:             "Epson PictureMate PM245"
-*ShortNickName:         "Epson PictureMate PM245"
-*NickName:              "Epson PictureMate PM245, Epson Inkjet Printer Driver (ESC/P-R) for Linux"
+*ModelName:             "Epson PictureMate PM 245"
+*ShortNickName:         "Epson PictureMate PM 245"
+*NickName:              "Epson PictureMate PM 245, Epson Inkjet Printer Driver (ESC/P-R) for Linux"
 *PSVersion:             "(3010.000) 550"
 *LanguageLevel:         "3"
 *ColorDevice:           True
@@ -45,6 +45,7 @@
 *LandscapeOrientation:  Plus90
 *VariablePaperSize:     False
 *TTRasterizer:          Type42
+*1284DeviceID:          "MFG:EPSON;MDL:PictureMate PM 245;DES:EPSON PictureMate PM 245;"
 
 *UIConstraints: *Quality PLATINA_NORMAL *PageSize Postcard
 *UIConstraints: *Quality PLATINA_NORMAL *PageSize TPostcard
