@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
@@ -41,8 +41,8 @@ config.status: configure
 	# Add here commands to configure the package.
 	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
 		--prefix=/usr \
-		--with-cupsfilterdir=/usr/local/lib/cups/filter \
-		--with-cupsppddir=/usr/local/share/ppd
+		--with-cupsfilterdir=/usr/lib/cups/filter \
+		--with-cupsppddir=/usr/share/ppd
 
 build: build-stamp
 

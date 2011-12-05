@@ -1,5 +1,5 @@
-epson-inkjet-printer-escpr (1.1.0-1) unstable; urgency=low
+epson-inkjet-printer-escpr (1.1.1-1) unstable; urgency=low
 
   * Please refer to ./NEWS
 
- -- Seiko Epson Corporation <linux-epson-inkjet@avasys.jp>  Fri, 10 Jun 2011 13:42:19 +0900
+ -- Seiko Epson Corporation <linux-epson-inkjet@avasys.jp>  Fri, 11 Nov 2011 15:25:19 +0900

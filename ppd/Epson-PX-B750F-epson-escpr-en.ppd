@@ -5,7 +5,7 @@
 *% Epson Inkjet Printer Driver (ESC/P-R) for Linux is presented by Seiko Epson.
 *% Copyright (C) Seiko Epson Corporation 2005-2011.
 *%
-*% LastUpdate: 2011/08/03
+*% LastUpdate: 2011/11/07
 *%
 *% This program is free software: you can redistribute it and/or modify
 *% it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@
 *LandscapeOrientation:  Plus90
 *VariablePaperSize:     False
 *TTRasterizer:          Type42
+*1284DeviceID:          "MFG:EPSON;MDL:PX-B750F;DES:EPSON PX-B750F;"
 
 *UIConstraints: *Quality PLAIN_NORMAL *PageSize L
 *UIConstraints: *Quality PLAIN_NORMAL *PageSize 2L
@@ -256,7 +257,7 @@
 *ko.Translation 	Quality/품질:""
 *zh_CN.Translation 	Quality/质量:""
 *zh_TW.Translation 	Quality/品質:""
-*Quality PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[600 300]>>setpagedevice"
+*Quality PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
 *ja.Quality 	PLAIN_NORMAL/普通紙 - 標準:""
 *nl.Quality 	PLAIN_NORMAL/Gewoon papier - Standaard:""
 *fr.Quality 	PLAIN_NORMAL/Papier ordinaire - Standard:""
@@ -267,7 +268,7 @@
 *ko.Quality 	PLAIN_NORMAL/일반 용지 - 표준:""
 *zh_CN.Quality 	PLAIN_NORMAL/普通纸 - 标准:""
 *zh_TW.Quality 	PLAIN_NORMAL/Plain Paper - 標準:""
-*Quality PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[600 1200]>>setpagedevice"
+*Quality PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
 *ja.Quality 	PLATINA_NORMAL/写真用紙クリスピア＜高光沢＞ - 標準:""
 *nl.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standaard:""
 *fr.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
@@ -278,7 +279,7 @@
 *ko.Quality 	PLATINA_NORMAL/광택 사진 용지(Ultra) - 표준:""
 *zh_CN.Quality 	PLATINA_NORMAL/爱普生超级光泽纸 - 标准:""
 *zh_TW.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - 標準:""
-*Quality PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[600 1200]>>setpagedevice"
+*Quality PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
 *ja.Quality 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
 *nl.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
 *fr.Quality 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
@@ -289,7 +290,7 @@
 *ko.Quality 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
 *zh_CN.Quality 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
 *zh_TW.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
-*Quality GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard: 	"<</HWResolution[600 1200]>>setpagedevice"
+*Quality GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
 *ja.Quality 	GLOSSYPHOTO_NORMAL/写真用紙エントリー＜光沢＞ - 標準:""
 *nl.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standaard:""
 *fr.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
@@ -300,7 +301,7 @@
 *ko.Quality 	GLOSSYPHOTO_NORMAL/광택 사진 용지 - 표준:""
 *zh_CN.Quality 	GLOSSYPHOTO_NORMAL/光泽照片纸 - 标准:""
 *zh_TW.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - 標準:""
-*Quality GLOSSYCAST_NORMAL/Epson Photo - Standard: 	"<</HWResolution[600 1200]>>setpagedevice"
+*Quality GLOSSYCAST_NORMAL/Epson Photo - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
 *ja.Quality 	GLOSSYCAST_NORMAL/フォト光沢紙 - 標準:""
 *nl.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standaard:""
 *fr.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
@@ -311,7 +312,7 @@
 *ko.Quality 	GLOSSYCAST_NORMAL/Epson 사진 용지 - 표준:""
 *zh_CN.Quality 	GLOSSYCAST_NORMAL/爱普生照片纸 - 标准:""
 *zh_TW.Quality 	GLOSSYCAST_NORMAL/Epson Photo - 標準:""
-*Quality PMMATT_NORMAL/Matte Paper - Heavyweight - Standard: 	"<</HWResolution[1200 600]>>setpagedevice"
+*Quality PMMATT_NORMAL/Matte Paper - Heavyweight - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
 *ja.Quality 	PMMATT_NORMAL/フォトマット紙 - 標準:""
 *nl.Quality 	PMMATT_NORMAL/Matte Paper - Heavyweight - Standaard:""
 *fr.Quality 	PMMATT_NORMAL/Papier Mat Epais - Standard:""

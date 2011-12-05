@@ -14,7 +14,7 @@
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with this program; if not, write to the Free Software
-## Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 cupsppddir = $(CUPS_PPD_DIR)
 cupsppd_DATA = \
@@ -290,16 +290,20 @@ Epson-WorkForce_435-epson-escpr-en.ppd \
 Epson-WorkForce_545-epson-escpr-en.ppd \
 Epson-WorkForce_645-epson-escpr-en.ppd \
 Epson-WorkForce_845-epson-escpr-en.ppd \
+Epson-WP-4010_Series-epson-escpr-en.ppd \
 Epson-WP-4011_Series-epson-escpr-en.ppd \
 Epson-WP-4015_Series-epson-escpr-en.ppd \
 Epson-WP-4020_Series-epson-escpr-en.ppd \
+Epson-WP-4023_Series-epson-escpr-en.ppd \
 Epson-WP-4025_Series-epson-escpr-en.ppd \
 Epson-WP-4511_Series-epson-escpr-en.ppd \
 Epson-WP-4515_Series-epson-escpr-en.ppd \
+Epson-WP-4520_Series-epson-escpr-en.ppd \
 Epson-WP-4521_Series-epson-escpr-en.ppd \
 Epson-WP-4525_Series-epson-escpr-en.ppd \
 Epson-WP-4530_Series-epson-escpr-en.ppd \
 Epson-WP-4531_Series-epson-escpr-en.ppd \
+Epson-WP-4533_Series-epson-escpr-en.ppd \
 Epson-WP-4535_Series-epson-escpr-en.ppd \
 Epson-WP-4540_Series-epson-escpr-en.ppd \
 Epson-WP-4545_Series-epson-escpr-en.ppd
