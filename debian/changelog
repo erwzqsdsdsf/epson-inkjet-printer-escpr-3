@@ -1,3 +1,11 @@
+epson-inkjet-printer-escpr (1.1.1-1) unstable; urgency=low
+
+  * New 1.1.1 upstream release.
+
+  * Add a check for the VERSION envvar in get-orig-source.
+
+ -- Didier Raboud <odyx@debian.org>  Wed, 07 Dec 2011 15:19:44 +0100
+
 epson-inkjet-printer-escpr (1.1.0-2) unstable; urgency=low
 
   * Correct the PPD-updater trigger regexp.
