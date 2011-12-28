@@ -1,3 +1,12 @@
+epson-inkjet-printer-escpr (1.1.1-2) unstable; urgency=low
+
+  * Install the overseen paper_list.csv. (Closes: #653426)
+    - Override pkgdatadir to install it to /usr/share/printer-driver-escpr;
+    - Add --fail-missing to dh_install to catch future mistakes.
+    Reported-by: Dave Thayer
+
+ -- Didier Raboud <odyx@debian.org>  Wed, 28 Dec 2011 11:59:28 +0100
+
 epson-inkjet-printer-escpr (1.1.1-1) unstable; urgency=low
 
   * New 1.1.1 upstream release.
