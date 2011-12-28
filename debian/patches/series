@@ -1,1 +1,2 @@
 dont_touch_debian_files.patch
+shared_files_go_to_package_named_dir.patch

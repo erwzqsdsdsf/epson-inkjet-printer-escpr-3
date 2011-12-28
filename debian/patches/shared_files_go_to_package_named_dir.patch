@@ -1,0 +1,17 @@
+Description: Override pkgdatadir to install paper_list.csv to
+ /usr/share/printer-driver-escpr
+Origin: vendor
+Forwarded: not-needed
+Author: Didier Raboud <odyx@debian.org>
+Last-Update: 2011-12-28
+--- a/configure.ac
++++ b/configure.ac
+@@ -25,6 +25,8 @@
+ AC_SUBST(PACKAGE_RELEASE, [1])
+ AC_SUBST(LSB_VER, [3.2])
+ AC_SUBST(VENDOR_NAME, ["Seiko Epson Corporation"])
++# Override for Debian packaging.
++AC_SUBST([pkgdatadir], ["\$(datadir)/printer-driver-escpr"])
+ 
+ AC_CONFIG_HEADER([config.h])
+ AC_CONFIG_SRCDIR(src/filter.c)

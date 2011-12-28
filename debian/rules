@@ -13,6 +13,9 @@ override_dh_auto_configure:
 	cp m4-macros debian/m4-macros.backup
 	dh_auto_configure
 
+override_dh_install:
+	dh_install --fail-missing -X.la
+
 override_dh_auto_clean:
 	dh_auto_clean
 	rm -f *.spec
