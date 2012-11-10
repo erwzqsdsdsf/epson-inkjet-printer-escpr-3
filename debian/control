@@ -28,41 +28,6 @@ Description: printer driver for Epson Inkjet that use ESC/P-R
  This package contains the CUPS filter driver and the compressed PPDs for the
  supported printers.
 
-Package: libescpr1
-Architecture: any
-Section: libs
-Depends: ${misc:Depends},
- ${shlibs:Depends}
-Pre-Depends: ${misc:Pre-Depends}
-Multi-Arch: same
-Description: printer driver for Epson Inkjet - shared library
- ESC/P-R is a common language for selected Epson printers that supports every
- media type, paper size and associated printing mode available on those
- printers. It is suited especially for consumer electronics devices and
- embedded equipments. ESC/P-R allows many kinds of devices to connect and
- communicate with Epson inkjet printers, expanding possibilities for use with
- medical equipment, measuring equipment, electronic whiteboards, and at home
- with home electronics and game machines.
- .
- This is the shared library package.
- 
-Package: libescpr-dev
-Architecture: any
-Section: libdevel
-Depends: ${misc:Depends},
- ${shlibs:Depends},
- libescpr1 (= ${binary:Version})
-Description: printer driver for Epson Inkjet - library development files
- ESC/P-R is a common language for selected Epson printers that supports every
- media type, paper size and associated printing mode available on those
- printers. It is suited especially for consumer electronics devices and
- embedded equipments. ESC/P-R allows many kinds of devices to connect and
- communicate with Epson inkjet printers, expanding possibilities for use with
- medical equipment, measuring equipment, electronic whiteboards, and at home
- with home electronics and game machines.
- .
- This package contains the development files for libescpr1.
-
 Package: epson-escpr
 Architecture: all
 Depends: printer-driver-escpr, ${misc:Depends}
