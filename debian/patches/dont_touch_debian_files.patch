@@ -3,7 +3,7 @@ Author: Didier Raboud <odyx@debian.org>
 Last-Update: 2011-10-21
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -24,10 +24,6 @@
+@@ -23,10 +23,6 @@
  
  ACLOCAL_AMFLAGS = -I m4
  
@@ -14,7 +14,7 @@ Last-Update: 2011-10-21
  debian/control: $(srcdir)/Makefile $(srcdir)/debian/control.in
  	rm -f $@ $@.tmp; \
  	sed -e 's|[@]PACKAGE_BUGREPORT[@]|$(PACKAGE_BUGREPORT)|' \
-@@ -66,14 +62,6 @@
+@@ -65,14 +61,6 @@
  	README \
  	README.ja \
  	bootstrap \
