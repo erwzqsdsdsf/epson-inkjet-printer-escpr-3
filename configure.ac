@@ -1,25 +1,25 @@
-dnl configure.in -- Process this file with autoconf to produce a configure script.
-dnl Epson Inkjet Printer Driver (ESC/P-R) for Linux
-dnl Copyright (C) 2006-2009 AVASYS CORPORATION.
-dnl Copyright (C) Seiko Epson Corporation 2006-2011.
-dnl  This program is free software; you can redistribute it and/or modify
-dnl it under the terms of the GNU General Public License as published by
-dnl the Free Software Foundation; either version 2 of the License, or
-dnl (at your option) any later version.
-dnl
-dnl This program is distributed in the hope that it will be useful,
-dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
-dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-dnl GNU General Public License for more details.
-dnl
-dnl You should have received a copy of the GNU General Public License
-dnl along with this program; if not, write to the Free Software
-dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
+## Configure.ac -- an automake template for a Makefile.in file
+## EPSON ESC/P-R Printer Driver for Linux
+## Copyright (C) 2000-2008 AVASYS CORPORATION.
+## Copyright (C) Seiko Epson Corporation 2000-2012.
+##  This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, write to the Free Software
+## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 AC_PREREQ(2.53)
 AC_INIT([Epson Inkjet Printer Driver (ESC/P-R) for Linux],
-	[1.1.1],
-	[Seiko Epson Corporation <linux-epson-inkjet@avasys.jp>],
+	[1.2.2],
+	[Seiko Epson Corporation <linux-printer@epson.jp>],
 	[epson-inkjet-printer-escpr])
 dnl  keep ALL versioning info in one location
 AC_SUBST(PACKAGE_RELEASE, [1])
@@ -135,10 +135,8 @@ AC_CHECK_FUNCS([\
 AC_CONFIG_FILES([\
         Makefile \
         epson-inkjet-printer-escpr.spec \
-        layout_script/Makefile \
-        lib/Makefile \
         lsb/lsb-rpm.spec \
-        lsb/makelsbpkg-tags.xml \
+			lib/Makefile \
         ppd/Makefile \
         src/Makefile \
         ])

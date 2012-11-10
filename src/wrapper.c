@@ -1,7 +1,7 @@
 /*
  * Epson Inkjet Printer Driver (ESC/P-R) for Linux
  * Copyright (C) 2002-2005 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2002-2009.
+ * Copyright (C) Seiko Epson Corporation 2002-2012.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
  */
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -46,6 +47,7 @@ typedef struct rtp_filter_option {
 	char ink[NAME_MAX + 1];
 	char media[NAME_MAX + 1];
 	char quality[NAME_MAX + 1];
+	char duplex[NAME_MAX + 1];
 } filter_option_t;
 
 /* Static functions */
@@ -59,6 +61,30 @@ static void sig_set (void);
 static void sigterm_handler (int sig);
 
 int cancel_flg;
+
+#include <stdarg.h>
+#define DEBUG_PATH "/tmp/eps_wrapper.txt"
+static FILE *debug_f = NULL;
+#define HAVE_DEBUG 0
+static void debug_msg(const char *fmt, ...){
+#if (HAVE_DEBUG)	
+	va_list ap;
+	
+	if(!debug_f){
+		debug_f = fopen(DEBUG_PATH, "wb");
+		if(debug_f == NULL){
+			return;
+		}
+		fchmod (fileno (debug_f), 0777);
+	}
+	
+	va_start (ap, fmt);
+	vfprintf (debug_f, fmt, ap);
+	fflush(debug_f);
+	va_end (ap);
+#endif
+	return;
+}
 
 /*
  * $$$ CUPS Filter Options $$$
@@ -134,20 +160,21 @@ main (int argc, char *argv[])
 	if (get_option_for_arg (argv[5], &fopt))
 	{
 		fprintf (stderr, "Cannot read filter option. Cannot get option of PIPS.");
+		debug_msg("Cannot read filter option. Cannot get option of PIPS.");
 		return 1;
 	}
-
 	if (get_option_for_ppd (argv[0], &fopt))
 	{
 		fprintf (stderr, "PPD file not found, or PPD file is broken. Cannot get option of PIPS.");
+		debug_msg("PPD file not found, or PPD file is broken. Cannot get option of PIPS.");
 		return 1;
 	}
-
 	/* Print start */
 	ras = cupsRasterOpen (fd, CUPS_RASTER_READ);
 	if (ras == NULL)
 	{
 		fprintf (stderr, "Can't open CUPS raster file.");
+		debug_msg("Can't open CUPS raster file");
 		return 1;
 	}
 
@@ -162,7 +189,7 @@ main (int argc, char *argv[])
 		{
 			char tmpbuf[256];
 
-			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %d %s %s %s",
+			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %d %s %s %s %s",
 				 CUPS_FILTER_PATH,
 				 CUPS_FILTER_NAME,
 				 fopt.model,
@@ -171,12 +198,15 @@ main (int argc, char *argv[])
 				 header.HWResolution[0],
 				 fopt.ink,
 				 fopt.media,
-				 fopt.quality);
-
+				 fopt.quality,
+				 fopt.duplex);
+			
+			debug_msg("tmpbuf = [%s]\n", tmpbuf);
 			pfp = popen (tmpbuf, "w");
 
 			if (pfp == NULL)
 			{
+				debug_msg("popen error");
 				perror ("popen");
 				return 1;
 			}
@@ -190,6 +220,7 @@ main (int argc, char *argv[])
 			if (!cupsRasterReadPixels (ras, (unsigned char*)image_raw, header.cupsBytesPerLine))
 			{
 				fprintf (stderr, "cupsRasterReadPixels");
+				debug_msg("cupsRasterReadPixels error");
 				return 1;
 			}
 			
@@ -197,6 +228,7 @@ main (int argc, char *argv[])
 			if (write_size != 1)
 			{
 				perror ("fwrite");
+				debug_msg("fwrite error");
 				return 8;
 			}
 		}
@@ -261,6 +293,20 @@ get_option_for_ppd (const char *printer, filter_option_t *filter_opt_p)
 		strcpy (filter_opt_p->quality, opt);
 	}
 
+	/* duplex */
+	if (filter_opt_p->duplex[0] == '\0')
+	{
+		opt = get_default_choice (ppd_p, "Duplex");
+		if (!opt)
+		{
+			debug_msg("can not get duplex\n");
+			strcpy (filter_opt_p->duplex, "None");
+			
+		}
+		else
+		strcpy (filter_opt_p->duplex, opt);
+	}
+
 #ifdef INK_CHANGE_SYSTEM
 	/* inkset */
 	if (filter_opt_p->inkset[0] == '\0')
@@ -284,10 +330,10 @@ get_option_for_arg (const char *opt_str, filter_option_t *filter_opt_p)
 	int opt_num;
 	cups_option_t *option_p;
 	const char *opt;
-
+	
 	const char *media_names[] = { "PageSize", "PageRegion",  "media", "" };
 	int i;
-
+	
 	if (strlen (opt_str) == 0)
 		return 0;
 
@@ -304,7 +350,9 @@ get_option_for_arg (const char *opt_str, filter_option_t *filter_opt_p)
 
 			num = strcspn (opt, ",");
 			if (num >= PPD_MAX_NAME)
+			{
 				return 1;
+			}
 
 			strncpy (filter_opt_p->media, opt, num);
 			filter_opt_p->media[num] = '\0';
@@ -319,8 +367,14 @@ get_option_for_arg (const char *opt_str, filter_option_t *filter_opt_p)
 
 	opt = cupsGetOption ("Quality", opt_num, option_p);
 	if (opt)
+	{
 		strcpy (filter_opt_p->quality, opt);
+		debug_msg("Quality = [%s]\n", opt);
+	}
 
+	opt = cupsGetOption ("Duplex", opt_num, option_p);
+	if (opt)
+		strcpy (filter_opt_p->duplex, opt);
 
 	return 0;
 }

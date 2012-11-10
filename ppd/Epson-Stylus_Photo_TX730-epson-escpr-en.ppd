@@ -5,7 +5,7 @@
 *% Epson Inkjet Printer Driver (ESC/P-R) for Linux is presented by Seiko Epson.
 *% Copyright (C) Seiko Epson Corporation 2005-2011.
 *%
-*% LastUpdate: 2011/11/07
+*% LastUpdate: 2010/08/03
 *%
 *% This program is free software: you can redistribute it and/or modify
 *% it under the terms of the GNU General Public License as published by
@@ -45,38 +45,30 @@
 *LandscapeOrientation:  Plus90
 *VariablePaperSize:     False
 *TTRasterizer:          Type42
-*1284DeviceID:          "MFG:EPSON;MDL:Stylus Photo TX730;DES:EPSON Stylus Photo TX730;"
+*1284DeviceID:          "MFG:EPSON;MDL:Epson Stylus Photo TX730;DES:Epson Stylus Photo TX730;"
 
 *UIConstraints: *Quality PLATINA_NORMAL *PageSize 4X7
 *UIConstraints: *Quality PLATINA_NORMAL *PageSize T4X7
 *UIConstraints: *Quality PLATINA_HIGH *PageSize 4X7
 *UIConstraints: *Quality PLATINA_HIGH *PageSize T4X7
+*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize 2L
+*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize T2L
+*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize 8x10
+*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize T8x10
 *UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize 4X7
 *UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize T4X7
+*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize 2L
+*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize T2L
+*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize 8x10
+*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize T8x10
 *UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize 4X7
 *UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize T4X7
+*UIConstraints: *Quality GLOSSYPHOTO_DRAFT *PageSize 2L
+*UIConstraints: *Quality GLOSSYPHOTO_DRAFT *PageSize T2L
+*UIConstraints: *Quality GLOSSYPHOTO_DRAFT *PageSize 8x10
+*UIConstraints: *Quality GLOSSYPHOTO_DRAFT *PageSize T8x10
 *UIConstraints: *Quality GLOSSYPHOTO_DRAFT *PageSize 4X7
 *UIConstraints: *Quality GLOSSYPHOTO_DRAFT *PageSize T4X7
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize 4X7
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize T4X7
-*UIConstraints: *Quality GLOSSYCAST_HIGH *PageSize 4X7
-*UIConstraints: *Quality GLOSSYCAST_HIGH *PageSize T4X7
-*UIConstraints: *Quality GLOSSYCAST_DRAFT *PageSize 4X7
-*UIConstraints: *Quality GLOSSYCAST_DRAFT *PageSize T4X7
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 2L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize T2L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 4X7
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize T4X7
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TA4
-*UIConstraints: *Quality PLAIN_HIGH *PageSize 4X6FULL
-*UIConstraints: *Quality PLAIN_HIGH *PageSize T4X6FULL
-*UIConstraints: *Quality PLAIN_HIGH *PageSize 2L
-*UIConstraints: *Quality PLAIN_HIGH *PageSize T2L
-*UIConstraints: *Quality PLAIN_HIGH *PageSize 4X7
-*UIConstraints: *Quality PLAIN_HIGH *PageSize T4X7
-*UIConstraints: *Quality PLAIN_HIGH *PageSize TA4
 *UIConstraints: *Quality PMMATT_NORMAL *PageSize 4X6FULL
 *UIConstraints: *Quality PMMATT_NORMAL *PageSize T4X6FULL
 *UIConstraints: *Quality PMMATT_NORMAL *PageSize 2L
@@ -89,21 +81,79 @@
 *UIConstraints: *Quality PMMATT_HIGH *PageSize T2L
 *UIConstraints: *Quality PMMATT_HIGH *PageSize 4X7
 *UIConstraints: *Quality PMMATT_HIGH *PageSize T4X7
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize 4X6FULL
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize T4X6FULL
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize 2L
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize T2L
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize 8x10
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize T8x10
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize 4X7
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize T4X7
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize TLetter
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize TA4
+*UIConstraints: *Quality PLAIN_HIGH *PageSize 4X6FULL
+*UIConstraints: *Quality PLAIN_HIGH *PageSize T4X6FULL
+*UIConstraints: *Quality PLAIN_HIGH *PageSize 2L
+*UIConstraints: *Quality PLAIN_HIGH *PageSize T2L
+*UIConstraints: *Quality PLAIN_HIGH *PageSize 8x10
+*UIConstraints: *Quality PLAIN_HIGH *PageSize T8x10
+*UIConstraints: *Quality PLAIN_HIGH *PageSize 4X7
+*UIConstraints: *Quality PLAIN_HIGH *PageSize T4X7
+*UIConstraints: *Quality PLAIN_HIGH *PageSize TLetter
+*UIConstraints: *Quality PLAIN_HIGH *PageSize TA4
 *UIConstraints: *Quality CDDVD_HIGH *PageSize 4X6FULL
 *UIConstraints: *Quality CDDVD_HIGH *PageSize T4X6FULL
 *UIConstraints: *Quality CDDVD_HIGH *PageSize 2L
 *UIConstraints: *Quality CDDVD_HIGH *PageSize T2L
+*UIConstraints: *Quality CDDVD_HIGH *PageSize 8x10
+*UIConstraints: *Quality CDDVD_HIGH *PageSize T8x10
 *UIConstraints: *Quality CDDVD_HIGH *PageSize 4X7
 *UIConstraints: *Quality CDDVD_HIGH *PageSize T4X7
+*UIConstraints: *Quality CDDVD_HIGH *PageSize Letter
+*UIConstraints: *Quality CDDVD_HIGH *PageSize TLetter
 *UIConstraints: *Quality CDDVD_HIGH *PageSize A4
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize 2L
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize T2L
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize 4X7
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize T4X7
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize A4
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TA4
+*UIConstraints: *Duplex DuplexTumble *Quality PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality PMPHOTO_HIGH
+*UIConstraints: *Duplex DuplexTumble *Quality PMPHOTO_DRAFT
+*UIConstraints: *Duplex DuplexTumble *Quality PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality PLATINA_HIGH
+*UIConstraints: *Duplex DuplexTumble *Quality GLOSSYPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality GLOSSYPHOTO_HIGH
+*UIConstraints: *Duplex DuplexTumble *Quality GLOSSYPHOTO_DRAFT
+*UIConstraints: *Duplex DuplexTumble *Quality PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality PMMATT_HIGH
+*UIConstraints: *Duplex DuplexTumble *Quality CDDVD_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMPHOTO_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMPHOTO_DRAFT
+*UIConstraints: *Duplex DuplexNoTumble *Quality PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PLATINA_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *Quality GLOSSYPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality GLOSSYPHOTO_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *Quality GLOSSYPHOTO_DRAFT
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMMATT_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *Quality CDDVD_HIGH
+*UIConstraints: *Duplex DuplexTumble *PageSize 4X6FULL
+*UIConstraints: *Duplex DuplexTumble *PageSize T4X6FULL
+*UIConstraints: *Duplex DuplexTumble *PageSize 2L
+*UIConstraints: *Duplex DuplexTumble *PageSize T2L
+*UIConstraints: *Duplex DuplexTumble *PageSize 8x10
+*UIConstraints: *Duplex DuplexTumble *PageSize T8x10
+*UIConstraints: *Duplex DuplexTumble *PageSize 4X7
+*UIConstraints: *Duplex DuplexTumble *PageSize T4X7
+*UIConstraints: *Duplex DuplexTumble *PageSize TLetter
+*UIConstraints: *Duplex DuplexTumble *PageSize TA4
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 4X6FULL
+*UIConstraints: *Duplex DuplexNoTumble *PageSize T4X6FULL
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 2L
+*UIConstraints: *Duplex DuplexNoTumble *PageSize T2L
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 8x10
+*UIConstraints: *Duplex DuplexNoTumble *PageSize T8x10
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 4X7
+*UIConstraints: *Duplex DuplexNoTumble *PageSize T4X7
+*UIConstraints: *Duplex DuplexNoTumble *PageSize TLetter
+*UIConstraints: *Duplex DuplexNoTumble *PageSize TA4
 
 *OpenUI *PageSize/Paper Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
@@ -162,6 +212,28 @@
 *ko.PageSize 	T2L/13 x 18 cm (5 x 7 in) (여백 없음):""
 *zh_CN.PageSize 	T2L/13 x 18 厘米 (5 x 7 英寸) (无边距):""
 *zh_TW.PageSize 	T2L/5 x 7 in / 127 x 178 mm (無邊):""
+*PageSize 8x10/20 x 25 cm (8 x 10 in): "<</PageSize[576.0 720.0]/ImagingBBox null>>setpagedevice"
+*ja.PageSize 	8x10/六切 203 x 254 mm:""
+*nl.PageSize 	8x10/20 x 25 cm (8 x 10 in):""
+*fr.PageSize 	8x10/20 x 25 cm (8 x 10 p.):""
+*de.PageSize 	8x10/20 x 25 cm (8 x 10 Zoll):""
+*it.PageSize 	8x10/20 x 25 cm (8 x 10 pol.):""
+*pt.PageSize 	8x10/20 x 25 cm (8 x 10 pol):""
+*es.PageSize 	8x10/20 x 25 cm (8 x 10 pulg):""
+*ko.PageSize 	8x10/8 x 10 in:""
+*zh_CN.PageSize 	8x10/8 x 10 英寸:""
+*zh_TW.PageSize 	8x10/20 x 25 cm (8 x 10 in):""
+*PageSize T8x10/20 x 25 cm (8 x 10 in) (Borderless): "<</PageSize[576.0 720.0]/ImagingBBox null>>setpagedevice"
+*ja.PageSize 	T8x10/六切 203 x 254 mm (フチなし):""
+*nl.PageSize 	T8x10/20 x 25 cm (8 x 10 in) (Randloos):""
+*fr.PageSize 	T8x10/20 x 25 cm (8 x 10 p.) (Sans marges):""
+*de.PageSize 	T8x10/20 x 25 cm (8 x 10 Zoll) (Randlos):""
+*it.PageSize 	T8x10/20 x 25 cm (8 x 10 pol.) (Senza margini):""
+*pt.PageSize 	T8x10/20 x 25 cm (8 x 10 pol) (Sem margens):""
+*es.PageSize 	T8x10/20 x 25 cm (8 x 10 pulg) (Sin márgenes):""
+*ko.PageSize 	T8x10/8 x 10 in (여백 없음):""
+*zh_CN.PageSize 	T8x10/8 x 10 英寸 (无边距):""
+*zh_TW.PageSize 	T8x10/20 x 25 cm (8 x 10 in) (無邊):""
 *PageSize 4X7/16x9 wide size (102 x 181 mm): "<</PageSize[288.0 512.0]/ImagingBBox null>>setpagedevice"
 *ja.PageSize 	4X7/ハイビジョンサイズ 102 x 181 mm:""
 *nl.PageSize 	4X7/16x9 wide size (102 x 181 mm):""
@@ -184,6 +256,28 @@
 *ko.PageSize 	T4X7/16x9 wide size (102 x 181 mm) (여백 없음):""
 *zh_CN.PageSize 	T4X7/16x9 宽尺寸 (102x181 毫米) (无边距):""
 *zh_TW.PageSize 	T4X7/16x9 wide size (102 x 181 mm) (無邊):""
+*PageSize Letter/Letter 8 1/2 x 11 in: "<</PageSize[612.0 792.0]/ImagingBBox null>>setpagedevice"
+*ja.PageSize 	Letter/Letter 8 1/2 x 11 in:""
+*nl.PageSize 	Letter/Letter 8 1/2 x 11 in:""
+*fr.PageSize 	Letter/Lettre US 8½ x 11 p.:""
+*de.PageSize 	Letter/Letter 8½ x 11 Zoll:""
+*it.PageSize 	Letter/Letter 216 x 279 mm:""
+*pt.PageSize 	Letter/Letter 8½ x 11 pol:""
+*es.PageSize 	Letter/Carta 8½ x 11 pulg:""
+*ko.PageSize 	Letter/Letter 8 1/2 x 11 in:""
+*zh_CN.PageSize 	Letter/信纸 8 1/2 x 11 英寸:""
+*zh_TW.PageSize 	Letter/Letter 8 1/2 x 11 in:""
+*PageSize TLetter/Letter 8 1/2 x 11 in (Borderless): "<</PageSize[612.0 792.0]/ImagingBBox null>>setpagedevice"
+*ja.PageSize 	TLetter/Letter 8 1/2 x 11 in (フチなし):""
+*nl.PageSize 	TLetter/Letter 8 1/2 x 11 in (Randloos):""
+*fr.PageSize 	TLetter/Lettre US 8½ x 11 p. (Sans marges):""
+*de.PageSize 	TLetter/Letter 8½ x 11 Zoll (Randlos):""
+*it.PageSize 	TLetter/Letter 216 x 279 mm (Senza margini):""
+*pt.PageSize 	TLetter/Letter 8½ x 11 pol (Sem margens):""
+*es.PageSize 	TLetter/Carta 8½ x 11 pulg (Sin márgenes):""
+*ko.PageSize 	TLetter/Letter 8 1/2 x 11 in (여백 없음):""
+*zh_CN.PageSize 	TLetter/信纸 8 1/2 x 11 英寸 (无边距):""
+*zh_TW.PageSize 	TLetter/Letter 8 1/2 x 11 in (無邊):""
 *PageSize A4/A4 210 x 297 mm: "<</PageSize[595.2 841.8]/ImagingBBox null>>setpagedevice"
 *ja.PageSize 	A4/A4 210 x 297 mm:""
 *nl.PageSize 	A4/A4 210 x 297 mm:""
@@ -265,6 +359,28 @@
 *ko.PageRegion 	T2L/13 x 18 cm (5 x 7 in) (여백 없음):""
 *zh_CN.PageRegion 	T2L/13 x 18 厘米 (5 x 7 英寸) (无边距):""
 *zh_TW.PageRegion 	T2L/5 x 7 in / 127 x 178 mm (無邊):""
+*PageRegion 8x10/20 x 25 cm (8 x 10 in): "<</PageRegion[576.0 720.0]/ImagingBBox null>>setpagedevice"
+*ja.PageRegion 	8x10/六切 203 x 254 mm:""
+*nl.PageRegion 	8x10/20 x 25 cm (8 x 10 in):""
+*fr.PageRegion 	8x10/20 x 25 cm (8 x 10 p.):""
+*de.PageRegion 	8x10/20 x 25 cm (8 x 10 Zoll):""
+*it.PageRegion 	8x10/20 x 25 cm (8 x 10 pol.):""
+*pt.PageRegion 	8x10/20 x 25 cm (8 x 10 pol):""
+*es.PageRegion 	8x10/20 x 25 cm (8 x 10 pulg):""
+*ko.PageRegion 	8x10/8 x 10 in:""
+*zh_CN.PageRegion 	8x10/8 x 10 英寸:""
+*zh_TW.PageRegion 	8x10/20 x 25 cm (8 x 10 in):""
+*PageRegion T8x10/20 x 25 cm (8 x 10 in) (Borderless): "<</PageRegion[576.0 720.0]/ImagingBBox null>>setpagedevice"
+*ja.PageRegion 	T8x10/六切 203 x 254 mm (フチなし):""
+*nl.PageRegion 	T8x10/20 x 25 cm (8 x 10 in) (Randloos):""
+*fr.PageRegion 	T8x10/20 x 25 cm (8 x 10 p.) (Sans marges):""
+*de.PageRegion 	T8x10/20 x 25 cm (8 x 10 Zoll) (Randlos):""
+*it.PageRegion 	T8x10/20 x 25 cm (8 x 10 pol.) (Senza margini):""
+*pt.PageRegion 	T8x10/20 x 25 cm (8 x 10 pol) (Sem margens):""
+*es.PageRegion 	T8x10/20 x 25 cm (8 x 10 pulg) (Sin márgenes):""
+*ko.PageRegion 	T8x10/8 x 10 in (여백 없음):""
+*zh_CN.PageRegion 	T8x10/8 x 10 英寸 (无边距):""
+*zh_TW.PageRegion 	T8x10/20 x 25 cm (8 x 10 in) (無邊):""
 *PageRegion 4X7/16x9 wide size (102 x 181 mm): "<</PageRegion[288.0 512.0]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion 	4X7/ハイビジョンサイズ 102 x 181 mm:""
 *nl.PageRegion 	4X7/16x9 wide size (102 x 181 mm):""
@@ -287,6 +403,28 @@
 *ko.PageRegion 	T4X7/16x9 wide size (102 x 181 mm) (여백 없음):""
 *zh_CN.PageRegion 	T4X7/16x9 宽尺寸 (102x181 毫米) (无边距):""
 *zh_TW.PageRegion 	T4X7/16x9 wide size (102 x 181 mm) (無邊):""
+*PageRegion Letter/Letter 8 1/2 x 11 in: "<</PageRegion[612.0 792.0]/ImagingBBox null>>setpagedevice"
+*ja.PageRegion 	Letter/Letter 8 1/2 x 11 in:""
+*nl.PageRegion 	Letter/Letter 8 1/2 x 11 in:""
+*fr.PageRegion 	Letter/Lettre US 8½ x 11 p.:""
+*de.PageRegion 	Letter/Letter 8½ x 11 Zoll:""
+*it.PageRegion 	Letter/Letter 216 x 279 mm:""
+*pt.PageRegion 	Letter/Letter 8½ x 11 pol:""
+*es.PageRegion 	Letter/Carta 8½ x 11 pulg:""
+*ko.PageRegion 	Letter/Letter 8 1/2 x 11 in:""
+*zh_CN.PageRegion 	Letter/信纸 8 1/2 x 11 英寸:""
+*zh_TW.PageRegion 	Letter/Letter 8 1/2 x 11 in:""
+*PageRegion TLetter/Letter 8 1/2 x 11 in (Borderless): "<</PageRegion[612.0 792.0]/ImagingBBox null>>setpagedevice"
+*ja.PageRegion 	TLetter/Letter 8 1/2 x 11 in (フチなし):""
+*nl.PageRegion 	TLetter/Letter 8 1/2 x 11 in (Randloos):""
+*fr.PageRegion 	TLetter/Lettre US 8½ x 11 p. (Sans marges):""
+*de.PageRegion 	TLetter/Letter 8½ x 11 Zoll (Randlos):""
+*it.PageRegion 	TLetter/Letter 216 x 279 mm (Senza margini):""
+*pt.PageRegion 	TLetter/Letter 8½ x 11 pol (Sem margens):""
+*es.PageRegion 	TLetter/Carta 8½ x 11 pulg (Sin márgenes):""
+*ko.PageRegion 	TLetter/Letter 8 1/2 x 11 in (여백 없음):""
+*zh_CN.PageRegion 	TLetter/信纸 8 1/2 x 11 英寸 (无边距):""
+*zh_TW.PageRegion 	TLetter/Letter 8 1/2 x 11 in (無邊):""
 *PageRegion A4/A4 210 x 297 mm: "<</PageRegion[595.2 841.8]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion 	A4/A4 210 x 297 mm:""
 *nl.PageRegion 	A4/A4 210 x 297 mm:""
@@ -316,8 +454,12 @@
 *ImageableArea T4X6FULL/10 x 15 cm (4 x 6 in) (Borderless): 	"0.0 0.0 288.0 432.0"
 *ImageableArea 2L/5 x 7 in / 127 x 178 mm: 	"8.4 8.4 351.6 496.0"
 *ImageableArea T2L/5 x 7 in / 127 x 178 mm (Borderless): 	"0.0 0.0 360.0 504.4"
+*ImageableArea 8x10/20 x 25 cm (8 x 10 in): 	"8.4 8.4 567.6 711.6"
+*ImageableArea T8x10/20 x 25 cm (8 x 10 in) (Borderless): 	"0.0 0.0 576.0 720.0"
 *ImageableArea 4X7/16x9 wide size (102 x 181 mm): 	"8.4 8.4 279.6 503.6"
 *ImageableArea T4X7/16x9 wide size (102 x 181 mm) (Borderless): 	"0.0 0.0 288.0 512.0"
+*ImageableArea Letter/Letter 8 1/2 x 11 in: 	"8.4 8.4 603.6 783.6"
+*ImageableArea TLetter/Letter 8 1/2 x 11 in (Borderless): 	"0.0 0.0 612.0 792.0"
 *ImageableArea A4/A4 210 x 297 mm: 	"8.4 8.4 586.8 833.4"
 *ImageableArea TA4/A4 210 x 297 mm (Borderless): 	"0.0 0.0 595.2 841.8"
 
@@ -326,8 +468,12 @@
 *PaperDimension T4X6FULL/10 x 15 cm (4 x 6 in) (Borderless): 	"288.0 432.0"
 *PaperDimension 2L/5 x 7 in / 127 x 178 mm: 	"360.0 504.4"
 *PaperDimension T2L/5 x 7 in / 127 x 178 mm (Borderless): 	"360.0 504.4"
+*PaperDimension 8x10/20 x 25 cm (8 x 10 in): 	"576.0 720.0"
+*PaperDimension T8x10/20 x 25 cm (8 x 10 in) (Borderless): 	"576.0 720.0"
 *PaperDimension 4X7/16x9 wide size (102 x 181 mm): 	"288.0 512.0"
 *PaperDimension T4X7/16x9 wide size (102 x 181 mm) (Borderless): 	"288.0 512.0"
+*PaperDimension Letter/Letter 8 1/2 x 11 in: 	"612.0 792.0"
+*PaperDimension TLetter/Letter 8 1/2 x 11 in (Borderless): 	"612.0 792.0"
 *PaperDimension A4/A4 210 x 297 mm: 	"595.2 841.8"
 *PaperDimension TA4/A4 210 x 297 mm (Borderless): 	"595.2 841.8"
 
@@ -432,61 +578,6 @@
 *ko.Quality 	GLOSSYPHOTO_DRAFT/광택 사진 용지 - 잉크절약(Draft):""
 *zh_CN.Quality 	GLOSSYPHOTO_DRAFT/光泽照片纸 - 经济:""
 *zh_TW.Quality 	GLOSSYPHOTO_DRAFT/Glossy Photo Paper - 草稿:""
-*Quality GLOSSYCAST_NORMAL/Epson Photo - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYCAST_NORMAL/フォト光沢紙 - 標準:""
-*nl.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standaard:""
-*fr.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*de.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*it.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*pt.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Normal:""
-*es.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Estándar:""
-*ko.Quality 	GLOSSYCAST_NORMAL/Epson 사진 용지 - 표준:""
-*zh_CN.Quality 	GLOSSYCAST_NORMAL/爱普生照片纸 - 标准:""
-*zh_TW.Quality 	GLOSSYCAST_NORMAL/Epson Photo - 標準:""
-*Quality GLOSSYCAST_HIGH/Epson Photo - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYCAST_HIGH/フォト光沢紙 - きれい:""
-*nl.Quality 	GLOSSYCAST_HIGH/Epson Photo - Beste:""
-*fr.Quality 	GLOSSYCAST_HIGH/Epson Photo - supérieure:""
-*de.Quality 	GLOSSYCAST_HIGH/Epson Photo - Optimales:""
-*it.Quality 	GLOSSYCAST_HIGH/Epson Photo - migliore:""
-*pt.Quality 	GLOSSYCAST_HIGH/Epson Photo - Superior:""
-*es.Quality 	GLOSSYCAST_HIGH/Epson Photo - Superior:""
-*ko.Quality 	GLOSSYCAST_HIGH/Epson 사진 용지 - 고급:""
-*zh_CN.Quality 	GLOSSYCAST_HIGH/爱普生照片纸 - 优质:""
-*zh_TW.Quality 	GLOSSYCAST_HIGH/Epson Photo - 最高品質:""
-*Quality GLOSSYCAST_DRAFT/Epson Photo - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYCAST_DRAFT/フォト光沢紙 - 速い:""
-*nl.Quality 	GLOSSYCAST_DRAFT/Epson Photo - Concept:""
-*fr.Quality 	GLOSSYCAST_DRAFT/Epson Photo - Brouillon:""
-*de.Quality 	GLOSSYCAST_DRAFT/Epson Photo - Entwurf:""
-*it.Quality 	GLOSSYCAST_DRAFT/Epson Photo - Bozza:""
-*pt.Quality 	GLOSSYCAST_DRAFT/Epson Photo - Prova:""
-*es.Quality 	GLOSSYCAST_DRAFT/Epson Photo - Borrador:""
-*ko.Quality 	GLOSSYCAST_DRAFT/Epson 사진 용지 - 잉크절약(Draft):""
-*zh_CN.Quality 	GLOSSYCAST_DRAFT/爱普生照片纸 - 经济:""
-*zh_TW.Quality 	GLOSSYCAST_DRAFT/Epson Photo - 草稿:""
-*Quality PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLAIN_NORMAL/普通紙 - 標準:""
-*nl.Quality 	PLAIN_NORMAL/Gewoon papier - Standaard:""
-*fr.Quality 	PLAIN_NORMAL/Papier ordinaire - Standard:""
-*de.Quality 	PLAIN_NORMAL/Normalpapier - Standard:""
-*it.Quality 	PLAIN_NORMAL/carte comuni - Standard:""
-*pt.Quality 	PLAIN_NORMAL/Papel Normal - Normal:""
-*es.Quality 	PLAIN_NORMAL/Papel Normal - Estándar:""
-*ko.Quality 	PLAIN_NORMAL/일반 용지 - 표준:""
-*zh_CN.Quality 	PLAIN_NORMAL/普通纸 - 标准:""
-*zh_TW.Quality 	PLAIN_NORMAL/Plain Paper - 標準:""
-*Quality PLAIN_HIGH/Plain Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLAIN_HIGH/普通紙 - きれい:""
-*nl.Quality 	PLAIN_HIGH/Gewoon papier - Beste:""
-*fr.Quality 	PLAIN_HIGH/Papier ordinaire - supérieure:""
-*de.Quality 	PLAIN_HIGH/Normalpapier - Optimales:""
-*it.Quality 	PLAIN_HIGH/carte comuni - migliore:""
-*pt.Quality 	PLAIN_HIGH/Papel Normal - Superior:""
-*es.Quality 	PLAIN_HIGH/Papel Normal - Superior:""
-*ko.Quality 	PLAIN_HIGH/일반 용지 - 고급:""
-*zh_CN.Quality 	PLAIN_HIGH/普通纸 - 优质:""
-*zh_TW.Quality 	PLAIN_HIGH/Plain Paper - 最高品質:""
 *Quality PMMATT_NORMAL/Matte Paper - Heavyweight - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
 *ja.Quality 	PMMATT_NORMAL/フォトマット紙 - 標準:""
 *nl.Quality 	PMMATT_NORMAL/Matte Paper - Heavyweight - Standaard:""
@@ -509,6 +600,28 @@
 *ko.Quality 	PMMATT_HIGH/고중량 매트지 - 고급:""
 *zh_CN.Quality 	PMMATT_HIGH/重磅粗面纸 - 优质:""
 *zh_TW.Quality 	PMMATT_HIGH/Matte Paper - Heavyweight - 最高品質:""
+*Quality PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.Quality 	PLAIN_NORMAL/普通紙 - 標準:""
+*nl.Quality 	PLAIN_NORMAL/Gewoon papier - Standaard:""
+*fr.Quality 	PLAIN_NORMAL/Papier ordinaire - Standard:""
+*de.Quality 	PLAIN_NORMAL/Normalpapier - Standard:""
+*it.Quality 	PLAIN_NORMAL/carte comuni - Standard:""
+*pt.Quality 	PLAIN_NORMAL/Papel Normal - Normal:""
+*es.Quality 	PLAIN_NORMAL/Papel Normal - Estándar:""
+*ko.Quality 	PLAIN_NORMAL/일반 용지 - 표준:""
+*zh_CN.Quality 	PLAIN_NORMAL/普通纸 - 标准:""
+*zh_TW.Quality 	PLAIN_NORMAL/Plain Paper - 標準:""
+*Quality PLAIN_HIGH/Plain Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.Quality 	PLAIN_HIGH/普通紙 - きれい:""
+*nl.Quality 	PLAIN_HIGH/Gewoon papier - Beste:""
+*fr.Quality 	PLAIN_HIGH/Papier ordinaire - supérieure:""
+*de.Quality 	PLAIN_HIGH/Normalpapier - Optimales:""
+*it.Quality 	PLAIN_HIGH/carte comuni - migliore:""
+*pt.Quality 	PLAIN_HIGH/Papel Normal - Superior:""
+*es.Quality 	PLAIN_HIGH/Papel Normal - Superior:""
+*ko.Quality 	PLAIN_HIGH/일반 용지 - 고급:""
+*zh_CN.Quality 	PLAIN_HIGH/普通纸 - 优质:""
+*zh_TW.Quality 	PLAIN_HIGH/Plain Paper - 最高品質:""
 *Quality CDDVD_HIGH/CD/DVD - Best: 	"<</HWResolution[360 360]>>setpagedevice"
 *ja.Quality 	CDDVD_HIGH/CD/DVD レーベル - きれい:""
 *nl.Quality 	CDDVD_HIGH/CD/DVD - Beste:""
@@ -520,18 +633,55 @@
 *ko.Quality 	CDDVD_HIGH/CD/DVD - 고급:""
 *zh_CN.Quality 	CDDVD_HIGH/CD/DVD - 优质:""
 *zh_TW.Quality 	CDDVD_HIGH/CD/DVD - 最高品質:""
-*Quality MINIPHOTO_NORMAL/Photo Stickers - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	MINIPHOTO_NORMAL/ミニフォトシール - 標準:""
-*nl.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standaard:""
-*fr.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*de.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*it.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*pt.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Normal:""
-*es.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Estándar:""
-*ko.Quality 	MINIPHOTO_NORMAL/포토 스티커 - 표준:""
-*zh_CN.Quality 	MINIPHOTO_NORMAL/妙妙贴纸 - 标准:""
-*zh_TW.Quality 	MINIPHOTO_NORMAL/Photo Stickers - 標準:""
 *CloseUI: *Quality
+
+*OpenUI *Duplex/Auto Duplex Printing - Binding Edge: PickOne
+*OrderDependency: 110 AnySetup *Duplex
+*ja.Translation 	Duplex/自動両面印刷 - とじ位置:""
+*nl.Translation 	Duplex/Automatisch dubbelzijdig afdrukken - Bindkant:""
+*fr.Translation 	Duplex/Impression recto verso automatique - Bord de reliure:""
+*de.Translation 	Duplex/Automatischer Duplexdruck - Heftkante:""
+*it.Translation 	Duplex/Stampa fronte/retro automatica - Lato di rilegatura:""
+*pt.Translation 	Duplex/Impressão Dúplex Automática - Limite da União:""
+*es.Translation 	Duplex/Impresión dúplex automática - Posición Encuadernado:""
+*ko.Translation 	Duplex/자동 양면 인쇄 - 철하는 위치:""
+*zh_CN.Translation 	Duplex/自动双面打印 - 装订边:""
+*zh_TW.Translation 	Duplex/自動雙面列印 - 裝訂邊:""
+*DefaultDuplex: None
+*Duplex None/Off:
+*ja.Duplex 	None/オフ:""
+*nl.Duplex 	None/Uit:""
+*fr.Duplex 	None/Non:""
+*de.Duplex 	None/Aus:""
+*it.Duplex 	None/Off:""
+*pt.Duplex 	None/Não:""
+*es.Duplex 	None/Desactivada:""
+*ko.Duplex 	None/사용 안 함:""
+*zh_CN.Duplex 	None/关:""
+*zh_TW.Duplex 	None/關閉:""
+*Duplex DuplexTumble/Short edge:
+*ja.Duplex 	DuplexTumble/短辺:""
+*nl.Duplex 	DuplexTumble/Korte zijde:""
+*fr.Duplex 	DuplexTumble/Bord court:""
+*de.Duplex 	DuplexTumble/Kurze Kante:""
+*it.Duplex 	DuplexTumble/Lato corto:""
+*pt.Duplex 	DuplexTumble/Margem curta:""
+*es.Duplex 	DuplexTumble/Lado corto:""
+*ko.Duplex 	DuplexTumble/짧은 방향:""
+*zh_CN.Duplex 	DuplexTumble/短边:""
+*zh_TW.Duplex 	DuplexTumble/短邊:""
+*Duplex DuplexNoTumble/Long edge:
+*ja.Duplex 	DuplexNoTumble/長辺:""
+*nl.Duplex 	DuplexNoTumble/Lange zijde:""
+*fr.Duplex 	DuplexNoTumble/Bord long:""
+*de.Duplex 	DuplexNoTumble/Lange Kante:""
+*it.Duplex 	DuplexNoTumble/Lato lungo:""
+*pt.Duplex 	DuplexNoTumble/Margem longa:""
+*es.Duplex 	DuplexNoTumble/Lado largo:""
+*ko.Duplex 	DuplexNoTumble/긴 방향:""
+*zh_CN.Duplex 	DuplexNoTumble/长边:""
+*zh_TW.Duplex 	DuplexNoTumble/長邊:""
+*CloseUI: *Duplex
 
 *OpenUI *Ink/Ink: PickOne
 *OrderDependency: 30 AnySetup *Ink

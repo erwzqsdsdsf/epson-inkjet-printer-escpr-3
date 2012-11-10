@@ -1,7 +1,7 @@
 /*
- * EPSON ESC/P-R Printer Driver for Linux
- * Copyright (C) 2000-2008 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2000-2008.
+ * Epson Inkjet Printer Driver (ESC/P-R) for Linux
+ * Copyright (C) 2002-2005 AVASYS CORPORATION.
+ * Copyright (C) Seiko Epson Corporation 2002-2012.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
- *
- * As a special exception, AVASYS CORPORATION gives permission to
- * link the code of this program with libraries which are covered by
- * the AVASYS Public License and distribute their linked
- * combinations.  You must obey the GNU General Public License in all
- * respects for all of the code used other than the libraries which
- * are covered by AVASYS Public License.
  */
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -92,7 +86,7 @@ OPTION_DATA mediaSizeData[] = {
     {PM_MSID_10X15,         "PP100",    N_("Photo Paper 100x150 mm")            },
     {PM_MSID_200X300,       "PP200",    N_("Photo Paper 200x300 mm")            },
     {PM_MSID_L,             "L",        N_("3.5x5 in  89x127 mm")               },
-    {PM_MSID_POSTCARD,      "PostCard", N_("Post Card  100x148 mm")             },
+    {PM_MSID_POSTCARD,      "Postcard", N_("Post Card  100x148 mm")             },
     {PM_MSID_DBLPOSTCARD,   "DPC",      N_("Double Post Card  200x148 mm")      },
     {PM_MSID_ENV_10_L,      "ENV10_L",  N_("Envelope #10(Landscape) 4 1/8x9 1/2 in")      },
     {PM_MSID_ENV_C6_L,      "ENVC6_L",  N_("Envelope C6(Landscape) 114x162 mm")           },

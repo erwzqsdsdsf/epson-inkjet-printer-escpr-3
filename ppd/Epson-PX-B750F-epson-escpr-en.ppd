@@ -3,9 +3,9 @@
 *%
 *% This PPD file is intended for Epson Inkjet Printer Driver (ESC/P-R).
 *% Epson Inkjet Printer Driver (ESC/P-R) for Linux is presented by Seiko Epson.
-*% Copyright (C) Seiko Epson Corporation 2005-2011.
+*% Copyright (C) Seiko Epson Corporation 2005-2012.
 *%
-*% LastUpdate: 2011/11/07
+*% LastUpdate: 2012/05/04
 *%
 *% This program is free software: you can redistribute it and/or modify
 *% it under the terms of the GNU General Public License as published by
@@ -65,6 +65,24 @@
 *UIConstraints: *Quality PMMATT_NORMAL *PageSize 2L
 *UIConstraints: *Quality PMMATT_NORMAL *PageSize 4X6FULL
 *UIConstraints: *Quality PMMATT_NORMAL *PageSize 8x10
+*UIConstraints: *Duplex DuplexTumble *Quality PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality GLOSSYPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality GLOSSYCAST_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality GLOSSYPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality GLOSSYCAST_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexTumble *PageSize L
+*UIConstraints: *Duplex DuplexTumble *PageSize 2L
+*UIConstraints: *Duplex DuplexTumble *PageSize 4X6FULL
+*UIConstraints: *Duplex DuplexTumble *PageSize 8x10
+*UIConstraints: *Duplex DuplexNoTumble *PageSize L
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 2L
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 4X6FULL
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 8x10
 
 *OpenUI *PageSize/Paper Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
@@ -324,6 +342,54 @@
 *zh_CN.Quality 	PMMATT_NORMAL/重磅粗面纸 - 标准:""
 *zh_TW.Quality 	PMMATT_NORMAL/Matte Paper - Heavyweight - 標準:""
 *CloseUI: *Quality
+
+*OpenUI *Duplex/Auto Duplex Printing - Binding Edge: PickOne
+*OrderDependency: 110 AnySetup *Duplex
+*ja.Translation 	Duplex/自動両面印刷 - とじ位置:""
+*nl.Translation 	Duplex/Automatisch dubbelzijdig afdrukken - Bindkant:""
+*fr.Translation 	Duplex/Impression recto verso automatique - Bord de reliure:""
+*de.Translation 	Duplex/Automatischer Duplexdruck - Heftkante:""
+*it.Translation 	Duplex/Stampa fronte/retro automatica - Lato di rilegatura:""
+*pt.Translation 	Duplex/Impressão Dúplex Automática - Limite da União:""
+*es.Translation 	Duplex/Impresión dúplex automática - Posición Encuadernado:""
+*ko.Translation 	Duplex/자동 양면 인쇄 - 철하는 위치:""
+*zh_CN.Translation 	Duplex/自动双面打印 - 装订边:""
+*zh_TW.Translation 	Duplex/自動雙面列印 - 裝訂邊:""
+*DefaultDuplex: None
+*Duplex None/Off:
+*ja.Duplex 	None/オフ:""
+*nl.Duplex 	None/Uit:""
+*fr.Duplex 	None/Non:""
+*de.Duplex 	None/Aus:""
+*it.Duplex 	None/Off:""
+*pt.Duplex 	None/Não:""
+*es.Duplex 	None/Desactivada:""
+*ko.Duplex 	None/사용 안 함:""
+*zh_CN.Duplex 	None/关:""
+*zh_TW.Duplex 	None/關閉:""
+*Duplex DuplexTumble/Short edge:
+*ja.Duplex 	DuplexTumble/短辺:""
+*nl.Duplex 	DuplexTumble/Korte zijde:""
+*fr.Duplex 	DuplexTumble/Bord court:""
+*de.Duplex 	DuplexTumble/Kurze Kante:""
+*it.Duplex 	DuplexTumble/Lato corto:""
+*pt.Duplex 	DuplexTumble/Margem curta:""
+*es.Duplex 	DuplexTumble/Lado corto:""
+*ko.Duplex 	DuplexTumble/짧은 방향:""
+*zh_CN.Duplex 	DuplexTumble/短边:""
+*zh_TW.Duplex 	DuplexTumble/短邊:""
+*Duplex DuplexNoTumble/Long edge:
+*ja.Duplex 	DuplexNoTumble/長辺:""
+*nl.Duplex 	DuplexNoTumble/Lange zijde:""
+*fr.Duplex 	DuplexNoTumble/Bord long:""
+*de.Duplex 	DuplexNoTumble/Lange Kante:""
+*it.Duplex 	DuplexNoTumble/Lato lungo:""
+*pt.Duplex 	DuplexNoTumble/Margem longa:""
+*es.Duplex 	DuplexNoTumble/Lado largo:""
+*ko.Duplex 	DuplexNoTumble/긴 방향:""
+*zh_CN.Duplex 	DuplexNoTumble/长边:""
+*zh_TW.Duplex 	DuplexNoTumble/長邊:""
+*CloseUI: *Duplex
 
 *OpenUI *Ink/Ink: PickOne
 *OrderDependency: 30 AnySetup *Ink

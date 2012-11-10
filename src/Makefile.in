@@ -54,7 +54,7 @@ PROGRAMS = $(cupsfilter_PROGRAMS)
 am_epson_escpr_OBJECTS = epson_escpr-filter.$(OBJEXT) \
 	epson_escpr-debug.$(OBJEXT) epson_escpr-str.$(OBJEXT) \
 	epson_escpr-err.$(OBJEXT) epson_escpr-csv.$(OBJEXT) \
-	epson_escpr-mem.$(OBJEXT)
+	epson_escpr-mem.$(OBJEXT) epson_escpr-linux_cmn.$(OBJEXT)
 epson_escpr_OBJECTS = $(am_epson_escpr_OBJECTS)
 epson_escpr_DEPENDENCIES = $(top_builddir)/lib/libescpr.la
 epson_escpr_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -204,28 +204,30 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 cupsfilterdir = $(CUPS_FILTER_DIR)
+ESCPR_LIB_DIR = ../escprlib
 epson_escpr_wrapper_CFLAGS = \
-	-DCUPS_FILTER_NAME=\"epson-escpr\" \
-	-DCUPS_FILTER_PATH=\"$(CUPS_FILTER_DIR)\"
+	-DCUPS_FILTER_NAME=\"epson-escpr\"				\
+	-DCUPS_FILTER_PATH=\"$(CUPS_FILTER_DIR)\" 
 
 epson_escpr_wrapper_SOURCES = \
 	wrapper.c
 
 epson_escpr_CFLAGS = \
-	-I$(top_srcdir)/lib \
-	-DPAPER_PATH=\"$(pkgdatadir)/paper_list.csv\"
+	-I$(top_srcdir)/lib									\
+	-DPAPER_PATH=\"$(pkgdatadir)/paper_list.csv\" 
 
 epson_escpr_SOURCES = \
-	filter.c \
-	libprtX.h \
-	debug.c debug.h \
-	pips.h \
-	pipsDef.h \
-	optBase.h \
-	str.c str.h \
-	err.c err.h \
-	csv.c csv.h \
-	mem.c mem.h \
+	filter.c													\
+	libprtX.h												\
+	debug.c debug.h										\
+	pips.h													\
+	pipsDef.h												\
+	optBase.h												\
+	str.c str.h												\
+	err.c err.h												\
+	csv.c csv.h												\
+	mem.c mem.h												\
+	linux_cmn.h linux_cmn.c								\
 	def.h
 
 epson_escpr_LDADD = \
@@ -325,6 +327,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-debug.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-err.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-filter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-linux_cmn.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-mem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-str.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr_wrapper-wrapper.Po@am__quote@
@@ -433,6 +436,20 @@ epson_escpr-mem.obj: mem.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mem.c' object='epson_escpr-mem.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -c -o epson_escpr-mem.obj `if test -f 'mem.c'; then $(CYGPATH_W) 'mem.c'; else $(CYGPATH_W) '$(srcdir)/mem.c'; fi`
+
+epson_escpr-linux_cmn.o: linux_cmn.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -MT epson_escpr-linux_cmn.o -MD -MP -MF $(DEPDIR)/epson_escpr-linux_cmn.Tpo -c -o epson_escpr-linux_cmn.o `test -f 'linux_cmn.c' || echo '$(srcdir)/'`linux_cmn.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/epson_escpr-linux_cmn.Tpo $(DEPDIR)/epson_escpr-linux_cmn.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='linux_cmn.c' object='epson_escpr-linux_cmn.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -c -o epson_escpr-linux_cmn.o `test -f 'linux_cmn.c' || echo '$(srcdir)/'`linux_cmn.c
+
+epson_escpr-linux_cmn.obj: linux_cmn.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -MT epson_escpr-linux_cmn.obj -MD -MP -MF $(DEPDIR)/epson_escpr-linux_cmn.Tpo -c -o epson_escpr-linux_cmn.obj `if test -f 'linux_cmn.c'; then $(CYGPATH_W) 'linux_cmn.c'; else $(CYGPATH_W) '$(srcdir)/linux_cmn.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/epson_escpr-linux_cmn.Tpo $(DEPDIR)/epson_escpr-linux_cmn.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='linux_cmn.c' object='epson_escpr-linux_cmn.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -c -o epson_escpr-linux_cmn.obj `if test -f 'linux_cmn.c'; then $(CYGPATH_W) 'linux_cmn.c'; else $(CYGPATH_W) '$(srcdir)/linux_cmn.c'; fi`
 
 epson_escpr_wrapper-wrapper.o: wrapper.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_wrapper_CFLAGS) $(CFLAGS) -MT epson_escpr_wrapper-wrapper.o -MD -MP -MF $(DEPDIR)/epson_escpr_wrapper-wrapper.Tpo -c -o epson_escpr_wrapper-wrapper.o `test -f 'wrapper.c' || echo '$(srcdir)/'`wrapper.c
