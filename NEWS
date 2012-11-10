@@ -1,6 +1,80 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.2.1                          (2012-09-14)
+----------------------------------------------------------------------
+ * Fixed a problem which the borderless printing except for A4 size failed.
+
+ * Added ppd files of following models
+     - Epson E-360 Series
+     - Epson E-830 Series
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.2.0                          (2012-05-21)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+      - Artisan 1430
+      - EP-4004
+      - Epson Stylus Photo 1430
+      - Epson Stylus Photo 1500
+ 
+ * Supported duplex printing for following models
+      - EP-904F
+      - Artisan 837
+      - Epson Stylus Photo PX830
+      - PX-B750F
+      - WP-4520 Series
+      - WP-4521 Series
+      - WP-4525 Series
+      - WP-4511 Series
+      - WP-4515 Series
+      - WP-4540 Series
+      - WP-4545 Series
+      - WP-4530 Series
+      - WP-4531 Series
+      - WP-4533 Series
+      - WP-4535 Series
+      - WP-4590 Series
+      - WP-4592 Series
+      - WP-4595 Series
+      - PX-B700
+      - WP-4010 Series
+      - WP-4011 Series
+      - WP-4015 Series
+      - WP-4020 Series
+      - WP-4023 Series
+      - WP-4025 Series
+      - WP-4090 Series
+      - WP-4091 Series
+      - WP-4092 Series
+      - WP-4095 Series
+      - EP-904A
+      - PX-1600F
+      - WF-7510 Series
+      - WF-7511 Series
+      - WF-7515 Series
+      - PX-1700F
+      - WF-7520 Series
+      - WF-7521 Series
+      - WF-7525 Series
+      - EP-804A
+      - Artisan 730
+      - Epson Stylus Photo TX730
+      - Epson Stylus Photo PX730
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.1.2                          (2012-02-29)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+      - WP-4590 Series
+      - WP-4592 Series
+      - WP-4595 Series
+      - WP-4090 Series
+      - WP-4091 Series
+      - WP-4092 Series
+      - WP-4095 Series
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.1.1                          (2011-11-11)
 ----------------------------------------------------------------------
  * Fixed a problem which the following printer cannot print out normally.

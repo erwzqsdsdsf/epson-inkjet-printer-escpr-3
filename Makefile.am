@@ -1,7 +1,7 @@
 ## Makefile.am -- an automake template for a Makefile.in file
 ## EPSON ESC/P-R Printer Driver for Linux
 ## Copyright (C) 2000-2008 AVASYS CORPORATION.
-## Copyright (C) Seiko Epson Corporation 2000-2011.
+## Copyright (C) Seiko Epson Corporation 2000-2012.
 ##  This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +17,6 @@
 ## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 SUBDIRS = \
-	layout_script \
 	lib \
 	ppd \
 	src
@@ -78,7 +77,4 @@ EXTRA_DIST = \
 	epson-inkjet-printer-escpr.spec.in \
 	lsb/lsb-rpm.spec \
 	lsb/lsb-rpm.spec.in \
-	lsb/makelsbpkg-perms.xml \
-	lsb/makelsbpkg-tags.xml \
-	lsb/makelsbpkg-tags.xml.in \
 	m4

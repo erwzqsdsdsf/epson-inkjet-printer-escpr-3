@@ -1,6 +1,6 @@
 # lsb.spec.in -- an rpm spec file templete for LSB package
 # Epson Inkjet Printer Driver (ESC/P-R) for Linux
-# Copyright (C) Seiko Epson Corporation 2011.
+# Copyright (C) Seiko Epson Corporation 2012.
 #  This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.1.1
+%define ver     1.2.2
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -30,6 +30,7 @@
 %define extraversion    -%{rel}lsb%{lsbver}
 %define supplierstr     Seiko Epson Corporation
 
+AutoReqProv: no
 
 Name: %{pkg}
 Version: %{ver}
@@ -37,8 +38,8 @@ Release: %{rel}lsb%{lsbver}
 Source0: %{name}-%{version}-%{release}.tar.gz
 License: GPL
 Vendor: Seiko Epson Corporation
-URL: http://avasys.jp/english/linux_e/
-Packager: Seiko Epson Corporation <linux-epson-inkjet@avasys.jp>
+URL: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
+Packager: Seiko Epson Corporation <linux-printer@epson.jp>
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 Group: Applications/System
 Requires: lsb >= %{lsbver}
@@ -53,7 +54,7 @@ This product supports only EPSON ESC/P-R printers. This package can be
 used for all EPSON ESC/P-R printers.
 
 For detail list of supported printer, please refer to below site:
-http://avasys.jp/english/linux_e/
+http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 
 # from RPM macro set for the LSB Driver Development Kit
 %install_into_opt
@@ -82,14 +83,6 @@ rm -f %{buildroot}%{_libdirglob}/*.la
 
 # from RPM macro set for the LSB Driver Development Kit
 %adjust_ppds
-
-# keep buildroot tree for makelsbpkg.
-# after you execute rpmbuild -bb, execute the following commands.
-# # makelsbpkg %{name} \
-#     --tagfile makelsbpkg-tags.xml \
-#     --permfile makelsbpkg-perms.xml \
-#     %{buildroot}.BAK
-cp -a %{buildroot} %{buildroot}.BAK
 
 # pre/post scripts
 %pre

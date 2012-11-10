@@ -1,7 +1,7 @@
 /*
- * EPSON ESC/P-R Printer Driver for Linux
- * Copyright (C) 2002-2008 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2002-2008.
+ * Epson Inkjet Printer Driver (ESC/P-R) for Linux
+ * Copyright (C) 2002-2005 AVASYS CORPORATION.
+ * Copyright (C) Seiko Epson Corporation 2002-2012.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
- *
- * As a special exception, AVASYS CORPORATION gives permission to
- * link the code of this program with libraries which are covered by
- * the AVASYS Public License and distribute their linked
- * combinations.  You must obey the GNU General Public License in all
- * respects for all of the code used other than the libraries which
- * are covered by AVASYS Public License.
  */
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -35,11 +29,34 @@
 
 #include "err.h"
 
+#define HAVE_DEBUG 0
+
 /* global  */
 static char err_pname[256] = "";
+static FILE *debug_f = NULL;
 
 /* static functions */
 static void err_doit (enum msgtype, int, const char *, va_list);
+
+void debug_msg(const char *fmt, ...){
+#if (HAVE_DEBUG)	
+	va_list ap;
+	
+	if(!debug_f){
+		debug_f = fopen(DEBUG_PATH, "wb");
+		if(debug_f == NULL){
+			return;
+		}
+		fchmod (fileno (debug_f), 0777);
+	}
+	
+	va_start (ap, fmt);
+	vfprintf (debug_f, fmt, ap);
+	fflush(debug_f);
+	va_end (ap);
+#endif
+	return;
+}
 
 void
 err_init (const char *name)

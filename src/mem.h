@@ -1,7 +1,7 @@
 /*
- * EPSON ESC/P-R Printer Driver for Linux
- * Copyright (C) 2002-2006 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2002-2006.
+ * Epson Inkjet Printer Driver (ESC/P-R) for Linux
+ * Copyright (C) 2002-2005 AVASYS CORPORATION.
+ * Copyright (C) Seiko Epson Corporation 2002-2012.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
- *
- * As a special exception, AVASYS CORPORATION gives permission to
- * link the code of this program with libraries which are covered by
- * the AVASYS Public License and distribute their linked
- * combinations.  You must obey the GNU General Public License in all
- * respects for all of the code used other than the libraries which
- * are covered by AVASYS Public License.
  */
+
 #ifndef MEM_H
 #define MEM_H
 

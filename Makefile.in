@@ -38,9 +38,8 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(srcdir)/epson-inkjet-printer-escpr.spec.in \
 	$(srcdir)/m4-macros $(top_srcdir)/configure \
-	$(top_srcdir)/lsb/lsb-rpm.spec.in \
-	$(top_srcdir)/lsb/makelsbpkg-tags.xml.in AUTHORS COPYING \
-	ChangeLog INSTALL NEWS compile config.guess config.sub depcomp \
+	$(top_srcdir)/lsb/lsb-rpm.spec.in AUTHORS COPYING ChangeLog \
+	INSTALL NEWS compile config.guess config.sub depcomp \
 	install-sh ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -54,8 +53,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = epson-inkjet-printer-escpr.spec lsb/lsb-rpm.spec \
-	lsb/makelsbpkg-tags.xml
+CONFIG_CLEAN_FILES = epson-inkjet-printer-escpr.spec lsb/lsb-rpm.spec
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
 DIST_SOURCES =
@@ -229,7 +227,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = \
-	layout_script \
 	lib \
 	ppd \
 	src
@@ -261,9 +258,6 @@ EXTRA_DIST = \
 	epson-inkjet-printer-escpr.spec.in \
 	lsb/lsb-rpm.spec \
 	lsb/lsb-rpm.spec.in \
-	lsb/makelsbpkg-perms.xml \
-	lsb/makelsbpkg-tags.xml \
-	lsb/makelsbpkg-tags.xml.in \
 	m4
 
 all: config.h
@@ -324,8 +318,6 @@ distclean-hdr:
 epson-inkjet-printer-escpr.spec: $(top_builddir)/config.status $(srcdir)/epson-inkjet-printer-escpr.spec.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 lsb/lsb-rpm.spec: $(top_builddir)/config.status $(top_srcdir)/lsb/lsb-rpm.spec.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-lsb/makelsbpkg-tags.xml: $(top_builddir)/config.status $(top_srcdir)/lsb/makelsbpkg-tags.xml.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:

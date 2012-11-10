@@ -3,9 +3,9 @@
 *%
 *% This PPD file is intended for Epson Inkjet Printer Driver (ESC/P-R).
 *% Epson Inkjet Printer Driver (ESC/P-R) for Linux is presented by Seiko Epson.
-*% Copyright (C) Seiko Epson Corporation 2005-2011.
+*% Copyright (C) Seiko Epson Corporation 2005-2012.
 *%
-*% LastUpdate: 2011/11/07
+*% LastUpdate: 2012/05/15
 *%
 *% This program is free software: you can redistribute it and/or modify
 *% it under the terms of the GNU General Public License as published by
@@ -45,27 +45,37 @@
 *LandscapeOrientation:  Plus90
 *VariablePaperSize:     False
 *TTRasterizer:          Type42
-*1284DeviceID:          "MFG:EPSON;MDL:WP-4540 Series;DES:EPSON WP-4540 Series;"
+*1284DeviceID:          "MFG:EPSON;MDL:WP-4540 Series;DES:Epson WP-4540 Series;"
 
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 2L
 *UIConstraints: *Quality PLAIN_NORMAL *PageSize 4X6FULL
+*UIConstraints: *Quality PLAIN_NORMAL *PageSize 2L
 *UIConstraints: *Quality PLAIN_NORMAL *PageSize 8x10
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize Legal
-*UIConstraints: *Quality PMPHOTO_NORMAL *PageSize Legal
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize 8x10
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize Legal
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize 2L
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize 8x10
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize Legal
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize 2L
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize 8x10
 *UIConstraints: *Quality PMMATT_NORMAL *PageSize Legal
+*UIConstraints: *Quality PMMATT_NORMAL *PageSize 4X6FULL
+*UIConstraints: *Quality PMMATT_NORMAL *PageSize 2L
+*UIConstraints: *Quality PMPHOTO_NORMAL *PageSize Legal
+*UIConstraints: *Quality PLATINA_NORMAL *PageSize Legal
+*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize Legal
+*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize 2L
+*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize 8x10
+*UIConstraints: *Duplex DuplexTumble *Quality PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexTumble *Quality GLOSSYPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *Quality GLOSSYPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexTumble *PageSize 4X6FULL
+*UIConstraints: *Duplex DuplexTumble *PageSize 2L
+*UIConstraints: *Duplex DuplexTumble *PageSize 8x10
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 4X6FULL
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 2L
+*UIConstraints: *Duplex DuplexNoTumble *PageSize 8x10
 
 *OpenUI *PageSize/Paper Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
-*DefaultPageSize: Letter
+*DefaultPageSize: A4
 *ja.Translation 	PageSize/用紙サイズ:""
 *nl.Translation 	PageSize/Papierformaat:""
 *fr.Translation 	PageSize/Taille papier:""
@@ -109,17 +119,6 @@
 *ko.PageSize 	A4/A4 210 x 297 mm:""
 *zh_CN.PageSize 	A4/A4 210 x 297 毫米:""
 *zh_TW.PageSize 	A4/A4 210 x 297 mm:""
-*PageSize 2L/5 x 7 in / 127 x 178 mm: "<</PageSize[360.0 504.4]/ImagingBBox null>>setpagedevice"
-*ja.PageSize 	2L/2L判 127 x 178 mm:""
-*nl.PageSize 	2L/13 x 18 cm (5 x 7 in):""
-*fr.PageSize 	2L/13 x 18 cm (5 x 7 p.):""
-*de.PageSize 	2L/13 x 18 cm (5 x 7 Zoll):""
-*it.PageSize 	2L/13 x 18 cm (5 x 7 pol.):""
-*pt.PageSize 	2L/13 x 18 cm (5 x 7 pol):""
-*es.PageSize 	2L/13 x 18 cm (5 x 7 pulg):""
-*ko.PageSize 	2L/13 x 18 cm (5 x 7 in):""
-*zh_CN.PageSize 	2L/13 x 18 厘米 (5 x 7 英寸):""
-*zh_TW.PageSize 	2L/5 x 7 in / 127 x 178 mm:""
 *PageSize 4X6FULL/10 x 15 cm (4 x 6 in): "<</PageSize[288.0 432.0]/ImagingBBox null>>setpagedevice"
 *ja.PageSize 	4X6FULL/KG サイズ 102 x 153 mm:""
 *nl.PageSize 	4X6FULL/10 x 15 cm (4 x 6 in):""
@@ -131,6 +130,17 @@
 *ko.PageSize 	4X6FULL/10 x 15 cm (4 x 6 in):""
 *zh_CN.PageSize 	4X6FULL/10 x 15 厘米 (4 x 6 英寸):""
 *zh_TW.PageSize 	4X6FULL/10 x 15 cm (4 x 6 in):""
+*PageSize 2L/5 x 7 in / 127 x 178 mm: "<</PageSize[360.0 504.4]/ImagingBBox null>>setpagedevice"
+*ja.PageSize 	2L/2L判 127 x 178 mm:""
+*nl.PageSize 	2L/13 x 18 cm (5 x 7 in):""
+*fr.PageSize 	2L/13 x 18 cm (5 x 7 p.):""
+*de.PageSize 	2L/13 x 18 cm (5 x 7 Zoll):""
+*it.PageSize 	2L/13 x 18 cm (5 x 7 pol.):""
+*pt.PageSize 	2L/13 x 18 cm (5 x 7 pol):""
+*es.PageSize 	2L/13 x 18 cm (5 x 7 pulg):""
+*ko.PageSize 	2L/13 x 18 cm (5 x 7 in):""
+*zh_CN.PageSize 	2L/13 x 18 厘米 (5 x 7 英寸):""
+*zh_TW.PageSize 	2L/5 x 7 in / 127 x 178 mm:""
 *PageSize 8x10/20 x 25 cm (8 x 10 in): "<</PageSize[576.0 720.0]/ImagingBBox null>>setpagedevice"
 *ja.PageSize 	8x10/六切 203 x 254 mm:""
 *nl.PageSize 	8x10/20 x 25 cm (8 x 10 in):""
@@ -146,7 +156,7 @@
 
 *OpenUI *PageRegion: PickOne
 *OrderDependency: 10 AnySetup *PageRegion
-*DefaultPageRegion: Letter
+*DefaultPageRegion: A4
 *ja.Translation 	PageRegion/用紙サイズ:""
 *nl.Translation 	PageRegion/Papierformaat:""
 *fr.Translation 	PageRegion/Taille papier:""
@@ -190,17 +200,6 @@
 *ko.PageRegion 	A4/A4 210 x 297 mm:""
 *zh_CN.PageRegion 	A4/A4 210 x 297 毫米:""
 *zh_TW.PageRegion 	A4/A4 210 x 297 mm:""
-*PageRegion 2L/5 x 7 in / 127 x 178 mm: "<</PageRegion[360.0 504.4]/ImagingBBox null>>setpagedevice"
-*ja.PageRegion 	2L/2L判 127 x 178 mm:""
-*nl.PageRegion 	2L/13 x 18 cm (5 x 7 in):""
-*fr.PageRegion 	2L/13 x 18 cm (5 x 7 p.):""
-*de.PageRegion 	2L/13 x 18 cm (5 x 7 Zoll):""
-*it.PageRegion 	2L/13 x 18 cm (5 x 7 pol.):""
-*pt.PageRegion 	2L/13 x 18 cm (5 x 7 pol):""
-*es.PageRegion 	2L/13 x 18 cm (5 x 7 pulg):""
-*ko.PageRegion 	2L/13 x 18 cm (5 x 7 in):""
-*zh_CN.PageRegion 	2L/13 x 18 厘米 (5 x 7 英寸):""
-*zh_TW.PageRegion 	2L/5 x 7 in / 127 x 178 mm:""
 *PageRegion 4X6FULL/10 x 15 cm (4 x 6 in): "<</PageRegion[288.0 432.0]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion 	4X6FULL/KG サイズ 102 x 153 mm:""
 *nl.PageRegion 	4X6FULL/10 x 15 cm (4 x 6 in):""
@@ -212,6 +211,17 @@
 *ko.PageRegion 	4X6FULL/10 x 15 cm (4 x 6 in):""
 *zh_CN.PageRegion 	4X6FULL/10 x 15 厘米 (4 x 6 英寸):""
 *zh_TW.PageRegion 	4X6FULL/10 x 15 cm (4 x 6 in):""
+*PageRegion 2L/5 x 7 in / 127 x 178 mm: "<</PageRegion[360.0 504.4]/ImagingBBox null>>setpagedevice"
+*ja.PageRegion 	2L/2L判 127 x 178 mm:""
+*nl.PageRegion 	2L/13 x 18 cm (5 x 7 in):""
+*fr.PageRegion 	2L/13 x 18 cm (5 x 7 p.):""
+*de.PageRegion 	2L/13 x 18 cm (5 x 7 Zoll):""
+*it.PageRegion 	2L/13 x 18 cm (5 x 7 pol.):""
+*pt.PageRegion 	2L/13 x 18 cm (5 x 7 pol):""
+*es.PageRegion 	2L/13 x 18 cm (5 x 7 pulg):""
+*ko.PageRegion 	2L/13 x 18 cm (5 x 7 in):""
+*zh_CN.PageRegion 	2L/13 x 18 厘米 (5 x 7 英寸):""
+*zh_TW.PageRegion 	2L/5 x 7 in / 127 x 178 mm:""
 *PageRegion 8x10/20 x 25 cm (8 x 10 in): "<</PageRegion[576.0 720.0]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion 	8x10/六切 203 x 254 mm:""
 *nl.PageRegion 	8x10/20 x 25 cm (8 x 10 in):""
@@ -225,20 +235,20 @@
 *zh_TW.PageRegion 	8x10/20 x 25 cm (8 x 10 in):""
 *CloseUI: *PageRegion
 
-*DefaultImageableArea: Letter
+*DefaultImageableArea: A4
 *ImageableArea Letter/Letter 8 1/2 x 11 in: 	"8.4 8.4 603.6 783.6"
 *ImageableArea Legal/Legal 8 1/2 x 14 in: 	"8.4 8.4 603.6 999.6"
 *ImageableArea A4/A4 210 x 297 mm: 	"8.4 8.4 586.8 833.4"
-*ImageableArea 2L/5 x 7 in / 127 x 178 mm: 	"8.4 8.4 351.6 496.0"
 *ImageableArea 4X6FULL/10 x 15 cm (4 x 6 in): 	"8.4 8.4 279.6 423.6"
+*ImageableArea 2L/5 x 7 in / 127 x 178 mm: 	"8.4 8.4 351.6 496.0"
 *ImageableArea 8x10/20 x 25 cm (8 x 10 in): 	"8.4 8.4 567.6 711.6"
 
-*DefaultPaperDimension: Letter
+*DefaultPaperDimension: A4
 *PaperDimension Letter/Letter 8 1/2 x 11 in: 	"612.0 792.0"
 *PaperDimension Legal/Legal 8 1/2 x 14 in: 	"612.0 1008.0"
 *PaperDimension A4/A4 210 x 297 mm: 	"595.2 841.8"
-*PaperDimension 2L/5 x 7 in / 127 x 178 mm: 	"360.0 504.4"
 *PaperDimension 4X6FULL/10 x 15 cm (4 x 6 in): 	"288.0 432.0"
+*PaperDimension 2L/5 x 7 in / 127 x 178 mm: 	"360.0 504.4"
 *PaperDimension 8x10/20 x 25 cm (8 x 10 in): 	"576.0 720.0"
 
 *OpenUI *Quality/Quality: PickOne
@@ -265,50 +275,6 @@
 *ko.Quality 	PLAIN_NORMAL/일반 용지 - 표준:""
 *zh_CN.Quality 	PLAIN_NORMAL/普通纸 - 标准:""
 *zh_TW.Quality 	PLAIN_NORMAL/Plain Paper - 標準:""
-*Quality PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
-*ja.Quality 	PLATINA_NORMAL/写真用紙クリスピア＜高光沢＞ - 標準:""
-*nl.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standaard:""
-*fr.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*de.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*it.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*pt.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Normal:""
-*es.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Estándar:""
-*ko.Quality 	PLATINA_NORMAL/광택 사진 용지(Ultra) - 표준:""
-*zh_CN.Quality 	PLATINA_NORMAL/爱普生超级光泽纸 - 标准:""
-*zh_TW.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - 標準:""
-*Quality PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
-*ja.Quality 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
-*nl.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
-*fr.Quality 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
-*de.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
-*it.Quality 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
-*pt.Quality 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
-*es.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
-*ko.Quality 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
-*zh_CN.Quality 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
-*zh_TW.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
-*Quality GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
-*ja.Quality 	GLOSSYPHOTO_NORMAL/写真用紙エントリー＜光沢＞ - 標準:""
-*nl.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standaard:""
-*fr.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
-*de.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
-*it.Quality 	GLOSSYPHOTO_NORMAL/Carta fotografica lucida - Standard:""
-*pt.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Normal:""
-*es.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Estándar:""
-*ko.Quality 	GLOSSYPHOTO_NORMAL/광택 사진 용지 - 표준:""
-*zh_CN.Quality 	GLOSSYPHOTO_NORMAL/光泽照片纸 - 标准:""
-*zh_TW.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - 標準:""
-*Quality GLOSSYCAST_NORMAL/Epson Photo - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
-*ja.Quality 	GLOSSYCAST_NORMAL/フォト光沢紙 - 標準:""
-*nl.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standaard:""
-*fr.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*de.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*it.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*pt.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Normal:""
-*es.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Estándar:""
-*ko.Quality 	GLOSSYCAST_NORMAL/Epson 사진 용지 - 표준:""
-*zh_CN.Quality 	GLOSSYCAST_NORMAL/爱普生照片纸 - 标准:""
-*zh_TW.Quality 	GLOSSYCAST_NORMAL/Epson Photo - 標準:""
 *Quality PMMATT_NORMAL/Matte Paper - Heavyweight - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
 *ja.Quality 	PMMATT_NORMAL/フォトマット紙 - 標準:""
 *nl.Quality 	PMMATT_NORMAL/Matte Paper - Heavyweight - Standaard:""
@@ -320,7 +286,88 @@
 *ko.Quality 	PMMATT_NORMAL/고중량 매트지 - 표준:""
 *zh_CN.Quality 	PMMATT_NORMAL/重磅粗面纸 - 标准:""
 *zh_TW.Quality 	PMMATT_NORMAL/Matte Paper - Heavyweight - 標準:""
+*Quality PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
+*ja.Quality 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
+*nl.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
+*fr.Quality 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
+*de.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
+*it.Quality 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
+*pt.Quality 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
+*es.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
+*ko.Quality 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
+*zh_CN.Quality 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
+*zh_TW.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
+*Quality PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
+*ja.Quality 	PLATINA_NORMAL/写真用紙クリスピア＜高光沢＞ - 標準:""
+*nl.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standaard:""
+*fr.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*de.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*it.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*pt.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Normal:""
+*es.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Estándar:""
+*ko.Quality 	PLATINA_NORMAL/광택 사진 용지(Ultra) - 표준:""
+*zh_CN.Quality 	PLATINA_NORMAL/爱普生超级光泽纸 - 标准:""
+*zh_TW.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - 標準:""
+*Quality GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard: 	"<</HWResolution[300 300]>>setpagedevice"
+*ja.Quality 	GLOSSYPHOTO_NORMAL/写真用紙エントリー＜光沢＞ - 標準:""
+*nl.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standaard:""
+*fr.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
+*de.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
+*it.Quality 	GLOSSYPHOTO_NORMAL/Carta fotografica lucida - Standard:""
+*pt.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Normal:""
+*es.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Estándar:""
+*ko.Quality 	GLOSSYPHOTO_NORMAL/광택 사진 용지 - 표준:""
+*zh_CN.Quality 	GLOSSYPHOTO_NORMAL/光泽照片纸 - 标准:""
+*zh_TW.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - 標準:""
 *CloseUI: *Quality
+
+*OpenUI *Duplex/Auto Duplex Printing - Binding Edge: PickOne
+*OrderDependency: 110 AnySetup *Duplex
+*ja.Translation 	Duplex/自動両面印刷 - とじ位置:""
+*nl.Translation 	Duplex/Automatisch dubbelzijdig afdrukken - Bindkant:""
+*fr.Translation 	Duplex/Impression recto verso automatique - Bord de reliure:""
+*de.Translation 	Duplex/Automatischer Duplexdruck - Heftkante:""
+*it.Translation 	Duplex/Stampa fronte/retro automatica - Lato di rilegatura:""
+*pt.Translation 	Duplex/Impressão Dúplex Automática - Limite da União:""
+*es.Translation 	Duplex/Impresión dúplex automática - Posición Encuadernado:""
+*ko.Translation 	Duplex/자동 양면 인쇄 - 철하는 위치:""
+*zh_CN.Translation 	Duplex/自动双面打印 - 装订边:""
+*zh_TW.Translation 	Duplex/自動雙面列印 - 裝訂邊:""
+*DefaultDuplex: None
+*Duplex None/Off:
+*ja.Duplex 	None/オフ:""
+*nl.Duplex 	None/Uit:""
+*fr.Duplex 	None/Non:""
+*de.Duplex 	None/Aus:""
+*it.Duplex 	None/Off:""
+*pt.Duplex 	None/Não:""
+*es.Duplex 	None/Desactivada:""
+*ko.Duplex 	None/사용 안 함:""
+*zh_CN.Duplex 	None/关:""
+*zh_TW.Duplex 	None/關閉:""
+*Duplex DuplexTumble/Short edge:
+*ja.Duplex 	DuplexTumble/短辺:""
+*nl.Duplex 	DuplexTumble/Korte zijde:""
+*fr.Duplex 	DuplexTumble/Bord court:""
+*de.Duplex 	DuplexTumble/Kurze Kante:""
+*it.Duplex 	DuplexTumble/Lato corto:""
+*pt.Duplex 	DuplexTumble/Margem curta:""
+*es.Duplex 	DuplexTumble/Lado corto:""
+*ko.Duplex 	DuplexTumble/짧은 방향:""
+*zh_CN.Duplex 	DuplexTumble/短边:""
+*zh_TW.Duplex 	DuplexTumble/短邊:""
+*Duplex DuplexNoTumble/Long edge:
+*ja.Duplex 	DuplexNoTumble/長辺:""
+*nl.Duplex 	DuplexNoTumble/Lange zijde:""
+*fr.Duplex 	DuplexNoTumble/Bord long:""
+*de.Duplex 	DuplexNoTumble/Lange Kante:""
+*it.Duplex 	DuplexNoTumble/Lato lungo:""
+*pt.Duplex 	DuplexNoTumble/Margem longa:""
+*es.Duplex 	DuplexNoTumble/Lado largo:""
+*ko.Duplex 	DuplexNoTumble/긴 방향:""
+*zh_CN.Duplex 	DuplexNoTumble/长边:""
+*zh_TW.Duplex 	DuplexNoTumble/長邊:""
+*CloseUI: *Duplex
 
 *OpenUI *Ink/Ink: PickOne
 *OrderDependency: 30 AnySetup *Ink

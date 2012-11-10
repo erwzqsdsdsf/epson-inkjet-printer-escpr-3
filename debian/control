@@ -1,7 +1,7 @@
 Source: epson-inkjet-printer-escpr
 Section: contrib/misc
 Priority: optional
-Maintainer: Seiko Epson Corporation <linux-epson-inkjet@avasys.jp>
+Maintainer: Seiko Epson Corporation <linux-printer@epson.jp>
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
 
@@ -17,4 +17,4 @@ Description: Epson Inkjet Printer Driver (ESC/P-R) for Linux
  used for all EPSON ESC/P-R printers.
  .
  For detail list of supported printer, please refer to below site:
- http://avasys.jp/english/linux_e/
+ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
