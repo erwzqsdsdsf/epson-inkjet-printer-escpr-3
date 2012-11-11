@@ -15,6 +15,9 @@ override_dh_auto_configure:
 		--libdir=/usr/lib/printer-driver-escpr/ \
 		--enable-static=no
 
+override_dh_makeshlibs:
+	dh_makeshlibs -X/usr/lib/printer-driver-escpr/libescpr
+
 override_dh_auto_clean:
 	dh_auto_clean
 	rm -f *.spec
