@@ -1,4 +1,3 @@
 usr/lib/cups/filter/*
 usr/share/cups
-debian/printer-driver-escpr.ppd-updater usr/share/cups/ppd-updaters/
 usr/share/printer-driver-escpr/paper_list.csv
