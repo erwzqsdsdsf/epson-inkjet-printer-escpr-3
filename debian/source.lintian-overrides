@@ -1,2 +1,0 @@
-# Compat 9 is used on purpose, for multiarch.
-package-needs-versioned-debhelper-build-depends 9
