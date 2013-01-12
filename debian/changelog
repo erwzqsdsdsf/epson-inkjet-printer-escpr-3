@@ -1,3 +1,14 @@
+epson-inkjet-printer-escpr (1.1.1-2~bpo60+1) squeeze-backports; urgency=low
+
+  * Prepare for squeeze-backports:
+    - revert "Convert libescpr1 library to multiarch."
+    - revert "Replace the PPD-updater postinst by CUPS' trigger.", to make it
+      not break with the cups version in Squeeze.
+  * Add myself to uploaders.
+  * Make dependency on dh-autoreconf versioned.
+
+ -- Holger Levsen <holger@debian.org>  Sat, 12 Jan 2013 19:36:53 +0100
+
 epson-inkjet-printer-escpr (1.1.1-2) unstable; urgency=low
 
   * Install the overseen paper_list.csv. (Closes: #653426)
