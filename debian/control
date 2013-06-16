@@ -3,7 +3,7 @@ Section: text
 Priority: optional
 Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 Uploaders: Didier Raboud <odyx@debian.org>
-Build-Depends: debhelper (>= 8.1.3~), dh-autoreconf, libcups2-dev, libcupsimage2-dev, pyppd (>= 0.4.9-6~)
+Build-Depends: debhelper (>= 9), dh-autoreconf, libcups2-dev, libcupsimage2-dev, pyppd (>= 0.4.9-6~)
 Vcs-Git: git://anonscm.debian.org/collab-maint/epson-inkjet-printer-escpr.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/epson-inkjet-printer-escpr.git
 Homepage: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX&productName=B700
