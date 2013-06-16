@@ -1,6 +1,57 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.2.3                          (2013-06-04)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - XP-410 Series
+     - XP-310 Series
+     - XP-211 214 216 Series
+     - XP-412 413 415 Series
+     - XP-312 313 315 Series
+     - XP-215 217 Series
+     - XP-212 213 Series
+
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.2.2                          (2012-10-23)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - EP-705A Series
+     - EP-775A Series
+     - EP-905A Series
+     - EP-905F Series
+     - EP-805A Series
+     - ME-301 Series
+     - ME-303 Series
+     - ME-400 Series
+     - PX-205 Series
+     - PX-405A Series
+     - PX-435A Series
+     - PX-505F Series
+     - PX-535F Series
+     - PX-675F Series
+     - PX-605F Series
+     - XP-200 Series
+     - XP-201 204 208 Series
+     - XP-202 203 206 Series
+     - XP-205 207 Series
+     - XP-300 Series
+     - XP-302 303 305 306 Series
+     - XP-400 Series
+     - XP-402 403 405 406 Series
+     - XP-750 Series
+     - XP-850 Series
+     - WF-2540 Series
+     - WF-2530 Series
+     - WF-2520 Series
+     - WF-2510 Series
+     - WF-3540 Series
+     - WF-3530 Series
+     - WF-3520 Series
+     - WF-3010 Series
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.2.1                          (2012-09-14)
 ----------------------------------------------------------------------
  * Fixed a problem which the borderless printing except for A4 size failed.

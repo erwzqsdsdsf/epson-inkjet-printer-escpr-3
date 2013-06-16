@@ -1,7 +1,7 @@
 ## Makefile.am -- an automake template for a Makefile.in file
 ## EPSON ESC/P-R Printer Driver for Linux
 ## Copyright (C) 2000-2008 AVASYS CORPORATION.
-## Copyright (C) Seiko Epson Corporation 2000-2012.
+## Copyright (C) Seiko Epson Corporation 2000-2013.
 ##  This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2 of the License, or
