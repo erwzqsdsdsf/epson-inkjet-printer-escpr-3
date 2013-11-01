@@ -1,3 +1,9 @@
+epson-inkjet-printer-escpr (1.2.3-3) unstable; urgency=low
+
+  * Rebuild against pyppd >= 1.0.1-2~
+
+ -- Didier Raboud <odyx@debian.org>  Fri, 01 Nov 2013 13:45:00 +0100
+
 epson-inkjet-printer-escpr (1.2.3-2) unstable; urgency=low
 
   * Rebuild against pyppd >= 1.0.1
