@@ -27,12 +27,3 @@ Description: printer driver for Epson Inkjet that use ESC/P-R
  .
  This package contains the CUPS filter driver and the compressed PPDs for the
  supported printers.
-
-Package: epson-escpr
-Architecture: all
-Depends: printer-driver-escpr, ${misc:Depends}
-Section: oldlibs
-Priority: extra
-Description: transitional dummy package for epson-escpr printer driver
- This is a transitional dummy package to transition to uniformly named
- printer-driver-escpr.
