@@ -87,7 +87,7 @@ OPTION_DATA mediaSizeData[] = {
     {PM_MSID_200X300,       "PP200",    N_("Photo Paper 200x300 mm")            },
     {PM_MSID_L,             "L",        N_("3.5x5 in  89x127 mm")               },
     {PM_MSID_POSTCARD,      "Postcard", N_("Post Card  100x148 mm")             },
-    {PM_MSID_DBLPOSTCARD,   "DPC",      N_("Double Post Card  200x148 mm")      },
+    {PM_MSID_DBLPOSTCARD,   "DoublePostcard",      N_("Double Post Card  200x148 mm")      },
     {PM_MSID_ENV_10_L,      "ENV10_L",  N_("Envelope #10(Landscape) 4 1/8x9 1/2 in")      },
     {PM_MSID_ENV_C6_L,      "ENVC6_L",  N_("Envelope C6(Landscape) 114x162 mm")           },
     {PM_MSID_ENV_DL_L,      "ENVDL_L",  N_("Envelope DL(Landscape) 110x220 mm")           },
@@ -101,7 +101,7 @@ OPTION_DATA mediaSizeData[] = {
     {PM_MSID_2L,            "2L",       N_("5x7 in  127x178 mm")                },
     {PM_MSID_ENV_10,        "ENV10",    N_("Envelope #10  4 1/8x9 1/2 in")      },
     {PM_MSID_ENV_C6,        "ENVC6",    N_("Envelope C6  114x162 mm")           },
-    {PM_MSID_ENV_DL,        "ENVDL",  	N_("Envelope DL  110x220 mm")           },
+    {PM_MSID_ENV_DL,        "EnvDL",  	N_("Envelope DL  110x220 mm")           },
     {PM_MSID_NEWENV,        "ENV5X8",	N_("Envelope 132x220 mm")       	},
     {PM_MSID_BUZCARD_89X50, "NC",       N_("Business Card 89x50 mm")            },
     {PM_MSID_BUZCARD_89X55, "NC55",     N_("Business Card 89x50 mm")            },
@@ -164,7 +164,7 @@ OPTION_DATA mediaTypeData[] = {
     { PM_MTID_PHOTOINKJET2,  "PIJ2", 	 N_("Epson Photo Quality Ink Jet")},
     { PM_MTID_DURABRITE,     "EPP_P",    N_("DURABrite Photo Paper")},
     { PM_MTID_MATTEMEISHI,   "MMEISHI",  N_("Matte Business Card")},
-    { PM_MTID_HAGAKIATENA,   "ADDRESS",  N_("Post Card Address Side")},
+    { PM_MTID_HAGAKIATENA,   "HAGAKIATENA",  N_("Post Card Address Side")},
     { PM_MTID_PHOTOALBUM,    "P_ALBUM",  N_("Photo Album")},
     { PM_MTID_PHOTOSTAND,    "P_BOARD",  N_("Photo Board Paper")},
     { PM_MTID_RCB,           "RCB",	 N_("RC-B")},
@@ -182,8 +182,14 @@ OPTION_DATA mediaTypeData[] = {
 /* add Wed Jan 28 2009 ^ */
 /* del Wed Jan 28 2009 { PM_MTID_GPHOTO,        "GPHOTO",   N_("Glossy Photo Paper_2")},*/
 /* del Wed Jan 28 2009 { PM_MTID_PHOTOEGCP,     "PHOTOEGCP",N_("Epson Photo")},*/
-    { PM_MTID_CDDVD,         "CDR",      N_("CD/DVD")},
-    { PM_MTID_CDDVDHIGH,     "CDRH",     N_("CD/DVD Premium Surface")},
+/*  { PM_MTID_CDDVD,         "CDR",      N_("CD/DVD")},*/
+	 { PM_MTID_CDDVD,         "CDDVD",    N_("CD/DVD")},
+    { PM_MTID_CDDVDHIGH,     "CDDVDHIGH",     N_("CD/DVD Premium Surface")},
+	 { PM_MTID_PREPRINTED,    "PREPRINTED",     N_("Preprinted")},
+	 { PM_MTID_THICKPAPER,    "THICKPAPER",    N_("Thick Paper")},
+	 { PM_MTID_LETTERHEAD,    "LETTERHEAD",    N_("Letterhead")},
+	 { PM_MTID_RECYCLED,    "RECYCLED",    N_("Recycled")},
+	 { PM_MTID_COLORPAPER,    "COLORPAPER",    N_("Color")},
     { PM_MTID_CLEANING,      "CLEAN",    N_("Cleaning Sheet")},
     { PM_MTID_UNKNOWN,       "UNKNOWN",  N_("Unknown Paper Type")},
     { END_ARRAY,             "",         ""                       }

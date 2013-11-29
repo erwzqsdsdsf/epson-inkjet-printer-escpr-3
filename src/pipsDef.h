@@ -203,6 +203,12 @@ enum eOUTPUT_FORMAT
 /* del Wed Jan 28 2009 #define	    PM_MTID_PHOTOEGCP           0x2C*/
 #define	    PM_MTID_CDDVD               0x5B
 #define	    PM_MTID_CDDVDHIGH           0x5C
+#define	    PM_MTID_HAGAKIATENA         0x20
+#define	    PM_MTID_THICKPAPER          0x2F
+#define	    PM_MTID_PREPRINTED          0x35
+#define	    PM_MTID_LETTERHEAD          0x36
+#define	    PM_MTID_RECYCLED	          0x37
+#define	    PM_MTID_COLORPAPER          0x38
 #define	    PM_MTID_CLEANING            0x63
 #define	    PM_MTID_UNKNOWN             -2
 

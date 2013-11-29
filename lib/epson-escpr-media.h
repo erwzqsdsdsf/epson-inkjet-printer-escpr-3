@@ -98,12 +98,12 @@ typedef enum _tagMEDIA_SIZE_ID_ {
     EPS_MSID_A2               , /* 67  0x43  [420.000,594.000]  */
     EPS_MSID_USC              , /* 68  0x44  [431.800,558.800]  */
     EPS_MSID_10X12            , /* 69  0x45  [254.000,304.800]  */
-     EPS_MSID_F4		      	,
-	EPS_MSID_ENVY0					,
-	EPS_MSID_ENVY6					,
-	EPS_MSID_ENVK2					,
-	EPS_MSID_4PC	      		,
-	EPS_MSID_CHOKEI_5	      	,
+    EPS_MSID_F4		      	,
+		EPS_MSID_ENVY0					,
+		EPS_MSID_ENVY6					,
+		EPS_MSID_ENVK2					,
+		EPS_MSID_4PC	      		,
+		EPS_MSID_CHOKEI_5	      	,
     EPS_MSID_CHOKEI_6	      ,
     EPS_MSID_YOUGATA_1	      ,
     EPS_MSID_YOUGATA_2	      ,
@@ -141,14 +141,14 @@ static const EPS_MEDIA_INFO epsMediaSize[] = {
 {   EPS_MSID_LEGAL,         3060, 5040, 2976, 4956, -36, -42, 3132, 5152 },
 {   EPS_MSID_A5,            2098, 2976, 2014, 2892, -36, -42, 2170, 3088 },
 {   EPS_MSID_A6,            1488, 2098, 1404, 2014, -36, -42, 1560, 2210 },
-{   EPS_MSID_B5,            2580, 3643, 2495, 3558, -36, -42, 2652, 3755 },
+{		EPS_MSID_B5,            2579, 3642, 2495, 3558, -36, -42, 2651, 3754 },
 {   EPS_MSID_EXECUTIVE,     2610, 3780, 2526, 3696, -36, -42, 2682, 3892 },
 {   EPS_MSID_HALFLETTER,    1980, 3060, 1896, 2976, -36, -42, 2052, 3172 },
 {   EPS_MSID_PANORAMIC,     2976, 8419, 2892, 8335, -36, -42, 3048, 8531 },
 {   EPS_MSID_TRIM_4X6,      1610, 2330, 1526, 2246, -36, -42, 1682, 2442 },
 {   EPS_MSID_4X6,           1440, 2160, 1356, 2076, -36, -42, 1512, 2272 },
 {   EPS_MSID_5X8,           1800, 2880, 1716, 2796, -36, -42, 1872, 2992 },
-{   EPS_MSID_8X10,          2880, 3600, 2796, 3516, -36, -42, 2952, 3712 },
+{		EPS_MSID_8X10,          2880, 3600, 2796, 3516, -36, -42, 2952, 3712 },
 {   EPS_MSID_F4,            2976, 4677, 2892, 4593, -36, -42, 3048, 4789 },
 {   EPS_MSID_ENVY0,         1701, 3331, 1617, 3247, -36, -42, 1773, 3443 },
 {   EPS_MSID_ENVY6,         1389, 2693, 1305, 2609, -36, -42, 1461, 2805 },
@@ -158,22 +158,22 @@ static const EPS_MEDIA_INFO epsMediaSize[] = {
 {   EPS_MSID_200X300,       3061, 4790, 2977, 4706, -36, -42, 3133, 4902 },
 {   EPS_MSID_L,             1260, 1800, 1176, 1716, -36, -42, 1332, 1912 },
 {   EPS_MSID_POSTCARD,      1417, 2098, 1333, 2013, -36, -42, 1489, 2210 },
-{   EPS_MSID_DBLPOSTCARD,   2835, 2098, 2751, 2014, -36, -42, 2907, 2210 },
+{		EPS_MSID_DBLPOSTCARD,   2834, 2097, 2750, 2013, -36, -42, 2906, 2209 },
 {   EPS_MSID_ENV_10_L,      3420, 1485, 3336, 1401, -36, -42, 3492, 1597 },
 {   EPS_MSID_ENV_C6_L,      2296, 1616, 2212, 1532, -36, -42, 2368, 1728 },
 {   EPS_MSID_ENV_DL_L,      3118, 1559, 3034, 1475, -36, -42, 3190, 1671 },
 {   EPS_MSID_NEWEVN_L,      3118, 1871, 3034, 1787, -36, -42, 3190, 1983 },
 {   EPS_MSID_CHOKEI_3,      1701, 3685, 1617, 3247, -36, -42, 1773, 3797 },
 {   EPS_MSID_CHOKEI_4,      1276, 3161, 1192, 2822, -36, -42, 1348, 3273 },
-{   EPS_MSID_YOKEI_1,       1701, 2494, 1617, 2410, -36, -42, 1773, 2606 },
-{   EPS_MSID_YOKEI_2,       1616, 2296, 1532, 2212, -36, -42, 1688, 2408 },
-{   EPS_MSID_YOKEI_3,       1389, 2098, 1305, 2014, -36, -42, 1461, 2210 },
-{   EPS_MSID_YOKEI_4,       1488, 3331, 1404, 3247, -36, -42, 1560, 3443 },
+{		EPS_MSID_YOKEI_1,       1701, 2494, 1561, 2169, -36, -42, 1773, 2606 },
+{		EPS_MSID_YOKEI_2,       1616, 2296, 1476, 1971, -36, -42, 1688, 2408 },
+{		EPS_MSID_YOKEI_3,       1389, 2098, 1249, 1773, -36, -42, 1461, 2210 },
+{		EPS_MSID_YOKEI_4,       1488, 3330, 1348, 3005, -36, -42, 1560, 3442 },
 {   EPS_MSID_2L,            1800, 2522, 1716, 2436, -36, -42, 1872, 2634 },
-{   EPS_MSID_ENV_10_P,      1485, 3420, 1401, 3336, -36, -42, 1557, 3532 },
-{   EPS_MSID_ENV_C6_P,      1616, 2296, 1532, 2212, -36, -42, 1688, 2408 },
-{   EPS_MSID_ENV_DL_P,      1559, 3118, 1475, 3034, -36, -42, 1631, 3230 },
-{   EPS_MSID_NEWENV_P,      1871, 3118, 1787, 3034, -36, -42, 1943, 3230 },
+{		EPS_MSID_ENV_10_P,      1485, 3420, 1345, 3095, -36, -42, 1557, 3532 },
+{		EPS_MSID_ENV_C6_P,      1615, 2296, 1475, 1971, -36, -42, 1687, 2408 },
+{		EPS_MSID_ENV_DL_P,      1559, 3118, 1419, 2793, -36, -42, 1631, 3230 },
+{   EPS_MSID_NEWENV_P,      1871, 3118, 1787, 2793, -36, -42, 1943, 3230 },
 {   EPS_MSID_MEISHI,        1261,  779, 1177,  695, -36, -42, 1333,  891 },
 {   EPS_MSID_BUZCARD_89X50, 1261,  709, 1177,  625, -36, -42, 1333,  821 },
 {   EPS_MSID_CARD_54X86,     765, 1219,  681, 1135, -36, -42,  837, 1331 },
@@ -185,14 +185,14 @@ static const EPS_MEDIA_INFO epsMediaSize[] = {
 {   EPS_MSID_PALBUM_A5_L,   2976, 2101, 2892, 2017, -36, -42, 3048, 2213 },
 {   EPS_MSID_PALBUM_A4,     2976, 4203, 2892, 4119, -36, -42, 3048, 4315 },
 {   EPS_MSID_HIVISION,      1440, 2560, 1356, 2476, -36, -42, 1512, 2672 },
-{   EPS_MSID_A3NOBI,        4663, 6846, 4578, 6761, -48, -42, 4759, 6958 },
-{   EPS_MSID_A3,            4209, 5953, 4125, 5868, -48, -42, 4305, 6065 },
-{   EPS_MSID_B4,            3643, 5159, 3559, 5075, -36, -42, 3715, 5271 },
-{   EPS_MSID_USB,           3960, 6120, 3876, 6036, -36, -42, 4032, 6232 },
-{   EPS_MSID_11X14,         3960, 5040, 3876, 4956, -36, -42, 4032, 5152 },
-{   EPS_MSID_B3,            5159, 7285, 5075, 7201, -48, -42, 5255, 7397 },
-{   EPS_MSID_A2,            5953, 8419, 5869, 8335, -48, -42, 6049, 8531 },
-{   EPS_MSID_USC,           6120, 7920, 6036, 7836, -48, -42, 6216, 8032 },
+{		EPS_MSID_A3NOBI,        4662, 6845, 4577, 6760, -48, -42, 4758, 6957 },
+{		EPS_MSID_A3,            4209, 5952, 4125, 5867, -48, -42, 4305, 6064 },
+{		EPS_MSID_B4,            3643, 5159, 3559, 5075, -48, -42, 3739, 5271 },
+{		EPS_MSID_USB,           3960, 6120, 3876, 6036, -48, -42, 4056, 6232 },
+{		EPS_MSID_11X14,         3960, 5040, 3876, 4956, -48, -42, 4056, 5152 },
+{		EPS_MSID_B3,            5159, 7285, 5075, 7201, -48, -42, 5255, 7397 },
+{		EPS_MSID_A2,            5953, 8419, 5869, 8335, -48, -42, 6049, 8531 },
+{		EPS_MSID_USC,           6120, 7920, 6036, 7836, -48, -42, 6216, 8032 },
 {   EPS_MSID_10X12,         3600, 4320, 3516, 4236, -36, -42, 3672, 4432 },
 {   EPS_MSID_12X12,         4320, 4320, 4236, 4236, -36, -42, 4392, 4432 },
 {   EPS_MSID_GLT,            2880, 3780, 2796, 3696, -36, -42, 2952, 3892},
@@ -222,30 +222,30 @@ static const EPS_MEDIA_INFO epsMediaSize300[] = {
 {   EPS_MSID_5X8,           1500, 2400, 1430, 2330, -30, -35, 1560, 2493 }, 
 {   EPS_MSID_8X10,          2400, 3000, 2330, 2930, -30, -35, 2460, 3093 }, 
 {   EPS_MSID_10X15,         1181, 1771, 1111, 1701, -30, -35, 1241, 1864 }, 
-{	EPS_MSID_F4,    		2480, 3898, 2410, 3828, -30, -35, 2540, 3991 },
+{	  EPS_MSID_F4,    				2480, 3898, 2410, 3828, -30, -35, 2540, 3991 },
 {   EPS_MSID_ENVY0,         1417, 2776, 1347, 2706, -36, -42, 1477, 2869 },
 {   EPS_MSID_ENVY6,         1157, 2244, 1087, 2174, -36, -42, 1217, 2337 },
 {   EPS_MSID_ENVK2,         2835, 3921, 2765, 3851, -36, -42, 2895, 4014 },
-{	EPS_MSID_4PC, 		    2362, 3496, 2292, 3426, -30, -35, 2422, 3589 },
+{		EPS_MSID_4PC, 		    	2362, 3496, 2292, 3426, -30, -35, 2422, 3589 },
 {   EPS_MSID_200X300,       2551, 3992, 2481, 3922, -30, -35, 2611, 4085 },
 {   EPS_MSID_L,             1050, 1500,  980, 1430, -30, -35, 1110, 1593 }, 
 {   EPS_MSID_POSTCARD,      1181, 1748, 1111, 1678, -30, -35, 1241, 1841 }, 
-{   EPS_MSID_DBLPOSTCARD,   2363, 1748, 2293, 1678, -30, -35, 2423, 1841 }, 
+{   EPS_MSID_DBLPOSTCARD,   2362, 1748, 2292, 1678, -30, -35, 2422, 1842 },
 {   EPS_MSID_ENV_10_L,      2850, 1238, 2780, 1168, -30, -35, 2910, 1331 }, 
 {   EPS_MSID_ENV_C6_L,      1913, 1347, 1843, 1277, -30, -35, 1973, 1440 }, 
 {   EPS_MSID_ENV_DL_L,      2598, 1299, 2528, 1229, -30, -35, 2658, 1392 }, 
 {   EPS_MSID_NEWEVN_L,      2598, 1559, 2528, 1489, -30, -35, 2658, 1652 }, 
 {   EPS_MSID_CHOKEI_3,      1418, 3071, 1348, 3001, -30, -35, 1478, 3164 }, 
 {   EPS_MSID_CHOKEI_4,      1063, 2634,  993, 2564, -30, -35, 1123, 2727 }, 
-{   EPS_MSID_YOKEI_1,       1418, 2078, 1348, 2008, -30, -35, 1478, 2171 }, 
-{   EPS_MSID_YOKEI_2,       1347, 1913, 1277, 1843, -30, -35, 1407, 2006 }, 
-{   EPS_MSID_YOKEI_3,       1158, 1748, 1088, 1678, -30, -35, 1218, 1841 }, 
-{   EPS_MSID_YOKEI_4,       1240, 2776, 1170, 2706, -30, -35, 1300, 2869 }, 
+{   EPS_MSID_YOKEI_1,       1417, 2078, 1299, 1807, -30, -35, 1477, 2172 },
+{   EPS_MSID_YOKEI_2,       1346, 1913, 1228, 1642, -30, -35, 1406, 2007 },
+{   EPS_MSID_YOKEI_3,       1157, 1748, 1039, 1477, -30, -35, 1217, 1842 },
+{   EPS_MSID_YOKEI_4,       1240, 2775, 1122, 2504, -30, -35, 1300, 2869 }, 
 {   EPS_MSID_2L,            1500, 2100, 1430, 2030, -30, -35, 1560, 2193 }, 
-{   EPS_MSID_ENV_10_P,      1238, 2850, 1168, 2780, -30, -35, 1298, 2943 }, 
-{   EPS_MSID_ENV_C6_P,      1347, 1913, 1277, 1843, -30, -35, 1407, 2006 }, 
-{   EPS_MSID_ENV_DL_P,      1299, 2598, 1229, 2528, -30, -35, 1359, 2691 }, 
-{   EPS_MSID_NEWENV_P,      1559, 2598, 1489, 2528, -30, -35, 1619, 2691 }, 
+{   EPS_MSID_ENV_10_P,      1238, 2850, 1120, 2579, -30, -35, 1298, 2944 },
+{   EPS_MSID_ENV_C6_P,      1346, 1913, 1228, 1642, -30, -35, 1406, 2007 },
+{   EPS_MSID_ENV_DL_P,      1299, 2598, 1181, 2327, -30, -35, 1359, 2692 },
+{   EPS_MSID_NEWENV_P,      1535, 2598, 1417, 2327, -30, -35, 1595, 2692 },
 {   EPS_MSID_MEISHI,        1051,  649,  981,  579, -30, -35, 1111,  742 }, 
 {   EPS_MSID_BUZCARD_89X50, 1051,  591,  981,  521, -30, -35, 1111,  684 }, 
 {   EPS_MSID_CARD_54X86,     638, 1016,  568,  946, -30, -35,  698, 1109 }, 
@@ -278,6 +278,17 @@ static const EPS_MEDIA_INFO epsMediaSize300[] = {
 #define EPS_BORDERS_MARGIN_300	(35)
 /*#define EPS_BORDERS_MARGIN_600	(70)*/
 
+#define EPS_RIGHT_MARGIN__BORDERLESS_360	(-36)
+#define EPS_BOTTOM_MARGIN__BORDERLESS_360	(-70)
+#define EPS_RIGHT_MARGIN__BORDERLESS_300	(-30)
+#define EPS_BOTTOM_MARGIN__BORDERLESS_300	(-58)
+
+/* user defined size range */
+#define EPS_USER_WIDTH_MIN	(35)		/* 3.5inch x 10 */
+#define EPS_USER_HEIGHT_MIN	(50)		/* 5  inch x 10 */
+#define EPS_USER_WIDTH_MAX1	(85)		/* 8.5inch x 10 */
+#define EPS_USER_WIDTH_MAX2	(130)		/* 13 inch x 10 */
+#define EPS_USER_HEIGHT_MAX	(440)		/* 44 inch x 10 */
 
 /*-------------  Definition of Media Type ID / Global Media Type Declarations   --------*/
 /*******************************************|********************************************/
@@ -290,7 +301,7 @@ typedef enum _tagMEDIA_TYPE_ID_ {
     EPS_MTID_IRON             , /*  2  0x02,  "Iron-On Cool Peel Transfer Paper\0"          */
     EPS_MTID_PHOTOINKJET      , /*  3  0x03,  "Photo Qaulity Ink Jet Paper #2\0"            */
     EPS_MTID_PHOTOADSHEET     , /*  4  0x04,  "Photo Qaulity Self Adhesive Sheets\0"        */
-    EPS_MTID_MATTE            , /*  5  0x05,  "Mattee Paper-HeavyWeight\0"                  */
+    EPS_MTID_MATTE            , /*  5  0x05,  "Matte Paper-HeavyWeight\0"                  */
     EPS_MTID_PHOTO            , /*  6  0x06,  "Photo Paper\0"                               */
     EPS_MTID_PHOTOFILM        , /*  7  0x07,  "Photo Quality Glossy Flim\0"                 */
     EPS_MTID_MINIPHOTO        , /*  8  0x08,  "Photo Stickers 4/6\0"                        */
@@ -330,15 +341,18 @@ typedef enum _tagMEDIA_TYPE_ID_ {
     EPS_MTID_GLOSSYHAGAKI     , /* 42  0x2A,  "Glossy Postcard\0"                           */
     EPS_MTID_GLOSSYPHOTO      , /* 43  0x2B,  "Glossy Photo Paper\0"                        */
     EPS_MTID_GLOSSYCAST	      , /* 44  0x2C,  "Epson Photo\0"							    */
-    EPS_MTID_LETTERHEAD	      , //lam dai hiep them
-    EPS_MTID_RECYCLED	      , //lam dai hiep them
-    EPS_MTID_COLORPAPER	      , //lam dai hiep them
-    EPS_MTID_LABEL	      , //lam dai hiep them
-    EPS_MTID_THICK	      , //lam dai hiep them
-    EPS_MTID_EXTHICK	      , //lam dai hiep them
-    EPS_MTID_COATED	      , //lam dai hiep them
-    EPS_MTID_SPECIAL	      , //lam dai hiep them
-    EPS_MTID_BUSINESSCOAT     , /* 45  0x2D,  "Business Ink Jet Coat Paper\0"			    */
+		EPS_MTID_BUSINESSCOAT     , /* 45  0x2D,  "Business Ink Jet Coat Paper\0"			    */
+		EPS_MTID_MEDICINEBAG      , /* 46  0x2E,  "Medicine bag\0"			                    */
+		EPS_MTID_THICKPAPER       , /* 47  0x2F,  "Thick Paper\0"                               */
+		EPS_MTID_BROCHURE         , /* 48  0x30,  "Brochure & Flyer Paper Glossy Double-sided\0"*/
+		EPS_MTID_MATTE_DS         , /* 49  0x31,  "EPSON Matte Double-sided\0"                  */
+		EPS_MTID_BSMATTE_DS       , /* 50  0x32,  "EPSON Bussines card Matte Double-sided\0"    */
+		EPS_MTID_3D               , /* 51  0x33,  "3D media\0"                                  */
+		EPS_MTID_LCPP             , /* 52  0x34,  "Photo Paper Glossy\0"                        */
+		EPS_MTID_PREPRINTED       , /* 53  0x35,  "Preprinted\0"                                */
+		EPS_MTID_LETTERHEAD       , /* 54  0x36,  "Letterhead\0"                                */
+		EPS_MTID_RECYCLED         , /* 55  0x37,  "Recycled\0"                                  */
+		EPS_MTID_COLORPAPER       , /* 56  0x38,  "Color\0"                                     */
     EPS_MTID_CDDVD         =91, /* 91  0x5B,  "CD/DVD Label\0"                              */
     EPS_MTID_CDDVDHIGH        , /* 92  0x5C,  "CD/DVD High Quality Label\0"                 */
     EPS_MTID_CDDVDGLOSSY      , /* 93  0x5D,  "CD/DVD Glossy Surface\0"                     */
@@ -396,14 +410,24 @@ static const EPS_UINT32 epsMediaTypeIndex[] = {
     EPS_MTID_GLOSSYHAGAKI     , /* 42  0x2A,  "Glossy Postcard\0"                           */
     EPS_MTID_GLOSSYPHOTO      , /* 43  0x2B,  "Glossy Photo Paper\0"                        */
     EPS_MTID_GLOSSYCAST	      , /* 44  0x2C,  "Epson Photo\0"							    */
-	EPS_MTID_BUSINESSCOAT     , /* 45  0x2D,  "Business Ink Jet Coat Paper\0"				*/
+		EPS_MTID_BUSINESSCOAT     , /* 45  0x2D,  "Business Ink Jet Coat Paper\0"				*/
+		EPS_MTID_MEDICINEBAG      , /* 46  0x2D,  "Medicine bag\0"			                    */
+		EPS_MTID_THICKPAPER       , /* 47  0x2D,  "Thick Paper\0"                               */
+		EPS_MTID_BROCHURE         , /* 48  0x2E,  "Brochure & Flyer Paper Glossy Double-sided\0"*/
+		EPS_MTID_MATTE_DS         , /* 49  0x2F,  "EPSON Matte Double-sided\0"                  */
+		EPS_MTID_BSMATTE_DS       , /* 50  0x30,  "EPSON Bussines card Matte Double-sided\0"    */
+		EPS_MTID_3D               , /* 51  0x31,  "3D media\0"                                  */
+		EPS_MTID_LCPP             , /* 52  0x34,  "Photo Paper Glossy\0"                        */
+		EPS_MTID_PREPRINTED       , /* 53  0x35,  "Preprinted\0"                                */
+		EPS_MTID_LETTERHEAD       , /* 54  0x36,  "Letterhead\0"                                */
+		EPS_MTID_RECYCLED         , /* 55  0x37,  "Recycled\0"                                  */
+		EPS_MTID_COLORPAPER            , /* 56  0x38,  "Color\0"                                     */
     EPS_MTID_CDDVD            , /* 91  0x5B,  "CD/DVD Label\0"                              */
     EPS_MTID_CDDVDHIGH        , /* 92  0x5C,  "CD/DVD High Quality Label\0"                 */
     EPS_MTID_CDDVDGLOSSY      , /* 93  0x5D,  "CD/DVD Glossy Surface\0"                     */
     EPS_MTID_CLEANING         , /* 99  0x63,  "Cleaning Paper\0"                            */
 /*  EPS_MTID_UNKNOWN   not include this list                                                */
 };
-
 #define EPS_NUM_MEDIA_TYPES     sizeof(epsMediaTypeIndex)/sizeof(EPS_UINT32)
 
 

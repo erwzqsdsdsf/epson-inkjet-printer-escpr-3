@@ -130,6 +130,8 @@ EPS_ERR_CODE epsInitLib(){
 	cmnFuncPtrs.stateCallback = NULL; /* current version unused */
 
 	memcpy((void*)(&epsCmnFnc), (void*)&cmnFuncPtrs, sizeof(EPS_CMN_FUNC));
+	
+	return EPS_ERR_NONE;
 }
 
 EPS_ERR_CODE epsInitJob(){
@@ -431,6 +433,7 @@ main (int argc, char *argv[])
 	printJob.printer = &curPrinter;
 
 	prtSetupJobFunctions(printJob.printer, &jobFnc);
+	
 	debug_msg("call SendStartJob function\n");
 
 	err = SendStartJob(FALSE);
@@ -634,7 +637,7 @@ main (int argc, char *argv[])
 			int revert = 0;
 			int pos = posbuf - bandBmp.WidthBytes ;
 			int revert_line;
-			char *rever_buf = malloc(bandBmp.WidthBytes);
+			char *rever_buf = malloc(bandBmp.WidthBytes + 1000);
 			//debug_msg("byte_par_pixel = %d\n", byte_par_pixel);
 			for (revert = print_area_y; revert > 0; revert--)
 			{
@@ -665,6 +668,7 @@ main (int argc, char *argv[])
 				//debug_msg("printHeight = %d\n", printHeight);
 				//debug_msg("WidthByte = %d\n", bandBmp.WidthBytes);
 			}
+
 			debug_msg("free rever\n");
 			if (rever_buf != NULL)
 			{
@@ -880,6 +884,7 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 	debug_msg(" mediaType = %s\n", mediaType);
 
 	/* Print Quality */
+	jobAttr.printQuality = EPS_MQID_DRAFT;
 	if(strcmp(quality, "_DRAFT") == 0){
 		printQuality->PrintQuality = ESCPR_PQ_DRAFT;
 		jobAttr.printQuality = EPS_MQID_DRAFT; 
@@ -888,7 +893,8 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 		jobAttr.printQuality = EPS_MQID_NORMAL; 
 	}else{
 		printQuality->PrintQuality = ESCPR_PQ_HIGH;		  
-		jobAttr.printQuality = EPS_MQID_DRAFT; 
+		//jobAttr.printQuality = EPS_MQID_DRAFT; 
+		jobAttr.printQuality = EPS_MQID_HIGH;
 	}
 
 	/* Ink */
@@ -940,6 +946,7 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 	/* free alloced memory */
 	mem_free(mediaType);
 	mem_free(ink);
+	mem_free(duplex);
 
 	return 0;
 }

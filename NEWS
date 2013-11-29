@@ -1,6 +1,36 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.3.0                          (2013-09-12)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - XP-600 Series
+     - XP-700 Series
+     - XP-800 Series
+     - WF-M1560 Series
+     - PX-K150 Series
+     - WF-M1030 Series
+     - M100 Series
+     - M105 Series
+     - M200 Series
+     - M205 Series
+     - EP-976A3 Series
+     - XP-950 Series
+     - EP-906F Series
+     - EP-806A Series
+     - EP-776A Series
+     - EP-706A Series
+     - EP-306 Series
+     - XP-510 Series
+     - XP-610 Series
+     - XP-710 Series
+     - XP-810 Series
+     - E-370 Series
+     - E-840 Series
+     
+ * Updated ESC/P-R library to version 5.3.
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.2.3                          (2013-06-04)
 ----------------------------------------------------------------------
  * Added ppd files of following models
