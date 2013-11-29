@@ -146,7 +146,12 @@ typedef struct {
 #define ESCPR_MTID_PLATINA            38  
 #define ESCPR_MTID_ULTRASMOOTH        39
 #define ESCPR_MTID_CDDVD              91  
-#define ESCPR_MTID_CDDVDHIGH          92  
+#define ESCPR_MTID_CDDVDHIGH          92
+#define ESCPR_MTID_THICKPAPER         47
+#define ESCPR_MTID_PREPRINTED         53
+#define ESCPR_MTID_LETTERHEAD         54
+#define ESCPR_MTID_RECYCLED		        55
+#define ESCPR_MTID_COLORPAPER         56
 #define ESCPR_MTID_CLEANING           99  
 
 /*=======================================================================================*/

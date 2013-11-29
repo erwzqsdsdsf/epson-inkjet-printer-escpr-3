@@ -210,6 +210,7 @@ Epson-E-330S-epson-escpr-en.ppd \
 Epson-E-340-epson-escpr-en.ppd \
 Epson-E-350-epson-escpr-en.ppd \
 Epson-E-360_Series-epson-escpr-en.ppd \
+Epson-E-370_Series-epson-escpr-en.ppd \
 Epson-E-500-epson-escpr-en.ppd \
 Epson-E-520-epson-escpr-en.ppd \
 Epson-E-530-epson-escpr-en.ppd \
@@ -220,17 +221,22 @@ Epson-E-800-epson-escpr-en.ppd \
 Epson-E-810-epson-escpr-en.ppd \
 Epson-E-820-epson-escpr-en.ppd \
 Epson-E-830_Series-epson-escpr-en.ppd \
+Epson-E-840_Series-epson-escpr-en.ppd \
+Epson-EP-306_Series-epson-escpr-en.ppd \
 Epson-EP-702A-epson-escpr-en.ppd \
 Epson-EP-703A-epson-escpr-en.ppd \
 Epson-EP-704A-epson-escpr-en.ppd \
 Epson-EP-705A_Series-epson-escpr-en.ppd \
+Epson-EP-706A_Series-epson-escpr-en.ppd \
 Epson-EP-774A-epson-escpr-en.ppd \
 Epson-EP-775A_Series-epson-escpr-en.ppd \
+Epson-EP-776A_Series-epson-escpr-en.ppd \
 Epson-EP-801A-epson-escpr-en.ppd \
 Epson-EP-802A-epson-escpr-en.ppd \
 Epson-EP-803A-epson-escpr-en.ppd \
 Epson-EP-804A-epson-escpr-en.ppd \
 Epson-EP-805A_Series-epson-escpr-en.ppd \
+Epson-EP-806A_Series-epson-escpr-en.ppd \
 Epson-EP-901A-epson-escpr-en.ppd \
 Epson-EP-901F-epson-escpr-en.ppd \
 Epson-EP-902A-epson-escpr-en.ppd \
@@ -240,6 +246,8 @@ Epson-EP-904A-epson-escpr-en.ppd \
 Epson-EP-904F-epson-escpr-en.ppd \
 Epson-EP-905A_Series-epson-escpr-en.ppd \
 Epson-EP-905F_Series-epson-escpr-en.ppd \
+Epson-EP-906F_Series-epson-escpr-en.ppd \
+Epson-EP-976A3_Series-epson-escpr-en.ppd \
 Epson-EP-4004-epson-escpr-en.ppd \
 Epson-K200-epson-escpr-en.ppd \
 Epson-K300-epson-escpr-en.ppd \
@@ -325,6 +333,7 @@ Epson-PX-FA700-epson-escpr-en.ppd \
 Epson-PX-G5300-epson-escpr-en.ppd \
 Epson-PX-1600F-epson-escpr-en.ppd \
 Epson-PX-1700F-epson-escpr-en.ppd \
+Epson-PX-K150_Series-epson-escpr-en.ppd \
 Epson-Stylus_CX2800-epson-escpr-en.ppd \
 Epson-Stylus_CX2900-epson-escpr-en.ppd \
 Epson-Stylus_CX3700-epson-escpr-en.ppd \
@@ -519,6 +528,12 @@ Epson-WF-7515_Series-epson-escpr-en.ppd \
 Epson-WF-7520_Series-epson-escpr-en.ppd \
 Epson-WF-7521_Series-epson-escpr-en.ppd \
 Epson-WF-7525_Series-epson-escpr-en.ppd \
+Epson-WF-M1030_Series-epson-escpr-en.ppd \
+Epson-WF-M1560_Series-epson-escpr-en.ppd \
+Epson-M100_Series-epson-escpr-en.ppd \
+Epson-M105_Series-epson-escpr-en.ppd \
+Epson-M200_Series-epson-escpr-en.ppd \
+Epson-M205_Series-epson-escpr-en.ppd \
 Epson-XP-200_Series-epson-escpr-en.ppd \
 Epson-XP-201_204_208_Series-epson-escpr-en.ppd \
 Epson-XP-202_203_206_Series-epson-escpr-en.ppd \
@@ -534,8 +549,16 @@ Epson-XP-400_Series-epson-escpr-en.ppd \
 Epson-XP-410_Series-epson-escpr-en.ppd \
 Epson-XP-402_403_405_406_Series-epson-escpr-en.ppd \
 Epson-XP-412_413_415_Series-epson-escpr-en.ppd \
+Epson-XP-510_Series-epson-escpr-en.ppd \
+Epson-XP-600_Series-epson-escpr-en.ppd \
+Epson-XP-610_Series-epson-escpr-en.ppd \
+Epson-XP-700_Series-epson-escpr-en.ppd \
+Epson-XP-710_Series-epson-escpr-en.ppd \
 Epson-XP-750_Series-epson-escpr-en.ppd \
-Epson-XP-850_Series-epson-escpr-en.ppd
+Epson-XP-800_Series-epson-escpr-en.ppd \
+Epson-XP-810_Series-epson-escpr-en.ppd \
+Epson-XP-850_Series-epson-escpr-en.ppd \
+Epson-XP-950_Series-epson-escpr-en.ppd 
 
 EXTRA_DIST = $(cupsppd_DATA)
 all: all-am

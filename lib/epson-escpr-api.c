@@ -3454,8 +3454,7 @@ EPS_LOG_FUNCIN;
 		}
 		/*** Media Type                                                                     */
 		if (! ( ( (jobAttr->mediaTypeIdx       >= EPS_MTID_PLAIN           ) &&
-	/*              (jobAttr->mediaTypeIdx       <= EPS_MTID_GLOSSYHAGAKI    )    ) ||*/
-				  (jobAttr->mediaTypeIdx       <= EPS_MTID_BUSINESSCOAT    )    ) ||
+				  (jobAttr->mediaTypeIdx       <= EPS_MTID_COLORPAPER           )    ) ||
 				( (jobAttr->mediaTypeIdx       >= EPS_MTID_CDDVD           ) &&
 				  (jobAttr->mediaTypeIdx       <= EPS_MTID_CDDVDGLOSSY     )    ) ||
 				( (jobAttr->mediaTypeIdx       == EPS_MTID_CLEANING        )    )    ) ){
