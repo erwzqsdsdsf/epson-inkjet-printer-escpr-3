@@ -48,6 +48,7 @@ typedef struct rtp_filter_option {
 	char media[NAME_MAX + 1];
 	char quality[NAME_MAX + 1];
 	char duplex[NAME_MAX + 1];
+	char inputslot[NAME_MAX + 1];
 } filter_option_t;
 
 /* Static functions */
@@ -189,7 +190,7 @@ main (int argc, char *argv[])
 		{
 			char tmpbuf[256];
 
-			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %d %s %s %s %s",
+			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %d %s %s %s %s %s",
 				 CUPS_FILTER_PATH,
 				 CUPS_FILTER_NAME,
 				 fopt.model,
@@ -199,7 +200,8 @@ main (int argc, char *argv[])
 				 fopt.ink,
 				 fopt.media,
 				 fopt.quality,
-				 fopt.duplex);
+				 fopt.duplex,
+				 fopt.inputslot);
 			
 			debug_msg("tmpbuf = [%s]\n", tmpbuf);
 			pfp = popen (tmpbuf, "w");
@@ -287,6 +289,11 @@ get_option_for_ppd (const char *printer, filter_option_t *filter_opt_p)
 	if (filter_opt_p->quality[0] == '\0')
 	{
 		opt = get_default_choice (ppd_p, "Quality");
+
+		if(!opt)
+			opt = get_default_choice (ppd_p, "MediaType");
+
+
 		if (!opt)
 			return 1;
 
@@ -305,6 +312,20 @@ get_option_for_ppd (const char *printer, filter_option_t *filter_opt_p)
 		}
 		else
 		strcpy (filter_opt_p->duplex, opt);
+	}
+	
+	/* inputslot */
+	if (filter_opt_p->inputslot[0] == '\0')
+	{
+		opt = get_default_choice (ppd_p, "InputSlot");
+		if (!opt)
+		{
+			debug_msg("can not get inputslot\n");
+			strcpy (filter_opt_p->inputslot, "Unknown"); //AutoSelection
+			
+		}
+		else
+		strcpy (filter_opt_p->inputslot, opt);
 	}
 
 #ifdef INK_CHANGE_SYSTEM
@@ -375,6 +396,10 @@ get_option_for_arg (const char *opt_str, filter_option_t *filter_opt_p)
 	opt = cupsGetOption ("Duplex", opt_num, option_p);
 	if (opt)
 		strcpy (filter_opt_p->duplex, opt);
+
+	opt = cupsGetOption ("InputSlot", opt_num, option_p);
+	if (opt)
+		strcpy (filter_opt_p->inputslot, opt);
 
 	return 0;
 }

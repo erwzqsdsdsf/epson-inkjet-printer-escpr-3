@@ -59,7 +59,7 @@
 
 #define PIPSLITE_FILTER_VERSION "* epson-escpr is a part of " PACKAGE_STRING
 
-#define PIPSLITE_FILTER_USAGE "Usage: $ epson-escpr model width_pixel height_pixel Ink PageSize Quality"
+#define PIPSLITE_FILTER_USAGE "Usage: $ epson-escpr model width_pixel height_pixel Ink PageSize Quality Duplex InputSlot"
 
 typedef struct rtp_filter_option {
 	char model[NAME_MAX];
@@ -68,6 +68,7 @@ typedef struct rtp_filter_option {
 	char media[NAME_MAX];
 	char quality[NAME_MAX];
 	char duplex[NAME_MAX];
+	char inputslot[NAME_MAX];
 } filter_option_t;
 
 
@@ -292,7 +293,7 @@ main (int argc, char *argv[])
 	DEBUG_START;
 	err_init (argv[0]);
 
-	if (argc != 9)
+	if (argc != 10)
 	{
 		for ( i = 1; i < argc; i++ ) {
 			if ( (0 == strncmp(argv[i], "-v", (strlen("-v")+1)) )
@@ -337,6 +338,7 @@ main (int argc, char *argv[])
 	strncpy (fopt.media, argv[6], NAME_MAX);
 	strncpy (fopt.quality, argv[7], NAME_MAX);
 	strncpy (fopt.duplex, argv[8], NAME_MAX);
+	strncpy (fopt.inputslot, argv[9], NAME_MAX);
 	
 	debug_msg("all para\n");
 	for(i = 0; i< argc; i++){
@@ -348,7 +350,7 @@ main (int argc, char *argv[])
 	
 	if (set_pips_parameter (&fopt, &printOpt, &printQuality))
 		err_fatal ("Cannot get option of PIPS."); /* exit */
-	debug_msg("after setpip, duplex = %d\n", jobAttr.duplex);
+		
 	point = fopt.media;
 	if(point[0]=='T')
 	{
@@ -403,7 +405,6 @@ main (int argc, char *argv[])
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	epsInitLib();
 	epsInitJob();
-	debug_msg("before setupjobattr, duplex = %d\n", jobAttr.duplex);
 	debug_msg("mediasizeIDx = %d\n", 	jobAttr.mediaSizeIdx);
 	err = SetupJobAttrib(&jobAttr);
 	if (err){
@@ -447,9 +448,6 @@ main (int argc, char *argv[])
 	printJob.jobStatus = EPS_STATUS_ESTABLISHED;
 	int printHeight = 0;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////	
-
-
-
 
 	print_area_x = printJob.printableAreaWidth;
 	print_area_y = printJob.printableAreaHeight;
@@ -514,7 +512,7 @@ main (int argc, char *argv[])
 		debug_msg("ppm image width = %d; height = %d\n", bytes_per_line/3, (int)print_area_y);
 		printJob.verticalOffset = 0;
 		debug_msg("start page %d ======================\n", page_count);
-		if (jobAttr.duplex ==  EPS_DUPLEX_SHORT && ((page_count % 2) == 0))
+		if (jobAttr.duplex ==  EPS_DUPLEX_LONG && ((page_count % 2) == 0))
 		{
 			char* pagebuf = malloc((int)(print_area_y) * (bandBmp.WidthBytes));
 			char* startpage = pagebuf;
@@ -864,10 +862,12 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 	char *quality;
 	char *ink;
 	char *duplex;
+	char *inputslot;
 
+	/* Some model's ppd don't support duplex or inputslot option.*/
 	if (strlen (filter_opt_p->media) == 0
-	    || strlen (filter_opt_p->ink) == 0
-	    || strlen (filter_opt_p->quality) == 0)
+	    || strlen (filter_opt_p->quality) == 0
+	    || strlen (filter_opt_p->ink) == 0 )
 		return 1;
 
 	/* pickup MediaType & Quality from input */
@@ -885,7 +885,7 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 
 	/* Print Quality */
 	jobAttr.printQuality = EPS_MQID_DRAFT;
-	if(strcmp(quality, "_DRAFT") == 0){
+	if(strcmp(quality, "_DRAFT") == 0 || strcmp(quality, "_SUPERDRAFT") == 0){
 		printQuality->PrintQuality = ESCPR_PQ_DRAFT;
 		jobAttr.printQuality = EPS_MQID_DRAFT; 
 	}else if(strcmp(quality, "_NORMAL") == 0){
@@ -922,6 +922,43 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 		debug_msg("DUPLEX SHORT\n");
  		jobAttr.duplex =  EPS_DUPLEX_SHORT;
  	}
+ 	
+	/* InputSlot */
+	inputslot = str_clone (filter_opt_p->inputslot, strlen (filter_opt_p->inputslot));
+ 	if (strcmp (inputslot, "Rear") == 0){ 
+		debug_msg("Rear Tray\n");
+ 		jobAttr.paperSource =  EPS_MPID_REAR;
+ 	}
+ 	else if(strcmp (inputslot, "Upper") == 0 || strcmp (inputslot, "Cassette1") == 0 || strcmp (inputslot, "Cassette") == 0){ 
+		debug_msg("Upper Tray\n");
+ 		jobAttr.paperSource =  EPS_MPID_FRONT1;
+ 	}
+ 	else if(strcmp (inputslot, "Lower") == 0 || strcmp (inputslot, "Cassette2") == 0){ 
+		debug_msg("Lower Tray\n");
+ 		jobAttr.paperSource =  EPS_MPID_FRONT2;
+ 	}
+ 	else if(strcmp (inputslot, "Cassette3") == 0){ 
+		debug_msg("Lower Tray\n");
+ 		jobAttr.paperSource =  EPS_MPID_FRONT3;
+ 	}
+ 	else if(strcmp (inputslot, "Cassette4") == 0){ 
+		debug_msg("Lower Tray\n");
+ 		jobAttr.paperSource =  EPS_MPID_FRONT4;
+ 	}
+ 	else if(strcmp (inputslot, "ManualFeed") == 0){ 
+		debug_msg("Rear Manual Reed Tray\n");
+ 		jobAttr.paperSource =  EPS_MPID_REARMANUAL;
+ 	}
+ 	else if(strcmp (inputslot, "DiskTray") == 0){ 
+		debug_msg("CD/DVD Tray\n");
+ 		jobAttr.paperSource =  EPS_MPID_CDTRAY;
+ 	}
+ 	else{ 
+		debug_msg("Auto Selection\n");
+ 		jobAttr.paperSource =  EPS_MPID_AUTO;
+ 	}
+ 	
+ 	
 	/* Others */
 	printQuality->Brightness = 0;
 	printQuality->Contrast = 0;
@@ -940,14 +977,15 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 	jobAttr.paletteData = NULL;
 	jobAttr.copies = 1;
 	jobAttr.feedDirection = EPS_FEEDDIR_PORTRAIT;      /* paper feed direction  hardcode */
-	jobAttr.paperSource = EPS_MPID_AUTO;
+//	jobAttr.paperSource = EPS_MPID_AUTO;
 	jobAttr.printDirection = 0;
 
 	/* free alloced memory */
 	mem_free(mediaType);
 	mem_free(ink);
 	mem_free(duplex);
-
+	mem_free(inputslot);
+	
 	return 0;
 }
 

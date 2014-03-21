@@ -135,10 +135,11 @@ OPTION_DATA mediaTypeData[] = {
     { PM_MTID_PLAIN,         "PLAIN",    N_("plain papers")                      },
     { PM_MTID_360INKJET,     "FINE",     N_("360dpi Ink Jet Paper")              },
     { PM_MTID_IRON,          "IRON",     N_("Iron-On Cool Peel Transfer Paper")  },
-    { PM_MTID_PHOTOINKJET,   "SFINE",    N_("Photo Quality Ink Jet Paper")       },
+//    { PM_MTID_PHOTOINKJET,   "SFINE",    N_("Photo Quality Ink Jet Paper")       },
+    { PM_MTID_MATTE,   	     "SFINE",    N_("Photo Quality Ink Jet Paper")       }, /* Treated as "EPSON Matte" */
     { PM_MTID_PHOTOADSHEET,  "PADSHEET", N_("Photo Quality Self Adhesive Sheets")},
     { PM_MTID_MATTE,         "PMMATT",   N_("EPSON Matte")                       },
-    { PM_MTID_PHOTO,         "GPPAPER",  N_("Photo Paper")            	 },  /* chenged Wed Jan 28 2009 */
+    { PM_MTID_PHOTO,         "GPPAPER",  N_("Photo Paper")            	 },
     { PM_MTID_PHOTOFILM,     "GFILM",    N_("Photo Quality Glossy Film")         },
     { PM_MTID_MINIPHOTO,     "MINIPHOTO",N_("Epson Photo Stickers")		 },
     { PM_MTID_OHP,           "OHP",      N_("Ink Jet Transparencies")            },
@@ -157,7 +158,8 @@ OPTION_DATA mediaTypeData[] = {
     { PM_MTID_DSMATTE,       "DBSMATT",  N_("Double-Sided Matte Paper")},
     { PM_MTID_CLPHOTO,       "CLPP",     N_("ColorLife Photo Paper")},
     { PM_MTID_ECOPHOTO,      "EPHOTO",   N_("Economy Photo Paper")},
-    { PM_MTID_VELVETFINEART, "VELVET_FINE", N_("Velvet Fine Art Paper")},
+//    { PM_MTID_VELVETFINEART, "VELVET_FINE", N_("Velvet Fine Art Paper")},
+    { PM_MTID_MATTE, 	     "VELVET_FINE", N_("Velvet Fine Art Paper")},	/* Treated as "EPSON Matte" */
     { PM_MTID_PROOFSEMI,     "PROOF_S",  N_("Proofing Paper Semimatte")},
     { PM_MTID_HAGAKIRECL,    "RCPC",     N_("Recycled Paper Postcard")},
     { PM_MTID_HAGAKIINKJET,  "IJPC",     N_("Ink Jet Postcard")},
@@ -172,24 +174,20 @@ OPTION_DATA mediaTypeData[] = {
     { PM_MTID_ENVELOPE,      "ENV", 	 N_("Envelope")},
     { PM_MTID_PLATINA,       "PLATINA",  N_("Epson Ultra Glossy")},
     { PM_MTID_ULTRASMOOTH,   "USF_ART",  N_("UltraSmooth Fine Art Paper")},
-/* add Wed Jan 28 2009 v */
-    { PM_MTID_SFHAGAKI,   	"SFHAGAKI",  N_("Super Fine Postcard")},
-    { PM_MTID_PHOTOSTD,   	"PHOTOSTD",  N_("Premium Glossy Photo Paper")},
-    { PM_MTID_GLOSSYHAGAKI, "GLOSSYHAGAKI", N_("Glossy Postcard")},
-    { PM_MTID_GLOSSYPHOTO,  "GLOSSYPHOTO",  N_("Glossy Photo Paper")},
+    { PM_MTID_SFHAGAKI,      "SFHAGAKI",  N_("Super Fine Postcard")},
+    { PM_MTID_PHOTOSTD,      "PHOTOSTD",  N_("Premium Glossy Photo Paper")},
+    { PM_MTID_GLOSSYHAGAKI,  "GLOSSYHAGAKI", N_("Glossy Postcard")},
+//    { PM_MTID_GLOSSYPHOTO,  "GLOSSYPHOTO",  N_("Glossy Photo Paper")},
+    { PM_MTID_PGPHOTO,      "GLOSSYPHOTO",  N_("Glossy Photo Paper")},		/* Treated as "EPSON Premium Glossy" */
     { PM_MTID_GLOSSYCAST,	"GLOSSYCAST",  N_("Epson Photo")},
     { PM_MTID_BUSINESSCOAT, "BUSINESSCOAT", N_("Business Ink Jet Coat Paper")},
-/* add Wed Jan 28 2009 ^ */
-/* del Wed Jan 28 2009 { PM_MTID_GPHOTO,        "GPHOTO",   N_("Glossy Photo Paper_2")},*/
-/* del Wed Jan 28 2009 { PM_MTID_PHOTOEGCP,     "PHOTOEGCP",N_("Epson Photo")},*/
-/*  { PM_MTID_CDDVD,         "CDR",      N_("CD/DVD")},*/
-	 { PM_MTID_CDDVD,         "CDDVD",    N_("CD/DVD")},
+    { PM_MTID_CDDVD,         "CDDVD",    N_("CD/DVD")},
     { PM_MTID_CDDVDHIGH,     "CDDVDHIGH",     N_("CD/DVD Premium Surface")},
-	 { PM_MTID_PREPRINTED,    "PREPRINTED",     N_("Preprinted")},
-	 { PM_MTID_THICKPAPER,    "THICKPAPER",    N_("Thick Paper")},
-	 { PM_MTID_LETTERHEAD,    "LETTERHEAD",    N_("Letterhead")},
-	 { PM_MTID_RECYCLED,    "RECYCLED",    N_("Recycled")},
-	 { PM_MTID_COLORPAPER,    "COLORPAPER",    N_("Color")},
+    { PM_MTID_PREPRINTED,    "PREPRINTED",     N_("Preprinted")},
+    { PM_MTID_THICKPAPER,    "THICKPAPER",    N_("Thick Paper")},
+    { PM_MTID_LETTERHEAD,    "LETTERHEAD",    N_("Letterhead")},
+    { PM_MTID_RECYCLED,    "RECYCLED",    N_("Recycled")},
+    { PM_MTID_COLORPAPER,    "COLORPAPER",    N_("Color")},
     { PM_MTID_CLEANING,      "CLEAN",    N_("Cleaning Sheet")},
     { PM_MTID_UNKNOWN,       "UNKNOWN",  N_("Unknown Paper Type")},
     { END_ARRAY,             "",         ""                       }

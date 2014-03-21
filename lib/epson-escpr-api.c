@@ -3495,6 +3495,7 @@ EPS_LOG_FUNCIN;
 				  (jobAttr->paperSource        == EPS_MPID_FRONT3          ) ||
 				  (jobAttr->paperSource        == EPS_MPID_FRONT4          ) ||
 				  (jobAttr->paperSource        == EPS_MPID_CDTRAY          ) ||
+				  (jobAttr->paperSource        == EPS_MPID_REARMANUAL          ) ||
 				  
 				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_MP_TRAY		) ||
 				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_CASSETTE1		) ||
@@ -4012,6 +4013,9 @@ EPS_UINT32      retBufSize = 0;             /* Size of buffer written           
 		break;
 	case EPS_MPID_CDTRAY:
 		pCmdPos[5] = 0x02; pCmdPos[6] = 0x01; 
+		break;
+	case EPS_MPID_REARMANUAL:
+		pCmdPos[5] = 0x02; pCmdPos[6] = 0x00; 
 		break;
 
 	case EPS_MPID_AUTO:

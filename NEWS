@@ -1,6 +1,66 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.4.0                          (2014-03-06)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - PX-S740 Series
+     - PX-S840 Series
+     - PX-M741F Series
+     - PX-M740F Series
+     - PX-M840F Series
+     - PX-M5041F Series
+     - PX-M5040F Series
+     - PX-S5040 Series
+     - WF-3640 Series
+     - WF-3620 Series
+     - WF-4630 Series
+     - WF-4640 Series
+     - WF-5110 Series
+     - WF-5190 Series
+     - WF-5620 Series
+     - WF-5690 Series
+     - WF-7110 Series
+     - WF-7610 Series
+     - WF-7620 Series
+     
+ * Supported PaperSource(InputSlot) option
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.3.1                          (2013-12-11)
+----------------------------------------------------------------------
+ * Modified ppd files of following models
+     - E-370 Series
+     - E-840 Series
+     - EP-306 Series
+     - EP-706A Series
+     - EP-776A Series
+     - EP-806A Series
+     - EP-906A Series
+     - EP-976A3 Series 
+     - XP-211_214_216_Series
+     - XP-212_213_Series
+     - XP-215_217_Series
+     - XP-310_Series
+     - XP-312_313_315_Series
+     - XP-410_Series
+     - XP-412_413_415_Series
+     - XP-510_Series
+     - XP-600_Series
+     - XP-610_Series
+     - XP-700_Series
+     - XP-710_Series
+     - XP-800_Series
+     - XP-810_Series
+     - XP-950_Series
+
+ * Added ppd files of following models
+     - PX-046A Series
+     - XP-436A Series 
+
+ * Fixed a duplex printing bug which is reversed Long Edge and Short Edge.
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.3.0                          (2013-09-12)
 ----------------------------------------------------------------------
  * Added ppd files of following models
