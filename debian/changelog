@@ -1,3 +1,10 @@
+epson-inkjet-printer-escpr (1.4.0-1) unstable; urgency=medium
+
+  * New 1.4.0 upstream version (Closes: #742264)
+    - Fixed a duplex printing bug which is reversed Long Edge and Short Edge
+
+ -- Didier Raboud <odyx@debian.org>  Fri, 21 Mar 2014 13:30:16 +0100
+
 epson-inkjet-printer-escpr (1.3.0-2) unstable; urgency=medium
 
   * Move the repository from collab-maint to printing; update the VCS-*
