@@ -1,6 +1,79 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.4.1                          (2014-07-07)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - E-850 Series
+     - EP-707A Series
+     - EP-777A Series
+     - EP-807A Series
+     - EP-907F Series
+     - EP-977A3 Series
+     - L455 Series
+     - PX-047A Series
+     - PX-437A Series
+     - PX-M650A
+     - PX-M650F
+     - PX-M840FX
+     - PX-M7050 Series
+     - PX-M7050FP
+     - PX-M7050FX
+     - PX-S05 Series
+     - PX-S840X
+     - PX-S7050 Series
+     - PX-S7050PS
+     - PX-S7050X
+     - Stylus_DX3800
+     - WF-100 Series
+     - WF-2630 Series
+     - WF-2650 Series
+     - WF-2660 Series
+     - WF-R4640 Series
+     - WF-R5190 Series
+     - WF-R5690 Series
+     - WF-R8590 Series
+     - XP-55 Series
+     - XP-225 Series
+     - XP-322_323_325 Series
+     - XP-422_423_425 Series
+     - XP-520 Series
+     - XP-620 Series
+     - XP-720 Series
+     - XP-760 Series
+     - XP-820 Series
+     - XP-860_Series
+
+ * Changed PPD key from Quality to MediaType
+
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.4.0                          (2014-07-07)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - PX-S740 Series
+     - PX-S840 Series
+     - PX-M741F Series
+     - PX-M740F Series
+     - PX-M840F Series
+     - PX-M5041F Series
+     - PX-M5040F Series
+     - PX-S5040 Series
+     - WF-3640 Series
+     - WF-3620 Series
+     - WF-4630 Series
+     - WF-4640 Series
+     - WF-5110 Series
+     - WF-5190 Series
+     - WF-5620 Series
+     - WF-5690 Series
+     - WF-7110 Series
+     - WF-7610 Series
+     - WF-7620 Series
+     
+ * Supported PaperSource(InputSlot) option
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.4.0                          (2014-03-06)
 ----------------------------------------------------------------------
  * Added ppd files of following models

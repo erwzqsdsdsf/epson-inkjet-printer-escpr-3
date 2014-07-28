@@ -47,204 +47,204 @@
 *TTRasterizer:          Type42
 *1284DeviceID:          "MFG:EPSON;MDL:PM-D800;DES:EPSON PM-D800;"
 
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TA4
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TL
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 2L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize T2L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 8x10
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize T8x10
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize NC91
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TNC91
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize CARD
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TCARD
-*UIConstraints: *Quality PLAIN_HIGH *PageSize TA4
-*UIConstraints: *Quality PLAIN_HIGH *PageSize L
-*UIConstraints: *Quality PLAIN_HIGH *PageSize TL
-*UIConstraints: *Quality PLAIN_HIGH *PageSize 2L
-*UIConstraints: *Quality PLAIN_HIGH *PageSize T2L
-*UIConstraints: *Quality PLAIN_HIGH *PageSize 8x10
-*UIConstraints: *Quality PLAIN_HIGH *PageSize T8x10
-*UIConstraints: *Quality PLAIN_HIGH *PageSize NC91
-*UIConstraints: *Quality PLAIN_HIGH *PageSize TNC91
-*UIConstraints: *Quality PLAIN_HIGH *PageSize CARD
-*UIConstraints: *Quality PLAIN_HIGH *PageSize TCARD
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize TA4
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize L
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize TL
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize 2L
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize T2L
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize 8x10
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize T8x10
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize NC91
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize TNC91
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize CARD
-*UIConstraints: *Quality PLAIN_DRAFT *PageSize TCARD
-*UIConstraints: *Quality PMPHOTO_NORMAL *PageSize NC91
-*UIConstraints: *Quality PMPHOTO_NORMAL *PageSize TNC91
-*UIConstraints: *Quality PMPHOTO_HIGH *PageSize NC91
-*UIConstraints: *Quality PMPHOTO_HIGH *PageSize TNC91
-*UIConstraints: *Quality PMPHOTO_DRAFT *PageSize NC91
-*UIConstraints: *Quality PMPHOTO_DRAFT *PageSize TNC91
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize Postcard
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize NC91
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize TNC91
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize CARD
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize TCARD
-*UIConstraints: *Quality PLATINA_HIGH *PageSize Postcard
-*UIConstraints: *Quality PLATINA_HIGH *PageSize TPostcard
-*UIConstraints: *Quality PLATINA_HIGH *PageSize NC91
-*UIConstraints: *Quality PLATINA_HIGH *PageSize TNC91
-*UIConstraints: *Quality PLATINA_HIGH *PageSize CARD
-*UIConstraints: *Quality PLATINA_HIGH *PageSize TCARD
-*UIConstraints: *Quality PLATINA_DRAFT *PageSize Postcard
-*UIConstraints: *Quality PLATINA_DRAFT *PageSize TPostcard
-*UIConstraints: *Quality PLATINA_DRAFT *PageSize NC91
-*UIConstraints: *Quality PLATINA_DRAFT *PageSize TNC91
-*UIConstraints: *Quality PLATINA_DRAFT *PageSize CARD
-*UIConstraints: *Quality PLATINA_DRAFT *PageSize TCARD
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize L
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize TL
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize 2L
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize T2L
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize Postcard
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize 8x10
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize T8x10
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize CARD
-*UIConstraints: *Quality PMMATT_NORMAL *PageSize TCARD
-*UIConstraints: *Quality PMMATT_HIGH *PageSize L
-*UIConstraints: *Quality PMMATT_HIGH *PageSize TL
-*UIConstraints: *Quality PMMATT_HIGH *PageSize 2L
-*UIConstraints: *Quality PMMATT_HIGH *PageSize T2L
-*UIConstraints: *Quality PMMATT_HIGH *PageSize Postcard
-*UIConstraints: *Quality PMMATT_HIGH *PageSize TPostcard
-*UIConstraints: *Quality PMMATT_HIGH *PageSize 8x10
-*UIConstraints: *Quality PMMATT_HIGH *PageSize T8x10
-*UIConstraints: *Quality PMMATT_HIGH *PageSize CARD
-*UIConstraints: *Quality PMMATT_HIGH *PageSize TCARD
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize L
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize TL
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize 2L
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize T2L
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize Postcard
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize TPostcard
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize 8x10
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize T8x10
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize CARD
-*UIConstraints: *Quality PMMATT_DRAFT *PageSize TCARD
-*UIConstraints: *Quality IRON_NORMAL *PageSize TA4
-*UIConstraints: *Quality IRON_NORMAL *PageSize L
-*UIConstraints: *Quality IRON_NORMAL *PageSize TL
-*UIConstraints: *Quality IRON_NORMAL *PageSize 2L
-*UIConstraints: *Quality IRON_NORMAL *PageSize T2L
-*UIConstraints: *Quality IRON_NORMAL *PageSize Postcard
-*UIConstraints: *Quality IRON_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality IRON_NORMAL *PageSize 8x10
-*UIConstraints: *Quality IRON_NORMAL *PageSize T8x10
-*UIConstraints: *Quality IRON_NORMAL *PageSize NC91
-*UIConstraints: *Quality IRON_NORMAL *PageSize TNC91
-*UIConstraints: *Quality IRON_NORMAL *PageSize CARD
-*UIConstraints: *Quality IRON_NORMAL *PageSize TCARD
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize A4
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize L
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize TL
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize 2L
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize T2L
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize Postcard
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize 8x10
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize T8x10
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize NC91
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize TNC91
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize CARD
-*UIConstraints: *Quality CDDVD_NORMAL *PageSize TCARD
-*UIConstraints: *Quality IJPC_NORMAL *PageSize A4
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TA4
-*UIConstraints: *Quality IJPC_NORMAL *PageSize L
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TL
-*UIConstraints: *Quality IJPC_NORMAL *PageSize 2L
-*UIConstraints: *Quality IJPC_NORMAL *PageSize T2L
-*UIConstraints: *Quality IJPC_NORMAL *PageSize 8x10
-*UIConstraints: *Quality IJPC_NORMAL *PageSize T8x10
-*UIConstraints: *Quality IJPC_NORMAL *PageSize NC91
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TNC91
-*UIConstraints: *Quality IJPC_NORMAL *PageSize CARD
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TCARD
-*UIConstraints: *Quality IJPC_HIGH *PageSize A4
-*UIConstraints: *Quality IJPC_HIGH *PageSize TA4
-*UIConstraints: *Quality IJPC_HIGH *PageSize L
-*UIConstraints: *Quality IJPC_HIGH *PageSize TL
-*UIConstraints: *Quality IJPC_HIGH *PageSize 2L
-*UIConstraints: *Quality IJPC_HIGH *PageSize T2L
-*UIConstraints: *Quality IJPC_HIGH *PageSize 8x10
-*UIConstraints: *Quality IJPC_HIGH *PageSize T8x10
-*UIConstraints: *Quality IJPC_HIGH *PageSize NC91
-*UIConstraints: *Quality IJPC_HIGH *PageSize TNC91
-*UIConstraints: *Quality IJPC_HIGH *PageSize CARD
-*UIConstraints: *Quality IJPC_HIGH *PageSize TCARD
-*UIConstraints: *Quality IJPC_DRAFT *PageSize A4
-*UIConstraints: *Quality IJPC_DRAFT *PageSize TA4
-*UIConstraints: *Quality IJPC_DRAFT *PageSize L
-*UIConstraints: *Quality IJPC_DRAFT *PageSize TL
-*UIConstraints: *Quality IJPC_DRAFT *PageSize 2L
-*UIConstraints: *Quality IJPC_DRAFT *PageSize T2L
-*UIConstraints: *Quality IJPC_DRAFT *PageSize 8x10
-*UIConstraints: *Quality IJPC_DRAFT *PageSize T8x10
-*UIConstraints: *Quality IJPC_DRAFT *PageSize NC91
-*UIConstraints: *Quality IJPC_DRAFT *PageSize TNC91
-*UIConstraints: *Quality IJPC_DRAFT *PageSize CARD
-*UIConstraints: *Quality IJPC_DRAFT *PageSize TCARD
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize A4
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize TA4
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize L
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize TL
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize 2L
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize T2L
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize 8x10
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize T8x10
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize NC91
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize TNC91
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize CARD
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize TCARD
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize A4
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize TA4
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize L
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize TL
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize 2L
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize T2L
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize 8x10
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize T8x10
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize NC91
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize TNC91
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize CARD
-*UIConstraints: *Quality GLOSSYHAGAKI_HIGH *PageSize TCARD
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize A4
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize TA4
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize L
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize TL
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize 2L
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize T2L
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize 8x10
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize T8x10
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize NC91
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize TNC91
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize CARD
-*UIConstraints: *Quality GLOSSYHAGAKI_DRAFT *PageSize TCARD
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize A4
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TA4
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize L
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TL
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize 2L
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize T2L
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize 8x10
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize T8x10
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize NC91
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TNC91
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize CARD
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize TA4
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize L
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize TL
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize 2L
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize T2L
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize 8x10
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize T8x10
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize NC91
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize CARD
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize TA4
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize L
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize TL
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize 2L
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize T2L
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize 8x10
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize T8x10
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize NC91
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize TNC91
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize CARD
+*UIConstraints: *MediaType PLAIN_HIGH *PageSize TCARD
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize TA4
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize L
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize TL
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize 2L
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize T2L
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize 8x10
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize T8x10
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize NC91
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize TNC91
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize CARD
+*UIConstraints: *MediaType PLAIN_DRAFT *PageSize TCARD
+*UIConstraints: *MediaType PMPHOTO_NORMAL *PageSize NC91
+*UIConstraints: *MediaType PMPHOTO_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType PMPHOTO_HIGH *PageSize NC91
+*UIConstraints: *MediaType PMPHOTO_HIGH *PageSize TNC91
+*UIConstraints: *MediaType PMPHOTO_DRAFT *PageSize NC91
+*UIConstraints: *MediaType PMPHOTO_DRAFT *PageSize TNC91
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize NC91
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize CARD
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize Postcard
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize TPostcard
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize NC91
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize TNC91
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize CARD
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize TCARD
+*UIConstraints: *MediaType PLATINA_DRAFT *PageSize Postcard
+*UIConstraints: *MediaType PLATINA_DRAFT *PageSize TPostcard
+*UIConstraints: *MediaType PLATINA_DRAFT *PageSize NC91
+*UIConstraints: *MediaType PLATINA_DRAFT *PageSize TNC91
+*UIConstraints: *MediaType PLATINA_DRAFT *PageSize CARD
+*UIConstraints: *MediaType PLATINA_DRAFT *PageSize TCARD
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize L
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize TL
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize 2L
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize T2L
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize 8x10
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize T8x10
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize CARD
+*UIConstraints: *MediaType PMMATT_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize L
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize TL
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize 2L
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize T2L
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize Postcard
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize TPostcard
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize 8x10
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize T8x10
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize CARD
+*UIConstraints: *MediaType PMMATT_HIGH *PageSize TCARD
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize L
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize TL
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize 2L
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize T2L
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize Postcard
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize TPostcard
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize 8x10
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize T8x10
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize CARD
+*UIConstraints: *MediaType PMMATT_DRAFT *PageSize TCARD
+*UIConstraints: *MediaType IRON_NORMAL *PageSize TA4
+*UIConstraints: *MediaType IRON_NORMAL *PageSize L
+*UIConstraints: *MediaType IRON_NORMAL *PageSize TL
+*UIConstraints: *MediaType IRON_NORMAL *PageSize 2L
+*UIConstraints: *MediaType IRON_NORMAL *PageSize T2L
+*UIConstraints: *MediaType IRON_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType IRON_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType IRON_NORMAL *PageSize 8x10
+*UIConstraints: *MediaType IRON_NORMAL *PageSize T8x10
+*UIConstraints: *MediaType IRON_NORMAL *PageSize NC91
+*UIConstraints: *MediaType IRON_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType IRON_NORMAL *PageSize CARD
+*UIConstraints: *MediaType IRON_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize A4
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize L
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize TL
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize 2L
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize T2L
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize 8x10
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize T8x10
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize NC91
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize CARD
+*UIConstraints: *MediaType CDDVD_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize A4
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TA4
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize L
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TL
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize 2L
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize T2L
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize 8x10
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize T8x10
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize NC91
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize CARD
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType IJPC_HIGH *PageSize A4
+*UIConstraints: *MediaType IJPC_HIGH *PageSize TA4
+*UIConstraints: *MediaType IJPC_HIGH *PageSize L
+*UIConstraints: *MediaType IJPC_HIGH *PageSize TL
+*UIConstraints: *MediaType IJPC_HIGH *PageSize 2L
+*UIConstraints: *MediaType IJPC_HIGH *PageSize T2L
+*UIConstraints: *MediaType IJPC_HIGH *PageSize 8x10
+*UIConstraints: *MediaType IJPC_HIGH *PageSize T8x10
+*UIConstraints: *MediaType IJPC_HIGH *PageSize NC91
+*UIConstraints: *MediaType IJPC_HIGH *PageSize TNC91
+*UIConstraints: *MediaType IJPC_HIGH *PageSize CARD
+*UIConstraints: *MediaType IJPC_HIGH *PageSize TCARD
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize A4
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize TA4
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize L
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize TL
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize 2L
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize T2L
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize 8x10
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize T8x10
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize NC91
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize TNC91
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize CARD
+*UIConstraints: *MediaType IJPC_DRAFT *PageSize TCARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize A4
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize TA4
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize L
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize TL
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize 2L
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize T2L
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize 8x10
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize T8x10
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize NC91
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize CARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize A4
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize TA4
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize L
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize TL
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize 2L
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize T2L
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize 8x10
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize T8x10
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize NC91
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize TNC91
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize CARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_HIGH *PageSize TCARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize A4
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize TA4
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize L
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize TL
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize 2L
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize T2L
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize 8x10
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize T8x10
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize NC91
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize TNC91
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize CARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_DRAFT *PageSize TCARD
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize A4
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TA4
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize L
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TL
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize 2L
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize T2L
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize 8x10
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize T8x10
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize NC91
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TNC91
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize CARD
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TCARD
 
 *OpenUI *PageSize/Paper Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
@@ -616,251 +616,251 @@
 *PaperDimension CARD/Card 54 x 86 mm: 	"153.0 243.8"
 *PaperDimension TCARD/Card 54 x 86 mm (Borderless): 	"153.0 243.8"
 
-*OpenUI *Quality/Quality: PickOne
-*OrderDependency: 20 AnySetup *Quality
-*DefaultQuality: PLAIN_NORMAL
-*ja.Translation 	Quality/品質:""
-*nl.Translation 	Quality/Kwaliteit:""
-*fr.Translation 	Quality/Qualité:""
-*de.Translation 	Quality/Qualität:""
-*it.Translation 	Quality/Qualità:""
-*pt.Translation 	Quality/Qualidade:""
-*es.Translation 	Quality/Calidad:""
-*ko.Translation 	Quality/품질:""
-*zh_CN.Translation 	Quality/质量:""
-*zh_TW.Translation 	Quality/品質:""
-*Quality PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLAIN_NORMAL/普通紙 - 標準:""
-*nl.Quality 	PLAIN_NORMAL/Gewoon papier - Standaard:""
-*fr.Quality 	PLAIN_NORMAL/Papier ordinaire - Standard:""
-*de.Quality 	PLAIN_NORMAL/Normalpapier - Standard:""
-*it.Quality 	PLAIN_NORMAL/carte comuni - Standard:""
-*pt.Quality 	PLAIN_NORMAL/Papel Normal - Normal:""
-*es.Quality 	PLAIN_NORMAL/Papel Normal - Estándar:""
-*ko.Quality 	PLAIN_NORMAL/일반 용지 - 표준:""
-*zh_CN.Quality 	PLAIN_NORMAL/普通纸 - 标准:""
-*zh_TW.Quality 	PLAIN_NORMAL/Plain Paper - 標準:""
-*Quality PLAIN_HIGH/Plain Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLAIN_HIGH/普通紙 - きれい:""
-*nl.Quality 	PLAIN_HIGH/Gewoon papier - Beste:""
-*fr.Quality 	PLAIN_HIGH/Papier ordinaire - supérieure:""
-*de.Quality 	PLAIN_HIGH/Normalpapier - Optimales:""
-*it.Quality 	PLAIN_HIGH/carte comuni - migliore:""
-*pt.Quality 	PLAIN_HIGH/Papel Normal - Superior:""
-*es.Quality 	PLAIN_HIGH/Papel Normal - Superior:""
-*ko.Quality 	PLAIN_HIGH/일반 용지 - 고급:""
-*zh_CN.Quality 	PLAIN_HIGH/普通纸 - 优质:""
-*zh_TW.Quality 	PLAIN_HIGH/Plain Paper - 最高品質:""
-*Quality PLAIN_DRAFT/Plain Paper - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLAIN_DRAFT/普通紙 - 速い:""
-*nl.Quality 	PLAIN_DRAFT/Gewoon papier - Concept:""
-*fr.Quality 	PLAIN_DRAFT/Papier ordinaire - Brouillon:""
-*de.Quality 	PLAIN_DRAFT/Normalpapier - Entwurf:""
-*it.Quality 	PLAIN_DRAFT/carte comuni - Bozza:""
-*pt.Quality 	PLAIN_DRAFT/Papel Normal - Prova:""
-*es.Quality 	PLAIN_DRAFT/Papel Normal - Borrador:""
-*ko.Quality 	PLAIN_DRAFT/일반 용지 - 잉크절약(Draft):""
-*zh_CN.Quality 	PLAIN_DRAFT/普通纸 - 经济:""
-*zh_TW.Quality 	PLAIN_DRAFT/Plain Paper - 草稿:""
-*Quality PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
-*nl.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
-*fr.Quality 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
-*de.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
-*it.Quality 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
-*pt.Quality 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
-*es.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
-*ko.Quality 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
-*zh_CN.Quality 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
-*zh_TW.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
-*Quality PMPHOTO_HIGH/Premium Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMPHOTO_HIGH/写真用紙＜光沢＞ - きれい:""
-*nl.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Beste:""
-*fr.Quality 	PMPHOTO_HIGH/Papier Photo Glacé Premium - supérieure:""
-*de.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Optimales:""
-*it.Quality 	PMPHOTO_HIGH/Carta Fotografica Lucida Premium - migliore:""
-*pt.Quality 	PMPHOTO_HIGH/Papel Fotográfico Brilhante Premium - Superior:""
-*es.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Superior:""
-*ko.Quality 	PMPHOTO_HIGH/프리미엄 광택 사진 용지 - 고급:""
-*zh_CN.Quality 	PMPHOTO_HIGH/高质量光泽照片纸 - 优质:""
-*zh_TW.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - 最高品質:""
-*Quality PMPHOTO_DRAFT/Premium Glossy Photo Paper - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMPHOTO_DRAFT/写真用紙＜光沢＞ - 速い:""
-*nl.Quality 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - Concept:""
-*fr.Quality 	PMPHOTO_DRAFT/Papier Photo Glacé Premium - Brouillon:""
-*de.Quality 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - Entwurf:""
-*it.Quality 	PMPHOTO_DRAFT/Carta Fotografica Lucida Premium - Bozza:""
-*pt.Quality 	PMPHOTO_DRAFT/Papel Fotográfico Brilhante Premium - Prova:""
-*es.Quality 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - Borrador:""
-*ko.Quality 	PMPHOTO_DRAFT/프리미엄 광택 사진 용지 - 잉크절약(Draft):""
-*zh_CN.Quality 	PMPHOTO_DRAFT/高质量光泽照片纸 - 经济:""
-*zh_TW.Quality 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - 草稿:""
-*Quality PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLATINA_NORMAL/写真用紙クリスピア＜高光沢＞ - 標準:""
-*nl.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standaard:""
-*fr.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*de.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*it.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*pt.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Normal:""
-*es.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Estándar:""
-*ko.Quality 	PLATINA_NORMAL/광택 사진 용지(Ultra) - 표준:""
-*zh_CN.Quality 	PLATINA_NORMAL/爱普生超级光泽纸 - 标准:""
-*zh_TW.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - 標準:""
-*Quality PLATINA_HIGH/Ultra Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLATINA_HIGH/写真用紙クリスピア＜高光沢＞ - きれい:""
-*nl.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Beste:""
-*fr.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - supérieure:""
-*de.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Optimales:""
-*it.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - migliore:""
-*pt.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
-*es.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
-*ko.Quality 	PLATINA_HIGH/광택 사진 용지(Ultra) - 고급:""
-*zh_CN.Quality 	PLATINA_HIGH/爱普生超级光泽纸 - 优质:""
-*zh_TW.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - 最高品質:""
-*Quality PLATINA_DRAFT/Ultra Glossy Photo Paper - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLATINA_DRAFT/写真用紙クリスピア＜高光沢＞ - 速い:""
-*nl.Quality 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Concept:""
-*fr.Quality 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Brouillon:""
-*de.Quality 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Entwurf:""
-*it.Quality 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Bozza:""
-*pt.Quality 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Prova:""
-*es.Quality 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Borrador:""
-*ko.Quality 	PLATINA_DRAFT/광택 사진 용지(Ultra) - 잉크절약(Draft):""
-*zh_CN.Quality 	PLATINA_DRAFT/爱普生超级光泽纸 - 经济:""
-*zh_TW.Quality 	PLATINA_DRAFT/Ultra Glossy Photo Paper - 草稿:""
-*Quality PMMATT_NORMAL/Matte Paper - Heavyweight - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMMATT_NORMAL/フォトマット紙 - 標準:""
-*nl.Quality 	PMMATT_NORMAL/Matte Paper - Heavyweight - Standaard:""
-*fr.Quality 	PMMATT_NORMAL/Papier Mat Epais - Standard:""
-*de.Quality 	PMMATT_NORMAL/Matte Paper-Heavy Weight - Standard:""
-*it.Quality 	PMMATT_NORMAL/Carta matte alto spessore - Standard:""
-*pt.Quality 	PMMATT_NORMAL/Papel Mate Espesso - Normal:""
-*es.Quality 	PMMATT_NORMAL/Matte Paper-Alto Gramaje - Estándar:""
-*ko.Quality 	PMMATT_NORMAL/고중량 매트지 - 표준:""
-*zh_CN.Quality 	PMMATT_NORMAL/重磅粗面纸 - 标准:""
-*zh_TW.Quality 	PMMATT_NORMAL/Matte Paper - Heavyweight - 標準:""
-*Quality PMMATT_HIGH/Matte Paper - Heavyweight - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMMATT_HIGH/フォトマット紙 - きれい:""
-*nl.Quality 	PMMATT_HIGH/Matte Paper - Heavyweight - Beste:""
-*fr.Quality 	PMMATT_HIGH/Papier Mat Epais - supérieure:""
-*de.Quality 	PMMATT_HIGH/Matte Paper-Heavy Weight - Optimales:""
-*it.Quality 	PMMATT_HIGH/Carta matte alto spessore - migliore:""
-*pt.Quality 	PMMATT_HIGH/Papel Mate Espesso - Superior:""
-*es.Quality 	PMMATT_HIGH/Matte Paper-Alto Gramaje - Superior:""
-*ko.Quality 	PMMATT_HIGH/고중량 매트지 - 고급:""
-*zh_CN.Quality 	PMMATT_HIGH/重磅粗面纸 - 优质:""
-*zh_TW.Quality 	PMMATT_HIGH/Matte Paper - Heavyweight - 最高品質:""
-*Quality PMMATT_DRAFT/Matte Paper - Heavyweight - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMMATT_DRAFT/フォトマット紙 - 速い:""
-*nl.Quality 	PMMATT_DRAFT/Matte Paper - Heavyweight - Concept:""
-*fr.Quality 	PMMATT_DRAFT/Papier Mat Epais - Brouillon:""
-*de.Quality 	PMMATT_DRAFT/Matte Paper-Heavy Weight - Entwurf:""
-*it.Quality 	PMMATT_DRAFT/Carta matte alto spessore - Bozza:""
-*pt.Quality 	PMMATT_DRAFT/Papel Mate Espesso - Prova:""
-*es.Quality 	PMMATT_DRAFT/Matte Paper-Alto Gramaje - Borrador:""
-*ko.Quality 	PMMATT_DRAFT/고중량 매트지 - 잉크절약(Draft):""
-*zh_CN.Quality 	PMMATT_DRAFT/重磅粗面纸 - 经济:""
-*zh_TW.Quality 	PMMATT_DRAFT/Matte Paper - Heavyweight - 草稿:""
-*Quality IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	IRON_NORMAL/アイロンプリントペーパー - 標準:""
-*nl.Quality 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standaard:""
-*fr.Quality 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard:""
-*de.Quality 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard:""
-*it.Quality 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard:""
-*pt.Quality 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Normal:""
-*es.Quality 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Estándar:""
-*ko.Quality 	IRON_NORMAL/Cool Peel 열전사 용지 - 표준:""
-*zh_CN.Quality 	IRON_NORMAL/T恤转印纸 - 标准:""
-*zh_TW.Quality 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - 標準:""
-*Quality CDDVD_NORMAL/CD/DVD - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	CDDVD_NORMAL/CD/DVD レーベル - 標準:""
-*nl.Quality 	CDDVD_NORMAL/CD/DVD - Standaard:""
-*fr.Quality 	CDDVD_NORMAL/CD/DVD - Standard:""
-*de.Quality 	CDDVD_NORMAL/CD/DVD - Standard:""
-*it.Quality 	CDDVD_NORMAL/CD/DVD - Standard:""
-*pt.Quality 	CDDVD_NORMAL/CD/DVD - Normal:""
-*es.Quality 	CDDVD_NORMAL/CD/DVD - Estándar:""
-*ko.Quality 	CDDVD_NORMAL/CD/DVD - 표준:""
-*zh_CN.Quality 	CDDVD_NORMAL/CD/DVD - 标准:""
-*zh_TW.Quality 	CDDVD_NORMAL/CD/DVD - 標準:""
-*Quality IJPC_NORMAL/Ink Jet Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	IJPC_NORMAL/官製ハガキ(インクジェット紙) - 標準:""
-*nl.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standaard:""
-*fr.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*de.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*it.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*pt.Quality 	IJPC_NORMAL/Ink Jet Postcard - Normal:""
-*es.Quality 	IJPC_NORMAL/Ink Jet Postcard - Estándar:""
-*ko.Quality 	IJPC_NORMAL/엽서(잉크젯 전용) - 표준:""
-*zh_CN.Quality 	IJPC_NORMAL/喷墨明信片 - 标准:""
-*zh_TW.Quality 	IJPC_NORMAL/Ink Jet Postcard - 標準:""
-*Quality IJPC_HIGH/Ink Jet Postcard - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	IJPC_HIGH/官製ハガキ(インクジェット紙) - きれい:""
-*nl.Quality 	IJPC_HIGH/Ink Jet Postcard - Beste:""
-*fr.Quality 	IJPC_HIGH/Ink Jet Postcard - supérieure:""
-*de.Quality 	IJPC_HIGH/Ink Jet Postcard - Optimales:""
-*it.Quality 	IJPC_HIGH/Ink Jet Postcard - migliore:""
-*pt.Quality 	IJPC_HIGH/Ink Jet Postcard - Superior:""
-*es.Quality 	IJPC_HIGH/Ink Jet Postcard - Superior:""
-*ko.Quality 	IJPC_HIGH/엽서(잉크젯 전용) - 고급:""
-*zh_CN.Quality 	IJPC_HIGH/喷墨明信片 - 优质:""
-*zh_TW.Quality 	IJPC_HIGH/Ink Jet Postcard - 最高品質:""
-*Quality IJPC_DRAFT/Ink Jet Postcard - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	IJPC_DRAFT/官製ハガキ(インクジェット紙) - 速い:""
-*nl.Quality 	IJPC_DRAFT/Ink Jet Postcard - Concept:""
-*fr.Quality 	IJPC_DRAFT/Ink Jet Postcard - Brouillon:""
-*de.Quality 	IJPC_DRAFT/Ink Jet Postcard - Entwurf:""
-*it.Quality 	IJPC_DRAFT/Ink Jet Postcard - Bozza:""
-*pt.Quality 	IJPC_DRAFT/Ink Jet Postcard - Prova:""
-*es.Quality 	IJPC_DRAFT/Ink Jet Postcard - Borrador:""
-*ko.Quality 	IJPC_DRAFT/엽서(잉크젯 전용) - 잉크절약(Draft):""
-*zh_CN.Quality 	IJPC_DRAFT/喷墨明信片 - 经济:""
-*zh_TW.Quality 	IJPC_DRAFT/Ink Jet Postcard - 草稿:""
-*Quality GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYHAGAKI_NORMAL/郵便光沢ハガキ - 標準:""
-*nl.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standaard:""
-*fr.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
-*de.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
-*it.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
-*pt.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Normal:""
-*es.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Estándar:""
-*ko.Quality 	GLOSSYHAGAKI_NORMAL/엽서(광택) - 표준:""
-*zh_CN.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 标准:""
-*zh_TW.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 標準:""
-*Quality GLOSSYHAGAKI_HIGH/Glossy Postcard - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYHAGAKI_HIGH/郵便光沢ハガキ - きれい:""
-*nl.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Beste:""
-*fr.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - supérieure:""
-*de.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Optimales:""
-*it.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - migliore:""
-*pt.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Superior:""
-*es.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Superior:""
-*ko.Quality 	GLOSSYHAGAKI_HIGH/엽서(광택) - 고급:""
-*zh_CN.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - 优质:""
-*zh_TW.Quality 	GLOSSYHAGAKI_HIGH/Glossy Postcard - 最高品質:""
-*Quality GLOSSYHAGAKI_DRAFT/Glossy Postcard - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYHAGAKI_DRAFT/郵便光沢ハガキ - 速い:""
-*nl.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Concept:""
-*fr.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Brouillon:""
-*de.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Entwurf:""
-*it.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Bozza:""
-*pt.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Prova:""
-*es.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Borrador:""
-*ko.Quality 	GLOSSYHAGAKI_DRAFT/엽서(광택) - 잉크절약(Draft):""
-*zh_CN.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - 经济:""
-*zh_TW.Quality 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - 草稿:""
-*Quality MINIPHOTO_NORMAL/Photo Stickers - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	MINIPHOTO_NORMAL/ミニフォトシール - 標準:""
-*nl.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standaard:""
-*fr.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*de.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*it.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*pt.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Normal:""
-*es.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Estándar:""
-*ko.Quality 	MINIPHOTO_NORMAL/포토 스티커 - 표준:""
-*zh_CN.Quality 	MINIPHOTO_NORMAL/妙妙贴纸 - 标准:""
-*zh_TW.Quality 	MINIPHOTO_NORMAL/Photo Stickers - 標準:""
-*CloseUI: *Quality
+*OpenUI *MediaType/Media Type: PickOne
+*OrderDependency: 20 AnySetup *MediaType
+*DefaultMediaType: PLAIN_NORMAL
+*ja.Translation 	MediaType/品質:""
+*nl.Translation 	MediaType/Kwaliteit:""
+*fr.Translation 	MediaType/Qualité:""
+*de.Translation 	MediaType/Qualität:""
+*it.Translation 	MediaType/Qualità:""
+*pt.Translation 	MediaType/Qualidade:""
+*es.Translation 	MediaType/Calidad:""
+*ko.Translation 	MediaType/품질:""
+*zh_CN.Translation 	MediaType/质量:""
+*zh_TW.Translation 	MediaType/品質:""
+*MediaType PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLAIN_NORMAL/普通紙 - 標準:""
+*nl.MediaType 	PLAIN_NORMAL/Gewoon papier - Standaard:""
+*fr.MediaType 	PLAIN_NORMAL/Papier ordinaire - Standard:""
+*de.MediaType 	PLAIN_NORMAL/Normalpapier - Standard:""
+*it.MediaType 	PLAIN_NORMAL/carte comuni - Standard:""
+*pt.MediaType 	PLAIN_NORMAL/Papel Normal - Normal:""
+*es.MediaType 	PLAIN_NORMAL/Papel Normal - Estándar:""
+*ko.MediaType 	PLAIN_NORMAL/일반 용지 - 표준:""
+*zh_CN.MediaType 	PLAIN_NORMAL/普通纸 - 标准:""
+*zh_TW.MediaType 	PLAIN_NORMAL/Plain Paper - 標準:""
+*MediaType PLAIN_HIGH/Plain Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLAIN_HIGH/普通紙 - きれい:""
+*nl.MediaType 	PLAIN_HIGH/Gewoon papier - Beste:""
+*fr.MediaType 	PLAIN_HIGH/Papier ordinaire - supérieure:""
+*de.MediaType 	PLAIN_HIGH/Normalpapier - Optimales:""
+*it.MediaType 	PLAIN_HIGH/carte comuni - migliore:""
+*pt.MediaType 	PLAIN_HIGH/Papel Normal - Superior:""
+*es.MediaType 	PLAIN_HIGH/Papel Normal - Superior:""
+*ko.MediaType 	PLAIN_HIGH/일반 용지 - 고급:""
+*zh_CN.MediaType 	PLAIN_HIGH/普通纸 - 优质:""
+*zh_TW.MediaType 	PLAIN_HIGH/Plain Paper - 最高品質:""
+*MediaType PLAIN_DRAFT/Plain Paper - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLAIN_DRAFT/普通紙 - 速い:""
+*nl.MediaType 	PLAIN_DRAFT/Gewoon papier - Concept:""
+*fr.MediaType 	PLAIN_DRAFT/Papier ordinaire - Brouillon:""
+*de.MediaType 	PLAIN_DRAFT/Normalpapier - Entwurf:""
+*it.MediaType 	PLAIN_DRAFT/carte comuni - Bozza:""
+*pt.MediaType 	PLAIN_DRAFT/Papel Normal - Prova:""
+*es.MediaType 	PLAIN_DRAFT/Papel Normal - Borrador:""
+*ko.MediaType 	PLAIN_DRAFT/일반 용지 - 잉크절약(Draft):""
+*zh_CN.MediaType 	PLAIN_DRAFT/普通纸 - 经济:""
+*zh_TW.MediaType 	PLAIN_DRAFT/Plain Paper - 草稿:""
+*MediaType PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
+*nl.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
+*fr.MediaType 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
+*de.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
+*it.MediaType 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
+*pt.MediaType 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
+*es.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
+*ko.MediaType 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
+*zh_CN.MediaType 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
+*zh_TW.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
+*MediaType PMPHOTO_HIGH/Premium Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMPHOTO_HIGH/写真用紙＜光沢＞ - きれい:""
+*nl.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Beste:""
+*fr.MediaType 	PMPHOTO_HIGH/Papier Photo Glacé Premium - supérieure:""
+*de.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Optimales:""
+*it.MediaType 	PMPHOTO_HIGH/Carta Fotografica Lucida Premium - migliore:""
+*pt.MediaType 	PMPHOTO_HIGH/Papel Fotográfico Brilhante Premium - Superior:""
+*es.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Superior:""
+*ko.MediaType 	PMPHOTO_HIGH/프리미엄 광택 사진 용지 - 고급:""
+*zh_CN.MediaType 	PMPHOTO_HIGH/高质量光泽照片纸 - 优质:""
+*zh_TW.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - 最高品質:""
+*MediaType PMPHOTO_DRAFT/Premium Glossy Photo Paper - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMPHOTO_DRAFT/写真用紙＜光沢＞ - 速い:""
+*nl.MediaType 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - Concept:""
+*fr.MediaType 	PMPHOTO_DRAFT/Papier Photo Glacé Premium - Brouillon:""
+*de.MediaType 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - Entwurf:""
+*it.MediaType 	PMPHOTO_DRAFT/Carta Fotografica Lucida Premium - Bozza:""
+*pt.MediaType 	PMPHOTO_DRAFT/Papel Fotográfico Brilhante Premium - Prova:""
+*es.MediaType 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - Borrador:""
+*ko.MediaType 	PMPHOTO_DRAFT/프리미엄 광택 사진 용지 - 잉크절약(Draft):""
+*zh_CN.MediaType 	PMPHOTO_DRAFT/高质量光泽照片纸 - 经济:""
+*zh_TW.MediaType 	PMPHOTO_DRAFT/Premium Glossy Photo Paper - 草稿:""
+*MediaType PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLATINA_NORMAL/写真用紙クリスピア＜高光沢＞ - 標準:""
+*nl.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standaard:""
+*fr.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*de.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*it.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*pt.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Normal:""
+*es.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Estándar:""
+*ko.MediaType 	PLATINA_NORMAL/광택 사진 용지(Ultra) - 표준:""
+*zh_CN.MediaType 	PLATINA_NORMAL/爱普生超级光泽纸 - 标准:""
+*zh_TW.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - 標準:""
+*MediaType PLATINA_HIGH/Ultra Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLATINA_HIGH/写真用紙クリスピア＜高光沢＞ - きれい:""
+*nl.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Beste:""
+*fr.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - supérieure:""
+*de.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Optimales:""
+*it.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - migliore:""
+*pt.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
+*es.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
+*ko.MediaType 	PLATINA_HIGH/광택 사진 용지(Ultra) - 고급:""
+*zh_CN.MediaType 	PLATINA_HIGH/爱普生超级光泽纸 - 优质:""
+*zh_TW.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - 最高品質:""
+*MediaType PLATINA_DRAFT/Ultra Glossy Photo Paper - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLATINA_DRAFT/写真用紙クリスピア＜高光沢＞ - 速い:""
+*nl.MediaType 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Concept:""
+*fr.MediaType 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Brouillon:""
+*de.MediaType 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Entwurf:""
+*it.MediaType 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Bozza:""
+*pt.MediaType 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Prova:""
+*es.MediaType 	PLATINA_DRAFT/Ultra Glossy Photo Paper - Borrador:""
+*ko.MediaType 	PLATINA_DRAFT/광택 사진 용지(Ultra) - 잉크절약(Draft):""
+*zh_CN.MediaType 	PLATINA_DRAFT/爱普生超级光泽纸 - 经济:""
+*zh_TW.MediaType 	PLATINA_DRAFT/Ultra Glossy Photo Paper - 草稿:""
+*MediaType PMMATT_NORMAL/Matte Paper - Heavyweight - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMMATT_NORMAL/フォトマット紙 - 標準:""
+*nl.MediaType 	PMMATT_NORMAL/Matte Paper - Heavyweight - Standaard:""
+*fr.MediaType 	PMMATT_NORMAL/Papier Mat Epais - Standard:""
+*de.MediaType 	PMMATT_NORMAL/Matte Paper-Heavy Weight - Standard:""
+*it.MediaType 	PMMATT_NORMAL/Carta matte alto spessore - Standard:""
+*pt.MediaType 	PMMATT_NORMAL/Papel Mate Espesso - Normal:""
+*es.MediaType 	PMMATT_NORMAL/Matte Paper-Alto Gramaje - Estándar:""
+*ko.MediaType 	PMMATT_NORMAL/고중량 매트지 - 표준:""
+*zh_CN.MediaType 	PMMATT_NORMAL/重磅粗面纸 - 标准:""
+*zh_TW.MediaType 	PMMATT_NORMAL/Matte Paper - Heavyweight - 標準:""
+*MediaType PMMATT_HIGH/Matte Paper - Heavyweight - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMMATT_HIGH/フォトマット紙 - きれい:""
+*nl.MediaType 	PMMATT_HIGH/Matte Paper - Heavyweight - Beste:""
+*fr.MediaType 	PMMATT_HIGH/Papier Mat Epais - supérieure:""
+*de.MediaType 	PMMATT_HIGH/Matte Paper-Heavy Weight - Optimales:""
+*it.MediaType 	PMMATT_HIGH/Carta matte alto spessore - migliore:""
+*pt.MediaType 	PMMATT_HIGH/Papel Mate Espesso - Superior:""
+*es.MediaType 	PMMATT_HIGH/Matte Paper-Alto Gramaje - Superior:""
+*ko.MediaType 	PMMATT_HIGH/고중량 매트지 - 고급:""
+*zh_CN.MediaType 	PMMATT_HIGH/重磅粗面纸 - 优质:""
+*zh_TW.MediaType 	PMMATT_HIGH/Matte Paper - Heavyweight - 最高品質:""
+*MediaType PMMATT_DRAFT/Matte Paper - Heavyweight - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMMATT_DRAFT/フォトマット紙 - 速い:""
+*nl.MediaType 	PMMATT_DRAFT/Matte Paper - Heavyweight - Concept:""
+*fr.MediaType 	PMMATT_DRAFT/Papier Mat Epais - Brouillon:""
+*de.MediaType 	PMMATT_DRAFT/Matte Paper-Heavy Weight - Entwurf:""
+*it.MediaType 	PMMATT_DRAFT/Carta matte alto spessore - Bozza:""
+*pt.MediaType 	PMMATT_DRAFT/Papel Mate Espesso - Prova:""
+*es.MediaType 	PMMATT_DRAFT/Matte Paper-Alto Gramaje - Borrador:""
+*ko.MediaType 	PMMATT_DRAFT/고중량 매트지 - 잉크절약(Draft):""
+*zh_CN.MediaType 	PMMATT_DRAFT/重磅粗面纸 - 经济:""
+*zh_TW.MediaType 	PMMATT_DRAFT/Matte Paper - Heavyweight - 草稿:""
+*MediaType IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	IRON_NORMAL/アイロンプリントペーパー - 標準:""
+*nl.MediaType 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standaard:""
+*fr.MediaType 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard:""
+*de.MediaType 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard:""
+*it.MediaType 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Standard:""
+*pt.MediaType 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Normal:""
+*es.MediaType 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - Estándar:""
+*ko.MediaType 	IRON_NORMAL/Cool Peel 열전사 용지 - 표준:""
+*zh_CN.MediaType 	IRON_NORMAL/T恤转印纸 - 标准:""
+*zh_TW.MediaType 	IRON_NORMAL/Iron-On Cool Peel Transfer Paper - 標準:""
+*MediaType CDDVD_NORMAL/CD/DVD - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	CDDVD_NORMAL/CD/DVD レーベル - 標準:""
+*nl.MediaType 	CDDVD_NORMAL/CD/DVD - Standaard:""
+*fr.MediaType 	CDDVD_NORMAL/CD/DVD - Standard:""
+*de.MediaType 	CDDVD_NORMAL/CD/DVD - Standard:""
+*it.MediaType 	CDDVD_NORMAL/CD/DVD - Standard:""
+*pt.MediaType 	CDDVD_NORMAL/CD/DVD - Normal:""
+*es.MediaType 	CDDVD_NORMAL/CD/DVD - Estándar:""
+*ko.MediaType 	CDDVD_NORMAL/CD/DVD - 표준:""
+*zh_CN.MediaType 	CDDVD_NORMAL/CD/DVD - 标准:""
+*zh_TW.MediaType 	CDDVD_NORMAL/CD/DVD - 標準:""
+*MediaType IJPC_NORMAL/Ink Jet Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	IJPC_NORMAL/官製ハガキ(インクジェット紙) - 標準:""
+*nl.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standaard:""
+*fr.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*de.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*it.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*pt.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Normal:""
+*es.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Estándar:""
+*ko.MediaType 	IJPC_NORMAL/엽서(잉크젯 전용) - 표준:""
+*zh_CN.MediaType 	IJPC_NORMAL/喷墨明信片 - 标准:""
+*zh_TW.MediaType 	IJPC_NORMAL/Ink Jet Postcard - 標準:""
+*MediaType IJPC_HIGH/Ink Jet Postcard - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	IJPC_HIGH/官製ハガキ(インクジェット紙) - きれい:""
+*nl.MediaType 	IJPC_HIGH/Ink Jet Postcard - Beste:""
+*fr.MediaType 	IJPC_HIGH/Ink Jet Postcard - supérieure:""
+*de.MediaType 	IJPC_HIGH/Ink Jet Postcard - Optimales:""
+*it.MediaType 	IJPC_HIGH/Ink Jet Postcard - migliore:""
+*pt.MediaType 	IJPC_HIGH/Ink Jet Postcard - Superior:""
+*es.MediaType 	IJPC_HIGH/Ink Jet Postcard - Superior:""
+*ko.MediaType 	IJPC_HIGH/엽서(잉크젯 전용) - 고급:""
+*zh_CN.MediaType 	IJPC_HIGH/喷墨明信片 - 优质:""
+*zh_TW.MediaType 	IJPC_HIGH/Ink Jet Postcard - 最高品質:""
+*MediaType IJPC_DRAFT/Ink Jet Postcard - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	IJPC_DRAFT/官製ハガキ(インクジェット紙) - 速い:""
+*nl.MediaType 	IJPC_DRAFT/Ink Jet Postcard - Concept:""
+*fr.MediaType 	IJPC_DRAFT/Ink Jet Postcard - Brouillon:""
+*de.MediaType 	IJPC_DRAFT/Ink Jet Postcard - Entwurf:""
+*it.MediaType 	IJPC_DRAFT/Ink Jet Postcard - Bozza:""
+*pt.MediaType 	IJPC_DRAFT/Ink Jet Postcard - Prova:""
+*es.MediaType 	IJPC_DRAFT/Ink Jet Postcard - Borrador:""
+*ko.MediaType 	IJPC_DRAFT/엽서(잉크젯 전용) - 잉크절약(Draft):""
+*zh_CN.MediaType 	IJPC_DRAFT/喷墨明信片 - 经济:""
+*zh_TW.MediaType 	IJPC_DRAFT/Ink Jet Postcard - 草稿:""
+*MediaType GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	GLOSSYHAGAKI_NORMAL/郵便光沢ハガキ - 標準:""
+*nl.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standaard:""
+*fr.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
+*de.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
+*it.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
+*pt.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Normal:""
+*es.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Estándar:""
+*ko.MediaType 	GLOSSYHAGAKI_NORMAL/엽서(광택) - 표준:""
+*zh_CN.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 标准:""
+*zh_TW.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 標準:""
+*MediaType GLOSSYHAGAKI_HIGH/Glossy Postcard - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	GLOSSYHAGAKI_HIGH/郵便光沢ハガキ - きれい:""
+*nl.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Beste:""
+*fr.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - supérieure:""
+*de.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Optimales:""
+*it.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - migliore:""
+*pt.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Superior:""
+*es.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - Superior:""
+*ko.MediaType 	GLOSSYHAGAKI_HIGH/엽서(광택) - 고급:""
+*zh_CN.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - 优质:""
+*zh_TW.MediaType 	GLOSSYHAGAKI_HIGH/Glossy Postcard - 最高品質:""
+*MediaType GLOSSYHAGAKI_DRAFT/Glossy Postcard - Draft: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	GLOSSYHAGAKI_DRAFT/郵便光沢ハガキ - 速い:""
+*nl.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Concept:""
+*fr.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Brouillon:""
+*de.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Entwurf:""
+*it.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Bozza:""
+*pt.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Prova:""
+*es.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - Borrador:""
+*ko.MediaType 	GLOSSYHAGAKI_DRAFT/엽서(광택) - 잉크절약(Draft):""
+*zh_CN.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - 经济:""
+*zh_TW.MediaType 	GLOSSYHAGAKI_DRAFT/Glossy Postcard - 草稿:""
+*MediaType MINIPHOTO_NORMAL/Photo Stickers - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	MINIPHOTO_NORMAL/ミニフォトシール - 標準:""
+*nl.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standaard:""
+*fr.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
+*de.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
+*it.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
+*pt.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Normal:""
+*es.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Estándar:""
+*ko.MediaType 	MINIPHOTO_NORMAL/포토 스티커 - 표준:""
+*zh_CN.MediaType 	MINIPHOTO_NORMAL/妙妙贴纸 - 标准:""
+*zh_TW.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - 標準:""
+*CloseUI: *MediaType
 
 *OpenUI *Ink/Ink: PickOne
 *OrderDependency: 30 AnySetup *Ink

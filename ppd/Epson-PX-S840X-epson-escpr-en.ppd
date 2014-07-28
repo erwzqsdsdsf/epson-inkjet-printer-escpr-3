@@ -7,12 +7,12 @@
 *FileVersion: "1.1"
 *LanguageVersion: English
 *LanguageEncoding: ISOLatin1
-*PCFileName: "EPPX-S840.PPD"
-*Product: "(EPSON PX-S840)"
+*PCFileName: "EPPX-S840X.PPD"
+*Product: "(EPSON PX-S840X)"
 *PSVersion: "(3010.000) 550"
-*ModelName: "EPSON PX-S840"
-*ShortNickName: "EPSON PX-S840"
-*NickName: "EPSON PX-S840 , Epson Inkjet Printer Driver (ESC/P-R) for Linux"
+*ModelName: "EPSON PX-S840X"
+*ShortNickName: "EPSON PX-S840X"
+*NickName: "EPSON PX-S840X , Epson Inkjet Printer Driver (ESC/P-R) for Linux"
 *Manufacturer: "Epson"
 *LanguageLevel: "3"
 *ColorDevice: True
@@ -27,309 +27,309 @@
 *cupsFilter: "application/vnd.cups-raster 0 epson-escpr-wrapper"
 *LandscapeOrientation: Plus90
 *VariablePaperSize: False
-*1284DeviceID: "MFG:Epson;MDL:PX-S840;DES:EPSON PX-S840;"
+*1284DeviceID: "MFG:Epson;MDL:PX-S840X;DES:EPSON PX-S840X;"
 
 
-*OpenUI *Quality/Print Quality: PickOne
-*OrderDependency: 20 AnySetup *Quality
-*DefaultQuality: PLAIN_NORMAL
-*Quality PLAIN_HIGH/Plain Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PLAIN_NORMAL/Plain Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality LETTERHEAD_HIGH/Letterhead-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality LETTERHEAD_NORMAL/Letterhead-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality RECYCLED_HIGH/Recycled-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality RECYCLED_NORMAL/Recycled-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality COLORPAPER_HIGH/Color-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality COLORPAPER_NORMAL/Color-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PREPRINTED_HIGH/Preprinted-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PREPRINTED_NORMAL/Preprinted-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality SFINE_HIGH/EPSON Super Fine Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality SFINE_NORMAL/EPSON Super Fine Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PMMATT_HIGH/EPSON Photo Matte Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PMPHOTO_HIGH/EPSON Photo Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PMPHOTO_NORMAL/EPSON Photo Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality RCPC_HIGH/Postcard-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality RCPC_NORMAL/Postcard-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality IJPC_HIGH/Ink Jet Postcard-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality IJPC_NORMAL/Ink Jet Postcard-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality ENV_HIGH/Envelope-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality ENV_NORMAL/Envelope-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*Quality THICK_HIGH/Thick-Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
-*Quality THICK_NORMAL/Thick-Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
-*nl.Translation Quality/Afdrukkwaliteit: ""
-*fr.Translation Quality/Qualité: ""
-*de.Translation Quality/Qualität: ""
-*it.Translation Quality/Qualità: ""
-*ja.Translation Quality/印刷品質: ""
-*pt.Translation Quality/Qualidade: ""
-*es.Translation Quality/Resolución: ""
-*ko.Translation Quality/인쇄 품질: ""
-*zh_TW.Translation Quality/列印品質: ""
-*zh_CN.Translation Quality/打印质量: ""
-*nl.Quality PLAIN_HIGH/Gewoon papier-Kwaliteit: ""
-*nl.Quality PLAIN_NORMAL/Gewoon papier-Standaard: ""
-*nl.Quality LETTERHEAD_HIGH/Briefhoofd-Kwaliteit: ""
-*nl.Quality LETTERHEAD_NORMAL/Briefhoofd-Standaard: ""
-*nl.Quality RECYCLED_HIGH/Gerecycleerd-Kwaliteit: ""
-*nl.Quality RECYCLED_NORMAL/Gerecycleerd-Standaard: ""
-*nl.Quality COLORPAPER_HIGH/Kleur-Kwaliteit: ""
-*nl.Quality COLORPAPER_NORMAL/Kleur-Standaard: ""
-*nl.Quality PREPRINTED_HIGH/Voorbedrukt-Kwaliteit: ""
-*nl.Quality PREPRINTED_NORMAL/Voorbedrukt-Standaard: ""
-*nl.Quality SFINE_HIGH/EPSON Super Fine Paper-Kwaliteit: ""
-*nl.Quality SFINE_NORMAL/EPSON Super Fine Paper-Standaard: ""
-*nl.Quality PMMATT_HIGH/EPSON Photo Matte Paper-Kwaliteit: ""
-*nl.Quality PMMATT_NORMAL/EPSON Photo Matte Paper-Standaard: ""
-*nl.Quality PMPHOTO_HIGH/EPSON Photo Paper-Kwaliteit: ""
-*nl.Quality PMPHOTO_NORMAL/EPSON Photo Paper-Standaard: ""
-*nl.Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-Kwaliteit: ""
-*nl.Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standaard: ""
-*nl.Quality RCPC_HIGH/Briefkaart-Kwaliteit: ""
-*nl.Quality RCPC_NORMAL/Briefkaart-Standaard: ""
-*nl.Quality IJPC_HIGH/Briefkaart inkjet-Kwaliteit: ""
-*nl.Quality IJPC_NORMAL/Briefkaart inkjet-Standaard: ""
-*nl.Quality ENV_HIGH/Enveloppe-Kwaliteit: ""
-*nl.Quality ENV_NORMAL/Enveloppe-Standaard: ""
-*nl.Quality THICK_HIGH/Dik papier-Kwaliteit: ""
-*nl.Quality THICK_NORMAL/Dik papier-Standaard: ""
-*fr.Quality PLAIN_HIGH/Papier Ordinaire-Qualité: ""
-*fr.Quality PLAIN_NORMAL/Papier Ordinaire-Standard: ""
-*fr.Quality LETTERHEAD_HIGH/En tête-Qualité: ""
-*fr.Quality LETTERHEAD_NORMAL/En tête-Standard: ""
-*fr.Quality RECYCLED_HIGH/Recyclé-Qualité: ""
-*fr.Quality RECYCLED_NORMAL/Recyclé-Standard: ""
-*fr.Quality COLORPAPER_HIGH/Couleur-Qualité: ""
-*fr.Quality COLORPAPER_NORMAL/Couleur-Standard: ""
-*fr.Quality PREPRINTED_HIGH/Pré-imprimé-Qualité: ""
-*fr.Quality PREPRINTED_NORMAL/Pré-imprimé-Standard: ""
-*fr.Quality SFINE_HIGH/EPSON Super Fine Paper-Qualité: ""
-*fr.Quality SFINE_NORMAL/EPSON Super Fine Paper-Standard: ""
-*fr.Quality PMMATT_HIGH/EPSON Photo Matte Paper-Qualité: ""
-*fr.Quality PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: ""
-*fr.Quality PMPHOTO_HIGH/EPSON Photo Paper-Qualité: ""
-*fr.Quality PMPHOTO_NORMAL/EPSON Photo Paper-Standard: ""
-*fr.Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-Qualité: ""
-*fr.Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: ""
-*fr.Quality RCPC_HIGH/Carte post<2E>-Qualité: ""
-*fr.Quality RCPC_NORMAL/Carte post<2E>-Standard: ""
-*fr.Quality IJPC_HIGH/Carte jet d'encre-Qualité: ""
-*fr.Quality IJPC_NORMAL/Carte jet d'encre-Standard: ""
-*fr.Quality ENV_HIGH/Enveloppe-Qualité: ""
-*fr.Quality ENV_NORMAL/Enveloppe-Standard: ""
-*fr.Quality THICK_HIGH/Papier épais-Qualité: ""
-*fr.Quality THICK_NORMAL/Papier épais-Standard: ""
-*de.Quality PLAIN_HIGH/Normalpapier-Qualität: ""
-*de.Quality PLAIN_NORMAL/Normalpapier-Standard: ""
-*de.Quality LETTERHEAD_HIGH/Letterhead-Qualität: ""
-*de.Quality LETTERHEAD_NORMAL/Letterhead-Standard: ""
-*de.Quality RECYCLED_HIGH/Recycling Papier-Qualität: ""
-*de.Quality RECYCLED_NORMAL/Recycling Papier-Standard: ""
-*de.Quality COLORPAPER_HIGH/Farbe-Qualität: ""
-*de.Quality COLORPAPER_NORMAL/Farbe-Standard: ""
-*de.Quality PREPRINTED_HIGH/Vordruck-Qualität: ""
-*de.Quality PREPRINTED_NORMAL/Vordruck-Standard: ""
-*de.Quality SFINE_HIGH/EPSON Super Fine Paper-Qualität: ""
-*de.Quality SFINE_NORMAL/EPSON Super Fine Paper-Standard: ""
-*de.Quality PMMATT_HIGH/EPSON Photo Matte Paper-Qualität: ""
-*de.Quality PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: ""
-*de.Quality PMPHOTO_HIGH/EPSON Photo Paper-Qualität: ""
-*de.Quality PMPHOTO_NORMAL/EPSON Photo Paper-Standard: ""
-*de.Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-Qualität: ""
-*de.Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: ""
-*de.Quality RCPC_HIGH/Postkarte-Qualität: ""
-*de.Quality RCPC_NORMAL/Postkarte-Standard: ""
-*de.Quality IJPC_HIGH/Tintenst<2E>-Postkarte-Qualität: ""
-*de.Quality IJPC_NORMAL/Tintenst<2E>-Postkarte-Standard: ""
-*de.Quality ENV_HIGH/Umschlag-Qualität: ""
-*de.Quality ENV_NORMAL/Umschlag-Standard: ""
-*de.Quality THICK_HIGH/Dickeres Papier-Qualität: ""
-*de.Quality THICK_NORMAL/Dickeres Papier-Standard: ""
-*it.Quality PLAIN_HIGH/Carta comune-Qualità: ""
-*it.Quality PLAIN_NORMAL/Carta comune-Standard: ""
-*it.Quality LETTERHEAD_HIGH/Intestata-Qualità: ""
-*it.Quality LETTERHEAD_NORMAL/Intestata-Standard: ""
-*it.Quality RECYCLED_HIGH/Riciclata-Qualità: ""
-*it.Quality RECYCLED_NORMAL/Riciclata-Standard: ""
-*it.Quality COLORPAPER_HIGH/Colore-Qualità: ""
-*it.Quality COLORPAPER_NORMAL/Colore-Standard: ""
-*it.Quality PREPRINTED_HIGH/Prestamp<2E>-Qualità: ""
-*it.Quality PREPRINTED_NORMAL/Prestamp<2E>-Standard: ""
-*it.Quality SFINE_HIGH/EPSON Super Fine Paper-Qualità: ""
-*it.Quality SFINE_NORMAL/EPSON Super Fine Paper-Standard: ""
-*it.Quality PMMATT_HIGH/EPSON Photo Matte Paper-Qualità: ""
-*it.Quality PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: ""
-*it.Quality PMPHOTO_HIGH/EPSON Photo Paper-Qualità: ""
-*it.Quality PMPHOTO_NORMAL/EPSON Photo Paper-Standard: ""
-*it.Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-Qualità: ""
-*it.Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: ""
-*it.Quality RCPC_HIGH/Cartolina-Qualità: ""
-*it.Quality RCPC_NORMAL/Cartolina-Standard: ""
-*it.Quality IJPC_HIGH/Cartolina getto inchiostro-Qualità: ""
-*it.Quality IJPC_NORMAL/Cartolina getto inchiostro-Standard: ""
-*it.Quality ENV_HIGH/Busta-Qualità: ""
-*it.Quality ENV_NORMAL/Busta-Standard: ""
-*it.Quality THICK_HIGH/Carta spessa-Qualità: ""
-*it.Quality THICK_NORMAL/Carta spessa-Standard: ""
-*ja.Quality PLAIN_HIGH/普通紙-きれい: ""
-*ja.Quality PLAIN_NORMAL/普通紙-標準: ""
-*ja.Quality LETTERHEAD_HIGH/レターヘッド-きれい: ""
-*ja.Quality LETTERHEAD_NORMAL/レターヘッド-標準: ""
-*ja.Quality RECYCLED_HIGH/再生紙-きれい: ""
-*ja.Quality RECYCLED_NORMAL/再生紙-標準: ""
-*ja.Quality COLORPAPER_HIGH/色つき-きれい: ""
-*ja.Quality COLORPAPER_NORMAL/色つき-標準: ""
-*ja.Quality PREPRINTED_HIGH/印刷済み-きれい: ""
-*ja.Quality PREPRINTED_NORMAL/印刷済み-標準: ""
-*ja.Quality SFINE_HIGH/EPSON スーパーファイン紙-きれい: ""
-*ja.Quality SFINE_NORMAL/EPSON スーパーファイン紙-標準: ""
-*ja.Quality PMMATT_HIGH/EPSON フォトマット紙-きれい: ""
-*ja.Quality PMMATT_NORMAL/EPSON フォトマット紙-標準: ""
-*ja.Quality PMPHOTO_HIGH/EPSON 写真用紙-きれい: ""
-*ja.Quality PMPHOTO_NORMAL/EPSON 写真用紙-標準: ""
-*ja.Quality PLATINA_HIGH/EPSON 写真用紙クリスピア-きれい: ""
-*ja.Quality PLATINA_NORMAL/EPSON 写真用紙クリスピア-標準: ""
-*ja.Quality RCPC_HIGH/郵便ハガキ-きれい: ""
-*ja.Quality RCPC_NORMAL/郵便ハガキ-標準: ""
-*ja.Quality IJPC_HIGH/郵便ハガキ（インクジェット紙）-きれい: ""
-*ja.Quality IJPC_NORMAL/郵便ハガキ（インクジェット紙）-標準: ""
-*ja.Quality ENV_HIGH/封筒-きれい: ""
-*ja.Quality ENV_NORMAL/封筒-標準: ""
-*ja.Quality THICK_HIGH/厚紙-きれい: ""
-*ja.Quality THICK_NORMAL/厚紙-標準: ""
-*pt.Quality PLAIN_HIGH/Papel normal-Qualidade: ""
-*pt.Quality PLAIN_NORMAL/Papel normal-Padrão: ""
-*pt.Quality LETTERHEAD_HIGH/Timbrado-Qualidade: ""
-*pt.Quality LETTERHEAD_NORMAL/Timbrado-Padrão: ""
-*pt.Quality RECYCLED_HIGH/Reciclado-Qualidade: ""
-*pt.Quality RECYCLED_NORMAL/Reciclado-Padrão: ""
-*pt.Quality COLORPAPER_HIGH/Cor-Qualidade: ""
-*pt.Quality COLORPAPER_NORMAL/Cor-Padrão: ""
-*pt.Quality PREPRINTED_HIGH/Pré-imp<2E>-Qualidade: ""
-*pt.Quality PREPRINTED_NORMAL/Pré-imp<2E>-Padrão: ""
-*pt.Quality SFINE_HIGH/Papel para Resolução Excelente EPSON-Qualidade: ""
-*pt.Quality SFINE_NORMAL/Papel para Resolução Excelente EPSON-Padrão: ""
-*pt.Quality PMMATT_HIGH/Papel Mate Fotográfico EPSON-Qualidade: ""
-*pt.Quality PMMATT_NORMAL/Papel Mate Fotográfico EPSON-Padrão: ""
-*pt.Quality PMPHOTO_HIGH/Papel Fotográfico EPSON-Qualidade: ""
-*pt.Quality PMPHOTO_NORMAL/Papel Fotográfico EPSON-Padrão: ""
-*pt.Quality PLATINA_HIGH/Papel Fotográfico CRISPIA EPSON-Qualidade: ""
-*pt.Quality PLATINA_NORMAL/Papel Fotográfico CRISPIA EPSON-Padrão: ""
-*pt.Quality RCPC_HIGH/Cartão postal-Qualidade: ""
-*pt.Quality RCPC_NORMAL/Cartão postal-Padrão: ""
-*pt.Quality IJPC_HIGH/Postal jato tinta-Qualidade: ""
-*pt.Quality IJPC_NORMAL/Postal jato tinta-Padrão: ""
-*pt.Quality ENV_HIGH/Envelope-Qualidade: ""
-*pt.Quality ENV_NORMAL/Envelope-Padrão: ""
-*pt.Quality THICK_HIGH/Papel espesso-Qualidade: ""
-*pt.Quality THICK_NORMAL/Papel espesso-Padrão: ""
-*es.Quality PLAIN_HIGH/Papel normal-Calidad: ""
-*es.Quality PLAIN_NORMAL/Papel normal-Estándar: ""
-*es.Quality LETTERHEAD_HIGH/Encabezado-Calidad: ""
-*es.Quality LETTERHEAD_NORMAL/Encabezado-Estándar: ""
-*es.Quality RECYCLED_HIGH/Reciclado-Calidad: ""
-*es.Quality RECYCLED_NORMAL/Reciclado-Estándar: ""
-*es.Quality COLORPAPER_HIGH/Color-Calidad: ""
-*es.Quality COLORPAPER_NORMAL/Color-Estándar: ""
-*es.Quality PREPRINTED_HIGH/Preimpreso-Calidad: ""
-*es.Quality PREPRINTED_NORMAL/Preimpreso-Estándar: ""
-*es.Quality SFINE_HIGH/EPSON Super Fine Paper-Calidad: ""
-*es.Quality SFINE_NORMAL/EPSON Super Fine Paper-Estándar: ""
-*es.Quality PMMATT_HIGH/EPSON Photo Matte Paper-Calidad: ""
-*es.Quality PMMATT_NORMAL/EPSON Photo Matte Paper-Estándar: ""
-*es.Quality PMPHOTO_HIGH/EPSON Photo Paper-Calidad: ""
-*es.Quality PMPHOTO_NORMAL/EPSON Photo Paper-Estándar: ""
-*es.Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-Calidad: ""
-*es.Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Estándar: ""
-*es.Quality RCPC_HIGH/Postal-Calidad: ""
-*es.Quality RCPC_NORMAL/Postal-Estándar: ""
-*es.Quality IJPC_HIGH/Postal especial-Calidad: ""
-*es.Quality IJPC_NORMAL/Postal especial-Estándar: ""
-*es.Quality ENV_HIGH/Sobre-Calidad: ""
-*es.Quality ENV_NORMAL/Sobre-Estándar: ""
-*es.Quality THICK_HIGH/Papel grueso-Calidad: ""
-*es.Quality THICK_NORMAL/Papel grueso-Estándar: ""
-*ko.Quality PLAIN_HIGH/일반 용지-품질: ""
-*ko.Quality PLAIN_NORMAL/일반 용지-일반: ""
-*ko.Quality LETTERHEAD_HIGH/레터 헤드-품질: ""
-*ko.Quality LETTERHEAD_NORMAL/레터 헤드-일반: ""
-*ko.Quality RECYCLED_HIGH/재생 용지-품질: ""
-*ko.Quality RECYCLED_NORMAL/재생 용지-일반: ""
-*ko.Quality COLORPAPER_HIGH/컬러-품질: ""
-*ko.Quality COLORPAPER_NORMAL/컬러-일반: ""
-*ko.Quality PREPRINTED_HIGH/이면지-품질: ""
-*ko.Quality PREPRINTED_NORMAL/이면지-일반: ""
-*ko.Quality SFINE_HIGH/EPSON 최고 품질 용지-품질: ""
-*ko.Quality SFINE_NORMAL/EPSON 최고 품질 용지-일반: ""
-*ko.Quality PMMATT_HIGH/EPSON 매트 사진 용지-품질: ""
-*ko.Quality PMMATT_NORMAL/EPSON 매트 사진 용지-일반: ""
-*ko.Quality PMPHOTO_HIGH/EPSON 사진 용지-품질: ""
-*ko.Quality PMPHOTO_NORMAL/EPSON 사진 용지-일반: ""
-*ko.Quality PLATINA_HIGH/EPSON 사진 용지 CRISPIA-품질: ""
-*ko.Quality PLATINA_NORMAL/EPSON 사진 용지 CRISPIA-일반: ""
-*ko.Quality RCPC_HIGH/엽서-품질: ""
-*ko.Quality RCPC_NORMAL/엽서-일반: ""
-*ko.Quality IJPC_HIGH/잉크젯 전용 엽서-품질: ""
-*ko.Quality IJPC_NORMAL/잉크젯 전용 엽서-일반: ""
-*ko.Quality ENV_HIGH/봉투-품질: ""
-*ko.Quality ENV_NORMAL/봉투-일반: ""
-*ko.Quality THICK_HIGH/두꺼운 용지-품질: ""
-*ko.Quality THICK_NORMAL/두꺼운 용지-일반: ""
-*zh_TW.Quality PLAIN_HIGH/Plain Paper-品質: ""
-*zh_TW.Quality PLAIN_NORMAL/Plain Paper-標準: ""
-*zh_TW.Quality LETTERHEAD_HIGH/信頭紙-品質: ""
-*zh_TW.Quality LETTERHEAD_NORMAL/信頭紙-標準: ""
-*zh_TW.Quality RECYCLED_HIGH/再生紙-品質: ""
-*zh_TW.Quality RECYCLED_NORMAL/再生紙-標準: ""
-*zh_TW.Quality COLORPAPER_HIGH/彩色-品質: ""
-*zh_TW.Quality COLORPAPER_NORMAL/彩色-標準: ""
-*zh_TW.Quality PREPRINTED_HIGH/回收紙-品質: ""
-*zh_TW.Quality PREPRINTED_NORMAL/回收紙-標準: ""
-*zh_TW.Quality SFINE_HIGH/EPSON Super Fine Paper-品質: ""
-*zh_TW.Quality SFINE_NORMAL/EPSON Super Fine Paper-標準: ""
-*zh_TW.Quality PMMATT_HIGH/EPSON Photo Matte Paper-品質: ""
-*zh_TW.Quality PMMATT_NORMAL/EPSON Photo Matte Paper-標準: ""
-*zh_TW.Quality PMPHOTO_HIGH/EPSON Photo Paper-品質: ""
-*zh_TW.Quality PMPHOTO_NORMAL/EPSON Photo Paper-標準: ""
-*zh_TW.Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-品質: ""
-*zh_TW.Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-標準: ""
-*zh_TW.Quality RCPC_HIGH/明信片-品質: ""
-*zh_TW.Quality RCPC_NORMAL/明信片-標準: ""
-*zh_TW.Quality IJPC_HIGH/Ink Jet Postcard-品質: ""
-*zh_TW.Quality IJPC_NORMAL/Ink Jet Postcard-標準: ""
-*zh_TW.Quality ENV_HIGH/Envelope-品質: ""
-*zh_TW.Quality ENV_NORMAL/Envelope-標準: ""
-*zh_TW.Quality THICK_HIGH/Thick-Paper-品質: ""
-*zh_TW.Quality THICK_NORMAL/Thick-Paper-標準: ""
-*zh_CN.Quality PLAIN_HIGH/普通纸-质量: ""
-*zh_CN.Quality PLAIN_NORMAL/普通纸-标准: ""
-*zh_CN.Quality LETTERHEAD_HIGH/信笺抬头-质量: ""
-*zh_CN.Quality LETTERHEAD_NORMAL/信笺抬头-标准: ""
-*zh_CN.Quality RECYCLED_HIGH/再生-质量: ""
-*zh_CN.Quality RECYCLED_NORMAL/再生-标准: ""
-*zh_CN.Quality COLORPAPER_HIGH/彩色-质量: ""
-*zh_CN.Quality COLORPAPER_NORMAL/彩色-标准: ""
-*zh_CN.Quality PREPRINTED_HIGH/预打印-质量: ""
-*zh_CN.Quality PREPRINTED_NORMAL/预打印-标准: ""
-*zh_CN.Quality SFINE_HIGH/EPSON Super Fine Paper-质量: ""
-*zh_CN.Quality SFINE_NORMAL/EPSON Super Fine Paper-标准: ""
-*zh_CN.Quality PMMATT_HIGH/EPSON Photo Matte Paper-质量: ""
-*zh_CN.Quality PMMATT_NORMAL/EPSON Photo Matte Paper-标准: ""
-*zh_CN.Quality PMPHOTO_HIGH/EPSON Photo Paper-质量: ""
-*zh_CN.Quality PMPHOTO_NORMAL/EPSON Photo Paper-标准: ""
-*zh_CN.Quality PLATINA_HIGH/EPSON Photo Paper CRISPIA-质量: ""
-*zh_CN.Quality PLATINA_NORMAL/EPSON Photo Paper CRISPIA-标准: ""
-*zh_CN.Quality RCPC_HIGH/明信片-质量: ""
-*zh_CN.Quality RCPC_NORMAL/明信片-标准: ""
-*zh_CN.Quality IJPC_HIGH/喷墨明信片-质量: ""
-*zh_CN.Quality IJPC_NORMAL/喷墨明信片-标准: ""
-*zh_CN.Quality ENV_HIGH/信封-质量: ""
-*zh_CN.Quality ENV_NORMAL/信封-标准: ""
-*zh_CN.Quality THICK_HIGH/厚打印纸-质量: ""
-*zh_CN.Quality THICK_NORMAL/厚打印纸-标准: ""
-*CloseUI: *Quality
+*OpenUI *MediaType/Media Type: PickOne
+*OrderDependency: 20 AnySetup *MediaType
+*DefaultMediaType: PLAIN_NORMAL
+*MediaType PLAIN_HIGH/Plain Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PLAIN_NORMAL/Plain Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType LETTERHEAD_HIGH/Letterhead-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType LETTERHEAD_NORMAL/Letterhead-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType RECYCLED_HIGH/Recycled-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType RECYCLED_NORMAL/Recycled-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType COLORPAPER_HIGH/Color-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType COLORPAPER_NORMAL/Color-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PREPRINTED_HIGH/Preprinted-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PREPRINTED_NORMAL/Preprinted-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType SFINE_HIGH/EPSON Super Fine Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType SFINE_NORMAL/EPSON Super Fine Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PMMATT_HIGH/EPSON Photo Matte Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PMPHOTO_HIGH/EPSON Photo Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PMPHOTO_NORMAL/EPSON Photo Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType RCPC_HIGH/Postcard-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType RCPC_NORMAL/Postcard-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType IJPC_HIGH/Ink Jet Postcard-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType IJPC_NORMAL/Ink Jet Postcard-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType ENV_HIGH/Envelope-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType ENV_NORMAL/Envelope-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType THICK_HIGH/Thick-Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
+*MediaType THICK_NORMAL/Thick-Paper-Standard: "<</HWResolution[360 360]>>setpagedevice"
+*nl.Translation MediaType/Afdrukkwaliteit: ""
+*fr.Translation MediaType/Qualité: ""
+*de.Translation MediaType/Qualität: ""
+*it.Translation MediaType/Qualità: ""
+*ja.Translation MediaType/印刷品質: ""
+*pt.Translation MediaType/Qualidade: ""
+*es.Translation MediaType/Resolución: ""
+*ko.Translation MediaType/인쇄 품질: ""
+*zh_TW.Translation MediaType/列印品質: ""
+*zh_CN.Translation MediaType/打印质量: ""
+*nl.MediaType PLAIN_HIGH/Gewoon papier-Kwaliteit: ""
+*nl.MediaType PLAIN_NORMAL/Gewoon papier-Standaard: ""
+*nl.MediaType LETTERHEAD_HIGH/Briefhoofd-Kwaliteit: ""
+*nl.MediaType LETTERHEAD_NORMAL/Briefhoofd-Standaard: ""
+*nl.MediaType RECYCLED_HIGH/Gerecycleerd-Kwaliteit: ""
+*nl.MediaType RECYCLED_NORMAL/Gerecycleerd-Standaard: ""
+*nl.MediaType COLORPAPER_HIGH/Kleur-Kwaliteit: ""
+*nl.MediaType COLORPAPER_NORMAL/Kleur-Standaard: ""
+*nl.MediaType PREPRINTED_HIGH/Voorbedrukt-Kwaliteit: ""
+*nl.MediaType PREPRINTED_NORMAL/Voorbedrukt-Standaard: ""
+*nl.MediaType SFINE_HIGH/EPSON Super Fine Paper-Kwaliteit: ""
+*nl.MediaType SFINE_NORMAL/EPSON Super Fine Paper-Standaard: ""
+*nl.MediaType PMMATT_HIGH/EPSON Photo Matte Paper-Kwaliteit: ""
+*nl.MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-Standaard: ""
+*nl.MediaType PMPHOTO_HIGH/EPSON Photo Paper-Kwaliteit: ""
+*nl.MediaType PMPHOTO_NORMAL/EPSON Photo Paper-Standaard: ""
+*nl.MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-Kwaliteit: ""
+*nl.MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standaard: ""
+*nl.MediaType RCPC_HIGH/Briefkaart-Kwaliteit: ""
+*nl.MediaType RCPC_NORMAL/Briefkaart-Standaard: ""
+*nl.MediaType IJPC_HIGH/Briefkaart inkjet-Kwaliteit: ""
+*nl.MediaType IJPC_NORMAL/Briefkaart inkjet-Standaard: ""
+*nl.MediaType ENV_HIGH/Enveloppe-Kwaliteit: ""
+*nl.MediaType ENV_NORMAL/Enveloppe-Standaard: ""
+*nl.MediaType THICK_HIGH/Dik papier-Kwaliteit: ""
+*nl.MediaType THICK_NORMAL/Dik papier-Standaard: ""
+*fr.MediaType PLAIN_HIGH/Papier Ordinaire-Qualité: ""
+*fr.MediaType PLAIN_NORMAL/Papier Ordinaire-Standard: ""
+*fr.MediaType LETTERHEAD_HIGH/En tête-Qualité: ""
+*fr.MediaType LETTERHEAD_NORMAL/En tête-Standard: ""
+*fr.MediaType RECYCLED_HIGH/Recyclé-Qualité: ""
+*fr.MediaType RECYCLED_NORMAL/Recyclé-Standard: ""
+*fr.MediaType COLORPAPER_HIGH/Couleur-Qualité: ""
+*fr.MediaType COLORPAPER_NORMAL/Couleur-Standard: ""
+*fr.MediaType PREPRINTED_HIGH/Pré-imprimé-Qualité: ""
+*fr.MediaType PREPRINTED_NORMAL/Pré-imprimé-Standard: ""
+*fr.MediaType SFINE_HIGH/EPSON Super Fine Paper-Qualité: ""
+*fr.MediaType SFINE_NORMAL/EPSON Super Fine Paper-Standard: ""
+*fr.MediaType PMMATT_HIGH/EPSON Photo Matte Paper-Qualité: ""
+*fr.MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: ""
+*fr.MediaType PMPHOTO_HIGH/EPSON Photo Paper-Qualité: ""
+*fr.MediaType PMPHOTO_NORMAL/EPSON Photo Paper-Standard: ""
+*fr.MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-Qualité: ""
+*fr.MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: ""
+*fr.MediaType RCPC_HIGH/Carte post<2E>-Qualité: ""
+*fr.MediaType RCPC_NORMAL/Carte post<2E>-Standard: ""
+*fr.MediaType IJPC_HIGH/Carte jet d'encre-Qualité: ""
+*fr.MediaType IJPC_NORMAL/Carte jet d'encre-Standard: ""
+*fr.MediaType ENV_HIGH/Enveloppe-Qualité: ""
+*fr.MediaType ENV_NORMAL/Enveloppe-Standard: ""
+*fr.MediaType THICK_HIGH/Papier épais-Qualité: ""
+*fr.MediaType THICK_NORMAL/Papier épais-Standard: ""
+*de.MediaType PLAIN_HIGH/Normalpapier-Qualität: ""
+*de.MediaType PLAIN_NORMAL/Normalpapier-Standard: ""
+*de.MediaType LETTERHEAD_HIGH/Letterhead-Qualität: ""
+*de.MediaType LETTERHEAD_NORMAL/Letterhead-Standard: ""
+*de.MediaType RECYCLED_HIGH/Recycling Papier-Qualität: ""
+*de.MediaType RECYCLED_NORMAL/Recycling Papier-Standard: ""
+*de.MediaType COLORPAPER_HIGH/Farbe-Qualität: ""
+*de.MediaType COLORPAPER_NORMAL/Farbe-Standard: ""
+*de.MediaType PREPRINTED_HIGH/Vordruck-Qualität: ""
+*de.MediaType PREPRINTED_NORMAL/Vordruck-Standard: ""
+*de.MediaType SFINE_HIGH/EPSON Super Fine Paper-Qualität: ""
+*de.MediaType SFINE_NORMAL/EPSON Super Fine Paper-Standard: ""
+*de.MediaType PMMATT_HIGH/EPSON Photo Matte Paper-Qualität: ""
+*de.MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: ""
+*de.MediaType PMPHOTO_HIGH/EPSON Photo Paper-Qualität: ""
+*de.MediaType PMPHOTO_NORMAL/EPSON Photo Paper-Standard: ""
+*de.MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-Qualität: ""
+*de.MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: ""
+*de.MediaType RCPC_HIGH/Postkarte-Qualität: ""
+*de.MediaType RCPC_NORMAL/Postkarte-Standard: ""
+*de.MediaType IJPC_HIGH/Tintenst<2E>-Postkarte-Qualität: ""
+*de.MediaType IJPC_NORMAL/Tintenst<2E>-Postkarte-Standard: ""
+*de.MediaType ENV_HIGH/Umschlag-Qualität: ""
+*de.MediaType ENV_NORMAL/Umschlag-Standard: ""
+*de.MediaType THICK_HIGH/Dickeres Papier-Qualität: ""
+*de.MediaType THICK_NORMAL/Dickeres Papier-Standard: ""
+*it.MediaType PLAIN_HIGH/Carta comune-Qualità: ""
+*it.MediaType PLAIN_NORMAL/Carta comune-Standard: ""
+*it.MediaType LETTERHEAD_HIGH/Intestata-Qualità: ""
+*it.MediaType LETTERHEAD_NORMAL/Intestata-Standard: ""
+*it.MediaType RECYCLED_HIGH/Riciclata-Qualità: ""
+*it.MediaType RECYCLED_NORMAL/Riciclata-Standard: ""
+*it.MediaType COLORPAPER_HIGH/Colore-Qualità: ""
+*it.MediaType COLORPAPER_NORMAL/Colore-Standard: ""
+*it.MediaType PREPRINTED_HIGH/Prestamp<2E>-Qualità: ""
+*it.MediaType PREPRINTED_NORMAL/Prestamp<2E>-Standard: ""
+*it.MediaType SFINE_HIGH/EPSON Super Fine Paper-Qualità: ""
+*it.MediaType SFINE_NORMAL/EPSON Super Fine Paper-Standard: ""
+*it.MediaType PMMATT_HIGH/EPSON Photo Matte Paper-Qualità: ""
+*it.MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-Standard: ""
+*it.MediaType PMPHOTO_HIGH/EPSON Photo Paper-Qualità: ""
+*it.MediaType PMPHOTO_NORMAL/EPSON Photo Paper-Standard: ""
+*it.MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-Qualità: ""
+*it.MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Standard: ""
+*it.MediaType RCPC_HIGH/Cartolina-Qualità: ""
+*it.MediaType RCPC_NORMAL/Cartolina-Standard: ""
+*it.MediaType IJPC_HIGH/Cartolina getto inchiostro-Qualità: ""
+*it.MediaType IJPC_NORMAL/Cartolina getto inchiostro-Standard: ""
+*it.MediaType ENV_HIGH/Busta-Qualità: ""
+*it.MediaType ENV_NORMAL/Busta-Standard: ""
+*it.MediaType THICK_HIGH/Carta spessa-Qualità: ""
+*it.MediaType THICK_NORMAL/Carta spessa-Standard: ""
+*ja.MediaType PLAIN_HIGH/普通紙-きれい: ""
+*ja.MediaType PLAIN_NORMAL/普通紙-標準: ""
+*ja.MediaType LETTERHEAD_HIGH/レターヘッド-きれい: ""
+*ja.MediaType LETTERHEAD_NORMAL/レターヘッド-標準: ""
+*ja.MediaType RECYCLED_HIGH/再生紙-きれい: ""
+*ja.MediaType RECYCLED_NORMAL/再生紙-標準: ""
+*ja.MediaType COLORPAPER_HIGH/色つき-きれい: ""
+*ja.MediaType COLORPAPER_NORMAL/色つき-標準: ""
+*ja.MediaType PREPRINTED_HIGH/印刷済み-きれい: ""
+*ja.MediaType PREPRINTED_NORMAL/印刷済み-標準: ""
+*ja.MediaType SFINE_HIGH/EPSON スーパーファイン紙-きれい: ""
+*ja.MediaType SFINE_NORMAL/EPSON スーパーファイン紙-標準: ""
+*ja.MediaType PMMATT_HIGH/EPSON フォトマット紙-きれい: ""
+*ja.MediaType PMMATT_NORMAL/EPSON フォトマット紙-標準: ""
+*ja.MediaType PMPHOTO_HIGH/EPSON 写真用紙-きれい: ""
+*ja.MediaType PMPHOTO_NORMAL/EPSON 写真用紙-標準: ""
+*ja.MediaType PLATINA_HIGH/EPSON 写真用紙クリスピア-きれい: ""
+*ja.MediaType PLATINA_NORMAL/EPSON 写真用紙クリスピア-標準: ""
+*ja.MediaType RCPC_HIGH/郵便ハガキ-きれい: ""
+*ja.MediaType RCPC_NORMAL/郵便ハガキ-標準: ""
+*ja.MediaType IJPC_HIGH/郵便ハガキ（インクジェット紙）-きれい: ""
+*ja.MediaType IJPC_NORMAL/郵便ハガキ（インクジェット紙）-標準: ""
+*ja.MediaType ENV_HIGH/封筒-きれい: ""
+*ja.MediaType ENV_NORMAL/封筒-標準: ""
+*ja.MediaType THICK_HIGH/厚紙-きれい: ""
+*ja.MediaType THICK_NORMAL/厚紙-標準: ""
+*pt.MediaType PLAIN_HIGH/Papel normal-Qualidade: ""
+*pt.MediaType PLAIN_NORMAL/Papel normal-Padrão: ""
+*pt.MediaType LETTERHEAD_HIGH/Timbrado-Qualidade: ""
+*pt.MediaType LETTERHEAD_NORMAL/Timbrado-Padrão: ""
+*pt.MediaType RECYCLED_HIGH/Reciclado-Qualidade: ""
+*pt.MediaType RECYCLED_NORMAL/Reciclado-Padrão: ""
+*pt.MediaType COLORPAPER_HIGH/Cor-Qualidade: ""
+*pt.MediaType COLORPAPER_NORMAL/Cor-Padrão: ""
+*pt.MediaType PREPRINTED_HIGH/Pré-imp<2E>-Qualidade: ""
+*pt.MediaType PREPRINTED_NORMAL/Pré-imp<2E>-Padrão: ""
+*pt.MediaType SFINE_HIGH/Papel para Resolução Excelente EPSON-Qualidade: ""
+*pt.MediaType SFINE_NORMAL/Papel para Resolução Excelente EPSON-Padrão: ""
+*pt.MediaType PMMATT_HIGH/Papel Mate Fotográfico EPSON-Qualidade: ""
+*pt.MediaType PMMATT_NORMAL/Papel Mate Fotográfico EPSON-Padrão: ""
+*pt.MediaType PMPHOTO_HIGH/Papel Fotográfico EPSON-Qualidade: ""
+*pt.MediaType PMPHOTO_NORMAL/Papel Fotográfico EPSON-Padrão: ""
+*pt.MediaType PLATINA_HIGH/Papel Fotográfico CRISPIA EPSON-Qualidade: ""
+*pt.MediaType PLATINA_NORMAL/Papel Fotográfico CRISPIA EPSON-Padrão: ""
+*pt.MediaType RCPC_HIGH/Cartão postal-Qualidade: ""
+*pt.MediaType RCPC_NORMAL/Cartão postal-Padrão: ""
+*pt.MediaType IJPC_HIGH/Postal jato tinta-Qualidade: ""
+*pt.MediaType IJPC_NORMAL/Postal jato tinta-Padrão: ""
+*pt.MediaType ENV_HIGH/Envelope-Qualidade: ""
+*pt.MediaType ENV_NORMAL/Envelope-Padrão: ""
+*pt.MediaType THICK_HIGH/Papel espesso-Qualidade: ""
+*pt.MediaType THICK_NORMAL/Papel espesso-Padrão: ""
+*es.MediaType PLAIN_HIGH/Papel normal-Calidad: ""
+*es.MediaType PLAIN_NORMAL/Papel normal-Estándar: ""
+*es.MediaType LETTERHEAD_HIGH/Encabezado-Calidad: ""
+*es.MediaType LETTERHEAD_NORMAL/Encabezado-Estándar: ""
+*es.MediaType RECYCLED_HIGH/Reciclado-Calidad: ""
+*es.MediaType RECYCLED_NORMAL/Reciclado-Estándar: ""
+*es.MediaType COLORPAPER_HIGH/Color-Calidad: ""
+*es.MediaType COLORPAPER_NORMAL/Color-Estándar: ""
+*es.MediaType PREPRINTED_HIGH/Preimpreso-Calidad: ""
+*es.MediaType PREPRINTED_NORMAL/Preimpreso-Estándar: ""
+*es.MediaType SFINE_HIGH/EPSON Super Fine Paper-Calidad: ""
+*es.MediaType SFINE_NORMAL/EPSON Super Fine Paper-Estándar: ""
+*es.MediaType PMMATT_HIGH/EPSON Photo Matte Paper-Calidad: ""
+*es.MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-Estándar: ""
+*es.MediaType PMPHOTO_HIGH/EPSON Photo Paper-Calidad: ""
+*es.MediaType PMPHOTO_NORMAL/EPSON Photo Paper-Estándar: ""
+*es.MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-Calidad: ""
+*es.MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-Estándar: ""
+*es.MediaType RCPC_HIGH/Postal-Calidad: ""
+*es.MediaType RCPC_NORMAL/Postal-Estándar: ""
+*es.MediaType IJPC_HIGH/Postal especial-Calidad: ""
+*es.MediaType IJPC_NORMAL/Postal especial-Estándar: ""
+*es.MediaType ENV_HIGH/Sobre-Calidad: ""
+*es.MediaType ENV_NORMAL/Sobre-Estándar: ""
+*es.MediaType THICK_HIGH/Papel grueso-Calidad: ""
+*es.MediaType THICK_NORMAL/Papel grueso-Estándar: ""
+*ko.MediaType PLAIN_HIGH/일반 용지-품질: ""
+*ko.MediaType PLAIN_NORMAL/일반 용지-일반: ""
+*ko.MediaType LETTERHEAD_HIGH/레터 헤드-품질: ""
+*ko.MediaType LETTERHEAD_NORMAL/레터 헤드-일반: ""
+*ko.MediaType RECYCLED_HIGH/재생 용지-품질: ""
+*ko.MediaType RECYCLED_NORMAL/재생 용지-일반: ""
+*ko.MediaType COLORPAPER_HIGH/컬러-품질: ""
+*ko.MediaType COLORPAPER_NORMAL/컬러-일반: ""
+*ko.MediaType PREPRINTED_HIGH/이면지-품질: ""
+*ko.MediaType PREPRINTED_NORMAL/이면지-일반: ""
+*ko.MediaType SFINE_HIGH/EPSON 최고 품질 용지-품질: ""
+*ko.MediaType SFINE_NORMAL/EPSON 최고 품질 용지-일반: ""
+*ko.MediaType PMMATT_HIGH/EPSON 매트 사진 용지-품질: ""
+*ko.MediaType PMMATT_NORMAL/EPSON 매트 사진 용지-일반: ""
+*ko.MediaType PMPHOTO_HIGH/EPSON 사진 용지-품질: ""
+*ko.MediaType PMPHOTO_NORMAL/EPSON 사진 용지-일반: ""
+*ko.MediaType PLATINA_HIGH/EPSON 사진 용지 CRISPIA-품질: ""
+*ko.MediaType PLATINA_NORMAL/EPSON 사진 용지 CRISPIA-일반: ""
+*ko.MediaType RCPC_HIGH/엽서-품질: ""
+*ko.MediaType RCPC_NORMAL/엽서-일반: ""
+*ko.MediaType IJPC_HIGH/잉크젯 전용 엽서-품질: ""
+*ko.MediaType IJPC_NORMAL/잉크젯 전용 엽서-일반: ""
+*ko.MediaType ENV_HIGH/봉투-품질: ""
+*ko.MediaType ENV_NORMAL/봉투-일반: ""
+*ko.MediaType THICK_HIGH/두꺼운 용지-품질: ""
+*ko.MediaType THICK_NORMAL/두꺼운 용지-일반: ""
+*zh_TW.MediaType PLAIN_HIGH/Plain Paper-品質: ""
+*zh_TW.MediaType PLAIN_NORMAL/Plain Paper-標準: ""
+*zh_TW.MediaType LETTERHEAD_HIGH/信頭紙-品質: ""
+*zh_TW.MediaType LETTERHEAD_NORMAL/信頭紙-標準: ""
+*zh_TW.MediaType RECYCLED_HIGH/再生紙-品質: ""
+*zh_TW.MediaType RECYCLED_NORMAL/再生紙-標準: ""
+*zh_TW.MediaType COLORPAPER_HIGH/彩色-品質: ""
+*zh_TW.MediaType COLORPAPER_NORMAL/彩色-標準: ""
+*zh_TW.MediaType PREPRINTED_HIGH/回收紙-品質: ""
+*zh_TW.MediaType PREPRINTED_NORMAL/回收紙-標準: ""
+*zh_TW.MediaType SFINE_HIGH/EPSON Super Fine Paper-品質: ""
+*zh_TW.MediaType SFINE_NORMAL/EPSON Super Fine Paper-標準: ""
+*zh_TW.MediaType PMMATT_HIGH/EPSON Photo Matte Paper-品質: ""
+*zh_TW.MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-標準: ""
+*zh_TW.MediaType PMPHOTO_HIGH/EPSON Photo Paper-品質: ""
+*zh_TW.MediaType PMPHOTO_NORMAL/EPSON Photo Paper-標準: ""
+*zh_TW.MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-品質: ""
+*zh_TW.MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-標準: ""
+*zh_TW.MediaType RCPC_HIGH/明信片-品質: ""
+*zh_TW.MediaType RCPC_NORMAL/明信片-標準: ""
+*zh_TW.MediaType IJPC_HIGH/Ink Jet Postcard-品質: ""
+*zh_TW.MediaType IJPC_NORMAL/Ink Jet Postcard-標準: ""
+*zh_TW.MediaType ENV_HIGH/Envelope-品質: ""
+*zh_TW.MediaType ENV_NORMAL/Envelope-標準: ""
+*zh_TW.MediaType THICK_HIGH/Thick-Paper-品質: ""
+*zh_TW.MediaType THICK_NORMAL/Thick-Paper-標準: ""
+*zh_CN.MediaType PLAIN_HIGH/普通纸-质量: ""
+*zh_CN.MediaType PLAIN_NORMAL/普通纸-标准: ""
+*zh_CN.MediaType LETTERHEAD_HIGH/信笺抬头-质量: ""
+*zh_CN.MediaType LETTERHEAD_NORMAL/信笺抬头-标准: ""
+*zh_CN.MediaType RECYCLED_HIGH/再生-质量: ""
+*zh_CN.MediaType RECYCLED_NORMAL/再生-标准: ""
+*zh_CN.MediaType COLORPAPER_HIGH/彩色-质量: ""
+*zh_CN.MediaType COLORPAPER_NORMAL/彩色-标准: ""
+*zh_CN.MediaType PREPRINTED_HIGH/预打印-质量: ""
+*zh_CN.MediaType PREPRINTED_NORMAL/预打印-标准: ""
+*zh_CN.MediaType SFINE_HIGH/EPSON Super Fine Paper-质量: ""
+*zh_CN.MediaType SFINE_NORMAL/EPSON Super Fine Paper-标准: ""
+*zh_CN.MediaType PMMATT_HIGH/EPSON Photo Matte Paper-质量: ""
+*zh_CN.MediaType PMMATT_NORMAL/EPSON Photo Matte Paper-标准: ""
+*zh_CN.MediaType PMPHOTO_HIGH/EPSON Photo Paper-质量: ""
+*zh_CN.MediaType PMPHOTO_NORMAL/EPSON Photo Paper-标准: ""
+*zh_CN.MediaType PLATINA_HIGH/EPSON Photo Paper CRISPIA-质量: ""
+*zh_CN.MediaType PLATINA_NORMAL/EPSON Photo Paper CRISPIA-标准: ""
+*zh_CN.MediaType RCPC_HIGH/明信片-质量: ""
+*zh_CN.MediaType RCPC_NORMAL/明信片-标准: ""
+*zh_CN.MediaType IJPC_HIGH/喷墨明信片-质量: ""
+*zh_CN.MediaType IJPC_NORMAL/喷墨明信片-标准: ""
+*zh_CN.MediaType ENV_HIGH/信封-质量: ""
+*zh_CN.MediaType ENV_NORMAL/信封-标准: ""
+*zh_CN.MediaType THICK_HIGH/厚打印纸-质量: ""
+*zh_CN.MediaType THICK_NORMAL/厚打印纸-标准: ""
+*CloseUI: *MediaType
 
 
 *OpenUI *Ink/Grayscale: PickOne
@@ -582,8 +582,9 @@
 *OrderDependency: 50 AnySetup *InputSlot
 *DefaultInputSlot: Auto
 *InputSlot Auto/Auto Select: ""
-*InputSlot ManualFeed/Rear Paper Feed: ""
+*InputSlot RearPaperFeed/Rear Paper Feed: ""
 *InputSlot Cassette1/Cassette 1: ""
+*InputSlot Cassette2/Cassette 2: ""
 *nl.Translation InputSlot/Papierbron: ""
 *fr.Translation InputSlot/Alimentation: ""
 *de.Translation InputSlot/Papierquelle: ""
@@ -595,35 +596,45 @@
 *zh_TW.Translation InputSlot/紙張來源: ""
 *zh_CN.Translation InputSlot/打印纸来源: ""
 *nl.InputSlot Auto/Automatisch selecteren: ""
-*nl.InputSlot ManualFeed/Papiertoevoer achter: ""
+*nl.InputSlot RearPaperFeed/Papiertoevoer achter: ""
 *nl.InputSlot Cassette1/Cassette 1: ""
+*nl.InputSlot Cassette2/Cassette 2: ""
 *fr.InputSlot Auto/Automatique: ""
-*fr.InputSlot ManualFeed/Alim<2E> papier arrière: ""
+*fr.InputSlot RearPaperFeed/Alim<2E> papier arrière: ""
 *fr.InputSlot Cassette1/Cassette 1: ""
+*fr.InputSlot Cassette2/Cassette 2: ""
 *de.InputSlot Auto/Automatische Auswahl: ""
-*de.InputSlot ManualFeed/Papiereinzug hinten: ""
+*de.InputSlot RearPaperFeed/Papiereinzug hinten: ""
 *de.InputSlot Cassette1/Kassette 1: ""
+*de.InputSlot Cassette2/Kassette 2: ""
 *it.InputSlot Auto/Selezione automatica: ""
-*it.InputSlot ManualFeed/Alim<2E> posteriore carta: ""
+*it.InputSlot RearPaperFeed/Alim<2E> posteriore carta: ""
 *it.InputSlot Cassette1/Cassetto 1: ""
+*it.InputSlot Cassette2/Cassetto 2: ""
 *ja.InputSlot Auto/自動選択: ""
-*ja.InputSlot ManualFeed/背面MPトレイ: ""
+*ja.InputSlot RearPaperFeed/背面MPトレイ: ""
 *ja.InputSlot Cassette1/カセット 1: ""
+*ja.InputSlot Cassette2/カセット 2: ""
 *pt.InputSlot Auto/Seleção automática: ""
-*pt.InputSlot ManualFeed/Alimentação traseira: ""
+*pt.InputSlot RearPaperFeed/Alimentação traseira: ""
 *pt.InputSlot Cassette1/Gaveta 1: ""
+*pt.InputSlot Cassette2/Gaveta 2: ""
 *es.InputSlot Auto/Auto Selección: ""
-*es.InputSlot ManualFeed/Aliment papel posterior: ""
+*es.InputSlot RearPaperFeed/Aliment papel posterior: ""
 *es.InputSlot Cassette1/Casete 1: ""
+*es.InputSlot Cassette2/Casete 2: ""
 *ko.InputSlot Auto/자동 선택: ""
-*ko.InputSlot ManualFeed/후면 용지 급지: ""
+*ko.InputSlot RearPaperFeed/후면 용지 급지: ""
 *ko.InputSlot Cassette1/카세트 1: ""
+*ko.InputSlot Cassette2/카세트 2: ""
 *zh_TW.InputSlot Auto/自動選取: ""
-*zh_TW.InputSlot ManualFeed/後方進紙: ""
+*zh_TW.InputSlot RearPaperFeed/後方進紙: ""
 *zh_TW.InputSlot Cassette1/進紙匣1: ""
+*zh_TW.InputSlot Cassette2/進紙匣2: ""
 *zh_CN.InputSlot Auto/自动选择: ""
-*zh_CN.InputSlot ManualFeed/后进纸器: ""
+*zh_CN.InputSlot RearPaperFeed/后进纸器: ""
 *zh_CN.InputSlot Cassette1/进纸器 1: ""
+*zh_CN.InputSlot Cassette2/进纸器 2: ""
 *CloseUI: *InputSlot
 
 
@@ -855,38 +866,38 @@
 *Font Symbol: Special "(001.007S)" Special ROM
 *Font ZapfDingbats: Special "(001.004S)" Standard ROM
 
-*UIConstraints: *Duplex DuplexNoTumble *Quality SFINE_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality SFINE_NORMAL
-*UIConstraints: *Duplex DuplexNoTumble *Quality PMMATT_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality PMMATT_NORMAL
-*UIConstraints: *Duplex DuplexNoTumble *Quality PMPHOTO_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality PMPHOTO_NORMAL
-*UIConstraints: *Duplex DuplexNoTumble *Quality PLATINA_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality PLATINA_NORMAL
-*UIConstraints: *Duplex DuplexNoTumble *Quality RCPC_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality RCPC_NORMAL
-*UIConstraints: *Duplex DuplexNoTumble *Quality IJPC_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality IJPC_NORMAL
-*UIConstraints: *Duplex DuplexNoTumble *Quality ENV_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality ENV_NORMAL
-*UIConstraints: *Duplex DuplexNoTumble *Quality THICK_HIGH
-*UIConstraints: *Duplex DuplexNoTumble *Quality THICK_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality SFINE_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality SFINE_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality PMMATT_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality PMMATT_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality PMPHOTO_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality PMPHOTO_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality PLATINA_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality PLATINA_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality RCPC_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality RCPC_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality IJPC_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality IJPC_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality ENV_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality ENV_NORMAL
-*UIConstraints: *Duplex DuplexTumble *Quality THICK_HIGH
-*UIConstraints: *Duplex DuplexTumble *Quality THICK_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType SFINE_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType SFINE_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType PMMATT_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType PMPHOTO_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType PLATINA_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType RCPC_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType RCPC_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType IJPC_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType IJPC_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType ENV_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType ENV_NORMAL
+*UIConstraints: *Duplex DuplexNoTumble *MediaType THICK_HIGH
+*UIConstraints: *Duplex DuplexNoTumble *MediaType THICK_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType SFINE_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType SFINE_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType PMMATT_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType PMMATT_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType PMPHOTO_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType PMPHOTO_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType PLATINA_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType PLATINA_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType RCPC_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType RCPC_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType IJPC_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType IJPC_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType ENV_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType ENV_NORMAL
+*UIConstraints: *Duplex DuplexTumble *MediaType THICK_HIGH
+*UIConstraints: *Duplex DuplexTumble *MediaType THICK_NORMAL
 *UIConstraints: *PageSize A5 *Duplex DuplexNoTumble
 *UIConstraints: *PageSize A5 *Duplex DuplexTumble
 *UIConstraints: *PageSize A6 *Duplex DuplexNoTumble
@@ -907,38 +918,38 @@
 *UIConstraints: *PageSize ENVY4 *Duplex DuplexTumble
 *UIConstraints: *PageSize Legal *Duplex DuplexNoTumble
 *UIConstraints: *PageSize Legal *Duplex DuplexTumble
-*UIConstraints: *InputSlot Auto *Quality SFINE_HIGH
-*UIConstraints: *InputSlot Auto *Quality SFINE_NORMAL
-*UIConstraints: *InputSlot Auto *Quality PMMATT_HIGH
-*UIConstraints: *InputSlot Auto *Quality PMMATT_NORMAL
-*UIConstraints: *InputSlot Auto *Quality PMPHOTO_HIGH
-*UIConstraints: *InputSlot Auto *Quality PMPHOTO_NORMAL
-*UIConstraints: *InputSlot Auto *Quality PLATINA_HIGH
-*UIConstraints: *InputSlot Auto *Quality PLATINA_NORMAL
-*UIConstraints: *InputSlot Auto *Quality RCPC_HIGH
-*UIConstraints: *InputSlot Auto *Quality RCPC_NORMAL
-*UIConstraints: *InputSlot Auto *Quality IJPC_HIGH
-*UIConstraints: *InputSlot Auto *Quality IJPC_NORMAL
-*UIConstraints: *InputSlot Auto *Quality ENV_HIGH
-*UIConstraints: *InputSlot Auto *Quality ENV_NORMAL
-*UIConstraints: *InputSlot Auto *Quality THICK_HIGH
-*UIConstraints: *InputSlot Auto *Quality THICK_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality SFINE_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality SFINE_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality PMMATT_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality PMMATT_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality PMPHOTO_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality PMPHOTO_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality PLATINA_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality PLATINA_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality RCPC_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality RCPC_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality IJPC_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality IJPC_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality ENV_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality ENV_NORMAL
-*UIConstraints: *InputSlot Cassette1 *Quality THICK_HIGH
-*UIConstraints: *InputSlot Cassette1 *Quality THICK_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType SFINE_HIGH
+*UIConstraints: *InputSlot Auto *MediaType SFINE_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType PMMATT_HIGH
+*UIConstraints: *InputSlot Auto *MediaType PMMATT_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType PMPHOTO_HIGH
+*UIConstraints: *InputSlot Auto *MediaType PMPHOTO_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType PLATINA_HIGH
+*UIConstraints: *InputSlot Auto *MediaType PLATINA_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType RCPC_HIGH
+*UIConstraints: *InputSlot Auto *MediaType RCPC_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType IJPC_HIGH
+*UIConstraints: *InputSlot Auto *MediaType IJPC_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType ENV_HIGH
+*UIConstraints: *InputSlot Auto *MediaType ENV_NORMAL
+*UIConstraints: *InputSlot Auto *MediaType THICK_HIGH
+*UIConstraints: *InputSlot Auto *MediaType THICK_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType SFINE_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType SFINE_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType PMMATT_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType PMMATT_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType PMPHOTO_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType PMPHOTO_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType PLATINA_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType PLATINA_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType RCPC_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType RCPC_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType IJPC_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType IJPC_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType ENV_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType ENV_NORMAL
+*UIConstraints: *InputSlot Cassette1 *MediaType THICK_HIGH
+*UIConstraints: *InputSlot Cassette1 *MediaType THICK_NORMAL
 *UIConstraints: *InputSlot Cassette1 *PageSize A6
 *UIConstraints: *InputSlot Cassette1 *PageSize Postcard
 *UIConstraints: *InputSlot Cassette1 *PageSize L
@@ -947,4 +958,28 @@
 *UIConstraints: *InputSlot Cassette1 *PageSize 8x10
 *UIConstraints: *InputSlot Cassette1 *PageSize 4X7
 *UIConstraints: *InputSlot Cassette1 *PageSize ENVY4
+*UIConstraints: *InputSlot Cassette2 *MediaType SFINE_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType SFINE_NORMAL
+*UIConstraints: *InputSlot Cassette2 *MediaType PMMATT_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType PMMATT_NORMAL
+*UIConstraints: *InputSlot Cassette2 *MediaType PMPHOTO_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType PMPHOTO_NORMAL
+*UIConstraints: *InputSlot Cassette2 *MediaType PLATINA_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType PLATINA_NORMAL
+*UIConstraints: *InputSlot Cassette2 *MediaType RCPC_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType RCPC_NORMAL
+*UIConstraints: *InputSlot Cassette2 *MediaType IJPC_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType IJPC_NORMAL
+*UIConstraints: *InputSlot Cassette2 *MediaType ENV_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType ENV_NORMAL
+*UIConstraints: *InputSlot Cassette2 *MediaType THICK_HIGH
+*UIConstraints: *InputSlot Cassette2 *MediaType THICK_NORMAL
+*UIConstraints: *InputSlot Cassette2 *PageSize A6
+*UIConstraints: *InputSlot Cassette2 *PageSize Postcard
+*UIConstraints: *InputSlot Cassette2 *PageSize L
+*UIConstraints: *InputSlot Cassette2 *PageSize 4X6FULL
+*UIConstraints: *InputSlot Cassette2 *PageSize 2L
+*UIConstraints: *InputSlot Cassette2 *PageSize 8x10
+*UIConstraints: *InputSlot Cassette2 *PageSize 4X7
+*UIConstraints: *InputSlot Cassette2 *PageSize ENVY4
 
