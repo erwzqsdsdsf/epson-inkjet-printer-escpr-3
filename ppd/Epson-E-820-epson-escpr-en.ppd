@@ -47,55 +47,55 @@
 *TTRasterizer:          Type42
 *1284DeviceID:          "MFG:EPSON;MDL:E-820;DES:EPSON E-820;"
 
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize Postcard
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize CARD
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize TCARD
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize 4X7
-*UIConstraints: *Quality PLATINA_NORMAL *PageSize T4X7
-*UIConstraints: *Quality PLATINA_HIGH *PageSize Postcard
-*UIConstraints: *Quality PLATINA_HIGH *PageSize TPostcard
-*UIConstraints: *Quality PLATINA_HIGH *PageSize CARD
-*UIConstraints: *Quality PLATINA_HIGH *PageSize TCARD
-*UIConstraints: *Quality PLATINA_HIGH *PageSize 4X7
-*UIConstraints: *Quality PLATINA_HIGH *PageSize T4X7
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize Postcard
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize CARD
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize TCARD
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize 4X7
-*UIConstraints: *Quality GLOSSYPHOTO_NORMAL *PageSize T4X7
-*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize Postcard
-*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize TPostcard
-*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize CARD
-*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize TCARD
-*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize 4X7
-*UIConstraints: *Quality GLOSSYPHOTO_HIGH *PageSize T4X7
-*UIConstraints: *Quality IJPC_NORMAL *PageSize L
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TL
-*UIConstraints: *Quality IJPC_NORMAL *PageSize CARD
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TCARD
-*UIConstraints: *Quality IJPC_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality IJPC_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality IJPC_NORMAL *PageSize 4X7
-*UIConstraints: *Quality IJPC_NORMAL *PageSize T4X7
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize L
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize TL
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize CARD
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize TCARD
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize 4X7
-*UIConstraints: *Quality GLOSSYHAGAKI_NORMAL *PageSize T4X7
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize L
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TL
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize CARD
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize TCARD
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize 4X7
-*UIConstraints: *Quality MINIPHOTO_NORMAL *PageSize T4X7
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize CARD
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize 4X7
+*UIConstraints: *MediaType PLATINA_NORMAL *PageSize T4X7
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize Postcard
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize TPostcard
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize CARD
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize TCARD
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize 4X7
+*UIConstraints: *MediaType PLATINA_HIGH *PageSize T4X7
+*UIConstraints: *MediaType GLOSSYPHOTO_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType GLOSSYPHOTO_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType GLOSSYPHOTO_NORMAL *PageSize CARD
+*UIConstraints: *MediaType GLOSSYPHOTO_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType GLOSSYPHOTO_NORMAL *PageSize 4X7
+*UIConstraints: *MediaType GLOSSYPHOTO_NORMAL *PageSize T4X7
+*UIConstraints: *MediaType GLOSSYPHOTO_HIGH *PageSize Postcard
+*UIConstraints: *MediaType GLOSSYPHOTO_HIGH *PageSize TPostcard
+*UIConstraints: *MediaType GLOSSYPHOTO_HIGH *PageSize CARD
+*UIConstraints: *MediaType GLOSSYPHOTO_HIGH *PageSize TCARD
+*UIConstraints: *MediaType GLOSSYPHOTO_HIGH *PageSize 4X7
+*UIConstraints: *MediaType GLOSSYPHOTO_HIGH *PageSize T4X7
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize L
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TL
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize CARD
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize 4X6FULL
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize T4X6FULL
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize 4X7
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize T4X7
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize L
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize TL
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize CARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize 4X6FULL
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize T4X6FULL
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize 4X7
+*UIConstraints: *MediaType GLOSSYHAGAKI_NORMAL *PageSize T4X7
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize L
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TL
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize CARD
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize TCARD
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize 4X6FULL
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize T4X6FULL
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize 4X7
+*UIConstraints: *MediaType MINIPHOTO_NORMAL *PageSize T4X7
 
 *OpenUI *PageSize/Paper Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
@@ -371,119 +371,119 @@
 *PaperDimension 4X7/16x9 wide size (102 x 181 mm): 	"288.0 512.0"
 *PaperDimension T4X7/16x9 wide size (102 x 181 mm) (Borderless): 	"288.0 512.0"
 
-*OpenUI *Quality/Quality: PickOne
-*OrderDependency: 20 AnySetup *Quality
-*DefaultQuality: PMPHOTO_NORMAL
-*ja.Translation 	Quality/品質:""
-*nl.Translation 	Quality/Kwaliteit:""
-*fr.Translation 	Quality/Qualité:""
-*de.Translation 	Quality/Qualität:""
-*it.Translation 	Quality/Qualità:""
-*pt.Translation 	Quality/Qualidade:""
-*es.Translation 	Quality/Calidad:""
-*ko.Translation 	Quality/품질:""
-*zh_CN.Translation 	Quality/质量:""
-*zh_TW.Translation 	Quality/品質:""
-*Quality PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
-*nl.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
-*fr.Quality 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
-*de.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
-*it.Quality 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
-*pt.Quality 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
-*es.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
-*ko.Quality 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
-*zh_CN.Quality 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
-*zh_TW.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
-*Quality PMPHOTO_HIGH/Premium Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMPHOTO_HIGH/写真用紙＜光沢＞ - きれい:""
-*nl.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Beste:""
-*fr.Quality 	PMPHOTO_HIGH/Papier Photo Glacé Premium - supérieure:""
-*de.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Optimales:""
-*it.Quality 	PMPHOTO_HIGH/Carta Fotografica Lucida Premium - migliore:""
-*pt.Quality 	PMPHOTO_HIGH/Papel Fotográfico Brilhante Premium - Superior:""
-*es.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Superior:""
-*ko.Quality 	PMPHOTO_HIGH/프리미엄 광택 사진 용지 - 고급:""
-*zh_CN.Quality 	PMPHOTO_HIGH/高质量光泽照片纸 - 优质:""
-*zh_TW.Quality 	PMPHOTO_HIGH/Premium Glossy Photo Paper - 最高品質:""
-*Quality PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLATINA_NORMAL/写真用紙クリスピア＜高光沢＞ - 標準:""
-*nl.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standaard:""
-*fr.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*de.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*it.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
-*pt.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Normal:""
-*es.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Estándar:""
-*ko.Quality 	PLATINA_NORMAL/광택 사진 용지(Ultra) - 표준:""
-*zh_CN.Quality 	PLATINA_NORMAL/爱普生超级光泽纸 - 标准:""
-*zh_TW.Quality 	PLATINA_NORMAL/Ultra Glossy Photo Paper - 標準:""
-*Quality PLATINA_HIGH/Ultra Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLATINA_HIGH/写真用紙クリスピア＜高光沢＞ - きれい:""
-*nl.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Beste:""
-*fr.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - supérieure:""
-*de.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Optimales:""
-*it.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - migliore:""
-*pt.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
-*es.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
-*ko.Quality 	PLATINA_HIGH/광택 사진 용지(Ultra) - 고급:""
-*zh_CN.Quality 	PLATINA_HIGH/爱普生超级光泽纸 - 优质:""
-*zh_TW.Quality 	PLATINA_HIGH/Ultra Glossy Photo Paper - 最高品質:""
-*Quality GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYPHOTO_NORMAL/写真用紙エントリー＜光沢＞ - 標準:""
-*nl.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standaard:""
-*fr.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
-*de.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
-*it.Quality 	GLOSSYPHOTO_NORMAL/Carta fotografica lucida - Standard:""
-*pt.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Normal:""
-*es.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Estándar:""
-*ko.Quality 	GLOSSYPHOTO_NORMAL/광택 사진 용지 - 표준:""
-*zh_CN.Quality 	GLOSSYPHOTO_NORMAL/光泽照片纸 - 标准:""
-*zh_TW.Quality 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - 標準:""
-*Quality GLOSSYPHOTO_HIGH/Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYPHOTO_HIGH/写真用紙エントリー＜光沢＞ - きれい:""
-*nl.Quality 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Beste:""
-*fr.Quality 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - supérieure:""
-*de.Quality 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Optimales:""
-*it.Quality 	GLOSSYPHOTO_HIGH/Carta fotografica lucida - migliore:""
-*pt.Quality 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Superior:""
-*es.Quality 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Superior:""
-*ko.Quality 	GLOSSYPHOTO_HIGH/광택 사진 용지 - 고급:""
-*zh_CN.Quality 	GLOSSYPHOTO_HIGH/光泽照片纸 - 优质:""
-*zh_TW.Quality 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - 最高品質:""
-*Quality IJPC_NORMAL/Ink Jet Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	IJPC_NORMAL/官製ハガキ(インクジェット紙) - 標準:""
-*nl.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standaard:""
-*fr.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*de.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*it.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*pt.Quality 	IJPC_NORMAL/Ink Jet Postcard - Normal:""
-*es.Quality 	IJPC_NORMAL/Ink Jet Postcard - Estándar:""
-*ko.Quality 	IJPC_NORMAL/엽서(잉크젯 전용) - 표준:""
-*zh_CN.Quality 	IJPC_NORMAL/喷墨明信片 - 标准:""
-*zh_TW.Quality 	IJPC_NORMAL/Ink Jet Postcard - 標準:""
-*Quality GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYHAGAKI_NORMAL/郵便光沢ハガキ - 標準:""
-*nl.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standaard:""
-*fr.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
-*de.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
-*it.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
-*pt.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Normal:""
-*es.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Estándar:""
-*ko.Quality 	GLOSSYHAGAKI_NORMAL/엽서(광택) - 표준:""
-*zh_CN.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 标准:""
-*zh_TW.Quality 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 標準:""
-*Quality MINIPHOTO_NORMAL/Photo Stickers - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	MINIPHOTO_NORMAL/ミニフォトシール - 標準:""
-*nl.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standaard:""
-*fr.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*de.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*it.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
-*pt.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Normal:""
-*es.Quality 	MINIPHOTO_NORMAL/Photo Stickers - Estándar:""
-*ko.Quality 	MINIPHOTO_NORMAL/포토 스티커 - 표준:""
-*zh_CN.Quality 	MINIPHOTO_NORMAL/妙妙贴纸 - 标准:""
-*zh_TW.Quality 	MINIPHOTO_NORMAL/Photo Stickers - 標準:""
-*CloseUI: *Quality
+*OpenUI *MediaType/Media Type: PickOne
+*OrderDependency: 20 AnySetup *MediaType
+*DefaultMediaType: PMPHOTO_NORMAL
+*ja.Translation 	MediaType/品質:""
+*nl.Translation 	MediaType/Kwaliteit:""
+*fr.Translation 	MediaType/Qualité:""
+*de.Translation 	MediaType/Qualität:""
+*it.Translation 	MediaType/Qualità:""
+*pt.Translation 	MediaType/Qualidade:""
+*es.Translation 	MediaType/Calidad:""
+*ko.Translation 	MediaType/품질:""
+*zh_CN.Translation 	MediaType/质量:""
+*zh_TW.Translation 	MediaType/品質:""
+*MediaType PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
+*nl.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
+*fr.MediaType 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
+*de.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
+*it.MediaType 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
+*pt.MediaType 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
+*es.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
+*ko.MediaType 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
+*zh_CN.MediaType 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
+*zh_TW.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
+*MediaType PMPHOTO_HIGH/Premium Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMPHOTO_HIGH/写真用紙＜光沢＞ - きれい:""
+*nl.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Beste:""
+*fr.MediaType 	PMPHOTO_HIGH/Papier Photo Glacé Premium - supérieure:""
+*de.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Optimales:""
+*it.MediaType 	PMPHOTO_HIGH/Carta Fotografica Lucida Premium - migliore:""
+*pt.MediaType 	PMPHOTO_HIGH/Papel Fotográfico Brilhante Premium - Superior:""
+*es.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - Superior:""
+*ko.MediaType 	PMPHOTO_HIGH/프리미엄 광택 사진 용지 - 고급:""
+*zh_CN.MediaType 	PMPHOTO_HIGH/高质量光泽照片纸 - 优质:""
+*zh_TW.MediaType 	PMPHOTO_HIGH/Premium Glossy Photo Paper - 最高品質:""
+*MediaType PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLATINA_NORMAL/写真用紙クリスピア＜高光沢＞ - 標準:""
+*nl.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standaard:""
+*fr.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*de.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*it.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Standard:""
+*pt.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Normal:""
+*es.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - Estándar:""
+*ko.MediaType 	PLATINA_NORMAL/광택 사진 용지(Ultra) - 표준:""
+*zh_CN.MediaType 	PLATINA_NORMAL/爱普生超级光泽纸 - 标准:""
+*zh_TW.MediaType 	PLATINA_NORMAL/Ultra Glossy Photo Paper - 標準:""
+*MediaType PLATINA_HIGH/Ultra Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLATINA_HIGH/写真用紙クリスピア＜高光沢＞ - きれい:""
+*nl.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Beste:""
+*fr.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - supérieure:""
+*de.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Optimales:""
+*it.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - migliore:""
+*pt.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
+*es.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - Superior:""
+*ko.MediaType 	PLATINA_HIGH/광택 사진 용지(Ultra) - 고급:""
+*zh_CN.MediaType 	PLATINA_HIGH/爱普生超级光泽纸 - 优质:""
+*zh_TW.MediaType 	PLATINA_HIGH/Ultra Glossy Photo Paper - 最高品質:""
+*MediaType GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	GLOSSYPHOTO_NORMAL/写真用紙エントリー＜光沢＞ - 標準:""
+*nl.MediaType 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standaard:""
+*fr.MediaType 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
+*de.MediaType 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Standard:""
+*it.MediaType 	GLOSSYPHOTO_NORMAL/Carta fotografica lucida - Standard:""
+*pt.MediaType 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Normal:""
+*es.MediaType 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - Estándar:""
+*ko.MediaType 	GLOSSYPHOTO_NORMAL/광택 사진 용지 - 표준:""
+*zh_CN.MediaType 	GLOSSYPHOTO_NORMAL/光泽照片纸 - 标准:""
+*zh_TW.MediaType 	GLOSSYPHOTO_NORMAL/Glossy Photo Paper - 標準:""
+*MediaType GLOSSYPHOTO_HIGH/Glossy Photo Paper - Best: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	GLOSSYPHOTO_HIGH/写真用紙エントリー＜光沢＞ - きれい:""
+*nl.MediaType 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Beste:""
+*fr.MediaType 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - supérieure:""
+*de.MediaType 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Optimales:""
+*it.MediaType 	GLOSSYPHOTO_HIGH/Carta fotografica lucida - migliore:""
+*pt.MediaType 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Superior:""
+*es.MediaType 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - Superior:""
+*ko.MediaType 	GLOSSYPHOTO_HIGH/광택 사진 용지 - 고급:""
+*zh_CN.MediaType 	GLOSSYPHOTO_HIGH/光泽照片纸 - 优质:""
+*zh_TW.MediaType 	GLOSSYPHOTO_HIGH/Glossy Photo Paper - 最高品質:""
+*MediaType IJPC_NORMAL/Ink Jet Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	IJPC_NORMAL/官製ハガキ(インクジェット紙) - 標準:""
+*nl.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standaard:""
+*fr.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*de.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*it.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*pt.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Normal:""
+*es.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Estándar:""
+*ko.MediaType 	IJPC_NORMAL/엽서(잉크젯 전용) - 표준:""
+*zh_CN.MediaType 	IJPC_NORMAL/喷墨明信片 - 标准:""
+*zh_TW.MediaType 	IJPC_NORMAL/Ink Jet Postcard - 標準:""
+*MediaType GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	GLOSSYHAGAKI_NORMAL/郵便光沢ハガキ - 標準:""
+*nl.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standaard:""
+*fr.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
+*de.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
+*it.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Standard:""
+*pt.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Normal:""
+*es.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - Estándar:""
+*ko.MediaType 	GLOSSYHAGAKI_NORMAL/엽서(광택) - 표준:""
+*zh_CN.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 标准:""
+*zh_TW.MediaType 	GLOSSYHAGAKI_NORMAL/Glossy Postcard - 標準:""
+*MediaType MINIPHOTO_NORMAL/Photo Stickers - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	MINIPHOTO_NORMAL/ミニフォトシール - 標準:""
+*nl.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standaard:""
+*fr.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
+*de.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
+*it.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Standard:""
+*pt.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Normal:""
+*es.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - Estándar:""
+*ko.MediaType 	MINIPHOTO_NORMAL/포토 스티커 - 표준:""
+*zh_CN.MediaType 	MINIPHOTO_NORMAL/妙妙贴纸 - 标准:""
+*zh_TW.MediaType 	MINIPHOTO_NORMAL/Photo Stickers - 標準:""
+*CloseUI: *MediaType
 
 *OpenUI *Ink/Ink: PickOne
 *OrderDependency: 30 AnySetup *Ink

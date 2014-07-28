@@ -59,7 +59,7 @@
 
 #define PIPSLITE_FILTER_VERSION "* epson-escpr is a part of " PACKAGE_STRING
 
-#define PIPSLITE_FILTER_USAGE "Usage: $ epson-escpr model width_pixel height_pixel Ink PageSize Quality Duplex InputSlot"
+#define PIPSLITE_FILTER_USAGE "Usage: $ epson-escpr model width_pixel height_pixel Ink PageSize MediaType Duplex InputSlot"
 
 typedef struct rtp_filter_option {
 	char model[NAME_MAX];
@@ -243,7 +243,7 @@ static int  getMediaSizeID(char *media_name){
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/* Useage: epson-escpr model width_pixel height_pixel Ink PageSize Quality */
+/* Useage: epson-escpr model width_pixel height_pixel Ink PageSize MediaType */
 int
 main (int argc, char *argv[])
 {
@@ -883,7 +883,7 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 	jobAttr.mediaTypeIdx = getMediaTypeID(mediaType);
 	debug_msg(" mediaType = %s\n", mediaType);
 
-	/* Print Quality */
+	/* Print MediaType */
 	jobAttr.printQuality = EPS_MQID_DRAFT;
 	if(strcmp(quality, "_DRAFT") == 0 || strcmp(quality, "_SUPERDRAFT") == 0){
 		printQuality->PrintQuality = ESCPR_PQ_DRAFT;
@@ -925,7 +925,7 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
  	
 	/* InputSlot */
 	inputslot = str_clone (filter_opt_p->inputslot, strlen (filter_opt_p->inputslot));
- 	if (strcmp (inputslot, "Rear") == 0){ 
+ 	if (strcmp (inputslot, "Rear") == 0 || strcmp (inputslot, "RearPaperFeed") == 0){ 
 		debug_msg("Rear Tray\n");
  		jobAttr.paperSource =  EPS_MPID_REAR;
  	}
@@ -946,7 +946,7 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
  		jobAttr.paperSource =  EPS_MPID_FRONT4;
  	}
  	else if(strcmp (inputslot, "ManualFeed") == 0){ 
-		debug_msg("Rear Manual Reed Tray\n");
+		debug_msg("Manual Reed Tray\n");
  		jobAttr.paperSource =  EPS_MPID_REARMANUAL;
  	}
  	else if(strcmp (inputslot, "DiskTray") == 0){ 

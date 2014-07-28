@@ -285,17 +285,18 @@ get_option_for_ppd (const char *printer, filter_option_t *filter_opt_p)
 		strcpy (filter_opt_p->ink, opt);
 	}
 
-	/* quality */
+	/* MediaType */
 	if (filter_opt_p->quality[0] == '\0')
 	{
-		opt = get_default_choice (ppd_p, "Quality");
+		opt = get_default_choice (ppd_p, "MediaType");
 
-		if(!opt)
-			opt = get_default_choice (ppd_p, "MediaType");
+		if (!opt){
+			opt = get_default_choice (ppd_p, "Quality");	/* for old version */
 
+			if (!opt)return 1;	
+		}
+			
 
-		if (!opt)
-			return 1;
 
 		strcpy (filter_opt_p->quality, opt);
 	}
@@ -386,11 +387,14 @@ get_option_for_arg (const char *opt_str, filter_option_t *filter_opt_p)
 	if (opt)
 		strcpy (filter_opt_p->ink, opt);
 
-	opt = cupsGetOption ("Quality", opt_num, option_p);
+	opt = cupsGetOption ("MediaType", opt_num, option_p);
+	if(!opt){
+		opt = cupsGetOption ("Quality", opt_num, option_p); /* for old version */
+	}
+
 	if (opt)
 	{
 		strcpy (filter_opt_p->quality, opt);
-		debug_msg("Quality = [%s]\n", opt);
 	}
 
 	opt = cupsGetOption ("Duplex", opt_num, option_p);

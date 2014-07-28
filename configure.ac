@@ -1,7 +1,7 @@
 ## Configure.ac -- an automake template for a Makefile.in file
 ## EPSON ESC/P-R Printer Driver for Linux
 ## Copyright (C) 2000-2008 AVASYS CORPORATION.
-## Copyright (C) Seiko Epson Corporation 2000-2013.
+## Copyright (C) Seiko Epson Corporation 2000-2014.
 ##  This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +18,7 @@
 
 AC_PREREQ(2.53)
 AC_INIT([Epson Inkjet Printer Driver (ESC/P-R) for Linux],
-	[1.4.0],
+	[1.4.1],
 	[Seiko Epson Corporation <linux-printer@epson.jp>],
 	[epson-inkjet-printer-escpr])
 dnl  keep ALL versioning info in one location
@@ -136,7 +136,7 @@ AC_CONFIG_FILES([\
         Makefile \
         epson-inkjet-printer-escpr.spec \
         lsb/lsb-rpm.spec \
-			lib/Makefile \
+        lib/Makefile \
         ppd/Makefile \
         src/Makefile \
         ])

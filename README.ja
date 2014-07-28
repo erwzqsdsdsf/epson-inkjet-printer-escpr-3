@@ -63,11 +63,11 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 	   
 	   Redhat系Linuxの場合
 	   -----------------
-	   # rpm -i epson-inkjet-printer-escpr-1.4.0-1lsb3.2.i486.rpm
+	   # rpm -i epson-inkjet-printer-escpr-1.4.1-1lsb3.2.i486.rpm
 	   -----------------
 	   Debian系Linuxの場合
 	   -----------------
-	   # dpkg -i epson-inkjet-printer-escpr_1.4.0-1lsb3.2_i386.deb
+	   # dpkg -i epson-inkjet-printer-escpr_1.4.1-1lsb3.2_i386.deb
 	   -----------------
 
 	4.1.2  LSB3.2以上に非対応のディストリビューションの場合
@@ -260,11 +260,11 @@ CUPSのドキュメントを参照下さい。
 6.1 Redhat系ディストリビューションの場合
 
 	6.1.1 ダウンロードしたsrs.rpmを解凍します。
-	   $ rpm2cpio epson-inkjet-printer-escpr-1.4.0-1lsb3.2.src.rpm | cpio -id
-	   $ tar zxvf epson-inkjet-printer-escpr-1.4.0-1lsb3.2.tar.gz
+	   $ rpm2cpio epson-inkjet-printer-escpr-1.4.1-1lsb3.2.src.rpm | cpio -id
+	   $ tar zxvf epson-inkjet-printer-escpr-1.4.1-1lsb3.2.tar.gz
 
 	6.1.2 configureを実行し、ソースtarballを作成します。
-	   $ cd epson-inkjet-printer-escpr-1.4.0
+	   $ cd epson-inkjet-printer-escpr-1.4.1
 	   $ ./bootstrap && ./configure --prefix=/usr && make dist
 
 	6.1.3 パッケージ作成用ディレクトリを作成します。
@@ -277,7 +277,7 @@ CUPSのドキュメントを参照下さい。
 	   (~/.rpmmacrosでrpmbuild以外のディレクトリを指定することもできます。)
 
 	6.1.4 ソースtarballとspecファイルを、上記のディレクトリにコピーします。
-	   $ cp epson-inkjet-printer-escpr-1.4.0.tar.gz ~/rpmbuild/SOURCES/.
+	   $ cp epson-inkjet-printer-escpr-1.4.1.tar.gz ~/rpmbuild/SOURCES/.
 	   $ cp epson-inkjet-printer-escpr.spec ~/rpmbuild/SPECS
 	   
 	6.1.5 rpmパッケージを作成します。
@@ -290,11 +290,11 @@ CUPSのドキュメントを参照下さい。
 6.2 Debian系ディストリビューションの場合
 
 6.2.1 ダウンロードしたsrs.rpmを解凍します。
-   $ rpm2cpio epson-inkjet-printer-escpr-1.4.0-1lsb3.2.src.rpm | cpio -id
-   $ tar zxvf epson-inkjet-printer-escpr-1.4.0-1lsb3.2.tar.gz
+   $ rpm2cpio epson-inkjet-printer-escpr-1.4.1-1lsb3.2.src.rpm | cpio -id
+   $ tar zxvf epson-inkjet-printer-escpr-1.4.1-1lsb3.2.tar.gz
 
 6.2.2 configureを実行します。
-   $ cd epson-inkjet-printer-escpr-1.4.0
+   $ cd epson-inkjet-printer-escpr-1.4.1
    $ ./bootstrap && ./configure --prefix=/usr
 
 6.2.3 debパッケージを作成します。
@@ -307,11 +307,11 @@ CUPSのドキュメントを参照下さい。
 6.3 それ以外のディストリビューションの場合
 
 6.3.1 ダウンロードしたsrs.rpmを解凍します。
-   $ rpm2cpio epson-inkjet-printer-escpr-1.4.0-1lsb3.2.src.rpm | cpio -id
-   $ tar zxvf epson-inkjet-printer-escpr-1.4.0-1lsb3.2.tar.gz
+   $ rpm2cpio epson-inkjet-printer-escpr-1.4.1-1lsb3.2.src.rpm | cpio -id
+   $ tar zxvf epson-inkjet-printer-escpr-1.4.1-1lsb3.2.tar.gz
 
 6.3.2 configureを実行します。
-   $ cd epson-inkjet-printer-escpr-1.4.0
+   $ cd epson-inkjet-printer-escpr-1.4.1
    $ ./bootstrap && ./configure --prefix=/usr
 
    CUPS filterとPPDファイルのインストール先は自動判定していますが、
@@ -323,7 +323,7 @@ CUPSのドキュメントを参照下さい。
                                   例) /usr/share/ppd
                                       
 6.3.3 make, make install を実行します
-   $ cd epson-inkjet-printer-escpr-1.4.0
+   $ cd epson-inkjet-printer-escpr-1.4.1
    $ make 
    $ sudo make install
 

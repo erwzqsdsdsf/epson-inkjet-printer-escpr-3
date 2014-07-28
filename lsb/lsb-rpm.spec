@@ -1,6 +1,6 @@
 # lsb.spec.in -- an rpm spec file templete for LSB package
 # Epson Inkjet Printer Driver (ESC/P-R) for Linux
-# Copyright (C) Seiko Epson Corporation 2013.
+# Copyright (C) Seiko Epson Corporation 2014.
 #  This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.4.0
+%define ver     1.4.1
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit

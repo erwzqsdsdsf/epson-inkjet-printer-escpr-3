@@ -47,41 +47,41 @@
 *TTRasterizer:          Type42
 *1284DeviceID:          "MFG:EPSON;MDL:PX-404A;DES:EPSON PX-404A;"
 
-*UIConstraints: *Quality PMPHOTO_NORMAL *PageSize Postcard
-*UIConstraints: *Quality PMPHOTO_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality IJPC_NORMAL *PageSize L
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TL
-*UIConstraints: *Quality IJPC_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality IJPC_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality IJPC_NORMAL *PageSize 2L
-*UIConstraints: *Quality IJPC_NORMAL *PageSize T2L
-*UIConstraints: *Quality IJPC_NORMAL *PageSize A4
-*UIConstraints: *Quality IJPC_NORMAL *PageSize TA4
-*UIConstraints: *Quality RCPC_NORMAL *PageSize L
-*UIConstraints: *Quality RCPC_NORMAL *PageSize TL
-*UIConstraints: *Quality RCPC_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality RCPC_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality RCPC_NORMAL *PageSize 2L
-*UIConstraints: *Quality RCPC_NORMAL *PageSize T2L
-*UIConstraints: *Quality RCPC_NORMAL *PageSize A4
-*UIConstraints: *Quality RCPC_NORMAL *PageSize TA4
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize L
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize TL
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize 2L
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize T2L
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize Postcard
-*UIConstraints: *Quality GLOSSYCAST_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TL
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 4X6FULL
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize T4X6FULL
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize 2L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize T2L
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize Postcard
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TPostcard
-*UIConstraints: *Quality PLAIN_NORMAL *PageSize TA4
+*UIConstraints: *MediaType PMPHOTO_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType PMPHOTO_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize L
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TL
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize 4X6FULL
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize T4X6FULL
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize 2L
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize T2L
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize A4
+*UIConstraints: *MediaType IJPC_NORMAL *PageSize TA4
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize L
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize TL
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize 4X6FULL
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize T4X6FULL
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize 2L
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize T2L
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize A4
+*UIConstraints: *MediaType RCPC_NORMAL *PageSize TA4
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize L
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize TL
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize 4X6FULL
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize T4X6FULL
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize 2L
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize T2L
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType GLOSSYCAST_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize L
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize TL
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize 4X6FULL
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize T4X6FULL
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize 2L
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize T2L
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize Postcard
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize TPostcard
+*UIConstraints: *MediaType PLAIN_NORMAL *PageSize TA4
 
 *OpenUI *PageSize/Paper Size: PickOne
 *OrderDependency: 10 AnySetup *PageSize
@@ -357,75 +357,75 @@
 *PaperDimension A4/A4 210 x 297 mm: 	"595.2 841.8"
 *PaperDimension TA4/A4 210 x 297 mm (Borderless): 	"595.2 841.8"
 
-*OpenUI *Quality/Quality: PickOne
-*OrderDependency: 20 AnySetup *Quality
-*DefaultQuality: PLAIN_NORMAL
-*ja.Translation 	Quality/品質:""
-*nl.Translation 	Quality/Kwaliteit:""
-*fr.Translation 	Quality/Qualité:""
-*de.Translation 	Quality/Qualität:""
-*it.Translation 	Quality/Qualità:""
-*pt.Translation 	Quality/Qualidade:""
-*es.Translation 	Quality/Calidad:""
-*ko.Translation 	Quality/품질:""
-*zh_CN.Translation 	Quality/质量:""
-*zh_TW.Translation 	Quality/品質:""
-*Quality PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
-*nl.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
-*fr.Quality 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
-*de.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
-*it.Quality 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
-*pt.Quality 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
-*es.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
-*ko.Quality 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
-*zh_CN.Quality 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
-*zh_TW.Quality 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
-*Quality IJPC_NORMAL/Ink Jet Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	IJPC_NORMAL/官製ハガキ(インクジェット紙) - 標準:""
-*nl.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standaard:""
-*fr.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*de.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*it.Quality 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
-*pt.Quality 	IJPC_NORMAL/Ink Jet Postcard - Normal:""
-*es.Quality 	IJPC_NORMAL/Ink Jet Postcard - Estándar:""
-*ko.Quality 	IJPC_NORMAL/엽서(잉크젯 전용) - 표준:""
-*zh_CN.Quality 	IJPC_NORMAL/喷墨明信片 - 标准:""
-*zh_TW.Quality 	IJPC_NORMAL/Ink Jet Postcard - 標準:""
-*Quality RCPC_NORMAL/Recycled Paper Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	RCPC_NORMAL/官製ハガキ(再生紙) - 標準:""
-*nl.Quality 	RCPC_NORMAL/Recycled Paper Postcard - Standaard:""
-*fr.Quality 	RCPC_NORMAL/Recycled Paper Postcard - Standard:""
-*de.Quality 	RCPC_NORMAL/Recycled Paper Postcard - Standard:""
-*it.Quality 	RCPC_NORMAL/Recycled Paper Postcard - Standard:""
-*pt.Quality 	RCPC_NORMAL/Recycled Paper Postcard - Normal:""
-*es.Quality 	RCPC_NORMAL/Recycled Paper Postcard - Estándar:""
-*ko.Quality 	RCPC_NORMAL/엽서(재생 용지) - 표준:""
-*zh_CN.Quality 	RCPC_NORMAL/再生纸明信片 - 标准:""
-*zh_TW.Quality 	RCPC_NORMAL/Recycled Paper Postcard - 標準:""
-*Quality GLOSSYCAST_NORMAL/Epson Photo - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	GLOSSYCAST_NORMAL/フォト光沢紙 - 標準:""
-*nl.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standaard:""
-*fr.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*de.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*it.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
-*pt.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Normal:""
-*es.Quality 	GLOSSYCAST_NORMAL/Epson Photo - Estándar:""
-*ko.Quality 	GLOSSYCAST_NORMAL/Epson 사진 용지 - 표준:""
-*zh_CN.Quality 	GLOSSYCAST_NORMAL/爱普生照片纸 - 标准:""
-*zh_TW.Quality 	GLOSSYCAST_NORMAL/Epson Photo - 標準:""
-*Quality PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
-*ja.Quality 	PLAIN_NORMAL/普通紙 - 標準:""
-*nl.Quality 	PLAIN_NORMAL/Gewoon papier - Standaard:""
-*fr.Quality 	PLAIN_NORMAL/Papier ordinaire - Standard:""
-*de.Quality 	PLAIN_NORMAL/Normalpapier - Standard:""
-*it.Quality 	PLAIN_NORMAL/carte comuni - Standard:""
-*pt.Quality 	PLAIN_NORMAL/Papel Normal - Normal:""
-*es.Quality 	PLAIN_NORMAL/Papel Normal - Estándar:""
-*ko.Quality 	PLAIN_NORMAL/일반 용지 - 표준:""
-*zh_CN.Quality 	PLAIN_NORMAL/普通纸 - 标准:""
-*zh_TW.Quality 	PLAIN_NORMAL/Plain Paper - 標準:""
-*CloseUI: *Quality
+*OpenUI *MediaType/Media Type: PickOne
+*OrderDependency: 20 AnySetup *MediaType
+*DefaultMediaType: PLAIN_NORMAL
+*ja.Translation 	MediaType/品質:""
+*nl.Translation 	MediaType/Kwaliteit:""
+*fr.Translation 	MediaType/Qualité:""
+*de.Translation 	MediaType/Qualität:""
+*it.Translation 	MediaType/Qualità:""
+*pt.Translation 	MediaType/Qualidade:""
+*es.Translation 	MediaType/Calidad:""
+*ko.Translation 	MediaType/품질:""
+*zh_CN.Translation 	MediaType/质量:""
+*zh_TW.Translation 	MediaType/品質:""
+*MediaType PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PMPHOTO_NORMAL/写真用紙＜光沢＞ - 標準:""
+*nl.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standaard:""
+*fr.MediaType 	PMPHOTO_NORMAL/Papier Photo Glacé Premium - Standard:""
+*de.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Standard:""
+*it.MediaType 	PMPHOTO_NORMAL/Carta Fotografica Lucida Premium - Standard:""
+*pt.MediaType 	PMPHOTO_NORMAL/Papel Fotográfico Brilhante Premium - Normal:""
+*es.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - Estándar:""
+*ko.MediaType 	PMPHOTO_NORMAL/프리미엄 광택 사진 용지 - 표준:""
+*zh_CN.MediaType 	PMPHOTO_NORMAL/高质量光泽照片纸 - 标准:""
+*zh_TW.MediaType 	PMPHOTO_NORMAL/Premium Glossy Photo Paper - 標準:""
+*MediaType IJPC_NORMAL/Ink Jet Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	IJPC_NORMAL/官製ハガキ(インクジェット紙) - 標準:""
+*nl.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standaard:""
+*fr.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*de.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*it.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Standard:""
+*pt.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Normal:""
+*es.MediaType 	IJPC_NORMAL/Ink Jet Postcard - Estándar:""
+*ko.MediaType 	IJPC_NORMAL/엽서(잉크젯 전용) - 표준:""
+*zh_CN.MediaType 	IJPC_NORMAL/喷墨明信片 - 标准:""
+*zh_TW.MediaType 	IJPC_NORMAL/Ink Jet Postcard - 標準:""
+*MediaType RCPC_NORMAL/Recycled Paper Postcard - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	RCPC_NORMAL/官製ハガキ(再生紙) - 標準:""
+*nl.MediaType 	RCPC_NORMAL/Recycled Paper Postcard - Standaard:""
+*fr.MediaType 	RCPC_NORMAL/Recycled Paper Postcard - Standard:""
+*de.MediaType 	RCPC_NORMAL/Recycled Paper Postcard - Standard:""
+*it.MediaType 	RCPC_NORMAL/Recycled Paper Postcard - Standard:""
+*pt.MediaType 	RCPC_NORMAL/Recycled Paper Postcard - Normal:""
+*es.MediaType 	RCPC_NORMAL/Recycled Paper Postcard - Estándar:""
+*ko.MediaType 	RCPC_NORMAL/엽서(재생 용지) - 표준:""
+*zh_CN.MediaType 	RCPC_NORMAL/再生纸明信片 - 标准:""
+*zh_TW.MediaType 	RCPC_NORMAL/Recycled Paper Postcard - 標準:""
+*MediaType GLOSSYCAST_NORMAL/Epson Photo - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	GLOSSYCAST_NORMAL/フォト光沢紙 - 標準:""
+*nl.MediaType 	GLOSSYCAST_NORMAL/Epson Photo - Standaard:""
+*fr.MediaType 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
+*de.MediaType 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
+*it.MediaType 	GLOSSYCAST_NORMAL/Epson Photo - Standard:""
+*pt.MediaType 	GLOSSYCAST_NORMAL/Epson Photo - Normal:""
+*es.MediaType 	GLOSSYCAST_NORMAL/Epson Photo - Estándar:""
+*ko.MediaType 	GLOSSYCAST_NORMAL/Epson 사진 용지 - 표준:""
+*zh_CN.MediaType 	GLOSSYCAST_NORMAL/爱普生照片纸 - 标准:""
+*zh_TW.MediaType 	GLOSSYCAST_NORMAL/Epson Photo - 標準:""
+*MediaType PLAIN_NORMAL/Plain Paper - Standard: 	"<</HWResolution[360 360]>>setpagedevice"
+*ja.MediaType 	PLAIN_NORMAL/普通紙 - 標準:""
+*nl.MediaType 	PLAIN_NORMAL/Gewoon papier - Standaard:""
+*fr.MediaType 	PLAIN_NORMAL/Papier ordinaire - Standard:""
+*de.MediaType 	PLAIN_NORMAL/Normalpapier - Standard:""
+*it.MediaType 	PLAIN_NORMAL/carte comuni - Standard:""
+*pt.MediaType 	PLAIN_NORMAL/Papel Normal - Normal:""
+*es.MediaType 	PLAIN_NORMAL/Papel Normal - Estándar:""
+*ko.MediaType 	PLAIN_NORMAL/일반 용지 - 표준:""
+*zh_CN.MediaType 	PLAIN_NORMAL/普通纸 - 标准:""
+*zh_TW.MediaType 	PLAIN_NORMAL/Plain Paper - 標準:""
+*CloseUI: *MediaType
 
 *OpenUI *Ink/Ink: PickOne
 *OrderDependency: 30 AnySetup *Ink
