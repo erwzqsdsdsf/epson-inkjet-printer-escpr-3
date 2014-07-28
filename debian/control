@@ -7,6 +7,7 @@ Build-Depends: debhelper (>= 9), dh-autoreconf, libcups2-dev, libcupsimage2-dev,
 Vcs-Git: https://alioth.debian.org/anonscm/git/printing/epson-inkjet-printer-escpr.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=printing/epson-inkjet-printer-escpr.git
 Homepage: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX&productName=B700
+XS-Testsuite: autopkgtest
 Standards-Version: 3.9.5
 
 Package: printer-driver-escpr
