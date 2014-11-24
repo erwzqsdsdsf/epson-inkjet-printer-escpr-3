@@ -63,9 +63,12 @@ static void sigterm_handler (int sig);
 
 int cancel_flg;
 
-#include <stdarg.h>
 #define DEBUG_PATH "/tmp/eps_wrapper.txt"
+
+#if (HAVE_DEBUG)
 static FILE *debug_f = NULL;
+#endif
+
 #define HAVE_DEBUG 0
 static void debug_msg(const char *fmt, ...){
 #if (HAVE_DEBUG)	
@@ -261,7 +264,7 @@ get_option_for_ppd (const char *printer, filter_option_t *filter_opt_p)
 
 	/* Make library file name */
 	strcpy (filter_opt_p->model, ppd_p->modelname);
-	for (i = 0; filter_opt_p->model[i] != '\0' && i < NAME_MAX; i ++)
+	for (i = 0; i < NAME_MAX && filter_opt_p->model[i] != '\0' ; i ++)
 		filter_opt_p->model_low[i] = tolower (filter_opt_p->model[i]);
 	filter_opt_p->model_low[i] = '\0';
 

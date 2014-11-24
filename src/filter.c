@@ -31,8 +31,6 @@
 #include <ctype.h>
 #include <errno.h>
 
-
-
 #include "epson-escpr-def.h"
 #include "epson-escpr-media.h"
 #include "epson-protocol.h"
@@ -44,13 +42,10 @@
 #include "err.h"
 #include "mem.h"
 #include "str.h"
-#include "csv.h"
 #include "debug.h"
 #include "libprtX.h"
 #include "optBase.h"
 #include "linux_cmn.h"
-
-
 
 #define PATH_MAX 256
 #define NAME_MAX 41
@@ -76,7 +71,6 @@ FILE* outfp = NULL;
 
 /* static functions */
 static int set_pips_parameter (filter_option_t *, ESCPR_OPT *, ESCPR_PRINT_QUALITY *);
-static int get_page_size (const char *, const char *);
 static int getMediaTypeID(char *);
 static ESCPR_BYTE4 print_spool_fnc(void* , const ESCPR_UBYTE1*, ESCPR_UBYTE4);
 
@@ -157,17 +151,10 @@ EPS_ERR_CODE epsInitJob(){
 	printJob.contData.sendData = NULL;
 	printJob.contData.sendDataSize = 0;
 
-	/* DEL printJob.additional = EPS_ADDDATA_NONE;
-	printJob.qrcode.bits = NULL;
-	printJob.qrcode.cellNum = 0;
-	printJob.qrcode.dpc = 0; */
 	obsClear();
 
 /*** Set "Endian-ness" for the current cpu                                              */
 	memInspectEndian();
-	
-/*** Set Communication Mode                                                             */
-	//printJob.commMode = commMode;
 	
 /*** Change ESC/P-R Lib Status                                                          */
 	libStatus = EPS_STATUS_INITIALIZED;
@@ -198,21 +185,6 @@ EPS_ERR_CODE epsInitVariable(){
 	}
 	memset(tmpLineBuf, 0xFF, (EPS_UINT32)tmpLineBufSize);
 	return EPS_ERR_NONE;
-}
-
-
-EPS_ERR_CODE epsFilterEndPage(EPS_BOOL bNextPage){
-	EPS_ERR_CODE    retStatus= EPS_ERR_NONE;
-	
-#ifdef GCOMSW_CMD_ESCPAGE_S
-	debug_msg("GCOMSW_CMD_ESCPAGE defined\n");
-		retStatus = pageEndPage();
-#else
-		retStatus = EPS_ERR_LANGUAGE_NOT_SUPPORTED;
-#endif
-
-	return retStatus;
-
 }
 
 void eps_toupper(char *str){
@@ -248,7 +220,6 @@ int
 main (int argc, char *argv[])
 {
 	filter_option_t fopt;
-	char libfile[PATH_MAX + 1]; 
 
 	long width_pixel, height_pixel;
 	long HWResolution;
@@ -270,7 +241,6 @@ main (int argc, char *argv[])
 	
 	/* 2005.11.28 added  */
 	char *paper;
-	char *bin_id;
 	char *point;
 
 	/* library options */
@@ -321,12 +291,11 @@ main (int argc, char *argv[])
 	memset (&fopt, 0, sizeof (filter_option_t));
 	memset (&printOpt, 0, sizeof (ESCPR_OPT));
 	memset (&printQuality, 0, sizeof(ESCPR_PRINT_QUALITY));
-	//memset (&printJob, 0, sizeof(ESCPR_PRINT_JOB));
 	memset (&bandBmp, 0, sizeof(ESCPR_BANDBMP));
 	memset (&bandRect, 0, sizeof(ESCPR_RECT));
 
 	strncpy (fopt.model, argv[1], NAME_MAX);
-	for (i = 0; fopt.model[i] != '\0' && i < NAME_MAX - 1; i ++)
+	for (i = 0; i < NAME_MAX - 1 && fopt.model[i] != '\0' ; i ++)
 		fopt.model_low[i] = tolower (fopt.model[i]);
 	fopt.model_low[i] = '\0';
 
@@ -355,45 +324,33 @@ main (int argc, char *argv[])
 	if(point[0]=='T')
 	{
 		paper=str_clone(++point,strlen(fopt.media)-1);
-		bin_id="BORDERLESS";
 		jobAttr.printLayout = EPS_MLID_BORDERLESS;
 		debug_msg("borderless\n");
 	}
 	else
 	{
 		paper=str_clone(point,strlen(fopt.media));
-		bin_id="BORDER";
 		jobAttr.printLayout = EPS_MLID_BORDERS;
 		debug_msg("border\n");
 	}
 	
 	eps_toupper(fopt.media);
-	//jobAttr.mediaSizeIdx = getMediaSizeID(fopt.media);
 	jobAttr.mediaSizeIdx = getMediaSizeID(paper);
 
 	switch(HWResolution){
 	case 360:
-		//printJob.InResolution = ESCPR_IR_3636;
 		jobAttr.inputResolution = EPS_IR_360X360;
 		break;
 	case 720:
-		//printJob.InResolution = ESCPR_IR_7272;
 		jobAttr.inputResolution = EPS_IR_720X720;
 		break;
 	case 300:
-		//printJob.InResolution = ESCPR_IR_3030;
 		jobAttr.inputResolution = EPS_IR_300X300;
 		break;
 	case 600:
-		//printJob.InResolution = ESCPR_IR_6060;
 		jobAttr.inputResolution = EPS_IR_600X600;
 		break;							
 	}
-
-	
-	//if (get_page_size (&printJob, paper, bin_id))
-	if (get_page_size (paper, bin_id))
-		err_fatal ("Cannot get page size of PIPS.");
 
 	band_line = 1;
 
@@ -411,8 +368,6 @@ main (int argc, char *argv[])
 		debug_msg("Error occurred in \"SetupJobAttrib\": %d\n", err);
 		err_fatal ("Error occurred in \"SetupJobAttrib\".");	/* exit */
 	}
-	//printJob.paperWidth = width_pixel;
-	//printJob.paperHeight = height_pixel;
 
 	epsInitVariable();
 	
@@ -467,11 +422,6 @@ main (int argc, char *argv[])
 	/* debug */
 	DEBUG_JOB_STRUCT (printJob);
 	DEBUG_QUALITY_STRUCT (printQuality);
-#if 0
-	err = escprInitJob (&printOpt, &printQuality, &printJob);
-	if (err)
-		err_fatal ("Error occurred in \"INIT_FUNC\".");	/* exit */
-#endif	
 
 	x_mag = (double)print_area_x / width_pixel;
 	y_mag = (double)print_area_y / height_pixel;
@@ -517,8 +467,7 @@ main (int argc, char *argv[])
 			char* pagebuf = malloc((int)(print_area_y) * (bandBmp.WidthBytes));
 			char* startpage = pagebuf;
 			long int posbuf = 0;
-			//debug_msg("height pixel = %d\n", height_pixel);
-			//debug_msg("height pixel [%d]* byte_per_line [%d]=%d// Widthbyte = %d\n", (int)height_pixel, bytes_per_line, (int)(height_pixel)*(bytes_per_line), bandBmp.WidthBytes);
+
 			for (i = 0; i < print_area_y; i ++)
 			{
 				char *line;
@@ -526,7 +475,7 @@ main (int argc, char *argv[])
 				line = (char *)(band + (bandBmp.WidthBytes * band_line_count));
 				while ((0 == y_count) || ((i > (y_mag * y_count) - 1) && (y_count < height_pixel))) {
 					while ((0 == err) && (read_size < bytes_per_line)) {
-						size_t rsize;
+						int rsize;
 						rsize = read(STDIN_FILENO, image_raw + read_size, bytes_per_line - read_size);
 						//debug_msg("step 11\n");
 						if (rsize <= 0) {
@@ -534,8 +483,6 @@ main (int argc, char *argv[])
 								err = -1;
 								cancel = 1;
 								goto quit;
-								/* not reached		*/
-								break;
 							}
 							usleep(50000);
 						} else {
@@ -587,7 +534,6 @@ main (int argc, char *argv[])
 				if (band_line_count >= band_line)
 				{
 					bandRect.bottom = bandRect.top + band_line_count;
-					printHeight = band_line_count;
 					printHeight = 1;
 					memcpy(pagebuf, bandBmp.Bits, bandBmp.WidthBytes);
 #if (HAVE_PPM)
@@ -601,7 +547,7 @@ main (int argc, char *argv[])
 #endif
 					pagebuf+= bandBmp.WidthBytes;
 					posbuf+=bandBmp.WidthBytes;
-					//D_PrintBand (bandBmp.Bits, bandBmp.WidthBytes, &printHeight);
+
 					band_line_count -= printHeight;
 					bandBmp.Bits += band_line_count;
 					
@@ -628,15 +574,10 @@ main (int argc, char *argv[])
 				band_line_count -= printHeight;
 				bandBmp.Bits += band_line_count;
 			}
-			//debug_msg("band line count = %d\n", band_line_count);
-			//debug_msg("width byte = %d\n", bandBmp.WidthBytes);
-			//debug_msg("posbuf = %d\n", posbuf);
 		
 			int revert = 0;
 			int pos = posbuf - bandBmp.WidthBytes ;
-			int revert_line;
 			char *rever_buf = malloc(bandBmp.WidthBytes + 1000);
-			//debug_msg("byte_par_pixel = %d\n", byte_par_pixel);
 			for (revert = print_area_y; revert > 0; revert--)
 			{
 				if (3 != byte_par_pixel)
@@ -653,18 +594,10 @@ main (int argc, char *argv[])
 					for (k = bandBmp.WidthBytes/3; k >= 0; k--)
 					{
 						memcpy(rever_buf + k*3, startpage + pos + (bandBmp.WidthBytes - 6) - k*3, 3);
-// 						if (k == 0)
-// 						{
-// 							memcpy(rever_buf + k*3, startpage + pos + bandBmp.WidthBytes + 3, 3);
-// 						}
 					}
-					//debug_msg("k = %d\n", k);
 				}
-				//debug_msg("step 100\n");
 				PrintBand (rever_buf, bandBmp.WidthBytes, &printHeight);
 				pos -= bandBmp.WidthBytes;
-				//debug_msg("printHeight = %d\n", printHeight);
-				//debug_msg("WidthByte = %d\n", bandBmp.WidthBytes);
 			}
 
 			debug_msg("free rever\n");
@@ -678,7 +611,6 @@ main (int argc, char *argv[])
 			{
 				pagebuf = startpage;
 				free (pagebuf);
-				pagebuf = NULL;
 			}
 			debug_msg("free page sucessfull\n");
 			err = epsEndPage(FALSE);
@@ -695,7 +627,7 @@ main (int argc, char *argv[])
 				line = (char *)(band + (bandBmp.WidthBytes * band_line_count));
 				while ((0 == y_count) || ((i > (y_mag * y_count) - 1) && (y_count < height_pixel))) {
 					while ((0 == err) && (read_size < bytes_per_line)) {
-						size_t rsize;
+						int rsize;
 						
 						rsize = read(STDIN_FILENO, image_raw + read_size, bytes_per_line - read_size);
 						/* 2009.03.17 epson-escpr-1.0.0 */
@@ -710,8 +642,6 @@ main (int argc, char *argv[])
 								/* don't care err = -1  */
 								cancel = 1;
 								goto quit;
-								/* not reached		*/
-								break;
 							}
 							usleep(50000);
 						} else {
@@ -779,10 +709,7 @@ main (int argc, char *argv[])
 				if (band_line_count >= band_line)
 				{
 					bandRect.bottom = bandRect.top + band_line_count;
-					#if 0
-					if (escprBandOut (&bandBmp, &bandRect))
-						err_fatal ("Error occurred in \"OUT_FUNC\"."); /* exit */
-					#endif
+
 					printHeight = band_line_count;
 					PrintBand (bandBmp.Bits, bandBmp.WidthBytes, &printHeight);
 #if (HAVE_PPM)
@@ -807,7 +734,6 @@ main (int argc, char *argv[])
 			{
 				bandRect.bottom = bandRect.top + band_line_count;
 				
-				//if (PrintBand (&bandBmp, bandBmp.WidthBytes))
 				err = PrintBand (bandBmp.Bits, bandBmp.WidthBytes, &printHeight);
 				debug_msg("printHeight = %d\n", printHeight);
 				if(err)
@@ -825,7 +751,6 @@ main (int argc, char *argv[])
 				bandBmp.Bits += band_line_count;
 			}
 			
-			//if (escprTerminatePage (1ESCPR_END_PAGE))
 			err = epsEndPage(FALSE);
 			if(err)
 				err_fatal ("Error occurred in \"PEND_FUNC\".");	/* exit */
@@ -841,7 +766,6 @@ quit:;
 		err = epsEndPage(FALSE);
 	}
      
-	//if (escprDestroyJob ())
 	err = epsEndJob();
 	if(err)
 		err_fatal ("Error occurred in \"END_FUNC\"."); /* exit */
@@ -989,91 +913,6 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 	return 0;
 }
 
-
-/* Get PageSize for PIPS */
-static int
-get_page_size (const char *paper, const char *bin_id)
-{
-#if 0
-	csvlist_t *csv_p;
-	const char *path = PAPER_PATH;
-	int pos;
-
-	long l_margin, r_margin, t_margin, b_margin;
-	
-	csv_p = csvlist_open (path);
-	if (!csv_p)
-		err_fatal ("%s : List file is broken.", path);
-
-	pos = csvlist_search_keyword (csv_p, 0, paper);
-	if (pos < 0)
-		err_fatal ("%s : Unknown PageSize.", paper);
-
-
-	//if(printJob->InResolution == ESCPR_IR_3636 || printJob->InResolution == ESCPR_IR_7272){
-	if(jobAttr.inputResolution == EPS_IR_360X360 || jobAttr.inputResolution == EPS_IR_720X720){
-		printJob->PaperWidth = atol (csvlist_get_word (csv_p, pos + 2));
-		printJob->PaperLength = atol (csvlist_get_word (csv_p, pos + 3));
-
-		l_margin = atol (csvlist_get_word (csv_p, pos + 4));
-		r_margin = atol (csvlist_get_word (csv_p, pos + 5));
-		t_margin = atol (csvlist_get_word (csv_p, pos + 6));
-		b_margin = atol (csvlist_get_word (csv_p, pos + 7));
-	}else{
-		printJob->PaperWidth = atol (csvlist_get_word (csv_p, pos + 8));
-		printJob->PaperLength = atol (csvlist_get_word (csv_p, pos + 9));
-
-		l_margin = atol (csvlist_get_word (csv_p, pos + 10));
-		r_margin = atol (csvlist_get_word (csv_p, pos + 11));
-		t_margin = atol (csvlist_get_word (csv_p, pos + 12));
-		b_margin = atol (csvlist_get_word (csv_p, pos + 13));
-
-	}
-
-
-	if (!strcmp (bin_id, "BORDER"))
-	{
- 		printJob->PrintableAreaWidth = printJob->PaperWidth - l_margin - r_margin;
-		printJob->PrintableAreaLength = printJob->PaperLength - t_margin - b_margin;
-		printJob->TopMargin = t_margin;
-		printJob->LeftMargin = l_margin;
-	}
-
-	else if (!strcmp (bin_id, "BORDERLESS"))
-	{
-		if(printJob->InResolution == ESCPR_IR_3636 || printJob->InResolution == ESCPR_IR_7272){
-	 		printJob->PrintableAreaWidth = printJob->PaperWidth + 72;
-			printJob->PrintableAreaLength = printJob->PaperLength + 112;
-			printJob->TopMargin = -42;
-			if ( printJob->PaperWidth < 4209 ) 
-				printJob->LeftMargin = -36;
-			else
-				printJob->LeftMargin = -48;
-		}else{
-	 		printJob->PrintableAreaWidth = printJob->PaperWidth + 60;
-			printJob->PrintableAreaLength = printJob->PaperLength + 93;
-			printJob->TopMargin = -35;
-			if ( printJob->PaperWidth < 3507 ) 
-				printJob->LeftMargin = -30;
-			else
-				printJob->LeftMargin = -40;
-
-		}
-
-	}
-
-	else
-	{
-		err_fatal ("%s : This sheet feeder is not supported.");
-	}
-
-	printJob->PrintDirection =  0; 
-
-	/* free alloced memory */
-	csvlist_close(csv_p);
-#endif
-	return 0;
-}
 
 static int  getMediaTypeID(char *rsc_name)
 {

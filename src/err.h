@@ -27,8 +27,6 @@
 
 #include <stdarg.h>
 
-#include "def.h"
-
 #define DEBUG_PATH "/tmp/eps_debug.txt"
 
 enum msgtype {
@@ -44,7 +42,7 @@ void err_init (const char *);
 void err_msg (enum msgtype, const char *, ...);
 void err_fatal (const char *, ...);
 void err_system (const char *, ...);
-
+void debug_msg(const char *fmt, ...);
 
 
 #endif /* ERR_H */

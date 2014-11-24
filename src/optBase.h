@@ -22,52 +22,20 @@
 #  include <config.h>
 #endif
 
-#include "pips.h"
+#define END_ARRAY -1	
 
 #ifndef N_
 #define N_(magic_word)      (magic_word)
 #endif
 
-const char *highRanckLabels[] = {
-  "hoge hoge",
-  N_("I/O"),
-  N_("Paper"),
-  N_("Layout"),
-  N_("Main"),
-  N_("Color Management"),
-  N_("Utility"),
-  NULL
-};
+typedef struct _OPTION_DATA
+{
+	int value;
+	char *rsc_name;
+	char *x_name;
+	char *x_name_jp;
+} OPTION_DATA;
 
-const char *ioLabels[] = {
-  N_("Input"),
-  N_("Output"),
-  N_("Select"),
-  NULL
-};
-
-const char *outputLabels[] = {
-  N_("to printer"),
-  N_("to file"),
-  NULL,
-};
-
-const char *outputTypeLabels = N_("export file");
-
-const char *finishButtonLabels[] = {
-  N_("Save"),
-  N_("Print"),
-  N_("Quit"),
-  NULL
-};
-
-const char *def_margin_label = N_("Default");
-
-OPTION_DATA inkData[] = {
-  {     PIPS_OUTPUT_CMYKcm,     "COLOR",        N_("Color")        },
-  {     PIPS_OUTPUT_MONO,       "MONO",         N_("Black")        },
-  {     END_ARRAY,              "",             ""             }
-};
 
 OPTION_DATA mediaSizeData[] = {
     {PM_MSID_A4,            "A4",       N_("A4  210x297 mm")},
@@ -193,70 +161,3 @@ OPTION_DATA mediaTypeData[] = {
     { END_ARRAY,             "",         ""                       }
 };
 
-OPTION_DATA levelData[] = {
-  {     PIPS_LV_DRAFT,          "DRAFT",        N_("Draft")           },
-  {     PIPS_LV_NORMAL,         "NORMAL",       N_("Normal")          },
-  {     PIPS_LV_HIGH,           "HIGH",         N_("High")            },
-  {     END_ARRAY,              "",             ""                    }
-};
-
-OPTION_DATA fitPageData[] = {
-  {     PIPS_FP_OFF,    "OFF",  ""                  },
-  {     PIPS_FP_ON,     "ON",   N_("Fit to Page")   },
-  {     END_ARRAY,      "",     ""                  }
-};
-
-OPTION_DATA multiPageData[] = {
-  {     PIPS_MP_1,          "1",        N_("None")        },
-  {     PIPS_MP_2,          "2",        N_("2 Pages")     },
-  {     PIPS_MP_4,          "4",        N_("4 Pages")     },
-  {     END_ARRAY,      "",     ""                  }
-};
-
-
-OPTION_DATA borderlessprintData[] = {
-  {     PIPS_BL_OFF,    "OFF",  ""                      },
-  {     PIPS_BL_ON,     "ON",   N_("Borderless") },
-  {     END_ARRAY,      "",     ""                      }
-};
-
-OPTION_ALL opt_all[] = {
-  {     P_SCALE,                NULL,           N_("Reduce/Enlarge (%)")    },
-  {     P_INK,                  inkData,        N_("Ink")                   },
-  {     P_MEDIA_SIZE,           mediaSizeData,  N_("Paper Size")            },
-  {     P_MEDIA_TYPE,           mediaTypeData,  N_("Media Type")            },
-  {     P_BRIGHTNESS,           NULL,           N_("Brightness")            },
-  {     P_CONTRAST,             NULL,           N_("Contrast")              },
-  {     P_SATURATION,           NULL,           N_("Saturation")            },
-  {     P_QUALITY_LEVEL,        levelData,      N_("Quality")               },
-  {     P_MARGIN,               NULL,           N_("Margin (mm)")           },
-  {     P_FIT_PAGE,             fitPageData,    N_("Fit to Page")           },
-  {     P_MULTI_PAGE,           multiPageData,  N_("Multi Page")            },
-  {     P_MARGIN_X,             NULL,           N_("Left")                  },
-  {     P_MARGIN_Y,             NULL,           N_("Top")                   },
-  {     P_BORDERLESS_PRINT,     borderlessprintData,  N_("Borderless")  },
-  {     END_ARRAY,              NULL,           ""                          }
-};
-
-const char Status_Monitor[] = N_("Status Monitor");
-const char Ink_Level[] = N_("Ink Level");
-const char Check[]=N_("Check");
-const char Ink_Black[] = N_("Black");
-const char Ink_Color[] = N_("Color");
-const char Ink_Chenge[] = N_("Replacement");
-const char Ink_Volume[] = N_("Ink");
-const char No_Connect_Message[] = N_("Cannot communicate with a printer.");
-
-const char Utility_Err_Msg[] = N_("A problem has occurred.");
-
-const char Ink_Change[] = N_("InkChange");
-const char Ink_Change_Msg[] = N_("The ink cartridge configuration was changed.\n"
-				 "Settings will be reset to the default.\n"
-				 "Reconfigure the settings as needed.");
-
-const char Connected_Printer_Chg[] = N_("Printer Changed");
-const char Connected_Printer_Chg_Msg[] = N_("The information on a printer was changed.\n"
-				      "Setup is returned to a default.\n"
-				      "Please set up again.");
-const char Printer_Disconnected[] = N_("Printer Disconnected");
-const char Printer_Disconnected_Msg[] = N_("Please check connection with a printer and turn ON the power supply of a printer.");

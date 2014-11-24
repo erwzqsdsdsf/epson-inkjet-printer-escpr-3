@@ -1,6 +1,21 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.4.3                          (2014-10-01)
+----------------------------------------------------------------------
+ * Added Postcard size 
+     - WF-100 Series
+     - PX-S05 Series
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.4.2                          (2014-09-05)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - PF-70 Series
+     - L-810 Series
+     - L-850 Series
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.4.1                          (2014-07-07)
 ----------------------------------------------------------------------
  * Added ppd files of following models

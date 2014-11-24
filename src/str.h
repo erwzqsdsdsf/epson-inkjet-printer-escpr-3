@@ -25,8 +25,6 @@
 #  include <config.h>
 #endif
 
-#include "def.h"
-
 BEGIN_C
 
 char * str_clone (char *, size_t);

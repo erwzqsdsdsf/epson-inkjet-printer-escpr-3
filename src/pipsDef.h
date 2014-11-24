@@ -33,41 +33,8 @@ extern "C" {
 	typedef unsigned short USHORT;
 	typedef unsigned int UINT;
 	typedef unsigned long ULONG;
-	typedef struct _POINT
-	{
-		long x;
-		long y;
-	} POINT, *LP_POINT;
-
 	typedef int BOOL;
 	typedef void* HANDLE;
-
-
-	typedef struct _DOUBLE_POINT
-	{
-		double x;
-		double y;
-	} DPOINT, *LP_DPOINT;
-
-/* print構造体 印刷パラメータを格納する */
-	typedef struct _PP_PRINT_STRUCT
-	{
-		UCHAR paper;
-		UCHAR ink;
-		UCHAR media_type;
-		UCHAR qlevel;
-
-		int brightness;
-		int contrast;
-		int saturation;
-		POINT ratio;
-		POINT margin;
-		POINT paper_size;
-		POINT paper_area;
-		POINT default_margin;
-		int fit_page;	 /* add -Fri Oct  5 2001 */
-		UCHAR borderless_print;
-	} PRT_STRUCT, *LP_PRT_STRUCT;
 
 #ifdef __cplusplus
 }
