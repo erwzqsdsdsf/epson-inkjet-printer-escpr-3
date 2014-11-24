@@ -1,1 +1,4 @@
+# Upstream backports
+u1.4.4-fixed-a-problem-when-using-rear-feed-slot-as-inputslot.patch
+
 dont_touch_debian_files.patch

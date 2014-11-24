@@ -1,0 +1,26 @@
+Description: Upstream 1.4.4 change: Fixed a problem when using "Rear Feed Slot" as InputSlot.
+Origin: upstream
+Bug-Debian: https://bugs.debian.org/755408
+Last-Update: 2014-11-24
+--- a/src/filter.c
++++ b/src/filter.c
+@@ -925,7 +925,7 @@
+  	
+ 	/* InputSlot */
+ 	inputslot = str_clone (filter_opt_p->inputslot, strlen (filter_opt_p->inputslot));
+- 	if (strcmp (inputslot, "Rear") == 0 || strcmp (inputslot, "RearPaperFeed") == 0){ 
++ 	if (strcmp (inputslot, "RearPaperFeed") == 0){ 
+ 		debug_msg("Rear Tray\n");
+  		jobAttr.paperSource =  EPS_MPID_REAR;
+  	}
+@@ -945,8 +945,8 @@
+ 		debug_msg("Lower Tray\n");
+  		jobAttr.paperSource =  EPS_MPID_FRONT4;
+  	}
+- 	else if(strcmp (inputslot, "ManualFeed") == 0){ 
+-		debug_msg("Manual Reed Tray\n");
++ 	else if(strcmp (inputslot, "Rear") == 0 || strcmp (inputslot, "ManualFeed") == 0){ 
++		debug_msg("Manual Feed Tray\n");
+  		jobAttr.paperSource =  EPS_MPID_REARMANUAL;
+  	}
+  	else if(strcmp (inputslot, "DiskTray") == 0){ 
