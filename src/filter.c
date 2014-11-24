@@ -849,7 +849,7 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
  	
 	/* InputSlot */
 	inputslot = str_clone (filter_opt_p->inputslot, strlen (filter_opt_p->inputslot));
- 	if (strcmp (inputslot, "Rear") == 0 || strcmp (inputslot, "RearPaperFeed") == 0){ 
+ 	if (strcmp (inputslot, "RearPaperFeed") == 0){ 
 		debug_msg("Rear Tray\n");
  		jobAttr.paperSource =  EPS_MPID_REAR;
  	}
@@ -869,8 +869,8 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 		debug_msg("Lower Tray\n");
  		jobAttr.paperSource =  EPS_MPID_FRONT4;
  	}
- 	else if(strcmp (inputslot, "ManualFeed") == 0){ 
-		debug_msg("Manual Reed Tray\n");
+ 	else if(strcmp (inputslot, "Rear") == 0 || strcmp (inputslot, "ManualFeed") == 0){ 
+		debug_msg("Manual Feed Tray\n");
  		jobAttr.paperSource =  EPS_MPID_REARMANUAL;
  	}
  	else if(strcmp (inputslot, "DiskTray") == 0){ 
