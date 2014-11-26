@@ -1,3 +1,11 @@
+epson-inkjet-printer-escpr (1.4.1-2) unstable; urgency=medium
+
+  * Backport the 1.4.4 change:
+    - Fixed a problem when using "Rear Feed Slot" as InputSlot
+      (Closes: #755408)
+
+ -- Didier Raboud <odyx@debian.org>  Wed, 26 Nov 2014 13:36:11 +0100
+
 epson-inkjet-printer-escpr (1.4.1-1) unstable; urgency=medium
 
   * New 1.4.1 upstream version
