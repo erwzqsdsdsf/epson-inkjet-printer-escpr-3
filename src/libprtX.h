@@ -40,13 +40,6 @@ extern "C" {
 #define DLL_FILTER_PMREPLY "escprFilterPMReply"
 	
 	typedef void *handle_t;
-
-	typedef struct point_struct
-	{
-		long x;
-		long y;
-	} point_t;
-
 	typedef int (*INIT_FUNC) (const ESCPR_OPT *, const ESCPR_PRINT_QUALITY *, const ESCPR_PRINT_JOB*);
 	typedef int (*PINIT_FUNC) (void);
 	typedef int (*OUT_FUNC) (const ESCPR_BANDBMP *, ESCPR_RECT *);

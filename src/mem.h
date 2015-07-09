@@ -25,7 +25,16 @@
 #  include <config.h>
 #endif
 
-#include "def.h"
+/* defines */
+#ifdef __cplusplus
+#define BEGIN_C extern "C" {
+#define END_C }
+#else
+#define BEGIN_C
+#define END_C
+#endif /* __cplusplus */
+
+typedef int bool_t;
 
 /* If it is a success, an address is returned, and if it is failure, a message is outputted and it ends. */
 #define mem_new(type, num) \

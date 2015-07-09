@@ -26,7 +26,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "err.h"
 
 #define HAVE_DEBUG 0
@@ -57,6 +56,7 @@ void debug_msg(const char *fmt, ...){
 #endif
 	return;
 }
+
 
 void
 err_init (const char *name)

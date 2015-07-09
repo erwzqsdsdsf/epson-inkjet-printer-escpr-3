@@ -43,10 +43,10 @@ debug_init (void)
 	pid = getpid ();
 	sprintf (path, "%s.%d", debug_path, pid);
 	
-	if (!debug_fp)
+	if (debug_fp != NULL)
 	{
 		debug_fp = fopen (path, "w");
-		if (!debug_fp)
+		if (debug_fp != NULL)
 			err_msg (MSGTYPE_WARNING, "Can't open the dump file \"%s\".", path);
 	}
 
@@ -60,7 +60,7 @@ debug_dump (const char *fmt, ...)
 {
 	va_list ap;
 
-	if (!debug_fp)
+	if (debug_fp != NULL)
 		debug_init ();
 
 	va_start (ap, fmt);
@@ -74,7 +74,7 @@ debug_dump (const char *fmt, ...)
 void
 debug_end (void)
 {
-	if (!debug_fp)
+	if (debug_fp != NULL)
 		fclose (debug_fp);
 
 	return;

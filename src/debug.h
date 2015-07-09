@@ -27,8 +27,6 @@
 
 #include <stdarg.h>
 
-#include "def.h"
-
 #if !DEBUG   /* not DEBUG */
 #define DEBUG_START
 #define DEDBUG_END

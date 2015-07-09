@@ -172,12 +172,6 @@ EPS_UINT32 epsmpGetTime(void)
 /*******************************************|********************************************/
 EPS_UINT32 epsmpGetLocalTime(EPS_LOCAL_TIME *epsTime)
 {
-	time_t now;
-	struct tm *t;
-
-	now = time(NULL);
-	t = localtime(&now);
-
 	epsTime->year =  1900;
 	epsTime->mon =  1;
 	epsTime->day = 1;

@@ -53,8 +53,8 @@ am__installdirs = "$(DESTDIR)$(cupsfilterdir)"
 PROGRAMS = $(cupsfilter_PROGRAMS)
 am_epson_escpr_OBJECTS = epson_escpr-filter.$(OBJEXT) \
 	epson_escpr-debug.$(OBJEXT) epson_escpr-str.$(OBJEXT) \
-	epson_escpr-err.$(OBJEXT) epson_escpr-csv.$(OBJEXT) \
-	epson_escpr-mem.$(OBJEXT) epson_escpr-linux_cmn.$(OBJEXT)
+	epson_escpr-err.$(OBJEXT) epson_escpr-mem.$(OBJEXT) \
+	epson_escpr-linux_cmn.$(OBJEXT)
 epson_escpr_OBJECTS = $(am_epson_escpr_OBJECTS)
 epson_escpr_DEPENDENCIES = $(top_builddir)/lib/libescpr.la
 epson_escpr_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -206,29 +206,26 @@ top_srcdir = @top_srcdir@
 cupsfilterdir = $(CUPS_FILTER_DIR)
 ESCPR_LIB_DIR = ../escprlib
 epson_escpr_wrapper_CFLAGS = \
-	-DCUPS_FILTER_NAME=\"epson-escpr\"				\
+	-Wall\
+	-DCUPS_FILTER_NAME=\"epson-escpr\" \
 	-DCUPS_FILTER_PATH=\"$(CUPS_FILTER_DIR)\" 
 
 epson_escpr_wrapper_SOURCES = \
 	wrapper.c
 
 epson_escpr_CFLAGS = \
-	-I$(top_srcdir)/lib									\
-	-DPAPER_PATH=\"$(pkgdatadir)/paper_list.csv\" 
+	-I$(top_srcdir)/lib
 
 epson_escpr_SOURCES = \
-	filter.c													\
-	libprtX.h												\
-	debug.c debug.h										\
-	pips.h													\
-	pipsDef.h												\
-	optBase.h												\
-	str.c str.h												\
-	err.c err.h												\
-	csv.c csv.h												\
-	mem.c mem.h												\
-	linux_cmn.h linux_cmn.c								\
-	def.h
+	filter.c \
+	libprtX.h \
+	debug.c debug.h	\
+	pipsDef.h \
+	optBase.h \
+	str.c str.h \
+	err.c err.h \
+	mem.c mem.h \
+	linux_cmn.h linux_cmn.c
 
 epson_escpr_LDADD = \
 	$(top_builddir)/lib/libescpr.la
@@ -323,7 +320,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-csv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-debug.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-err.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epson_escpr-filter.Po@am__quote@
@@ -408,20 +404,6 @@ epson_escpr-err.obj: err.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='err.c' object='epson_escpr-err.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -c -o epson_escpr-err.obj `if test -f 'err.c'; then $(CYGPATH_W) 'err.c'; else $(CYGPATH_W) '$(srcdir)/err.c'; fi`
-
-epson_escpr-csv.o: csv.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -MT epson_escpr-csv.o -MD -MP -MF $(DEPDIR)/epson_escpr-csv.Tpo -c -o epson_escpr-csv.o `test -f 'csv.c' || echo '$(srcdir)/'`csv.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/epson_escpr-csv.Tpo $(DEPDIR)/epson_escpr-csv.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='csv.c' object='epson_escpr-csv.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -c -o epson_escpr-csv.o `test -f 'csv.c' || echo '$(srcdir)/'`csv.c
-
-epson_escpr-csv.obj: csv.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -MT epson_escpr-csv.obj -MD -MP -MF $(DEPDIR)/epson_escpr-csv.Tpo -c -o epson_escpr-csv.obj `if test -f 'csv.c'; then $(CYGPATH_W) 'csv.c'; else $(CYGPATH_W) '$(srcdir)/csv.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/epson_escpr-csv.Tpo $(DEPDIR)/epson_escpr-csv.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='csv.c' object='epson_escpr-csv.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -c -o epson_escpr-csv.obj `if test -f 'csv.c'; then $(CYGPATH_W) 'csv.c'; else $(CYGPATH_W) '$(srcdir)/csv.c'; fi`
 
 epson_escpr-mem.o: mem.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(epson_escpr_CFLAGS) $(CFLAGS) -MT epson_escpr-mem.o -MD -MP -MF $(DEPDIR)/epson_escpr-mem.Tpo -c -o epson_escpr-mem.o `test -f 'mem.c' || echo '$(srcdir)/'`mem.c

@@ -24,8 +24,6 @@
 
 #include <stdlib.h>
 #include "mem.h"
-#include "err.h"
-
 
 void *
 mem_malloc (unsigned int size, bool_t crit)
@@ -52,7 +50,7 @@ mem_calloc (unsigned int num, unsigned int size, bool_t crit)
 }
 
 void *
-mem_realloc (void *m, u_int size, bool_t crit)
+mem_realloc (void *m, unsigned int size, bool_t crit)
 {
 	m = realloc (m, size);
 	if (crit && m == NULL)

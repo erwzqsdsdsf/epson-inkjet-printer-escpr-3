@@ -30,7 +30,7 @@
 *1284DeviceID: "MFG:Epson;MDL:PX-S05 Series;DES:EPSON PX-S05 Series;"
 
 
-*OpenUI *MediaType/Media Type: PickOne
+*OpenUI *MediaType/Print Quality: PickOne
 *OrderDependency: 20 AnySetup *MediaType
 *DefaultMediaType: PLAIN_NORMAL
 *MediaType PLAIN_HIGH/Plain Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
@@ -280,6 +280,8 @@
 *PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*PageSize Postcard/Postcard: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*PageSize TPostcard/Postcard (Borderless): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *PageSize NC91/Business card: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *PageSize TNC91/Business card (Borderless): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *PageSize L/3<2E>5 x 5 in <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -307,6 +309,8 @@
 *nl.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *nl.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *nl.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*nl.PageSize Postcard/Ansichtkaart: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*nl.PageSize TPostcard/Ansichtkaart (Randloos): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *nl.PageSize NC91/Visitekaartje: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *nl.PageSize TNC91/Visitekaartje (Randloos): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *nl.PageSize L/3,5 x 5 inch <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -324,6 +328,8 @@
 *fr.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *fr.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *fr.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*fr.PageSize Postcard/Carte postale: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*fr.PageSize TPostcard/Carte postale (Sans marges): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *fr.PageSize NC91/Carte de visite: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *fr.PageSize TNC91/Carte de visite (Sans marges): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *fr.PageSize L/3,5 x 5 p<2E> <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -341,6 +347,8 @@
 *de.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *de.PageSize A5/DIN A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *de.PageSize A6/DIN A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*de.PageSize Postcard/Postkarte: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*de.PageSize TPostcard/Postkarte (Randlos): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *de.PageSize NC91/Visitenkarte: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *de.PageSize TNC91/Visitenkarte (Randlos): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *de.PageSize L/3,5 x 5 Zoll <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -358,6 +366,8 @@
 *it.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *it.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *it.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*it.PageSize Postcard/Cartolina: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*it.PageSize TPostcard/Cartolina (Senza margini): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *it.PageSize NC91/Biglietto da visita: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *it.PageSize TNC91/Biglietto da visita (Senza margini): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *it.PageSize L/3,5 x 5 pol<2E> <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -375,6 +385,8 @@
 *ja.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *ja.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *ja.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*ja.PageSize Postcard/はがき: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*ja.PageSize TPostcard/はがき (四辺フチなし): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *ja.PageSize NC91/名刺: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ja.PageSize TNC91/名刺 (四辺フチなし): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ja.PageSize L/L判: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -392,6 +404,8 @@
 *pt.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *pt.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *pt.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*pt.PageSize Postcard/Postal: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*pt.PageSize TPostcard/Postal (Sem margens): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *pt.PageSize NC91/Cartão-de-visita: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *pt.PageSize TNC91/Cartão-de-visita (Sem margens): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *pt.PageSize L/3,5 x 5<22> <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -409,6 +423,8 @@
 *es.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *es.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *es.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*es.PageSize Postcard/Postal: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*es.PageSize TPostcard/Postal (Sin márgenes): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *es.PageSize NC91/Tarjeta de visita: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *es.PageSize TNC91/Tarjeta de visita (Sin márgenes): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *es.PageSize L/3,5 x 5 pulg<2E> <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -426,6 +442,8 @@
 *ko.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *ko.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *ko.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*ko.PageSize Postcard/엽서: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*ko.PageSize TPostcard/엽서 (여백 없음): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *ko.PageSize NC91/명함: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ko.PageSize TNC91/명함 (여백 없음): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ko.PageSize L/3<2E>5 x 5 in <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -443,6 +461,8 @@
 *zh_TW.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*zh_TW.PageSize Postcard/明信片: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*zh_TW.PageSize TPostcard/明信片 (無邊): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageSize NC91/名片: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageSize TNC91/名片 (無邊): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageSize L/3<2E>5 x 5 in <2F> 89 x 127 mm: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -460,6 +480,8 @@
 *zh_CN.PageSize B5/JIS B5: "<</PageSize[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageSize A5/A5: "<</PageSize[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageSize A6/A6: "<</PageSize[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*zh_CN.PageSize Postcard/明信片: "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*zh_CN.PageSize TPostcard/明信片 (无边距): "<</PageSize[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageSize NC91/名片: "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageSize TNC91/名片 (无边距): "<</PageSize[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageSize L/3<2E>5 x 5 英寸 <2F> 89 x 127 毫米: "<</PageSize[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -485,6 +507,8 @@
 *PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*PageRegion Postcard/Postcard: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*PageRegion TPostcard/Postcard (Borderless): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *PageRegion NC91/Business card: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *PageRegion TNC91/Business card (Borderless): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *PageRegion L/3<2E>5 x 5 in <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -512,6 +536,8 @@
 *nl.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *nl.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *nl.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*nl.PageRegion Postcard/Ansichtkaart: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*nl.PageRegion TPostcard/Ansichtkaart (Randloos): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *nl.PageRegion NC91/Visitekaartje: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *nl.PageRegion TNC91/Visitekaartje (Randloos): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *nl.PageRegion L/3,5 x 5 inch <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -529,6 +555,8 @@
 *fr.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *fr.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *fr.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*fr.PageRegion Postcard/Carte postale: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*fr.PageRegion TPostcard/Carte postale (Sans marges): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *fr.PageRegion NC91/Carte de visite: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *fr.PageRegion TNC91/Carte de visite (Sans marges): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *fr.PageRegion L/3,5 x 5 p<2E> <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -546,6 +574,8 @@
 *de.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *de.PageRegion A5/DIN A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *de.PageRegion A6/DIN A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*de.PageRegion Postcard/Postkarte: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*de.PageRegion TPostcard/Postkarte (Randlos): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *de.PageRegion NC91/Visitenkarte: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *de.PageRegion TNC91/Visitenkarte (Randlos): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *de.PageRegion L/3,5 x 5 Zoll <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -563,6 +593,8 @@
 *it.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *it.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *it.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*it.PageRegion Postcard/Cartolina: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*it.PageRegion TPostcard/Cartolina (Senza margini): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *it.PageRegion NC91/Biglietto da visita: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *it.PageRegion TNC91/Biglietto da visita (Senza margini): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *it.PageRegion L/3,5 x 5 pol<2E> <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -580,6 +612,8 @@
 *ja.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*ja.PageRegion Postcard/はがき: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*ja.PageRegion TPostcard/はがき (四辺フチなし): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion NC91/名刺: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion TNC91/名刺 (四辺フチなし): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ja.PageRegion L/L判: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -597,6 +631,8 @@
 *pt.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *pt.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *pt.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*pt.PageRegion Postcard/Postal: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*pt.PageRegion TPostcard/Postal (Sem margens): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *pt.PageRegion NC91/Cartão-de-visita: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *pt.PageRegion TNC91/Cartão-de-visita (Sem margens): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *pt.PageRegion L/3,5 x 5<22> <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -614,6 +650,8 @@
 *es.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *es.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *es.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*es.PageRegion Postcard/Postal: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*es.PageRegion TPostcard/Postal (Sin márgenes): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *es.PageRegion NC91/Tarjeta de visita: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *es.PageRegion TNC91/Tarjeta de visita (Sin márgenes): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *es.PageRegion L/3,5 x 5 pulg<2E> <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -631,6 +669,8 @@
 *ko.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *ko.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *ko.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*ko.PageRegion Postcard/엽서: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*ko.PageRegion TPostcard/엽서 (여백 없음): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *ko.PageRegion NC91/명함: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ko.PageRegion TNC91/명함 (여백 없음): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *ko.PageRegion L/3<2E>5 x 5 in <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -648,6 +688,8 @@
 *zh_TW.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*zh_TW.PageRegion Postcard/明信片: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*zh_TW.PageRegion TPostcard/明信片 (無邊): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageRegion NC91/名片: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageRegion TNC91/名片 (無邊): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_TW.PageRegion L/3<2E>5 x 5 in <2F> 89 x 127 mm: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -665,6 +707,8 @@
 *zh_CN.PageRegion B5/JIS B5: "<</PageRegion[516.00 728.60]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageRegion A5/A5: "<</PageRegion[419.60 595.20]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageRegion A6/A6: "<</PageRegion[297.60 419.60]/ImagingBBox null>>setpagedevice"
+*zh_CN.PageRegion Postcard/明信片: "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
+*zh_CN.PageRegion TPostcard/明信片 (无边距): "<</PageRegion[283.40 419.60]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageRegion NC91/名片: "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageRegion TNC91/名片 (无边距): "<</PageRegion[156.00 258.00]/ImagingBBox null>>setpagedevice"
 *zh_CN.PageRegion L/3<2E>5 x 5 英寸 <2F> 89 x 127 毫米: "<</PageRegion[252.20 360.00]/ImagingBBox null>>setpagedevice"
@@ -686,6 +730,8 @@
 *ImageableArea B5/JIS B5: "8.40 8.40 507.60 720.20"
 *ImageableArea A5/A5: "8.40 8.40 411.20 586.80"
 *ImageableArea A6/A6: "8.40 8.40 289.20 411.20"
+*ImageableArea Postcard/Postcard: "8.40 8.40 275.00 411.20"
+*ImageableArea TPostcard/Postcard (Borderless): "0.00 0.00 283.40 419.60"
 *ImageableArea NC91/Business card: "8.40 8.40 147.60 249.60"
 *ImageableArea TNC91/Business card (Borderless): "0.00 0.00 156.00 258.00"
 *ImageableArea L/3<2E>5 x 5 in <2F> 89 x 127 mm: "8.40 8.40 243.80 351.60"
@@ -706,6 +752,8 @@
 *PaperDimension B5/JIS B5: "516.00 728.60"
 *PaperDimension A5/A5: "419.60 595.20"
 *PaperDimension A6/A6: "297.60 419.60"
+*PaperDimension Postcard/Postcard: "283.40 419.60"
+*PaperDimension TPostcard/Postcard (Borderless): "283.40 419.60"
 *PaperDimension NC91/Business card: "156.00 258.00"
 *PaperDimension TNC91/Business card (Borderless): "156.00 258.00"
 *PaperDimension L/3<2E>5 x 5 in <2F> 89 x 127 mm: "252.20 360.00"
@@ -758,8 +806,19 @@
 *Font Symbol: Special "(001.007S)" Special ROM
 *Font ZapfDingbats: Special "(001.004S)" Standard ROM
 
+*UIConstraints: *PageSize TPostcard *MediaType PLAIN_HIGH
+*UIConstraints: *PageSize TPostcard *MediaType PLAIN_NORMAL
+*UIConstraints: *PageSize TPostcard *MediaType ENV_HIGH
+*UIConstraints: *PageSize TNC91 *MediaType PLAIN_HIGH
+*UIConstraints: *PageSize TNC91 *MediaType PLAIN_NORMAL
 *UIConstraints: *PageSize TNC91 *MediaType ENV_HIGH
+*UIConstraints: *PageSize TL *MediaType PLAIN_HIGH
+*UIConstraints: *PageSize TL *MediaType PLAIN_NORMAL
 *UIConstraints: *PageSize TL *MediaType ENV_HIGH
+*UIConstraints: *PageSize T4X6FULL *MediaType PLAIN_HIGH
+*UIConstraints: *PageSize T4X6FULL *MediaType PLAIN_NORMAL
 *UIConstraints: *PageSize T4X6FULL *MediaType ENV_HIGH
+*UIConstraints: *PageSize T4X7 *MediaType PLAIN_HIGH
+*UIConstraints: *PageSize T4X7 *MediaType PLAIN_NORMAL
 *UIConstraints: *PageSize T4X7 *MediaType ENV_HIGH
 
