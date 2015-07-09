@@ -1,3 +1,17 @@
+epson-inkjet-printer-escpr (1.4.5-1) unstable; urgency=medium
+
+  * New 1.4.5 upstream version
+    - Added ppd files of following model series: L565, L566, L810, L850,
+      WF-M5690, WF-M5190, PF-70, PX-M350F, and PX-S350
+    - Fixed a problem when using "Rear Feed Slot" as InputSlot
+    - Added Postcard size for model series: WF-100 and PX-S05
+
+  * Bump Standards-Version to 3.9.6 without changes needed
+  * Add gbp.conf
+  * Remove patch that was an upstream backport
+
+ -- Didier Raboud <odyx@debian.org>  Thu, 09 Jul 2015 16:36:55 +0200
+
 epson-inkjet-printer-escpr (1.4.1-2) unstable; urgency=medium
 
   * Backport the 1.4.4 change:
