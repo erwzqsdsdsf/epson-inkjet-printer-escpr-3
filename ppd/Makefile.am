@@ -1,7 +1,7 @@
 ## Makefile.am -- an automake template for a Makefile.in file
 ## EPSON ESC/P-R Printer Driver for Linux
 ## Copyright (C) 2000-2008 AVASYS CORPORATION.
-## Copyright (C) Seiko Epson Corporation 2000-2013.
+## Copyright (C) Seiko Epson Corporation 2000-2015.
 ##  This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2 of the License, or
@@ -83,7 +83,8 @@ Epson-EP-977A3_Series-epson-escpr-en.ppd \
 Epson-EP-4004-epson-escpr-en.ppd \
 Epson-K200-epson-escpr-en.ppd \
 Epson-K300-epson-escpr-en.ppd \
-Epson-L455_Series-epson-escpr-en.ppd \
+Epson-L565_Series-epson-escpr-en.ppd \
+Epson-L566_Series-epson-escpr-en.ppd \
 Epson-L810_Series-epson-escpr-en.ppd \
 Epson-L850_Series-epson-escpr-en.ppd \
 Epson-M200_Series-epson-escpr-en.ppd \
@@ -175,6 +176,8 @@ Epson-PX-B700-epson-escpr-en.ppd \
 Epson-PX-B750F-epson-escpr-en.ppd \
 Epson-PX-FA700-epson-escpr-en.ppd \
 Epson-PX-G5300-epson-escpr-en.ppd \
+Epson-PX-M350F-epson-escpr-en.ppd \
+Epson-PX-S350-epson-escpr-en.ppd \
 Epson-PX-M650A-epson-escpr-en.ppd \
 Epson-PX-M650F-epson-escpr-en.ppd \
 Epson-PX-M740F-epson-escpr-en.ppd \
@@ -370,6 +373,8 @@ Epson-WF-8090_Series-epson-escpr-en.ppd \
 Epson-WF-8510_Series-epson-escpr-en.ppd \
 Epson-WF-8590_Series-epson-escpr-en.ppd \
 Epson-WF-M1560_Series-epson-escpr-en.ppd \
+Epson-WF-M5190_Series-epson-escpr-en.ppd \
+Epson-WF-M5690_Series-epson-escpr-en.ppd \
 Epson-WF-R4640_Series-epson-escpr-en.ppd \
 Epson-WF-R5190_Series-epson-escpr-en.ppd \
 Epson-WF-R5690_Series-epson-escpr-en.ppd \
