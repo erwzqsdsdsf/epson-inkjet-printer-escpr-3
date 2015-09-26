@@ -144,16 +144,8 @@ extern "C" {
     /*** Misc                                                                           */
     /*** -------------------------------------------------------------------------------*/
 #define _SECOND_                    1000    /* Unit for changing milli second to second */
-#define _STATUS_REPLY_BUF            256    /* Printer status buffer size               */
+#define _STATUS_REPLY_BUF            512    /* Printer status buffer size               */
 
-
-    /*** PM string resource ID                                                          */
-    /*** -------------------------------------------------------------------------------*/
-#define EPS_PMS_E300	            (1)
-#define EPS_PMS_E500	            (2)
-#define EPS_PMS_E700	            EPS_PMS_E500
-#define EPS_PMS_PM200	            (3)
-#define EPS_PMS_PM240	            (4)
 
     /*** Model depend                                                                   */
     /*** -------------------------------------------------------------------------------*/
@@ -162,21 +154,19 @@ extern "C" {
 
 /*---------------------------  Public Function Declarations  ---------------------------*/
 /*******************************************|********************************************/
-extern EPS_BOOL     serParseDeviceID (EPS_INT8*, EPS_INT8*, EPS_INT8*, EPS_INT32*, EPS_UINT32*);
-extern EPS_ERR_CODE serAnalyzeStatus            (EPS_INT8*, EPS_STATUS_INFO*            );
+extern EPS_INT32    serParseDeviceID            (EPS_INT8*, EPS_INT32, EPS_INT8*, EPS_INT8*, 
+                                                 EPS_INT32*, EPS_UINT32*, EPS_UINT32*   );
+extern EPS_BOOL		serCheckLang				(EPS_INT8*, EPS_UINT32*					);
+extern EPS_ERR_CODE serAnalyzeStatus            (EPS_INT8*, EPS_UINT32, EPS_STATUS_INFO*);
 extern void         serDelayThread              (EPS_UINT32, EPS_CMN_FUNC*              );
-extern EPS_INT32    serGetInkError              (EPS_STATUS_INFO*, EPS_INT32*           );
 extern EPS_INT32    serInkLevelNromalize        (EPS_INT32                              );
+extern EPS_ERR_CODE serGetSerialNo              (EPS_INT8*, EPS_INT32, EPS_INT8*        );
+extern EPS_ERR_CODE serGetSerialNoFormST        (EPS_INT8*, EPS_INT8*, EPS_INT32        );
+extern EPS_ERR_CODE serGetSupplyInfo            (EPS_UINT8*, EPS_SUPPLY_INFO*           );
 
 #ifdef GCOMSW_EPSON_SLEEP
 extern EPS_ERR_CODE serSleep                    (EPS_UINT32                             );
 #endif
-
-    /*** pm reply                                                                       */
-    /*** -------------------------------------------------------------------------------*/
-extern EPS_ERR_CODE _SP_ChangeSpec_UpdatePMReply(EPS_PRINTER_INN*, EPS_UINT8*, EPS_INT32);
-extern EPS_ERR_CODE _SP_ChangeSpec_DraftOnly    (EPS_PRINTER_INN*, EPS_JOB_ATTRIB*      );
-extern void         serAppendMedia              (EPS_SUPPORTED_MEDIA*                   );
 
 
 extern void         obsSetPrinter               (const EPS_PRINTER_INN*                 );
@@ -185,7 +175,7 @@ extern void         obsClear                    (void                           
 extern EPS_INT32    obsGetPageMode              (void                                   );
 extern EPS_BOOL		obsIsA3Model				(EPS_INT32                              );
 extern EPS_BOOL		obsEnableDuplex				(EPS_INT32                              );
-
+extern EPS_BOOL		obsEnableAutoFeed			(void                                   );
 
 #ifdef __cplusplus
 }

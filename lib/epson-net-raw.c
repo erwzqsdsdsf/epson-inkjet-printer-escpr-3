@@ -29,7 +29,7 @@
 /*      EPS_ERR_CODE rawWritePrintData  (buffer, bufferlen, sendlen             );      */
 /*      EPS_ERR_CODE rawGetStatus       (printer, status, ioStatus              );      */
 /*      EPS_ERR_CODE rawGetJobStatus    (pstInfo			                    );      */
-/*      EPS_ERR_CODE rawGetPMString     (printer, pString, bufSize              );      */
+/*      EPS_ERR_CODE rawGetInfo         (printer, pString, bufSize              );      */
 /*      EPS_ERR_CODE rawMechCommand     (printer, Command                       );      */
 /*                                                                                      */
 /*******************************************|********************************************/
@@ -147,11 +147,12 @@ EPS_ERR_CODE rawFindStart(
 
 		EPS_SOCKET*		sock,
 		const EPS_INT8*	address,
-		EPS_BOOL        multi
+		EPS_BOOL        multi,
+		const EPS_UINT8*  mac
 		
 ){
 	EPS_LOG_FUNCIN
-	EPS_RETURN( snmpFindStart(sock, address, multi) )
+	EPS_RETURN( snmpFindStart(sock, address, multi, mac) )
 }
 
 
@@ -619,7 +620,7 @@ EPS_ERR_CODE rawGetStatus(
 		EPS_RETURN( ret )
 	}
 
-	ret = snmp.GetStatus(sock, printer->location, pstInfo );
+	ret = snmp.GetStatus(sock, printer->location, snmp.egID, pstInfo );
 
 	if( !IS_VALID_DATA_SESSION ){
 		/* Another proceessing, or printing after endjob */
@@ -706,42 +707,13 @@ EPS_ERR_CODE rawGetJobStatus(
 	}
 	
 	/*** Get Printer status by SNMP                                                     */
-	EPS_RETURN( snmp.GetStatus( rawPrintJob->socStat, printer->location, pstInfo ) )
+	EPS_RETURN( snmp.GetStatus( rawPrintJob->socStat, printer->location, snmp.egID, pstInfo ) )
 }
 
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     rawGetInkInfo()													*/
-/*                                                                                      */
-/* Arguments                                                                            */
-/* ---------                                                                            */
-/* Name:        Type:               Description:                                        */
-/* status		EPS_STATUS_INFO*	O: retrieve printer satus						    */
-/*                                                                                      */
-/* Return value:                                                                        */
-/*      EPS_ERR_NONE                    - Success                                       */
-/*      EPS_ERR_COMM_ERROR              - Communication Error                           */
-/*                                                                                      */ 
-/* Description:                                                                         */
-/*      Get Ink information.    				                                        */
-/*                                                                                      */
-/*******************************************|********************************************/
-EPS_ERR_CODE rawGetInkInfo(
-
-		EPS_STATUS_INFO*        pstInfo
-		
-){
-	EPS_PRINTER_INN*	printer = printJob.printer;
-
-	EPS_LOG_FUNCIN
-	EPS_RETURN( snmp.GetInkInfo(printer->location, pstInfo ) )
-}
-
-
-/*******************************************|********************************************/
-/*                                                                                      */
-/* Function name:     rawGetPMString()	        										*/
+/* Function name:     rawGetInfo()	                                                    */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
@@ -761,16 +733,16 @@ EPS_ERR_CODE rawGetInkInfo(
 /*		PM String : pString                                                             */
 /*                                                                                      */
 /*******************************************|********************************************/
-EPS_ERR_CODE rawGetPMString(
+EPS_ERR_CODE rawGetInfo(
 								  
 		const EPS_PRINTER_INN*	printer, 
  		EPS_INT32               type,
-        EPS_UINT8*              pString,
+        EPS_UINT8**             pString,
 		EPS_INT32*              bufSize
 
 ){
 	EPS_LOG_FUNCIN
-	EPS_RETURN( snmp.GetPMString(printer, type, pString, bufSize) )
+	EPS_RETURN( snmp.InfoCommand(printer, type, pString, bufSize) )
 }
 
 

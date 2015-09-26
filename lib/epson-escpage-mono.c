@@ -885,7 +885,7 @@ static EPS_ERR_CODE BandInit(
 
 	EPS_LOG_FUNCIN;
 
-	memset(pBand, 0, sizeof(pBand));
+	memset(pBand, 0, sizeof(EPS_PAGE_BAND_M));
 
     pBand->WidthInPixels = widthInPixels;
     pBand->WidthInBytes = (pBand->WidthInPixels+7)/8;
@@ -991,7 +991,7 @@ static EPS_ERR_CODE BandEmit(
 	cmdBuf.len = 0;	/* reset */
 	p = (EPS_INT8*)cmdBuf.p;
 
-	EPS_DBGPRINT(("Y = %d \r\n", iRow));
+	/*EPS_DBGPRINT(("Y = %d \r\n", iRow));*/
 	sprintf(p, "\x1D%dY", iRow);
 	p += strlen(p);
 

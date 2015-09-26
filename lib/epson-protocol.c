@@ -25,11 +25,11 @@
 /*      EPS_ERR_CODE prtProbePrinterByID	(probeParam                         );      */
 /*      EPS_ERR_CODE prtProbePrinterByAddr	(probeParam                         );      */
 /*      EPS_ERR_CODE prtRecoverPE           (                                   );      */
-/*      EPS_ERR_CODE prtGetPMString         (printer, pString, bufSize          );      */
+/*      EPS_ERR_CODE prtGetInfo             (printer, buffer, bufSize           );      */
 /*      EPS_ERR_CODE prtRegPrinter          (printer, bNotify                   );      */
 /*      EPS_ERR_CODE prtIsRegistered        (Address, Protocol                  );      */
 /*      EPS_ERR_CODE prtClearPrinterList    (printer                            );      */
-/*      EPS_ERR_CODE prtClearSupportedMedia (printer                            );      */
+/*      EPS_ERR_CODE prtClearPrinterAttribute(printer                           );      */
 /*      EPS_ERR_CODE prtSetIdStr            (printer, idString                  );      */
 /*                                                                                      */
 /*******************************************|********************************************/
@@ -39,12 +39,16 @@
 #include "epson-escpr-pvt.h"
 #include "epson-escpr-err.h"
 #include "epson-escpr-services.h"
+#include "epson-escpr-pm.h"
 #include "epson-escpr-mem.h"
 #ifdef GCOMSW_CMD_ESCPAGE
 #include "epson-escpage.h"
 #endif
 #ifdef GCOMSW_CMD_ESCPAGE_S
 #include "epson-escpage-s.h"
+#endif
+#ifdef GCOMSW_CMD_PCL
+#include "epson-pcl.h"
 #endif
 
 #include "epson-protocol.h"
@@ -72,7 +76,7 @@
 /*------------------------------------  Definition   -----------------------------------*/
 /*******************************************|********************************************/
 /* Find Printer functions                                                               */
-typedef EPS_ERR_CODE	(*NET_FindStart	)(EPS_SOCKET*, const EPS_INT8*, EPS_BOOL        );
+typedef EPS_ERR_CODE	(*NET_FindStart	)(EPS_SOCKET*, const EPS_INT8*, EPS_BOOL, const EPS_UINT8*);
 typedef EPS_ERR_CODE	(*NET_FindCheck	)(EPS_SOCKET, EPS_PRINTER_INN**                 );
 typedef EPS_ERR_CODE	(*NET_FindEnd	)(EPS_SOCKET                                    );
 
@@ -82,8 +86,8 @@ typedef struct tagEPS_FIND_FUNCS {
 	NET_FindEnd		fncEnd;				/* End function                                 */
 	EPS_SOCKET		sock;				/* socekt                                       */
 	EPS_INT8		address[EPS_ADDR_BUFFSIZE];
+	EPS_UINT8*		ifName;
 }EPS_FIND_FUNCS;
-
 
 #define	EPS_FINDNOTIFY_DELAY_COUNT		(10)
 
@@ -110,8 +114,6 @@ EPS_INT32    g_FindProtocol;
     /*** internal stock                                                                 */
     /*** -------------------------------------------------------------------------------*/
 static EPS_PRINTER_LIST	epsPrinterList;				/* Printer List						*/
-
-
 
 /*--------------------------------  Local Functions   ----------------------------------*/
 /*******************************************|********************************************/
@@ -279,11 +281,17 @@ EPS_ERR_CODE    prtFunctionCheck (
 			if (usbFuncPtrs->findFirst     == NULL){
 				EPS_RETURN( EPS_ERR_INV_FNCP_FINDFIRST )
 			}
-			if (usbFuncPtrs->findNext     == NULL){
+			if (usbFuncPtrs->findNext      == NULL){
 				EPS_RETURN( EPS_ERR_INV_FNCP_FINDNEXT )
 			}
 			if (usbFuncPtrs->findClose     == NULL){
 				EPS_RETURN( EPS_ERR_INV_FNCP_FINDCLOSE )
+			}
+			if (usbFuncPtrs->getDeviceID   == NULL){
+				EPS_RETURN( EPS_ERR_INV_FNCP_GETDEVICEID )
+			}
+			if (usbFuncPtrs->softReset     == NULL){
+				EPS_RETURN( EPS_ERR_INV_FNCP_SOFTRESET )
 			}
 #if 0 /* not necessary */
 			if (cmnFuncPtrs->stateCallback == NULL)
@@ -788,84 +796,7 @@ EPS_ERR_CODE prtSetupJobFunctions (
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:   prtGetInkStatus()                                                   */
-/*                                                                                      */
-/* Arguments                                                                            */
-/* ---------                                                                            */
-/* Name:        Type:               Description:                                        */
-/* status       EPS_STATUS*         Pointer to the printer status.                      */
-/*                                                                                      */
-/* Return value:                                                                        */
-/*      EPS_ERR_NONE                    - Success                                       */
-/*      EPS_ERR_NEED_BIDIRECT           - Need Bi-Directional Communication             */
-/*      EPS_ERR_COMM_ERROR              - Failed to send command                        */
-/*      EPS_ERR_NOT_OPEN_IO             - Cannot Open I/O Portal                        */
-/*      EPS_ERR_NOT_CLOSE_IO            - Cannot Close I/O Portal                       */
-/*      EPS_ERR_PROTOCOL_NOT_SUPPORTED  - Unsupported function Error                    */
-/*                                                                                      */
-/* Description:                                                                         */
-/*      Gets the Ink Infomation.                                                        */
-/*                                                                                      */
-/*******************************************|********************************************/
-EPS_ERR_CODE    prtGetInkInfo (
-
-        const EPS_PRINTER_INN*  printer,
-		EPS_INK_INFO*			info
-
-){
-/*** Declare Variable Local to Routine                                                  */
-	EPS_ERR_CODE    ret = EPS_ERR_NONE;         /* Return status of internal calls      */
-	EPS_STATUS_INFO	lclStatus;
-	EPS_INT32       idx;
-
-	EPS_LOG_FUNCIN
-
-/*** Validate communication mode                                                        */
-	if ( !EPS_IS_BI_PROTOCOL(printer->protocol) ){
-        EPS_RETURN( EPS_ERR_NEED_BIDIRECT )
-	}
-
-	memset(&lclStatus, 0, sizeof(lclStatus));
-/*** protocol GetStatus                                                                 */
-	switch( EPS_PRT_PROTOCOL( printer->protocol ) ){
-#ifdef GCOMSW_PRT_USE_USB
-	case EPS_PROTOCOL_USB:
-		ret = usbGetStatus(&lclStatus, NULL, NULL);
-		break;
-#endif
-
-#ifdef GCOMSW_PRT_USE_LPR
-	case EPS_PROTOCOL_LPR:
-		ret = lprGetInkInfo(&lclStatus);
-		break;
-#endif
-
-#ifdef GCOMSW_PRT_USE_RAW
-	case EPS_PROTOCOL_RAW:
-		ret = rawGetInkInfo(&lclStatus);
-		break;
-#endif
-
-	default:
-		ret = EPS_ERR_OPR_FAIL;
-	}
-
-	if(EPS_ERR_NONE == ret
-		&& EPS_SUBPROTOCOL_PCDEV != EPS_PRT_SUBPROTOCOL(printer->protocol) ){
-		info->number         = lclStatus.nInkNo;
-		for(idx=0; idx < EPS_INK_NUM; idx++) {
-			info->colors[idx]    = lclStatus.nColorType[idx];
-			info->remaining[idx] = lclStatus.nColor[idx];
-		}
-	}
-
-	EPS_RETURN( ret )
-}
-
-
-/*******************************************|********************************************/
-/*                                                                                      */
-/* Function name:   prtGetPMString()                                                    */
+/* Function name:   prtGetInfo()                                                        */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
@@ -885,11 +816,11 @@ EPS_ERR_CODE    prtGetInkInfo (
 /* Description:                                                                         */
 /*                                                                                      */
 /*******************************************|********************************************/
-EPS_ERR_CODE     prtGetPMString (
+EPS_ERR_CODE     prtGetInfo (
 
         const EPS_PRINTER_INN*  printer,
 		EPS_INT32               type,
-        EPS_UINT8*              pString,
+        EPS_UINT8**             buffer,
 		EPS_INT32*              bufSize
 
 ){
@@ -898,22 +829,27 @@ EPS_ERR_CODE     prtGetPMString (
 
 	EPS_LOG_FUNCIN
 
+/*** Validate communication mode                                                        */
+	if ( !EPS_IS_BI_PROTOCOL(printer->protocol) ){
+        EPS_RETURN( EPS_ERR_NEED_BIDIRECT )
+	}
+
 	switch( EPS_PRT_PROTOCOL( printer->protocol ) ){
 #ifdef GCOMSW_PRT_USE_USB
 	case EPS_PROTOCOL_USB:
-		ret = usbGetPMString(printer, type, pString, bufSize);
+		ret = usbGetInfo(printer, type, buffer, bufSize);
 		break;
 #endif
 
 #ifdef GCOMSW_PRT_USE_LPR
 	case EPS_PROTOCOL_LPR:
-		ret = lprGetPMString(printer, type, pString, bufSize);
+		ret = lprGetInfo(printer, type, buffer, bufSize);
 		break;
 #endif
 
 #ifdef GCOMSW_PRT_USE_RAW
 	case EPS_PROTOCOL_RAW:
-		ret = rawGetPMString(printer, type, pString, bufSize);
+		ret = rawGetInfo(printer, type, buffer, bufSize);
 		break;
 #endif
 
@@ -1072,7 +1008,7 @@ EPS_BOOL prtIsRegistered(
 		const EPS_INT8 *Address, 
 		const EPS_INT8 *modelName,
 		EPS_INT32 Protocol
-		
+
 ){
 	EPS_PL_NODE* current = epsPrinterList.root;
 	EPS_BOOL	 bMatch = FALSE;
@@ -1103,7 +1039,7 @@ EPS_BOOL prtIsRegistered(
 		}
 
 		current = current->next;
-	} 
+	}
 
 	EPS_RETURN( FALSE )
 }
@@ -1153,7 +1089,6 @@ EPS_ERR_CODE prtAddUsrPrinter(
 		EPS_RETURN( EPS_ERR_INV_ARG_COMMMODE )
 	}
 	if( tgtProtocol & EPS_PROTOCOL_USB ){				/* USB */
-		
 		EPS_RETURN( EPS_ERR_INV_ARG_COMMMODE )
 	}
 	if( memGetBitCount(tgtProtocol) > 1 ){				/* Multi protocol */
@@ -1170,9 +1105,13 @@ EPS_ERR_CODE prtAddUsrPrinter(
 #ifdef GCOMSW_CMD_ESCPAGE_S
 		  EPS_LANG_ESCPAGE_S		== usrPrinter->language ||
 #endif
+#ifdef GCOMSW_CMD_PCL
+		  EPS_LANG_PCL				== usrPrinter->language ||
+		  EPS_LANG_PCL_COLOR		== usrPrinter->language ||
+#endif
 		  EPS_LANG_ESCPAGE			== usrPrinter->language ||
 		  EPS_LANG_ESCPAGE_COLOR	== usrPrinter->language  ) ){
-		EPS_RETURN( EPS_ERR_INV_PRINT_LANGUAGE );
+		EPS_RETURN( EPS_ERR_INV_PRINT_LANGUAGE )
 	}
 
 	/*** pase location */
@@ -1302,7 +1241,7 @@ void prtClearPrinterList(
 	while(NULL != pCur){
 		pNext = pCur->next;
 
-		prtClearSupportedMedia(pCur->printer);
+		prtClearPrinterAttribute(pCur->printer);
 
 		EPS_SAFE_RELEASE( pCur->printer->protocolInfo );
 		EPS_SAFE_RELEASE( pCur->printer );
@@ -1320,7 +1259,7 @@ void prtClearPrinterList(
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     prtClearSupportedMedia()                                          */
+/* Function name:     prtClearPrinterAttribute()                                        */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
@@ -1334,13 +1273,11 @@ void prtClearPrinterList(
 /*      Crean up inside list of supported media structure.                              */
 /*                                                                                      */
 /*******************************************|********************************************/
-void prtClearSupportedMedia(
+void prtClearPrinterAttribute(
 							
 	EPS_PRINTER_INN*  printer
 
 ){
-    EPS_INT32       idx;
-
 	EPS_LOG_FUNCIN
 
     /* Clear "supportedMedia"                                              */
@@ -1348,16 +1285,14 @@ void prtClearSupportedMedia(
 		return;
 	}
 
+	epspmClearPrintAreaInfo(&printer->printAreaInfo);
+
 #ifdef GCOMSW_CMD_ESCPAGE
 	if(EPS_LANG_ESCPR == printer->language ){
 #endif
 		/*** ESC/P-R ***/
-		if( NULL != printer->supportedMedia.sizeList ){
-			for(idx = 0; idx < printer->supportedMedia.numSizes; idx++) {
-				EPS_SAFE_RELEASE(printer->supportedMedia.sizeList[idx].typeList);
-			}
-			EPS_SAFE_RELEASE(printer->supportedMedia.sizeList);
-		}
+		epspmClearMediaInfo(&printer->supportedMedia);
+		EPS_SAFE_RELEASE(printer->pmData.pmString);
 #ifdef GCOMSW_CMD_ESCPAGE
 	} else{
 		/*** ESC/Page ***/
@@ -1504,6 +1439,13 @@ static EPS_ERR_CODE FindNetPrinter (
 	EPS_INT32		nCnt = 0;
 	EPS_BOOL		bBreak = FALSE;
 
+	EPS_INT32		ifNum = 0;
+	EPS_UINT8*		ifBuf = NULL;
+#if LCOMSW_USE_MULTI_IF
+	EPS_UINT32		ifBufSize = 0;
+#endif
+	EPS_INT32		ifCnt = 0;
+
 	EPS_LOG_FUNCIN
 
 	if(epsCmnFnc.getTime){
@@ -1513,48 +1455,80 @@ static EPS_ERR_CODE FindNetPrinter (
 		timeout = tmStart = tmNow = tmSpan = tmReq = 0;
 	}
 
+#if LCOMSW_USE_MULTI_IF
+	if(plural){
+		ifNum = epsNetFnc.enumInterface(NULL, ifBufSize);
+		if(ifNum > 0){
+			ifBufSize = ifNum * EPS_IFNAME_LEN;
+			ifBuf = (EPS_UINT8*)EPS_ALLOC(ifBufSize);
+			if(NULL == ifBuf){
+				EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
+			}
+			memset(ifBuf, 0, ifBufSize);
+			ifNum = epsNetFnc.enumInterface(ifBuf, ifBufSize);
+		}
+		if(ifNum <= 0){
+			EPS_SAFE_RELEASE( ifBuf );
+			EPS_RETURN( EPS_ERR_COMM_ERROR )
+		}
+	} else{
+		ifNum = 1;
+	}
+#else
+	ifNum = 1;
+#endif
+
 #ifdef GCOMSW_PRT_USE_LPR
-	if(protocol & EPS_PROTOCOL_LPR) nProtocolCnt++;
+	if(protocol & EPS_PROTOCOL_LPR) nProtocolCnt += ifNum;
 #endif
 #ifdef GCOMSW_PRT_USE_RAW
-	if( (protocol & EPS_PROTOCOL_RAW) && !(protocol & EPS_PROTOCOL_LPR) ) nProtocolCnt++;
+	if( (protocol & EPS_PROTOCOL_RAW) && !(protocol & EPS_PROTOCOL_LPR) ) nProtocolCnt += ifNum;
 #endif
 	if(0 == nProtocolCnt){
+		EPS_SAFE_RELEASE( ifBuf );
 		EPS_RETURN( EPS_ERR_PRINTER_NOT_FOUND )
 	}
 
 	/* Setup net Find functions */
 	pProtocolFncs = (EPS_FIND_FUNCS*)EPS_ALLOC(sizeof(EPS_FIND_FUNCS)*nProtocolCnt);
     if(NULL == pProtocolFncs){
+		EPS_SAFE_RELEASE( ifBuf );
         EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
     }
-
+	memset(pProtocolFncs, 0, sizeof(EPS_FIND_FUNCS)*nProtocolCnt);
 	pFncs = pProtocolFncs;
 
 #ifdef GCOMSW_PRT_USE_LPR
 	if(protocol & EPS_PROTOCOL_LPR){
-		pFncs->fncStart = &lprFindStart;
-		pFncs->fncCheck = &lprFind;
-		pFncs->fncEnd = &lprFindEnd;
-		pFncs->sock = EPS_INVALID_SOCKET;
-		if(plural){
-			strcpy(pFncs->address, EPSNET_UDP_BROADCAST_ADDR);
-		} else{
-			strcpy(pFncs->address, address);
+		for(ifCnt = 0; ifCnt < ifNum; ifCnt++){
+			pFncs->fncStart = &lprFindStart;
+			pFncs->fncCheck = &lprFind;
+			pFncs->fncEnd = &lprFindEnd;
+			pFncs->sock = EPS_INVALID_SOCKET;
+			if(plural){
+				pFncs->ifName = ifBuf+(ifCnt*EPS_IFNAME_LEN);
+				strcpy(pFncs->address, EPSNET_UDP_BROADCAST_ADDR);
+			} else{
+				strcpy(pFncs->address, address);
+			}
+			pFncs++;
 		}
-		pFncs++;
 	}
 #endif
 #ifdef GCOMSW_PRT_USE_RAW
 	if( (protocol & EPS_PROTOCOL_RAW) && !(protocol & EPS_PROTOCOL_LPR) ){
-		pFncs->fncStart = &rawFindStart;
-		pFncs->fncCheck = &rawFind;
-		pFncs->fncEnd = &rawFindEnd;
-		pFncs->sock = EPS_INVALID_SOCKET;
-		if(plural){
-			strcpy(pFncs->address, EPSNET_UDP_BROADCAST_ADDR);
-		} else{
-			strcpy(pFncs->address, address);
+		for(ifCnt = 0; ifCnt < ifNum; ifCnt++){
+			pFncs->fncStart = &rawFindStart;
+			pFncs->fncCheck = &rawFind;
+			pFncs->fncEnd = &rawFindEnd;
+			pFncs->sock = EPS_INVALID_SOCKET;
+			if(plural){
+				pFncs->ifName = ifBuf+(ifCnt*EPS_IFNAME_LEN);
+				strcpy(pFncs->address, EPSNET_UDP_BROADCAST_ADDR);
+			} else{
+				strcpy(pFncs->address, address);
+			}
+			pFncs++;
 		}
 	}
 #endif
@@ -1563,7 +1537,7 @@ static EPS_ERR_CODE FindNetPrinter (
 	pFncs = pProtocolFncs;
 	ret = EPS_ERR_NONE;
 	for(nCnt = 0; (nCnt < nProtocolCnt) && (ret == EPS_ERR_NONE); nCnt++, pFncs++){
-		ret = pFncs->fncStart( &(pFncs->sock), pFncs->address, plural );
+		ret = pFncs->fncStart( &(pFncs->sock), pFncs->address, plural, pFncs->ifName );
 	}
 
 	/* Check response */
@@ -1578,12 +1552,15 @@ static EPS_ERR_CODE FindNetPrinter (
 			
 			if( EPS_COM_NOT_RECEIVE == ret ){
 				ret = EPS_ERR_PRINTER_NOT_FOUND;
+				/* next protocol */
+				nCnt++;
+				pFncs++;
 			} else{
 				tmReq = 0;
 			}
 
 			if( EPS_ERR_NONE == ret ){
-			    innerPrinter->protocol |= EPS_PRT_DIRECTION(printJob.commMode);
+				innerPrinter->protocol |= EPS_PRT_DIRECTION(printJob.commMode);
 				
 				ret = prtRegPrinter( innerPrinter, TRUE );
 
@@ -1594,23 +1571,39 @@ static EPS_ERR_CODE FindNetPrinter (
 					bBreak = TRUE;
 					break;
 				}
-
 			} else if(EPS_ERR_PRINTER_NOT_FOUND == ret ){
-				/* next protocol */
-				nCnt++;
-				pFncs++;
 			} else if(EPS_ERR_PRINTER_NOT_USEFUL == ret ){
 				if(FALSE == plural){
 					/* find one printer */
 					bBreak = TRUE;
 					break;
 				}
-				/* next protocol */
-				nCnt++;
-				pFncs++;
 			} else{
 				bBreak = TRUE;
 				break;
+			}
+
+			/* epsCancelFindPriter() */
+			if( epsCmnFnc.lockSync && epsCmnFnc.unlockSync ){
+				if( 0 == epsCmnFnc.lockSync() ){
+					if( g_FindBreak ){
+						epsCmnFnc.unlockSync();
+						bBreak = TRUE;
+						break;
+					}
+					epsCmnFnc.unlockSync();
+				}
+			}
+
+			/* Timeout */
+			if(timeout > 0){
+				tmNow = epsCmnFnc.getTime();
+				tmSpan = (EPS_UINT32)(tmNow - tmStart);
+				/*EPS_DBGPRINT( ("TM %u - %u <> %u\n", tmNow, tmStart, tmSpan) )*/
+				if( tmSpan >= timeout ){
+					bBreak = TRUE;
+					break;
+				}
 			}
 		}
 		if(bBreak)break;
@@ -1627,17 +1620,6 @@ static EPS_ERR_CODE FindNetPrinter (
 			}
 		}
 
-		/* Timeout */
-		if(timeout > 0){
-			tmNow = epsCmnFnc.getTime();
-			tmSpan = (EPS_UINT32)(tmNow - tmStart);
-			/*EPS_DBGPRINT( ("TM %u - %u <> %u\n", tmNow, tmStart, tmSpan) )*/
-			if( tmSpan >= timeout ){
-				bBreak = TRUE;
-				break;
-			}
-		}
-
 		/* re isuue request */
 		/*EPS_DBGPRINT( ("TM %u - %u <> %u\n", tmNow, tmStart, tmSpan) )*/
 		if( (EPS_ERR_PRINTER_NOT_FOUND == ret ||
@@ -1649,18 +1631,17 @@ static EPS_ERR_CODE FindNetPrinter (
 			} else{
 				/* beef up */
 				if( EPSNET_FIND_REREQUEST_TIME <= (EPS_UINT32)(tmNow - tmReq) ){
-					EPS_DBGPRINT( ("beef up TM %u - %u <> %u\n", tmNow, tmReq, (EPS_UINT32)(tmNow - tmReq)) )
+					/*EPS_DBGPRINT( ("beef up TM %u - %u <> %u\n", tmNow, tmReq, (EPS_UINT32)(tmNow - tmReq)) )*/
 					pFncs = pProtocolFncs;
 					ret = EPS_ERR_NONE;
 					for(nCnt = 0; (nCnt < nProtocolCnt) && (ret == EPS_ERR_NONE); nCnt++, pFncs++){
-						ret = pFncs->fncStart( &(pFncs->sock), pFncs->address, plural );
+						ret = pFncs->fncStart( &(pFncs->sock), pFncs->address, plural, pFncs->ifName );
 					}
 					tmReq = 0;
 					if(	EPS_ERR_NONE == ret){
 						ret = EPS_ERR_PRINTER_NOT_FOUND;
 					}
 				}
-
 			}
 		}
 	}
@@ -1672,6 +1653,7 @@ static EPS_ERR_CODE FindNetPrinter (
 	}
 
 	EPS_SAFE_RELEASE(pProtocolFncs);
+	EPS_SAFE_RELEASE( ifBuf );
 
 	EPS_RETURN( ret )
 }
@@ -1711,6 +1693,7 @@ static void MakePrinterStructure(
 	strcpy(dst->manufacturerName,	src->manufacturerName);
 	strcpy(dst->modelName,			src->modelName);
 	strcpy(dst->friendlyName,		src->friendlyName);
+	strcpy(dst->serialNo,			src->serialNo);
 	strcpy(dst->printerID,			src->printerID);
 }
 

@@ -1,11 +1,37 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
-epson-inkjet-printer-escpr-1.4.5                          (2015-02-17)
+epson-inkjet-printer-escpr-1.5.2                          (2015-08-28)
 ----------------------------------------------------------------------
  * Added ppd files of following models
-     - L565 Series
-     - L566 Series
+     - EP-808A Series
+     - EP-978A3 Series
+     - PF-81 Series
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.5.1                          (2015-08-19)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - ET-2500 Series
+     - ET-2550 Series
+     - ET-4500 Series
+     - ET-4550 Series
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.5.0                          (2015-05-11)
+----------------------------------------------------------------------
+ * Supported following options
+	- Brightness
+	- Contrast
+	- Saturation
+     
+ * Updated ESC/P-R library to version 5.4.
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.4.5                          (2015-02-16)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - L-565 Series
      - WF-M5690 Series
      - WF-M5190 Series
      - PX-M350F Series
@@ -28,8 +54,8 @@ epson-inkjet-printer-escpr-1.4.2                          (2014-09-05)
 ----------------------------------------------------------------------
  * Added ppd files of following models
      - PF-70 Series
-     - L810 Series
-     - L850 Series
+     - L-810 Series
+     - L-850 Series
 
 ----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.4.1                          (2014-07-07)

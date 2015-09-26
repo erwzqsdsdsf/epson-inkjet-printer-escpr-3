@@ -31,7 +31,6 @@ extern "C" {
 /*------------------------------------  Includes   -------------------------------------*/
 /*******************************************|********************************************/
 #include "epson-typedefs.h"
-#include "epson-escpr-pvt.h"
 
 
 /*------------------------------  Import Debug utility   -------------------------------*/
@@ -40,8 +39,8 @@ extern "C" {
 #include "epson-escpr-dbg.h"
 #else
 /* Redefine Debug macros */
-#define EPS_ALLOC( s )	    epsCmnFnc.memAlloc((EPS_UINT32)s)
-#define EPS_FREE( p )	    epsCmnFnc.memFree( p )
+#define EPS_ALLOC( s )	    epsCmnFnc.memAlloc((EPS_UINT32)(s))
+#define EPS_FREE( p )	    epsCmnFnc.memFree( (p) )
 #define EPS_RETURN(e)		return e;
 #define EPS_RETURN_VOID		return;
 	
@@ -70,9 +69,9 @@ extern "C" {
 /*******************************************|********************************************/
 
 #define EPS_SAFE_RELEASE( p )	\
-	if( NULL != p ){			\
-		EPS_FREE( p );			\
-		p = NULL;				\
+	if( NULL != (p) ){			\
+		EPS_FREE( (p) );		\
+		(p) = NULL;				\
 	}
 
 /*---------------------------------- CPU Endian-ness -----------------------------------*/

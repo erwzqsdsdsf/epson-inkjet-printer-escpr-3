@@ -1,7 +1,7 @@
 /*
  * Epson Inkjet Printer Driver (ESC/P-R) for Linux
  * Copyright (C) 2002-2005 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2002-2013.
+ * Copyright (C) Seiko Epson Corporation 2002-2015.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,22 +34,11 @@
 /* added 22-04-2004 */
 #include <signal.h>
 
-#define NAME_MAX 41
+#include "libprtX.h"
 
 #define WIDTH_BYTES(bits) (((bits) + 31) / 32 * 4)
 
 #define PIPSLITE_WRAPPER_VERSION "* epson-escpr-wrapepr is a part of " PACKAGE_STRING
-
-
-typedef struct rtp_filter_option {
-	char model[NAME_MAX + 1];
-	char model_low[NAME_MAX + 1];
-	char ink[NAME_MAX + 1];
-	char media[NAME_MAX + 1];
-	char quality[NAME_MAX + 1];
-	char duplex[NAME_MAX + 1];
-	char inputslot[NAME_MAX + 1];
-} filter_option_t;
 
 /* Static functions */
 static int get_option_for_ppd (const char *, filter_option_t *);
@@ -122,7 +111,6 @@ main (int argc, char *argv[])
 	while (flag) sleep (3);
 #endif /* USE_DEBUGGER */
 
-
 	cancel_flg = 0;
 	memset (&fopt, 0, sizeof (filter_option_t));
 	/* added 22-04-2004 */
@@ -160,7 +148,7 @@ main (int argc, char *argv[])
 	{
 		fd = 0;
 	}
-	 
+
 	if (get_option_for_arg (argv[5], &fopt))
 	{
 		fprintf (stderr, "Cannot read filter option. Cannot get option of PIPS.");
@@ -193,7 +181,7 @@ main (int argc, char *argv[])
 		{
 			char tmpbuf[256];
 
-			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %d %s %s %s %s %s",
+			sprintf (tmpbuf, "%s/%s \"%s\" %d %d %d %s %s %s %s %s %s %s %s",
 				 CUPS_FILTER_PATH,
 				 CUPS_FILTER_NAME,
 				 fopt.model,
@@ -204,9 +192,13 @@ main (int argc, char *argv[])
 				 fopt.media,
 				 fopt.quality,
 				 fopt.duplex,
-				 fopt.inputslot);
-			
+				 fopt.inputslot,
+				 fopt.brightness,
+				 fopt.contrast,
+				 fopt.saturation);
+		
 			debug_msg("tmpbuf = [%s]\n", tmpbuf);
+
 			pfp = popen (tmpbuf, "w");
 
 			if (pfp == NULL)
@@ -228,8 +220,9 @@ main (int argc, char *argv[])
 				debug_msg("cupsRasterReadPixels error");
 				return 1;
 			}
-			
+	
 			write_size = fwrite (image_raw, image_bytes, 1, pfp);
+
 			if (write_size != 1)
 			{
 				perror ("fwrite");
@@ -240,7 +233,8 @@ main (int argc, char *argv[])
 		
 		free (image_raw);
 	}
-	
+
+
 	pclose (pfp);
 	cupsRasterClose (ras);
 	return 0;
@@ -298,9 +292,7 @@ get_option_for_ppd (const char *printer, filter_option_t *filter_opt_p)
 
 			if (!opt)return 1;	
 		}
-			
-
-
+		
 		strcpy (filter_opt_p->quality, opt);
 	}
 
@@ -331,6 +323,49 @@ get_option_for_ppd (const char *printer, filter_option_t *filter_opt_p)
 		else
 		strcpy (filter_opt_p->inputslot, opt);
 	}
+
+	/* brightness */
+	if (filter_opt_p->brightness[0] == '\0')
+	{
+		opt = get_default_choice (ppd_p, "Brightness");
+		if (!opt)
+		{
+			debug_msg("can not get brightness\n");
+			strcpy (filter_opt_p->brightness, "0");
+			
+		}
+		else
+		strcpy (filter_opt_p->brightness, opt);
+	}
+
+	/* contrast */
+	if (filter_opt_p->contrast[0] == '\0')
+	{
+		opt = get_default_choice (ppd_p, "Contrast");
+		if (!opt)
+		{
+			debug_msg("can not get contrast\n");
+			strcpy (filter_opt_p->contrast, "0");
+			
+		}
+		else
+		strcpy (filter_opt_p->contrast, opt);
+	}
+
+	/* saturation */
+	if (filter_opt_p->saturation[0] == '\0')
+	{
+		opt = get_default_choice (ppd_p, "Saturation");
+		if (!opt)
+		{
+			debug_msg("can not get saturation\n");
+			strcpy (filter_opt_p->saturation, "0");
+			
+		}
+		else
+		strcpy (filter_opt_p->saturation, opt);
+	}
+
 
 #ifdef INK_CHANGE_SYSTEM
 	/* inkset */
@@ -407,6 +442,14 @@ get_option_for_arg (const char *opt_str, filter_option_t *filter_opt_p)
 	opt = cupsGetOption ("InputSlot", opt_num, option_p);
 	if (opt)
 		strcpy (filter_opt_p->inputslot, opt);
+
+	opt = cupsGetOption ("Brightness", opt_num, option_p);
+	if (opt)
+		strcpy (filter_opt_p->brightness, opt);
+
+	opt = cupsGetOption ("Contrast", opt_num, option_p);
+	if (opt)
+		strcpy (filter_opt_p->contrast, opt);
 
 	return 0;
 }

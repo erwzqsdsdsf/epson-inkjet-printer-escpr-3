@@ -56,8 +56,8 @@ extern void dbgFree(void *p);
 #define EPS_MEM_REPORT_PEAK	dbgMemReportPeak();
 #define EPS_MEM_GET_PEAK	dbgMemGetPeak()
 #define EPS_MEM_REPORT_LEAK dbgMemReportLeak();
-#define EPS_ALLOC( s )      dbgAlloc( __FILE__, __LINE__, (EPS_UINT32)s )
-#define EPS_FREE( p )	    dbgFree( (void*)p )
+#define EPS_ALLOC( s )      dbgAlloc( __FILE__, __LINE__, (EPS_UINT32)(s) )
+#define EPS_FREE( p )	    dbgFree( (void*)(p) )
 
 
 /*** PRINT                                                                              */

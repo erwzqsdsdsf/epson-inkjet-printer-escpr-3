@@ -48,16 +48,18 @@ extern "C" {
 
 #define EPSNET_UDP_BROADCAST_ADDR	"255.255.255.255"
 #define EPSNET_UPNP_MULTICAST_ADDR	"239.255.255.250"
-#define EPSNET_NUM_DISCOVERIES		(3)			/* times to send discovery msg	        */
+#define EPSNET_NUM_DISCOVERIES		(1)			/* times to send discovery msg	        */
 #define EPSNET_RECV_TIMEOUT			(5000)		/* default receive tiomeout				*/
 #define EPSNET_FIND_RECV_TIMEOUT	(100)		/* discover receive tiomeout			*/
 #define EPSNET_STAT_RECV_TIMEOUT	(1000)		/* status receive tiomeout			    */
 #define EPSNET_SEND_TIMEOUT			(500)		/* default send tiomeout                */
 #define EPSNET_BAND_SEND_TIMEOUT	(100)		/* band data send tiomeout	            */
 #define EPSNET_BAND_SEND_TIMEOUTL	(3*60*1000)	/* band data send tiomeout	            */
-#define EPSNET_FIND_REREQUEST_TIME	(500)		/* request re issue                     */
+#define EPSNET_FIND_REREQUEST_TIME	(2000)		/* request re issue                     */
 #define EPSNET_MAX_PATH				(255)		/* path buffer length           	    */
-#define EPSNET_STAT_RETRY			(5)			/* getstatus retry count			    */
+#define EPSNET_STAT_RETRY		    (5)			/* getstatus retry count			    */
+
+#define EPS_STAT_RETRY			    (5)			/* getstatus retry count			    */
 
 
     /*** PrinterID string format                                                        */
@@ -139,9 +141,8 @@ extern EPS_ERR_CODE prtRecoverPE			(void                                       )
 
     /*** Information                                                                    */
     /*** -------------------------------------------------------------------------------*/
-extern EPS_ERR_CODE prtGetPMString          (const EPS_PRINTER_INN*, EPS_INT32, 
-											 EPS_UINT8*, EPS_INT32*                     );
-extern EPS_ERR_CODE prtGetInkInfo           (const EPS_PRINTER_INN*, EPS_INK_INFO*      );
+extern EPS_ERR_CODE prtGetInfo              (const EPS_PRINTER_INN*, EPS_INT32, 
+											 EPS_UINT8**, EPS_INT32*                    );
 
     /*** Printer list                                                                   */
     /*** -------------------------------------------------------------------------------*/
@@ -151,7 +152,7 @@ extern void         prtClearPrinterList     (void                               
 extern EPS_ERR_CODE prtDuplPrinterList      (void                                       );
 extern EPS_ERR_CODE prtAddUsrPrinter		(const EPS_PRINTER*, EPS_PRINTER_INN**		);
 extern EPS_PRINTER_INN* prtGetInnerPrinter  (const EPS_PRINTER*                         );
-extern void         prtClearSupportedMedia  (EPS_PRINTER_INN*                           );
+extern void         prtClearPrinterAttribute(EPS_PRINTER_INN*                           );
 
 extern void         prtSetIdStr             (EPS_PRINTER_INN*, const EPS_INT8*          );
 

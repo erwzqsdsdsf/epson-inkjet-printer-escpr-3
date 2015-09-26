@@ -39,6 +39,8 @@
 /*      API-0017   EPS_ERR_CODE epsGetPrintableArea  (pageAttrib,                       */
 /*                                                      printableWidth,                 */
 /*                                                      printableHeight);               */
+/*      API-0018   EPS_ERR_CODE epsGetUsersizeRange	(resolution, minWidth, maxWidth,    */
+/*                                                   minHeight, maxHeight);             */
 /*                                                                                      */
 /*******************************************|********************************************/
 
@@ -51,20 +53,19 @@
                                             /* 1: Make 4KB packet                       */
 #define LCOMSW_CANCEL_JOB           0
 
-#define LCOMSW_USE_720DPI           0		/* Not support 720dpi                       */       
-
 #define ESCPR_DEBUG_IMAGE_LOG       0       /* 0: OFF    1: ON                          */
 
 #define LCOMSW_DUMMY_SEND			0		/* 1: Enable 0byte data sending             */
 
 /*#define LCOMSW_JOBPARAM_CEHCK_OFF*/
 
-/* #define LCOMSW_CMDDMP */
+/*#define LCOMSW_CMDDMP */
 
 /*------------------------------------  Includes   -------------------------------------*/
 /*******************************************|********************************************/
 #include "epson-escpr-pvt.h"
 #include "epson-escpr-services.h"
+#include "epson-escpr-pm.h"
 #include "epson-escpr-mem.h"
 #include "epson-protocol.h"
 #include "epson-layout.h"
@@ -90,22 +91,10 @@ EPS_CMN_FUNC    epsCmnFnc;
     /*** Print Job Structure                                                            */
     /*** -------------------------------------------------------------------------------*/
 EPS_PRINT_JOB   printJob;
-EPS_INT32 tonerSave;
-EPS_INT32 back_type;
-
-EPS_INT32 lWidth;
-EPS_INT32 lHeight;
-
-EPS_INT32 areaWidth;
-EPS_INT32 areaHeight;
 
 
 /*-------------------------  Module "Local Global" Variables  --------------------------*/
 /*******************************************|********************************************/
-    /*** internal stock                                                                 */
-    /*** -------------------------------------------------------------------------------*/
-static EPS_SUPPORTED_MEDIA	g_supportedMedia;				/* Supported Media          */
-
     /*** Job function                                                                   */
     /*** -------------------------------------------------------------------------------*/
 EPS_JOB_FUNCS		jobFnc;							
@@ -120,7 +109,7 @@ EPS_JOB_FUNCS		jobFnc;
 
     /*** Roop Count                                                                     */
     /*** -------------------------------------------------------------------------------*/
-#define EPS_ROOP_NUM                   40       /* Send the data for "EPS_ROOP_NUM"     */
+#define EPS_ROOP_NUM                   100      /* Send the data for "EPS_ROOP_NUM"     */
                                                 /* times and get printer status         */
 
 #define EPS_TIMEOUT_NUM                20       /* retry Send the data "EPS_TIMEOUT_NUM"*/
@@ -226,6 +215,8 @@ static const EPS_UINT8 RemoteNC[] = {
                             'N', 'C', 0x02, 0x00, 0x00, 0x00				};
 static const EPS_UINT8 RemoteVI[] = {
                             'V', 'I', 0x02, 0x00, 0x00, 0x00				};
+static const EPS_UINT8 RemoteEX33[] = {
+                            'E', 'X', 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x33, 0xFF, 0x01, 0x00};
 
 static const EPS_UINT8 DataCR[] = {0x0D			};
 static const EPS_UINT8 DataLF[] = {0x0A			};
@@ -239,14 +230,38 @@ static const EPS_UINT8 PrintQualityCmd[] = {
                             's', 'e', 't', 'q',
                             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-    /*** ESC/P-R Commands (APF setting)                                                 */
+    /*** ESC/P-R Commands (Print Num)                                                   */
+    /*** -------------------------------------------------------------------------------*/
+static const EPS_UINT8 PrintNumCmd[] = {
+	                        0x1B, 'n', 0x02, 0x00, 0x00, 0x00,
+                            's', 'e', 't', 'n',
+                            0x00, 0x00};
+
+    /*** ESC/P-R Commands (custom setting)                                              */
+    /*** -------------------------------------------------------------------------------*/
+static const EPS_UINT8 CustomCmd[]       = {
+	                        0x1B, 'm', 0x01, 0x00, 0x00, 0x00,
+                            's', 'e', 't', 'c',
+                            0x00 };
+static const EPS_UINT8 Chkcmd[]          = {
+	                        0x1B, 'u', 0x02, 0x00, 0x00, 0x00,
+                            'c', 'h', 'k', 'u',
+                            0x01, 0x01};
+
+	/*** ESC/P-R Commands (Copy num)                                                    */
+    /*** -------------------------------------------------------------------------------*/
+static const EPS_UINT8 CopyCmd[]   = {
+	                        0x1B, 'c', 0x01, 0x00, 0x00, 0x00,
+                            's', 'e', 't', 'c',
+                            0x00};
+	/*** ESC/P-R Commands (APF setting)                                                 */
     /*** -------------------------------------------------------------------------------*/
 static const EPS_UINT8 APFSettingCmd[]   = {
 	                        0x1B, 'a', 0x04, 0x00, 0x00, 0x00,
                             's', 'e', 't', 'a',
                             0x00, 0x00, 0x00, 0x00};
 
-    /*** ESC/P-R Commands (Print Job)                                                   */
+	/*** ESC/P-R Commands (Print Job)                                                   */
     /*** -------------------------------------------------------------------------------*/
 static const EPS_UINT8 JobCmd[]          = {
 	                        0x1B, 'j', 0x16, 0x00, 0x00, 0x00,
@@ -254,7 +269,7 @@ static const EPS_UINT8 JobCmd[]          = {
                             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 							0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 							0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-static const EPS_UINT8 JobCmdJpg[]       = {
+static const EPS_UINT8 SizeCmd[]       = {
 	                        0x1B, 'j', 0x05, 0x00, 0x00, 0x00,
                             's', 'e', 't', 's',
                             0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -307,7 +322,7 @@ EPS_INT32    libStatus;                  /*  Library (epsInitDriver) status     
 
     /*** Status counter                                                                 */
     /*** -------------------------------------------------------------------------------*/
-static EPS_INT32    gStatusCount;   /* Variable for register the number of getting      */
+EPS_INT32    gStatusCount;   /* Variable for register the number of getting      */
                                     /* printer status                                   */
 
     /*** Buffer for Print Band                                                          */
@@ -337,16 +352,18 @@ static EPS_UINT16   RunLengthEncode         (const EPS_UINT8*, EPS_UINT8*, EPS_U
 
 static void         MakeRemoteTICmd         (EPS_UINT8*                                 );
 static void         MakeQualityCmd          (EPS_UINT8*                                 );
+static void         MakePageNumCmd          (EPS_UINT8*                                 );
 static void         MakeAPFCmd              (EPS_UINT8*                                 );
 static void         MakeJobCmd              (EPS_UINT8*                                 );
+static void         MakeSizeCmd             (EPS_UINT8*                                 );
 static EPS_ERR_CODE AddCmdBuff              (EPS_UINT8 **, EPS_UINT8 **, EPS_UINT32 *, 
 											const EPS_UINT8 *, EPS_UINT32               );
-static EPS_ERR_CODE CreateMediaInfo			(EPS_PRINTER_INN*, EPS_UINT8*, EPS_INT32	);
+static EPS_ERR_CODE GetSupportedMedia       (EPS_PRINTER_INN*                           );
 static EPS_ERR_CODE	DuplSupportedMedia      (EPS_PRINTER_INN*, EPS_SUPPORTED_MEDIA*     );
 static EPS_ERR_CODE	GetPaperSource          (EPS_PRINTER_INN*                           );
-static EPS_ERR_CODE GetJpgMax               (EPS_PRINTER_INN*                          );
-static void     	ClearSupportedMedia     (void                                      );
 
+static EPS_ERR_CODE CalcPrintableArea		(EPS_JOB_ATTRIB*, EPS_PM_DATA*, EPS_PRINT_JOB*,
+											 EPS_UINT32*, EPS_UINT32*);
 
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%|%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -482,11 +499,6 @@ struct timeb    sleepS, sleepE;
 	printJob.contData.sendData = NULL;
 	printJob.contData.sendDataSize = 0;
 
-	/* DEL printJob.additional = EPS_ADDDATA_NONE;
-	printJob.qrcode.bits = NULL;
-	printJob.qrcode.cellNum = 0;
-	printJob.qrcode.dpc = 0; */
-
 	obsClear();
 
 /*** Set "Endian-ness" for the current cpu                                              */
@@ -536,16 +548,10 @@ EPS_ERR_CODE epsReleaseDriver (
 
 	epsEndJob();
 
-/*** Clear inside supported media list                                                  */
-	ClearSupportedMedia();
-
 /*** Clear inside printer list                                                          */
 	prtClearPrinterList();
 	printJob.printer = NULL;
 	obsClear();
-
-/*** Clear inside additional data buffer                                                */
-	/* DEL EPS_SAFE_RELEASE( printJob.qrcode.bits ) */
 
 /*** Change ESC/P-R Lib Status                                                          */
 	libStatus = EPS_STATUS_NOT_INITIALIZED;
@@ -831,6 +837,8 @@ EPS_LOG_FUNCIN;
 /*      EPS_ERR_INV_RIGHT_MARGIN                - Invalid Right Margin                  */
 /*      EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH     - Invalid Magin Setting (Width)         */
 /*      EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT    - Invalid Magin Setting (Height)        */
+/*      EPS_ERR_INV_CD_INDIM                    - Invalid CD Outside Diameter           */
+/*      EPS_ERR_INV_CD_OUTDIM                   - Invalid CD Outside Diameter           */
 /*      EPS_ERR_INV_PAPER_SOURCE                - Invalid Paper source                  */
 /*      EPS_ERR_INV_DUPLEX                      - Invalid duplex                        */
 /*      EPS_ERR_INV_FEED_DIRECTION              - Invalid feed direction                */
@@ -849,7 +857,6 @@ EPS_LOG_FUNCIN;
 /*      EPS_ERR_MEMORY_ALLOCATION       - Fail to memory allocation                     */
 /*      (Bi-Directional Only)                                                           */
 /*      EPS_ERR_PRINTER_ERR_OCCUR       - Printer Error happened                        */
-
 /*                                                                                      */
 /* Description:                                                                         */
 /*      Creates a new print job.                                                        */
@@ -877,6 +884,10 @@ EPS_LOG_FUNCIN;
         EPS_RETURN( EPS_ERR_JOB_NOT_CLOSED );
     }
 	
+	if (jobAttr == NULL){
+        EPS_RETURN( EPS_ERR_INV_ARG_JOB_ATTRIB )
+	}
+
 /*** Has a target printer specified                                                     */
 	if(NULL == printJob.printer){
 		EPS_RETURN( EPS_ERR_PRINTER_NOT_SET );
@@ -887,32 +898,6 @@ EPS_LOG_FUNCIN;
 			EPS_RETURN( EPS_ERR_INV_COLOR_PLANE );
 		}
 	}
-
-/*======================================================================================*/
-/*** Setup Page Attribute                                                               */
-/*======================================================================================*/
-	if (jobAttr == NULL){
-        EPS_RETURN( EPS_ERR_INV_ARG_JOB_ATTRIB )
-	}
-
-	if(EPS_LANG_ESCPR == printJob.printer->language ){
-		/*** ESC/P-R ***/
-		retStatus = SetupJobAttrib(jobAttr);
-	} else{
-		/*** ESC/Page ***/
-#ifdef GCOMSW_CMD_ESCPAGE
-		retStatus = pageInitJob(jobAttr);
-#else
-		retStatus = EPS_ERR_LANGUAGE_NOT_SUPPORTED;
-#endif
-	} 
-	if (EPS_ERR_NONE != retStatus){
-		EPS_RETURN( retStatus );
-	}
-
-/*** Change Job Status                                                                  */
-    printJob.jobStatus = EPS_STATUS_INITIALIZED;
-	obsSetColorPlane( printJob.attr.colorPlane );
 
 /*======================================================================================*/
 /*** Check the printer status. (before session open)                                    */
@@ -945,6 +930,35 @@ EPS_LOG_FUNCIN;
 	}
 
 /*======================================================================================*/
+/*** Setup Page Attribute                                                               */
+/*======================================================================================*/
+	if(EPS_LANG_ESCPR == printJob.printer->language ){
+		/*** ESC/P-R ***/
+		if(    (printJob.printer->pmData.version <= 0) 
+			&& EPS_IS_BI_PROTOCOL(printJob.printer->protocol) ){
+			/* get supported media */
+			retStatus = GetSupportedMedia(printJob.printer);
+		}
+		if (EPS_ERR_NONE == retStatus){
+			retStatus = SetupJobAttrib(jobAttr);
+		}
+	} else{
+		/*** ESC/Page ***/
+#ifdef GCOMSW_CMD_ESCPAGE
+		retStatus = pageInitJob(jobAttr);
+#else
+		retStatus = EPS_ERR_LANGUAGE_NOT_SUPPORTED;
+#endif
+	} 
+	if (EPS_ERR_NONE != retStatus){
+		EPS_RETURN( retStatus );
+	}
+
+/*** Change Job Status                                                                  */
+    printJob.jobStatus = EPS_STATUS_INITIALIZED;
+	obsSetColorPlane( printJob.attr.colorPlane );
+
+/*======================================================================================*/
 /*** Prepar RGB buffer                                                                  */
 /*======================================================================================*/
 	if(EPS_LANG_ESCPR == printJob.printer->language ){
@@ -974,15 +988,6 @@ EPS_LOG_FUNCIN;
 				EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION );
 			}
 			memset(tmpLineBuf, 0xFF, (EPS_UINT32)tmpLineBufSize);
-
-		} else if(EPS_CP_JPEG == printJob.attr.colorPlane){
-			if(0 == printJob.printer->JpgMax){
-				/*** get jpeg limit */
-				retStatus = GetJpgMax(printJob.printer);
-				if (retStatus != EPS_ERR_NONE) {
-					goto epsStartJob_END;
-				}
-			}
 		}
 	} else{
 #ifdef GCOMSW_CMD_ESCPAGE
@@ -1384,7 +1389,11 @@ EPS_ERR_CODE    retStatus = EPS_ERR_NONE;
 /*******************************************|********************************************/
 EPS_ERR_CODE    epsEndPage (
 
+#if GCOMSW_UPDATE_PAGE_REMAINDER
+        EPS_INT32   nextPage
+#else
         EPS_BOOL    nextPage
+#endif
 
 ){
 /*** Declare Variable Local to Routine                                                  */
@@ -1461,6 +1470,23 @@ EPS_LOG_FUNCIN;
 
 				pCmd = sendDataBuf;
 				memcpy(pCmd, EndPage, sizeof(EndPage));
+#if GCOMSW_UPDATE_PAGE_REMAINDER
+				if( 0 >= nextPage ){
+					if (EPS_DUPLEX_NONE != printJob.attr.duplex && 
+						0 == (printJob.pageCount & 0x01)) {
+						nextPage = 1;
+					}
+				}
+				if(0 >= nextPage
+					|| EPS_IS_CDDVD( printJob.attr.mediaTypeIdx )){
+					pCmd[10] = EPS_END_PAGE;
+				} else{ 
+					if(printJob.attr.pageNum <= nextPage){
+						printJob.attr.pageNum = nextPage+1;
+					}
+					pCmd[10] = (--printJob.attr.pageNum & 0xFF);
+				}
+#else
 				if( FALSE == nextPage ){
 					if (EPS_DUPLEX_NONE != printJob.attr.duplex && 
 						0 == (printJob.pageCount & 0x01)) {
@@ -1471,8 +1497,12 @@ EPS_LOG_FUNCIN;
 					|| EPS_IS_CDDVD( printJob.attr.mediaTypeIdx )){
 					pCmd[10] = EPS_END_PAGE;
 				} else{ 
-					pCmd[10] = EPS_NEXT_PAGE;
+					if(printJob.attr.pageNum <= 1){
+						printJob.attr.pageNum = 2;
+					}
+					pCmd[10] = (--printJob.attr.pageNum & 0xFF);
 				}
+#endif
 
 				retStatus = SendCommand(sendDataBuf, sizeof(EndPage), &retBufSize, TRUE);
 			}
@@ -1485,7 +1515,6 @@ EPS_LOG_FUNCIN;
 #endif
 		}
 	}
-
 
 epsEndPage_END:
 /*** Return to Caller                                                                   */
@@ -1634,7 +1663,7 @@ EPS_LOG_FUNCIN;
 				break;
 			}
 		
-			EPS_DBGPRINT(("retry ENDJOB\n"))
+			/*EPS_DBGPRINT(("retry ENDJOB\n"))*/
 			retStatus = SendLeftovers();
 			if(EPS_ERR_INVALID_CALL == retStatus){
 				retStatus = EPS_ERR_NONE;
@@ -1648,7 +1677,9 @@ EPS_LOG_FUNCIN;
 JOBEND_END:
 /*** Clear Memory                                                                       */
 #ifdef GCOMSW_CMD_ESCPAGE
-	pageRelaseBuffer();
+	if(printJob.printer && EPS_LANG_ESCPR != printJob.printer->language){
+		pageRelaseBuffer();
+	}
 #endif
 	EPS_SAFE_RELEASE(sendDataBuf );
     EPS_SAFE_RELEASE(tmpLineBuf  );
@@ -1658,9 +1689,6 @@ JOBEND_END:
 /*** Reset continue buffer                                                              */
 	printJob.contData.sendData = NULL;
 	printJob.contData.sendDataSize = 0;
-
-/*** Clear inside additional data buffer                                                */
-	/* DEL EPS_SAFE_RELEASE( printJob.qrcode.bits );*/
 
 /*** Clear and Copy Print_Job struct                                                    */
     memcpy(&tempPrintJob, &printJob, sizeof(EPS_PRINT_JOB));
@@ -1687,7 +1715,7 @@ JOBEND_END:
 	}
 #else
     if (EPS_ERR_NONE != retStatus) {
-		EPS_DBGPRINT(("epsEndJob failed (%d)\r\n", retStatus));
+		/*EPS_DBGPRINT(("epsEndJob failed (%d)\r\n", retStatus));*/
 		retStatus = EPS_ERR_NONE;
 	}
 #endif
@@ -1744,11 +1772,13 @@ EPS_LOG_FUNCIN;
 
     if (printJob.jobStatus == EPS_STATUS_ESTABLISHED) {
 		/*** Send the reset command to printer                                          */
-		retStatus = PRT_INVOKE_JOBFNC(jobFnc.ResetPrinter, ());
+		if(TRUE == printJob.bComm){
+			retStatus = PRT_INVOKE_JOBFNC(jobFnc.ResetPrinter, ());
+		}
 		printJob.resetSent = EPS_RESET_SENT;
 		printJob.resetReq = FALSE;
 		if(EPS_ERR_NONE != retStatus){
-			EPS_DBGPRINT(("ResetPrinter() failed (%d)\r\n", retStatus));
+			/*EPS_DBGPRINT(("ResetPrinter() failed (%d)\r\n", retStatus));*/
 			retStatus = EPS_ERR_CAN_NOT_RESET;
 			/* return retStatus;  Force continue */
 		}
@@ -1763,7 +1793,7 @@ EPS_LOG_FUNCIN;
 		/*** Invoke  epsEndJob()                                                        */
 		retTmp = epsEndJob();
 		if (retTmp != EPS_ERR_NONE) {
-			EPS_DBGPRINT(("epsEndJob() failed (%d)\r\n", retTmp));
+			/*EPS_DBGPRINT(("epsEndJob() failed (%d)\r\n", retTmp));*/
 			/* return retStatus;  Force continue */
 		}
 #if LCOMSW_CANCEL_JOB
@@ -1858,6 +1888,10 @@ EPS_ERR_CODE epsContinueJob (
 /*** Check printer starus                                                               */
 	retStatus = MonitorStatus(NULL);
 	if(EPS_ERR_NONE != retStatus){
+		if(EPS_ERR_COMM_ERROR == retStatus){
+			printJob.bComm = FALSE;
+			retStatus = EPS_ERR_PRINTER_ERR_OCCUR;
+		}
 		EPS_RETURN( retStatus );
 	}
 
@@ -2038,8 +2072,8 @@ EPS_ERR_CODE    epsGetStatus (
 		ret = EPS_ERR_COMM_ERROR;
 	}
 
-//	EPS_DBGPRINT((" State\t: %d\n Error\t: %d\n IoStatus\t: %d\n Canceling\t: %d\n Prepare\t: %d\n", 
-//		stInfo.nState, stInfo.nError, bIoStatus, bCanceling, stInfo.nPrepare))
+/*	EPS_DBGPRINT((" State\t: %d\n Error\t: %d\n IoStatus\t: %d\n Canceling\t: %d\n Prepare\t: %d\n", 
+		stInfo.nState, stInfo.nError, bIoStatus, bCanceling, stInfo.nPrepare)) */
 
 	if(EPS_ERR_COMM_ERROR == ret	||
 		EPS_ERR_NOT_OPEN_IO == ret	||
@@ -2072,11 +2106,6 @@ EPS_ERR_CODE    epsGetStatus (
 			status->printerStatus = EPS_PRNST_ERROR;
 
 			switch(stInfo.nError){
-				case EPS_PRNERR_INKOUT:
-					/* Convert Ink error */
-					serGetInkError(&stInfo, &status->errorCode);
-					break;
-
 				case EPS_PRNERR_INTERFACE:
 				case EPS_PRNERR_BUSY:
 					if(EPS_STATUS_ESTABLISHED == printJob.jobStatus){
@@ -2086,7 +2115,6 @@ EPS_ERR_CODE    epsGetStatus (
 					} else{
 						status->printerStatus = EPS_PRNST_BUSY;
 					}
-
 					break;
 
 				case EPS_PRNERR_PAPERJAM:
@@ -2193,6 +2221,9 @@ EPS_ERR_CODE    epsGetStatus (
 		case EPS_PRNERR_BATTERYVOLTAGE:
 		case EPS_PRNERR_BATTERYTEMPERATURE:
 		case EPS_PRNERR_BATTERYEMPTY:
+		case EPS_PRNERR_LOW_BATTERY_FNC:
+		case EPS_PRNERR_BATTERY_TEMPERATURE_HIGH:
+		case EPS_PRNERR_BATTERY_TEMPERATURE_LOW:
         case EPS_PRNERR_COMM:
 			status->jobContinue = FALSE;
 			break;
@@ -2207,6 +2238,10 @@ EPS_ERR_CODE    epsGetStatus (
 			}
 			break;
 		}
+	}
+
+	if(EPS_PRNERR_NOERROR != status->errorCode && 0x0EF0 == printJob.printer->egID){
+		status->errorCode = EPS_PRNERR_ANY;
 	}
 
 /*** Return to Caller                                                                   */
@@ -2247,6 +2282,7 @@ EPS_ERR_CODE    epsGetInkInfo (
 ){
 /*** Declare Variable Local to Routine                                                  */
 	EPS_ERR_CODE    ret = EPS_ERR_NONE;         /* Return status of internal calls      */
+	EPS_SUPPLY_INFO	supplyInfo;
 
 	EPS_LOG_FUNCIN;
 
@@ -2261,11 +2297,75 @@ EPS_ERR_CODE    epsGetInkInfo (
 	}
 
 	memset(info, 0, sizeof(EPS_INK_INFO));
+	memset(&supplyInfo, 0, sizeof(EPS_SUPPLY_INFO));
 
-/*** protocol GetStatus                                                                 */
-	ret = prtGetInkInfo(printJob.printer, info);
+	ret = epsGetSupplyInfo(&supplyInfo);
+	if (EPS_ERR_NONE == ret){
+		memcpy(info, &supplyInfo.ink, sizeof(*info));
+	}
 
 /*** Return to Caller                                                                   */
+	EPS_RETURN( ret );
+}
+
+
+/*******************************************|********************************************/
+/*                                                                                      */
+/* Function name:   epsGetSupplyInfo()                                                  */
+/*                                                                                      */
+/* Arguments                                                                            */
+/* ---------                                                                            */
+/* Name:        Type:               Description:                                        */
+/* status       EPS_STATUS*         Pointer to the printer status.                      */
+/*                                                                                      */
+/* Return value:                                                                        */
+/*      << Normal >>                                                                    */
+/*      EPS_ERR_NONE                    - Success                                       */
+/*      << Error >>                                                                     */
+/*      EPS_ERR_NEED_BIDIRECT           - Need Bi-Directional Communication             */
+/*      EPS_ERR_PRINTER_NOT_SET         - Target printer is not specified               */
+/*      EPS_ERR_INV_ARG_SUPPLYINFO      - Invalid argument                              */
+/*      EPS_ERR_COMM_ERROR              - Communication Error                           */
+/*      EPS_ERR_NOT_OPEN_IO             - Cannot Open I/O Portal                        */
+/*      EPS_ERR_OPR_FAIL                - Internal Error                                */
+/*      EPS_ERR_MEMORY_ALLOCATION       - Failed to allocate memory                     */
+/*                                                                                      */
+/* Description:                                                                         */
+/*      Gets the ink, power supply and paper setting Infomation.                        */
+/*                                                                                      */
+/*******************************************|********************************************/
+EPS_ERR_CODE    epsGetSupplyInfo (
+
+		EPS_SUPPLY_INFO		*info
+
+){
+/*** Declare Variable Local to Routine                                                  */
+	EPS_ERR_CODE    ret = EPS_ERR_NONE;         /* Return status of internal calls      */
+	EPS_PRINTER_INN* innerPrinter = NULL;
+    EPS_UINT8   buffer[_STATUS_REPLY_BUF];
+    EPS_UINT8*  pBuf =&buffer[0];
+	EPS_INT32   bufSize = _STATUS_REPLY_BUF;
+
+	EPS_LOG_FUNCIN;
+
+/*** Has a target printer specified                                                     */
+	if(NULL == printJob.printer){
+		EPS_RETURN( EPS_ERR_PRINTER_NOT_SET );
+	}
+	innerPrinter = printJob.printer;
+
+/*** Validate input parameters                                                          */
+	if (info == NULL){
+        EPS_RETURN( EPS_ERR_INV_ARG_SUPPLYINFO );
+	}
+
+	memset(info, 0, sizeof(EPS_SUPPLY_INFO));
+
+/*** get information                                                                    */
+	ret = prtGetInfo(innerPrinter, EPS_CBTCOM_ST, &pBuf, &bufSize);
+	if (EPS_ERR_NONE == ret){
+		ret = serGetSupplyInfo(pBuf, info);
+	}
 
 	EPS_RETURN( ret );
 }
@@ -2295,8 +2395,7 @@ EPS_ERR_CODE    epsGetInkInfo (
 /*      EPS_ERR_MEMORY_ALLOCATION       - Failed to allocate memory                     */
 /*                                                                                      */
 /* Description:                                                                         */
-/*      Get supported media information from printer and save those data in             */
-/*      "g_supportedMedia" structure.                                                   */
+/*      Get supported media information from printer and save those data.               */
 /*                                                                                      */
 /*******************************************|********************************************/
 EPS_ERR_CODE     epsGetSupportedMedia (
@@ -2306,16 +2405,13 @@ EPS_ERR_CODE     epsGetSupportedMedia (
 ){
 
 /*** Declare Variable Local to Routine                                                  */
-    EPS_ERR_CODE    retStatus, retGetPM;        /* Return status of internal calls      */
-    EPS_UINT8       pmString[EPS_PM_MAXSIZE];   /* Retrieved PM data from printer       */
-    EPS_INT32       pmSize = EPS_PM_MAXSIZE;
-
+    EPS_ERR_CODE    retStatus;                  /* Return status of internal calls      */
 	EPS_PRINTER_INN* innerPrinter = NULL;
 
 	EPS_LOG_FUNCIN;
 
 /*** Initialize Local Variables                                                         */
-    retStatus = retGetPM = EPS_ERR_NONE;
+    retStatus = EPS_ERR_NONE;
 
 /*** Validate communication mode                                                        */
 	if( !EPS_IS_BI_PROTOCOL(printJob.commMode) ){
@@ -2327,10 +2423,6 @@ EPS_ERR_CODE     epsGetSupportedMedia (
 		EPS_RETURN( EPS_ERR_PRINTER_NOT_SET );
 	}
 	innerPrinter = printJob.printer;
-
-	if( !EPS_IS_BI_PROTOCOL(innerPrinter->protocol) ){
-        EPS_RETURN( EPS_ERR_NEED_BIDIRECT );
-	}
 
 /*** Validate input parameters                                                          */
 	if (supportedMedia == NULL){
@@ -2345,40 +2437,15 @@ EPS_ERR_CODE     epsGetSupportedMedia (
 	}
 #endif
 
-	/* Clear the prev value                                                             */
-	prtClearSupportedMedia(innerPrinter);
-
-	/* Clear the Printer Model Information (Media data or "PM" data)                    */
-	memset(pmString,0,EPS_PM_MAXSIZE);
-
-	/*** Get PM from Printer                                                            */
-	retStatus = prtGetPMString(innerPrinter, 1, pmString, &pmSize);
-
-	/*** ESC/Page divergence ***/
-	if(EPS_LANG_ESCPR != innerPrinter->language ){
-#ifdef GCOMSW_CMD_ESCPAGE
-		if( EPS_ERR_NONE == retStatus ) {
-			/*** Create Media Infomation                                                */
-			retStatus = pageCreateMediaInfo(innerPrinter, pmString, pmSize);
-		}
-#else
-		retStatus = EPS_ERR_LANGUAGE_NOT_SUPPORTED;
-#endif
-
-	} else {
-		if ( EPS_ERR_NONE == retStatus ){
-			/*** Create Media Infomation                                                */
-			retStatus = CreateMediaInfo(innerPrinter, pmString, pmSize);
-		}
-	}
+	retStatus = GetSupportedMedia(innerPrinter);
 
 /*** Copy the supproted media information from "printer" structure to input buffer      */
 	if ( EPS_ERR_NONE == retStatus ){
 		/* Copy to input buffer                                                         */
 		retStatus = DuplSupportedMedia(innerPrinter, supportedMedia);
 	}
-/*** Return to Caller                                                                   */
-    EPS_RETURN( retStatus );
+
+	EPS_RETURN( retStatus );
 }
 
 
@@ -2390,12 +2457,13 @@ EPS_ERR_CODE     epsGetSupportedMedia (
 /* ---------                                                                            */
 /* Name:            Type:                   Description:                                */
 /* jobAttr          const EPS_JOB_ATTRIB*   I: Print Job Attribute                      */
-/* printableWidth   EPS_INT32*              O: Printable area width.                    */
-/* printableHeight  EPS_INT32*              O: Printable area height.                   */
+/* printableWidth   EPS_UINT32*             O: Printable area width.                    */
+/* printableHeight  EPS_UINT32*             O: Printable area height.                   */
 /*                                                                                      */
 /* Return value:                                                                        */
 /*      << Normal >>                                                                    */
 /*      EPS_ERR_NONE                            - Success                               */
+/*      EPS_TEMPORARY_VALUE                     - Temporary value                       */
 /*      << Error >>                                                                     */
 /*      EPS_ERR_LIB_NOT_INITIALIZED             - ESC/P-R Lib is NOT initialized        */
 /*      EPS_ERR_INV_ARG_JBO_ATTRIB              - Invalid argument "jobAttr"            */
@@ -2410,6 +2478,7 @@ EPS_ERR_CODE     epsGetSupportedMedia (
 /*      EPS_ERR_INV_RIGHT_MARGIN                - Invalid Right Margin                  */
 /*      EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH     - Invalid Magin Setting (Width)         */
 /*      EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT    - Invalid Magin Setting (Height)        */
+/*      EPS_ERR_INV_CD_OUTDIM                   - Invalid CD Outside Diameter           */
 /*      EPS_ERR_OPR_FAIL                        - Internal Error                        */
 /*                                                                                      */
 /* Description:                                                                         */
@@ -2423,15 +2492,11 @@ EPS_ERR_CODE    epsGetPrintableArea (
         EPS_UINT32*         printableHeight
 
 ){
-
 /*** Declare Variable Local to Routine                                                  */
-EPS_INT32       idx;                                /* General loop/index varaible      */
-EPS_ERR_CODE    retStatus;                          /* Return status of internal calls  */
-EPS_INT32       factor;                             /* Scaling factor for dpi           */
-EPS_INT32       tempPrintableWidth;
-EPS_INT32       tempPrintableHeight;
-const EPS_MEDIA_INFO* pMI = NULL;
-EPS_INT16		minCustomBorder;
+	EPS_ERR_CODE    retStatus = EPS_ERR_NONE;
+	EPS_ERR_CODE    retTmp = EPS_ERR_NONE;
+	EPS_PRINTER_INN* innerPrinter;
+	EPS_INT32		pmVer = 0;
 
 EPS_LOG_FUNCIN;
 
@@ -2442,16 +2507,20 @@ EPS_LOG_FUNCIN;
 	if(NULL == printJob.printer){
 		EPS_RETURN( EPS_ERR_PRINTER_NOT_SET );
 	}
+	innerPrinter = printJob.printer;
 
 /*** Validate input parameters                                                          */
-    if (jobAttr == NULL)
+    if (jobAttr == NULL){
         EPS_RETURN( EPS_ERR_INV_ARG_JOB_ATTRIB );
+	}
     
-    if (printableWidth == NULL)
+    if (printableWidth == NULL){
         EPS_RETURN( EPS_ERR_INV_ARG_PRINTABLE_WIDTH );
+	}
         
-    if (printableHeight == NULL)
+    if (printableHeight == NULL){
         EPS_RETURN( EPS_ERR_INV_ARG_PRINTABLE_HEIGHT );
+	}
 
 	/*** ESC/Page divergence ***/
 	if( EPS_LANG_ESCPR != printJob.printer->language ){
@@ -2463,184 +2532,415 @@ EPS_LOG_FUNCIN;
 		EPS_RETURN( retStatus );
 	}
 
-/*** Initialize Local Variables                                                         */
-    retStatus = EPS_ERR_NONE;
-
 /*** Validate/Confirm Page Attribute Data                                               */
     /*** Media Size                                                                     */
     if (! ( ( (jobAttr->mediaSizeIdx       >= EPS_MSID_A4              ) &&
-              (jobAttr->mediaSizeIdx       <= EPS_MSID_HIVISION        )    ) ||
+              (jobAttr->mediaSizeIdx       <= EPS_MSID_A5_24HOLE       )    ) ||
             ( (jobAttr->mediaSizeIdx       >= EPS_MSID_A3NOBI          ) &&
-              (jobAttr->mediaSizeIdx       <= EPS_MSID_12X12           )    ) ||
-            ( (jobAttr->mediaSizeIdx       == EPS_MSID_USER            )    )    ) )
+			  (jobAttr->mediaSizeIdx       <= EPS_MSID_12X12           )    ) ||
+            ( (jobAttr->mediaSizeIdx       == EPS_MSID_USER            )    ) )  )
+	{
         EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE );
-
-#if 0   /* These parameter are not used in this function */
-	/*** Media Type                                                                     */
-    if (! ( ( (jobAttr->mediaTypeIdx       >= EPS_MTID_PLAIN           ) &&
-/*              (jobAttr->mediaTypeIdx       <= EPS_MTID_GLOSSYHAGAKI    )    ) ||*/
-              (jobAttr->mediaTypeIdx       <= EPS_MTID_BUSINESSCOAT    )    ) ||
-            ( (jobAttr->mediaTypeIdx       >= EPS_MTID_CDDVD           ) &&
-              (jobAttr->mediaTypeIdx       <= EPS_MTID_CDDVDGLOSSY     )    ) ||
-            ( (jobAttr->mediaTypeIdx       == EPS_MTID_CLEANING        )    )    ) )
-        EPS_RETURN( EPS_ERR_INV_MEDIA_TYPE );
-#endif
+	}
 
     /*** Border Mode                                                                    */
     if (! (   (jobAttr->printLayout        == EPS_MLID_BORDERLESS      ) ||
               (jobAttr->printLayout        == EPS_MLID_BORDERS         ) ||
               (jobAttr->printLayout        == EPS_MLID_CDLABEL         ) ||
               (jobAttr->printLayout        == EPS_MLID_DIVIDE16        ) ||
-              (jobAttr->printLayout        == EPS_MLID_CUSTOM          )    ) )
+              (jobAttr->printLayout        == EPS_MLID_CUSTOM          ) ) )
+	{
         EPS_RETURN( EPS_ERR_INV_BORDER_MODE );
+	}
 
-#if 0   /* These parameter are not used in this function */
-    /*** Print Quality                                                                  */
-    if (! (   (jobAttr->printQuality       == EPS_MQID_DRAFT           ) ||
-              (jobAttr->printQuality       == EPS_MQID_NORMAL          ) ||
-              (jobAttr->printQuality       == EPS_MQID_HIGH            )    ) )
-        EPS_RETURN( EPS_ERR_INV_PRINT_QUALITY );
+	/*** decided pm version */
+	pmVer = 0;
+	if( jobAttr->mediaSizeIdx == EPS_MSID_USER   ||	
+		jobAttr->printLayout == EPS_MLID_CDLABEL ||
+        jobAttr->printLayout == EPS_MLID_DIVIDE16)
+	{ /* CD and PhotoSeal do not depend on the model */
+		pmVer = 1;	/* use static table */
+	} else{
+		if(innerPrinter->pmData.version <= 0 ){
+	        /* get supported media */
+			retStatus = GetSupportedMedia(innerPrinter);
+		}
+		if(EPS_ERR_NONE == retStatus){
+			pmVer = innerPrinter->pmData.version;
+		}
+	}
+	
+    /*** Get Printable Area                                                             */
+	retTmp = CalcPrintableArea(jobAttr, &innerPrinter->pmData, NULL, printableWidth, printableHeight);
+	if(EPS_ERR_NONE == retTmp){
+		if(0 == pmVer)retStatus = EPS_TEMPORARY_VALUE;
+	} else{
+		retStatus = retTmp;
+	}
 
-    /*** Color Mode                                                                     */
-    if (! (   (jobAttr->colorMode          == EPS_CM_COLOR             ) ||
-              (jobAttr->colorMode          == EPS_CM_MONOCHROME        )    ) )
-        EPS_RETURN( EPS_ERR_INV_COLOR_MODE );
+    EPS_RETURN( retStatus );
+}
+
+
+/*******************************************|********************************************/
+/*                                                                                      */
+/* Function name:   epsGetPrintAreaInfo()                                               */
+/*                                                                                      */
+/* Arguments                                                                            */
+/* ---------                                                                            */
+/* Name:            Type:                   Description:                                */
+/* jobAttr          const EPS_JOB_ATTRIB*   I: Print Job Attribute                      */
+/* paperWidth       EPS_UINT32*             O: Paper width.                             */
+/* paperHeight      EPS_UINT32*             O: Paper height.                            */
+/* margin           EPS_LAYOUT_MARGIN*      O: Printable area height.                   */
+/*                                                                                      */
+/* Return value:                                                                        */
+/*      << Normal >>                                                                    */
+/*      EPS_ERR_NONE                    - Success                                       */
+/*      EPS_TEMPORARY_VALUE             - Temporary value                               */
+/*      << Error >>                                                                     */
+/*      EPS_ERR_LIB_NOT_INITIALIZED     - ESC/P-R Lib is NOT initialized                */
+/*      EPS_ERR_PRINTER_NOT_SET         - Target printer is not specified               */
+/*      EPS_ERR_INV_ARG_JOB_ATTRIB      - Invalid argument "jobAttr"                    */
+/*      EPS_ERR_INV_ARG_PAPER_WIDTH     - Invalid argument "paperWidth"                 */
+/*      EPS_ERR_INV_ARG_PAPER_HEIGHT    - Invalid argument "paperHeight"                */
+/*      EPS_ERR_INV_ARG_LAYOUT_MARGIN   - Invalid argument                              */
+/*      EPS_ERR_INV_MEDIA_SIZE          - Invalid Media Size                            */
+/*      EPS_ERR_INV_BORDER_MODE         - Invalid Border Mode                           */
+/*      EPS_ERR_INV_INPUT_RESOLUTION    - Invalid Input Resolution                      */
+/*      EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH     - Invalid Magin Setting (Width)         */
+/*      EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT    - Invalid Magin Setting (Height)        */
+/*      EPS_ERR_INV_CD_OUTDIM           - Invalid CD Outside Diameter                   */
+/*      EPS_ERR_MEMORY_ALLOCATION       - Alloc memory failed                           */
+/*                                                                                      */
+/* Description:                                                                         */
+/*      Gets the prin area information of the preview.                                  */
+/*                                                                                      */
+/*******************************************|********************************************/
+EPS_ERR_CODE     epsGetPrintAreaInfo (
+
+        const EPS_JOB_ATTRIB* jobAttr,
+        EPS_UINT32*         paperWidth,
+        EPS_UINT32*         paperHeight,
+		EPS_LAYOUT_INFO*	layoutInfo
+
+){
+/*** Declare Variable Local to Routine                                                  */
+	EPS_ERR_CODE    retStatus = EPS_ERR_NONE;
+	EPS_ERR_CODE    retTmp = EPS_ERR_NONE;
+	EPS_PRINTER_INN* innerPrinter;
+	EPS_INT32		pmVer = 0;
+	EPS_INT32       tempPrintableWidth, tempPrintableHeight;
+
+EPS_LOG_FUNCIN;
+
+/*** Has a Lib been initialized                                                         */
+    if (libStatus != EPS_STATUS_INITIALIZED) {
+        EPS_RETURN( EPS_ERR_LIB_NOT_INITIALIZED );
+	}
+	if(NULL == printJob.printer){
+		EPS_RETURN( EPS_ERR_PRINTER_NOT_SET );
+	}
+	innerPrinter = printJob.printer;
+
+/*** Validate input parameters                                                          */
+    if (jobAttr == NULL){
+        EPS_RETURN( EPS_ERR_INV_ARG_JOB_ATTRIB );
+	}
+    if (paperWidth == NULL){
+        EPS_RETURN( EPS_ERR_INV_ARG_PAPER_WIDTH );
+	}   
+    if (paperHeight == NULL){
+        EPS_RETURN( EPS_ERR_INV_ARG_PAPER_HEIGHT );
+	}
+	if (layoutInfo == NULL){
+        EPS_RETURN( EPS_ERR_INV_ARG_LAYOUT_MARGIN );
+	}
+
+	if( EPS_LANG_ESCPR != printJob.printer->language ){
+#ifdef GCOMSW_CMD_ESCPAGE
+		retStatus = pageGetPrintAreaInfoFromTable(jobAttr,
+					paperWidth, paperHeight, layoutInfo);
+#else
+		retStatus = EPS_ERR_LANGUAGE_NOT_SUPPORTED;
 #endif
+	} else{
+		/*** decided pm version */
+		pmVer = 0;
+		if( jobAttr->mediaSizeIdx == EPS_MSID_USER   ||	
+			jobAttr->printLayout == EPS_MLID_CDLABEL ||
+			jobAttr->printLayout == EPS_MLID_DIVIDE16)
+		{ /* CD and PhotoSeal do not depend on the model */
+			pmVer = 1;	/* use static table */
+		} else{
+			if(innerPrinter->pmData.version <= 0 ){
+				/* get supported media */
+				retStatus = GetSupportedMedia(innerPrinter);
+			}
+			if(EPS_ERR_NONE == retStatus){
+				pmVer = innerPrinter->pmData.version;
+			}
+		}
+	
+		retTmp = epspmGetPrintAreaInfo(TRUE, jobAttr, &innerPrinter->pmData,
+				                       paperWidth, paperHeight, layoutInfo, NULL);
 
-    /*** Input Image Resolution                                                         */
-    /*** Select table and factor                                                        */
-	if(jobAttr->inputResolution == EPS_IR_360X360){
+		/*** Validate/Confirm Magin Setting                                             */
+		tempPrintableWidth  = *paperWidth  - layoutInfo->margin.left - layoutInfo->margin.right;
+		tempPrintableHeight = *paperHeight - layoutInfo->margin.top  - layoutInfo->margin.bottom;
+		if (tempPrintableWidth  <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH );
+		if (tempPrintableHeight <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT );
+
+		if(EPS_ERR_NONE == retTmp){
+			if(0 == pmVer)retStatus = EPS_TEMPORARY_VALUE;
+		} else{
+			retStatus = retTmp;
+		}
+	}
+
+    EPS_RETURN( retStatus );
+}
+
+
+/*******************************************|********************************************/
+/*                                                                                      */
+/* Function name:   epsGetPrintAreaInfoAll()                                            */
+/*                                                                                      */
+/* Arguments                                                                            */
+/* ---------                                                                            */
+/* Name:            Type:                   Description:                                */
+/* resorution       EPS_UINT32              I: input resolution                         */
+/* printAreaInfo    EPS_PRINT_AREA_INFO*    O: Printable area information               */
+/*                                                                                      */
+/* Return value:                                                                        */
+/*      << Normal >>                                                                    */
+/*      EPS_ERR_NONE                    - Success                                       */
+/*      EPS_TEMPORARY_VALUE             - Temporary value                               */
+/*      << Error >>                                                                     */
+/*      EPS_ERR_LIB_NOT_INITIALIZED     - ESC/P-R Lib is NOT initialized                */
+/*      EPS_ERR_PRINTER_NOT_SET         - Target printer is not specified               */
+/*      EPS_ERR_INV_ARG_PRINTAREA_INFO  - Invalid argument                              */
+/*      EPS_ERR_INV_INPUT_RESOLUTION    - Invalid Input Resolution                      */
+/*      EPS_ERR_MEMORY_ALLOCATION       - Alloc memory failed                           */
+/*                                                                                      */
+/* Description:                                                                         */
+/*      Gets the prin area information of the preview at all supported media.           */
+/*                                                                                      */
+/*******************************************|********************************************/
+EPS_ERR_CODE     epsGetPrintAreaInfoAll (
+
+		EPS_UINT32				resorution,
+        EPS_PRINT_AREA_INFO*	printAreaInfo
+
+){
+/*** Declare Variable Local to Routine                                                  */
+	EPS_ERR_CODE    retStatus = EPS_ERR_NONE;
+	EPS_ERR_CODE    retTmp = EPS_ERR_NONE;
+	EPS_PRINTER_INN* innerPrinter;
+
+EPS_LOG_FUNCIN;
+
+/*** Has a Lib been initialized                                                         */
+    if (libStatus != EPS_STATUS_INITIALIZED) {
+        EPS_RETURN( EPS_ERR_LIB_NOT_INITIALIZED );
+	}
+	if(NULL == printJob.printer){
+		EPS_RETURN( EPS_ERR_PRINTER_NOT_SET );
+	}
+	innerPrinter = printJob.printer;
+
+/*** Validate input parameters                                                          */
+    if (printAreaInfo == NULL){
+        EPS_RETURN( EPS_ERR_INV_ARG_PRINTAREA_INFO );
+	}
+
+	/* clear old */
+	epspmClearPrintAreaInfo(&innerPrinter->printAreaInfo);
+
+	if( EPS_LANG_ESCPR != printJob.printer->language ){
+#ifdef GCOMSW_CMD_ESCPAGE
+		retStatus = pageCreatePrintAreaInfoFromTable(resorution, &innerPrinter->printAreaInfo);
+#else
+		retStatus = EPS_ERR_LANGUAGE_NOT_SUPPORTED;
+#endif
+	} else{
+		/*** get supported media */
+		if(innerPrinter->pmData.version <= 0){
+			retStatus = GetSupportedMedia(innerPrinter);
+		}
+	
+		if(EPS_ERR_NONE == retStatus){
+			if(1 == innerPrinter->pmData.version){
+				retStatus = epspmCreatePrintAreaInfoFromTable(&innerPrinter->supportedMedia, 
+														resorution,
+														&innerPrinter->printAreaInfo);
+			} else{
+				retStatus = epspmCreatePrintAreaInfoFromPM(innerPrinter->pmData.pmString, 
+														innerPrinter->pmData.length,
+														resorution,
+														&innerPrinter->printAreaInfo);
+			}
+		} else{
+			retTmp = epspmCreatePrintAreaInfoFromTable(NULL, resorution,
+														&innerPrinter->printAreaInfo);
+			if(EPS_ERR_NONE == retTmp){
+				retStatus = EPS_TEMPORARY_VALUE;
+			}
+		}
+	}
+
+	/* Copy to input buffer                                                             */
+	printAreaInfo->numSizes = innerPrinter->printAreaInfo.numSizes;
+	printAreaInfo->sizeList = innerPrinter->printAreaInfo.sizeList;
+
+    EPS_RETURN( retStatus );
+}
+
+
+/*******************************************|********************************************/
+/*                                                                                      */
+/* Function name:   epsGetUsersizeRange()                                               */
+/*                                                                                      */
+/* Arguments                                                                            */
+/* ---------                                                                            */
+/* Name:            Type:                   Description:                                */
+/* resolution       EPS_INT32*              I: resolution to use.                       */
+/* minWidth         EPS_INT32*              O: Printable area min width.                */
+/* minWidth         EPS_INT32*              O: Printable area max width.                */
+/* minHeight        EPS_INT32*              O: Printable area min height.               */
+/* maxHeight        EPS_INT32*              O: Printable area max height.               */
+/*                                                                                      */
+/* Return value:                                                                        */
+/*      << Normal >>                                                                    */
+/*      EPS_ERR_NONE                        - Success                                   */
+/*      << Error >>                                                                     */
+/*      EPS_ERR_LIB_NOT_INITIALIZED         - ESC/P-R Lib is NOT initialized            */
+/*      EPS_ERR_LANGUAGE_NOT_SUPPORTED      - Unsupported function Error (language)     */
+/*      EPS_ERR_PRINTER_NOT_SET             - Target printer is not specified           */
+/*      EPS_ERR_INV_INPUT_RESOLUTION        - Invalid Input Resolution                  */
+/*      EPS_ERR_OPR_FAIL                    - Internal Error                            */
+/*      EPS_ERR_MEMORY_ALLOCATION           - Failed to allocate memory                 */
+/*                                                                                      */
+/* Description:                                                                         */
+/*      Gets the printable area of user defined size.                                   */
+/*                                                                                      */
+/*******************************************|********************************************/
+EPS_ERR_CODE    epsGetUsersizeRange (
+
+		EPS_UINT8           resolution,
+        EPS_UINT32*         minWidth,
+        EPS_UINT32*         maxWidth,
+        EPS_UINT32*         minHeight,
+        EPS_UINT32*         maxHeight
+
+){
+/*** Declare Variable Local to Routine                                                  */
+	EPS_ERR_CODE		retStatus;                  /* Return status of internal calls  */
+	EPS_PRINTER_INN*	innerPrinter;
+	const EPS_MEDIA_INFO* pMI = NULL;
+	EPS_INT32			factor;                     /* Scaling factor for dpi           */
+	EPS_UINT32			baseDPI;
+	EPS_INT32			n, idx;
+	EPS_UINT32			minW, maxW, minH, maxH;
+
+EPS_LOG_FUNCIN;
+
+/*** Initialize Variables                                                               */
+    retStatus = EPS_ERR_NONE;
+	*minWidth = *maxWidth = *minHeight = *maxHeight = 0;
+	factor = 1;
+
+/*** Has a Lib been initialized                                                         */
+    if (libStatus != EPS_STATUS_INITIALIZED) {
+        EPS_RETURN( EPS_ERR_LIB_NOT_INITIALIZED );
+	}
+/*** Has a target printer specified                                                     */
+	if(NULL == printJob.printer){
+		EPS_RETURN( EPS_ERR_PRINTER_NOT_SET );
+	}
+	innerPrinter = printJob.printer;
+
+	if( EPS_LANG_ESCPR != innerPrinter->language ){
+		EPS_RETURN( EPS_ERR_LANGUAGE_NOT_SUPPORTED );
+	}
+
+/*** Validate input parameters                                                          */
+    /*** Select table and factor */
+	switch(resolution){
+	case EPS_IR_360X360:
 		pMI = epsMediaSize;
 	    factor = 1;
-		minCustomBorder = EPS_BORDERS_MARGIN_360;
-	} else if(jobAttr->inputResolution == EPS_IR_720X720){
+		baseDPI = 36;
+		break;
+	case EPS_IR_720X720:
 		pMI = epsMediaSize;
 		factor = 2;
-		minCustomBorder = EPS_BORDERS_MARGIN_360;
-	} else if(jobAttr->inputResolution == EPS_IR_300X300){
+		baseDPI = 36;
+		break;
+	case EPS_IR_300X300:
 		pMI = epsMediaSize300;
 	    factor = 1;
-		minCustomBorder = EPS_BORDERS_MARGIN_300;
-	} else if(jobAttr->inputResolution == EPS_IR_600X600){
+		baseDPI = 30;
+		break;
+	case EPS_IR_600X600:
 		pMI = epsMediaSize300;
 	    factor = 2;
-		minCustomBorder = EPS_BORDERS_MARGIN_300;
-	} else{
+		baseDPI = 30;
+		break;
+	default:
         EPS_RETURN( EPS_ERR_INV_INPUT_RESOLUTION )
 	}
 
-#if 0   /* These parameter are not used in this function */
-    /*** Printing Direction                                                             */
-    if (! (   (jobAttr->printDirection     == EPS_PD_BIDIREC           ) ||
-              (jobAttr->printDirection     == EPS_PD_UNIDIREC          )    ) )
-        EPS_RETURN( EPS_ERR_INV_PRINT_DIRECTION );
+	if(innerPrinter->pmData.version <= 0){
+		retStatus = GetSupportedMedia(innerPrinter);
+	}
 
-    /*** Color Plane                                                                    */
-    if (! (   (jobAttr->colorPlane         == EPS_CP_FULLCOLOR         ) ||
-              (jobAttr->colorPlane         == EPS_CP_256COLOR          )    ) )
-        EPS_RETURN( EPS_ERR_INV_COLOR_PLANE );
+	if( EPS_ERR_NONE == retStatus ){
+		minW = minH = 0xFFFFFFFF;
+		maxW = maxH = 0;
+		for(n = 0; n < innerPrinter->supportedMedia.numSizes; n++){
+			if (EPS_MSID_USER != innerPrinter->supportedMedia.sizeList[n].mediaSizeID){
+				for (idx = 0; pMI[idx].id != -1; idx++) {
+					if (pMI[idx].id == innerPrinter->supportedMedia.sizeList[n].mediaSizeID)
+						break;
+				}
 
-    /*** Pallette Data                                                                  */
-    if (jobAttr->colorPlane == EPS_CP_256COLOR) {
-        if (! ((jobAttr->paletteSize       >= 3                        ) &&
-               (jobAttr->paletteSize       <= 768/*765*/               )    ) )
-            EPS_RETURN( EPS_ERR_INV_PALETTE_SIZE );
-        if (    jobAttr->paletteData       == NULL                     )
-            EPS_RETURN( EPS_ERR_INV_PALETTE_DATA );
-    }
-
-    /*** Brightness                                                                     */
-    if (! (   (jobAttr->brightness         >= -50                      ) &&
-              (jobAttr->brightness         <=  50                      )    ) )
-        EPS_RETURN( EPS_ERR_INV_BRIGHTNESS );
-
-    /*** Contrast                                                                       */
-    if (! (   (jobAttr->contrast           >= -50                      ) &&
-              (jobAttr->contrast           <=  50                      )    ) )
-        EPS_RETURN( EPS_ERR_INV_CONTRAST );
-
-    /*** Saturation                                                                     */
-    if (! (   (jobAttr->saturation         >= -50                      ) &&
-              (jobAttr->saturation         <=  50                      )    ) )
-        EPS_RETURN( EPS_ERR_INV_SATURATION );
-#endif
-
-    /*** Margin                                                                         */
-    if (jobAttr->printLayout == EPS_MLID_CUSTOM) {
-        if (jobAttr->topMargin    < minCustomBorder*factor) EPS_RETURN( EPS_ERR_INV_TOP_MARGIN );
-        if (jobAttr->leftMargin   < minCustomBorder*factor) EPS_RETURN( EPS_ERR_INV_LEFT_MARGIN );
-        if (jobAttr->bottomMargin < minCustomBorder*factor) EPS_RETURN( EPS_ERR_INV_BOTTOM_MARGIN );
-        if (jobAttr->rightMargin  < minCustomBorder*factor) EPS_RETURN( EPS_ERR_INV_RIGHT_MARGIN );
-    }
-
-#if 0   /* Don't need this logic */
-    /*** If full-color mode, nullify the 256-color parameters                           */
-    printJob.bpp = 1;
-    if (jobAttr->colorPlane == EPS_CP_FULLCOLOR) {
-        jobAttr->paletteSize = 0;
-        jobAttr->paletteData = NULL;
-        printJob.bpp          = 3;
-    }
-#endif
-
-/*** Get Printable Area                                                                 */
-    /*** Find the Media by ID                                                           */
-    for (idx = 0; pMI[idx].id != -1; idx++) {
-        if (pMI[idx].id == jobAttr->mediaSizeIdx)
-            break;
-    }
-    if (pMI[idx].id == -1) {
-        EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE );
-    }
-
-    /*** Initialize Printable based on printLayout                                      */
-    switch( jobAttr->printLayout ){
-	case EPS_MLID_BORDERLESS:
-        tempPrintableWidth  = pMI[idx].print_area_x_borderless * factor;
-        tempPrintableHeight = pMI[idx].print_area_y_borderless * factor;
-		break;
-
-	case EPS_MLID_BORDERS:
-	case EPS_MLID_DIVIDE16:	/* layout processing is not done. */
-        tempPrintableWidth  = pMI[idx].print_area_x_border * factor;
-        tempPrintableHeight = pMI[idx].print_area_y_border * factor;
-		break;
-
-	case EPS_MLID_CDLABEL:
-		if( !( (jobAttr->cdDimOut >= EPS_CDDIM_IN_MIN   )
-			&& (jobAttr->cdDimOut <= EPS_CDDIM_OUT_MAX ) ) ){
-			EPS_RETURN( EPS_ERR_INV_CD_OUTDIM );
+				if(minW > (EPS_UINT32)pMI[idx].paper_x)minW = pMI[idx].paper_x;
+				if(minH > (EPS_UINT32)pMI[idx].paper_y)minH = pMI[idx].paper_y;
+				
+				if(maxW < (EPS_UINT32)pMI[idx].paper_x)maxW = pMI[idx].paper_x;
+				if(maxH < (EPS_UINT32)pMI[idx].paper_y)maxH = pMI[idx].paper_y;
+			}
 		}
+	} else{
+		minW = EPS_USER_WIDTH_MIN * baseDPI;
+		minH = EPS_USER_HEIGHT_MIN * baseDPI;
+		maxW = EPS_USER_WIDTH_MAX2 * baseDPI;
+		maxH = EPS_USER_HEIGHT_MAX * baseDPI;
+	}
 
-		tempPrintableWidth  =
-			tempPrintableHeight = elGetDots(jobAttr->inputResolution, jobAttr->cdDimOut);
-		break;
+	if (minWidth != NULL) {
+		if(minW < EPS_USER_WIDTH_MIN * baseDPI)minW = EPS_USER_WIDTH_MIN * baseDPI;
+		*minWidth = minW * factor;
+	}
+	if (maxWidth != NULL) {
+		if(maxW > EPS_USER_WIDTH_MAX2 * baseDPI){
+			maxW = EPS_USER_WIDTH_MAX2 * baseDPI;
+		} else if((maxW > EPS_USER_WIDTH_MAX1 * baseDPI) && (maxW < EPS_USER_WIDTH_MAX2 * baseDPI)){
+			maxW = EPS_USER_WIDTH_MAX1 * baseDPI;
+		}
+		*maxWidth = maxW * factor;
+	}    
+	if (minHeight != NULL) {
+		if(minH < EPS_USER_HEIGHT_MIN * baseDPI)minH = EPS_USER_HEIGHT_MIN * baseDPI;
+		*minHeight = minH * factor;
+	}
+	if (maxHeight != NULL) {
+		if(maxH > EPS_USER_HEIGHT_MAX * baseDPI)maxH = EPS_USER_HEIGHT_MAX * baseDPI;
+		*maxHeight = maxH * factor;
+	}
 
-	default: /* printLayout  == EPS_MLID_CUSTOM */
-        tempPrintableWidth  = pMI[idx].paper_x *factor -
-                              jobAttr->leftMargin      -
-                              jobAttr->rightMargin;
-        tempPrintableHeight = pMI[idx].paper_y *factor -
-                              jobAttr->topMargin       -
-                              jobAttr->bottomMargin;
-    }
-
-/*** Validate/Confirm Magin Setting                                                     */
-    if (jobAttr->printLayout == EPS_MLID_CUSTOM) {
-        if (tempPrintableWidth  <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH );
-        if (tempPrintableHeight <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT );
-    }
-
-/*** Set Printable Area to input parameter                                              */
-    if ((tempPrintableWidth > 0) && (tempPrintableHeight > 0)) {
-        *printableWidth  = (EPS_UINT32)tempPrintableWidth;
-        *printableHeight = (EPS_UINT32)tempPrintableHeight;
-    } else{
-        EPS_RETURN( EPS_ERR_OPR_FAIL );
-    }
-    
-/*** Return to Caller                                                                   */
-    EPS_RETURN( EPS_ERR_NONE );
+	EPS_RETURN( retStatus );
 }
 
 
@@ -2730,6 +3030,12 @@ EPS_ERR_CODE epsMakeMainteCmd     (
 			}
 		}
 		MakeMainteCmd_ADDCMD(RemoteJS)
+		MakeMainteCmd_ADDCMD(RemotePP)
+		if(pCmdPos){
+			*(pCmdPos - sizeof(RemotePP) + 5) = 0x01;
+			*(pCmdPos - sizeof(RemotePP) + 6) = 0xFE;
+		}
+		MakeMainteCmd_ADDCMD(RemoteEX33)
 		MakeMainteCmd_ADDCMD(RemoteNC)
 		if(pCmdPos && obsIsA3Model(EPS_MDC_NOZZLE)){
 			*(pCmdPos - sizeof(RemoteNC) + 5) = 0x10;
@@ -2877,7 +3183,6 @@ static EPS_ERR_CODE   MonitorStatus (
 	/* The error occurs in printer. */
 	printJob.contData.lastError = StatInfo.nError;
 
-    /*EPS_DBGPRINT(("EPS SER: STAT MON -> Printer State [0x%x]\r\n",StatInfo.nState));*/
     if( StatInfo.nState & ( EPS_ST_IDLE          |
 							EPS_ST_WAITING       |
 							EPS_ST_SELF_PRINTING |
@@ -2885,6 +3190,7 @@ static EPS_ERR_CODE   MonitorStatus (
         /*EPS_DBGPRINT(("EPS SER: STAT MON -> SETTLING\r\n"));*/
         EPS_RETURN( EPS_ERR_NONE );
     }else{
+		/*EPS_DBGPRINT(("EPS SER: STAT MON -> Printer State [0x%x]\r\n",StatInfo.nState));*/
         EPS_RETURN( EPS_ERR_PRINTER_ERR_OCCUR );
 	}
 }
@@ -2996,21 +3302,16 @@ EPS_UINT32		sendHeight;
     /*** Initialize variable                                                            */
     line.bytesPerLine = printJob.bpp * widthPixels;
 	linePixels = Min(line.bytesPerLine, printJob.bpp * printJob.printableAreaWidth);
-
     for (; idx < sendHeight; idx++) {
         /* Calculate position of image line                                             */
-        //if(idx == 1){
-        	//idx = sendHeight;
-        	//break;
-        //}
         line.data = data + idx * line.bytesPerLine;
-
+        
         /*** Make new LineRect                                                          */
         line.rect.top      = (EPS_INT32)(printJob.verticalOffset + idx);
         line.rect.left     = 0;
         line.rect.bottom   = line.rect.top + 1;
         line.rect.right    = (EPS_INT32)(widthPixels);
-		
+      
 		/*** Test if current image data is completely white                             */
 		if(EPS_LANG_ESCPR == printJob.printer->language ){
 			skipLine = TRUE;
@@ -3035,9 +3336,8 @@ EPS_UINT32		sendHeight;
 
 			if (skipLine == TRUE)continue;
 		}
+
 		/*** Image Data not completely white - print image data                         */
-		//idx = sendHeight;
-		//break;
 		retStatus = PrintLine(&line);
 
         if (retStatus != EPS_ERR_NONE) {
@@ -3400,6 +3700,8 @@ static EPS_ERR_CODE    SendBlankBand (
 /*      EPS_ERR_INV_RIGHT_MARGIN                - Invalid Right Margin                  */
 /*      EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH     - Invalid Magin Setting (Width)         */
 /*      EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT    - Invalid Magin Setting (Height)        */
+/*      EPS_ERR_INV_CD_INDIM                    - Invalid CD Outside Diameter           */
+/*      EPS_ERR_INV_CD_OUTDIM                   - Invalid CD Outside Diameter           */
 /*                                                                                      */
 /* Description:                                                                         */
 /*      Confirm ESC/P-R Job Attribute.                                                  */
@@ -3414,15 +3716,12 @@ EPS_ERR_CODE    SetupJobAttrib (
 
 EPS_LOG_FUNCIN;
 
-
-
 /*** Validate input parameters                                                          */
 #ifndef LCOMSW_JOBPARAM_CEHCK_OFF
 /*======================================================================================*/
 /*** Validate/Confirm Page Attribute Data                                               */
 /*======================================================================================*/
 	/*** Color Plane                                                                    */
-	
 	if (! (   (jobAttr->colorPlane         == EPS_CP_FULLCOLOR         ) ||
 			  (jobAttr->colorPlane         == EPS_CP_256COLOR          ) ||
 			  (jobAttr->colorPlane         == EPS_CP_JPEG              ) ||
@@ -3446,15 +3745,23 @@ EPS_LOG_FUNCIN;
 	} else{												/* Image(RGB, Jpeg) */
 		/*** Media Size                                                                     */
 		if (! ( ( (jobAttr->mediaSizeIdx       >= EPS_MSID_A4              ) &&
-				  (jobAttr->mediaSizeIdx       <= EPS_MSID_HIVISION        )    ) ||
+				  (jobAttr->mediaSizeIdx       <= EPS_MSID_A5_24HOLE       )    ) ||
 				( (jobAttr->mediaSizeIdx       >= EPS_MSID_A3NOBI          ) &&
 				  (jobAttr->mediaSizeIdx       <= EPS_MSID_12X12           )    ) ||
-	 			( (jobAttr->mediaSizeIdx       == EPS_MSID_USER            )    )    ) ){
+                ( (jobAttr->mediaSizeIdx       == EPS_MSID_USER            )    ) )  )
+		{
 			EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE )
+		} else if (jobAttr->mediaSizeIdx       == EPS_MSID_USER ) {
+			if(EPS_JOB_ATTRIB_VER_4 > jobAttr->version){
+				EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE )
+			} else if( jobAttr->userDefWidth <= 0 || jobAttr->userDefHeight <= 0 ){
+				EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE )
+			}
 		}
+
 		/*** Media Type                                                                     */
 		if (! ( ( (jobAttr->mediaTypeIdx       >= EPS_MTID_PLAIN           ) &&
-				  (jobAttr->mediaTypeIdx       <= EPS_MTID_COLORPAPER           )    ) ||
+				  (jobAttr->mediaTypeIdx       <= EPS_MTID_GROSSY_ROLL_STICKER)    ) ||
 				( (jobAttr->mediaTypeIdx       >= EPS_MTID_CDDVD           ) &&
 				  (jobAttr->mediaTypeIdx       <= EPS_MTID_CDDVDGLOSSY     )    ) ||
 				( (jobAttr->mediaTypeIdx       == EPS_MTID_CLEANING        )    )    ) ){
@@ -3488,23 +3795,18 @@ EPS_LOG_FUNCIN;
 			EPS_RETURN( EPS_ERR_INV_SATURATION )
 		}
 		/*** Paper Source                                                                   */
-		if (! (   (jobAttr->paperSource        == EPS_MPID_AUTO			   ) ||
+		if (! (   (jobAttr->paperSource        == EPS_MPID_NOT_SPEC        ) ||
+			      (jobAttr->paperSource        == EPS_MPID_AUTO            ) ||
 				  (jobAttr->paperSource        == EPS_MPID_REAR            ) ||
 				  (jobAttr->paperSource        == EPS_MPID_FRONT1          ) ||
 				  (jobAttr->paperSource        == EPS_MPID_FRONT2          ) ||
 				  (jobAttr->paperSource        == EPS_MPID_FRONT3          ) ||
 				  (jobAttr->paperSource        == EPS_MPID_FRONT4          ) ||
 				  (jobAttr->paperSource        == EPS_MPID_CDTRAY          ) ||
-				  (jobAttr->paperSource        == EPS_MPID_REARMANUAL          ) ||
-				  
-				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_MP_TRAY		) ||
-				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_CASSETTE1		) ||
-				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_CASSETTE2		) ||
-				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_CASSETTE3		) ||
-				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_CASSETTE4		) ||
-				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_PARAM_MANUALFEED	) ||
-				  (jobAttr->paperSource        == EPS_MPID_PAGE_S_AUTO_TRAY		)
-				     ) ){
+				  (jobAttr->paperSource        == EPS_MPID_ROLL            ) ||
+				  (jobAttr->paperSource        == EPS_MPID_MANUAL          ) ||
+				  (jobAttr->paperSource        == EPS_MPID_MANUAL2         ) ) ){
+					  
 			EPS_RETURN( EPS_ERR_INV_PAPER_SOURCE )
 		}
 
@@ -3529,8 +3831,6 @@ EPS_LOG_FUNCIN;
 	}
 #endif
 
-
-
 /*======================================================================================*/
 /*** Copy Input Page Attribute Data to Internal Variable                                */
 /*======================================================================================*/
@@ -3540,8 +3840,10 @@ EPS_LOG_FUNCIN;
 	    memcpy((void*)(&printJob.attr), (void*)jobAttr, sizeof(EPS_JOB_ATTRIB));
 		retStatus = SetupRGBAttrib();
 		if(EPS_ERR_NONE == retStatus){
-			_SP_ChangeSpec_DraftOnly(printJob.printer, &printJob.attr);   
+			epspmChangeSpec_DraftOnly(printJob.printer, &printJob.attr);   
 			/* Ignore the return value of this func */
+		} else{
+			EPS_RETURN( retStatus );
 		}
 		break;
 
@@ -3549,8 +3851,16 @@ EPS_LOG_FUNCIN;
 	    memcpy((void*)(&printJob.attr), (void*)jobAttr, sizeof(EPS_JOB_ATTRIB));
 		retStatus = SetupJPGAttrib();
 		if(EPS_ERR_NONE == retStatus){
-			_SP_ChangeSpec_DraftOnly(printJob.printer, &printJob.attr);   
+			epspmChangeSpec_DraftOnly(printJob.printer, &printJob.attr);   
 			/* Ignore the return value of this func */
+		} else{
+			EPS_RETURN( retStatus );
+		}
+
+		/*** Set User defined Printable Area                                            */
+		retStatus = CalcPrintableArea(&printJob.attr, &printJob.printer->pmData, &printJob, NULL, NULL);
+		if( EPS_ERR_NONE != retStatus ){
+			EPS_RETURN( retStatus );
 		}
 		break;
 
@@ -3602,20 +3912,9 @@ EPS_ERR_CODE    SetupRGBAttrib (
 
 ){
 /*** Declare Variable Local to Routine                                                  */
-EPS_INT32       factor;                     /* Scaling factor for dpi                   */
-EPS_INT32       idx;                        /* Paper size index                         */
-EPS_INT32       tempPrintableWidth;         /* Temporary Variable                       */
-EPS_INT32       tempPrintableHeight;        /* Temporary Variable                       */
-const EPS_MEDIA_INFO* pMI = NULL;
-EPS_INT16		borderPixels;
+	EPS_ERR_CODE    retStatus = EPS_ERR_NONE;   /* Return status of internal calls      */
 
 	EPS_LOG_FUNCIN;
-
-/*** Initialize Global/Local Variables                                                  */
-    idx                 = -1;
-    tempPrintableWidth  = 0;
-    tempPrintableHeight = 0;
-
 #ifndef LCOMSW_JOBPARAM_CEHCK_OFF
 /*** Validate input parameters                                                          */
 	/*** Border Mode                                                                    */
@@ -3631,30 +3930,6 @@ EPS_INT16		borderPixels;
            (printJob.attr.colorMode          == EPS_CM_MONOCHROME        ) /*||
            (printJob.attr.colorMode          == EPS_CM_SEPIA             )*/ ) ){
 		EPS_RETURN( EPS_ERR_INV_COLOR_MODE )
-	}
-
-	/*** Input Image Resolution                                                     */
-    /*** Select table and factor                                                        */
-	if(printJob.attr.inputResolution == EPS_IR_360X360){
-		pMI = epsMediaSize;
-	    factor = 1;
-		borderPixels = EPS_BORDERS_MARGIN_360;
-	} else if(printJob.attr.inputResolution == EPS_IR_720X720){
-		pMI = epsMediaSize;
-		factor = 2;
-		borderPixels = EPS_BORDERS_MARGIN_360;
-	} else if(printJob.attr.inputResolution == EPS_IR_300X300){
-		pMI = epsMediaSize300;
-		//pMI = epsMediaSize;
-		factor = 1;
-		borderPixels = EPS_BORDERS_MARGIN_300;
-		//borderPixels = EPS_BORDERS_MARGIN_360;
-	} else if(printJob.attr.inputResolution == EPS_IR_600X600){
-		pMI = epsMediaSize300;
-	    factor = 2;
-		borderPixels = EPS_BORDERS_MARGIN_300;
-	} else{
-        EPS_RETURN( EPS_ERR_INV_INPUT_RESOLUTION )
 	}
 
 	/*** Printing Direction                                                         */
@@ -3674,106 +3949,13 @@ EPS_INT16		borderPixels;
 			EPS_RETURN( EPS_ERR_INV_PALETTE_DATA )
 		}
 	}
-
-    /*** Margin                                                                     */
-	if (printJob.attr.printLayout == EPS_MLID_CUSTOM) {
-		if (printJob.attr.topMargin    < borderPixels*factor) EPS_RETURN( EPS_ERR_INV_TOP_MARGIN );
-		if (printJob.attr.leftMargin   < borderPixels*factor) EPS_RETURN( EPS_ERR_INV_LEFT_MARGIN );
-		if (printJob.attr.bottomMargin < borderPixels*factor) EPS_RETURN( EPS_ERR_INV_BOTTOM_MARGIN );
-		if (printJob.attr.rightMargin  < borderPixels*factor) EPS_RETURN( EPS_ERR_INV_RIGHT_MARGIN );
-	}
 #endif
 
-/*======================================================================================*/
-/*** Set the following parameter                                                        */
-/***    - printJob.topMargin                                                            */
-/***    - printJob.leftMargin                                                           */
-/***    - printJob.printableAreaWidth                                                   */
-/***    - printJob.printableAreaHeight                                                  */
-/***    - printJob.borderlessModeInternal                                               */
-/***    - printJob.verticalOffset                                                       */
-/*======================================================================================*/
-    /*** Find the Media by ID                                                           */
-    for (idx = 0; pMI[idx].id != -1; idx++) {
-        if (pMI[idx].id == printJob.attr.mediaSizeIdx)
-            break;
-    }
-    if (pMI[idx].id == -1) {
-        EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE );
-    }
-
-    /*** Media Attributes                                                               */
-    printJob.paperWidth  = pMI[idx].paper_x * factor;
-    printJob.paperHeight = pMI[idx].paper_y * factor;
-
-    /*** Initialize Printable based on border mode                                      */
-    switch( printJob.attr.printLayout ){
-	case EPS_MLID_BORDERLESS:
-        printJob.topMargin      = pMI[idx].top_margin_borderless   * factor;
-        printJob.leftMargin     = pMI[idx].left_margin_borderless  * factor;
-        tempPrintableWidth      = pMI[idx].print_area_x_borderless * factor;
-        tempPrintableHeight     = pMI[idx].print_area_y_borderless * factor;
-        printJob.borderlessMode = EPS_BORDERLESS_NORMAL;
-		break;
-
-	case EPS_MLID_BORDERS:
-	case EPS_MLID_DIVIDE16:  
-		  printJob.topMargin      = borderPixels * factor;
-        printJob.leftMargin     = borderPixels * factor;
-
-        tempPrintableWidth      = pMI[idx].print_area_x_border * factor;
-        tempPrintableHeight     = pMI[idx].print_area_y_border * factor;
-        printJob.borderlessMode = EPS_BORDER_3MM_MARGINE;
-		break;
-
-	case EPS_MLID_CDLABEL:
-		tempPrintableWidth  =
-		tempPrintableHeight = elGetDots(printJob.attr.inputResolution, printJob.attr.cdDimOut);
-		printJob.topMargin  = CDDVD_OFFSET_Y(printJob.attr.inputResolution, printJob.attr.cdDimOut);
-		printJob.leftMargin = CDDVD_OFFSET_X(printJob.attr.inputResolution, printJob.attr.cdDimOut);
-        printJob.borderlessMode = EPS_BORDER_3MM_MARGINE; /* It's no meaning & no effect */
-
-		EPS_DBGPRINT(("dim: %d / top: %d / left: %d\n", printJob.attr.cdDimOut,
-						printJob.topMargin, printJob.leftMargin));
-		break;
-
-	default: /* printJob.attr.printLayout  == EPS_MLID_CUSTOM */
-        printJob.topMargin      = printJob.attr.topMargin;
-        printJob.leftMargin     = printJob.attr.leftMargin;
-        tempPrintableWidth      = pMI[idx].paper_x * factor		-
-                                  printJob.attr.leftMargin      -
-                                  printJob.attr.rightMargin;
-        tempPrintableHeight     = pMI[idx].paper_y * factor		-
-                                  printJob.attr.topMargin       -
-                                  printJob.attr.bottomMargin;
-		printJob.borderlessMode = EPS_BORDER_CUSTOM;
-    }
-
-    /*** Validate/Confirm Magin Setting                                                 */
-    if (printJob.attr.printLayout == EPS_MLID_CUSTOM) {
-        if (tempPrintableWidth  <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH );
-        if (tempPrintableHeight <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT );
-    }
-
-    /*** Set Printable Area */
-   EPS_INT32 lOffset = printJob.attr.inputResolution/30;
-    //printJob.printableAreaHeight  = (EPS_UINT32)lWidth + lOffset*2;
-    //printJob.printableAreaWidth = (EPS_UINT32)lHeight + lOffset*2;
-    
-    printJob.printableAreaWidth  = (EPS_UINT32)tempPrintableWidth;
-    printJob.printableAreaHeight = (EPS_UINT32)tempPrintableHeight;
-    //printJob.printableAreaWidth  = (EPS_UINT32)tempPrintableHeight;
-    //printJob.printableAreaHeight = (EPS_UINT32)tempPrintableWidth;
-    /*
-    areaWidth = tempPrintableHeight;
-	 areaHeight = tempPrintableWidth;
-    EPS_INT32 lOffset = printJob.attr.inputResolution/30;
-    printJob.printableAreaHeight  = (EPS_UINT32)lHeight + lOffset*2;
-    printJob.printableAreaWidth = (EPS_UINT32)lWidth + lOffset*2;
-    */
-    //printJob.printableAreaHeight  = (EPS_UINT32)lHeight + lOffset*2;
-    //printJob.printableAreaWidth = (EPS_UINT32)lWidth + lOffset*2;
-
+	/*** Set Printable Area                                                             */
+	retStatus = CalcPrintableArea(&printJob.attr, &printJob.printer->pmData, &printJob, NULL, NULL);
+	if( EPS_ERR_NONE != retStatus ){
+		EPS_RETURN( retStatus );
+	}
 
     /*** Scan through palette for the index value of white and set the global white
                                     value to this index for skipping white raster lines */
@@ -3788,16 +3970,73 @@ EPS_INT16		borderPixels;
 													printJob.attr.paletteData,
 													printJob.attr.paletteSize);
 
-    /*** Set "Base Point" Data                                                          */
-    /*** BORDER                                                                         */
-    printJob.border.top        =
-    printJob.border.left       =
-    printJob.border.bottom     =
-	printJob.border.right      = borderPixels * factor;
-
-    AdjustBasePoint();
+	AdjustBasePoint();
 
 	EPS_RETURN( EPS_ERR_NONE );
+}
+
+
+EPS_ERR_CODE    CalcPrintableArea (
+
+        EPS_JOB_ATTRIB*		pAttr,
+		EPS_PM_DATA*		pmData, 
+		EPS_PRINT_JOB*		pJobInfo,
+        EPS_UINT32*         printableWidth,
+        EPS_UINT32*         printableHeight
+
+){
+	EPS_ERR_CODE	ret = EPS_ERR_NONE;
+	EPS_UINT32      paperWidth, paperHeight;
+	EPS_INT32       tempPrintableWidth, tempPrintableHeight;
+	EPS_LAYOUT_INFO	lm;
+	EPS_RECT			baseBorder;
+		
+	EPS_LOG_FUNCIN;
+
+	ret = epspmGetPrintAreaInfo(FALSE, pAttr, pmData, &paperWidth, &paperHeight, &lm, &baseBorder);
+	if(EPS_ERR_NONE != ret){
+		EPS_RETURN( ret );
+	}
+	
+	tempPrintableWidth  = paperWidth  - lm.margin.left - lm.margin.right;
+	tempPrintableHeight = paperHeight - lm.margin.top  - lm.margin.bottom;
+
+	/*** Validate/Confirm Magin Setting                                                 */
+	if (tempPrintableWidth  <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_WIDTH );
+	if (tempPrintableHeight <= 0) EPS_RETURN( EPS_ERR_MARGIN_OVER_PRINTABLE_HEIGHT );
+
+	/*** Set Printable Area to input parameter                                          */
+	if(printableWidth != NULL && printableHeight != NULL){
+		*printableWidth  = tempPrintableWidth;
+		*printableHeight = tempPrintableHeight;
+	}
+
+	if(pJobInfo != NULL){
+		/*** Set Printable Area                                                     */
+		pJobInfo->paperWidth  = paperWidth;
+		pJobInfo->paperHeight = paperHeight;
+		pJobInfo->printableAreaWidth  = (EPS_UINT32)tempPrintableWidth;
+		pJobInfo->printableAreaHeight = (EPS_UINT32)tempPrintableHeight;
+		pJobInfo->topMargin   = lm.margin.top;
+		pJobInfo->leftMargin  = lm.margin.left;
+
+		switch( pAttr->printLayout ){
+		case EPS_MLID_BORDERLESS:
+		case EPS_MLID_BORDERS:
+		case EPS_MLID_DIVIDE16:  
+			pJobInfo->borderlessMode = EPS_BORDERLESS_NORMAL; /* It's no meaning & no effect */
+			break;
+		case EPS_MLID_CDLABEL:
+			pJobInfo->borderlessMode = EPS_BORDERLESS_NORMAL; /* It's no meaning & no effect */
+			break;
+		default: /* pAttr->printLayout  == EPS_MLID_CUSTOM */
+			pJobInfo->borderlessMode = EPS_BORDER_CUSTOM;
+		}
+		/*** Set "Base Point" for custom margin                                     */
+		pJobInfo->border = baseBorder;
+	}
+
+	EPS_RETURN( ret );
 }
 
 
@@ -4000,7 +4239,6 @@ EPS_UINT32      retBufSize = 0;             /* Size of buffer written           
 	/*** Remote Command - PP                                                            */
 	SendStartJob_ADDCMD(RemotePP)
 	pCmdPos -= sizeof(RemotePP);
-	
 	switch(printJob.attr.paperSource){
 	case EPS_MPID_REAR:
 		pCmdPos[5] = 0x01; pCmdPos[6] = 0x00; 
@@ -4011,11 +4249,23 @@ EPS_UINT32      retBufSize = 0;             /* Size of buffer written           
 	case EPS_MPID_FRONT2:
 		pCmdPos[5] = 0x01; pCmdPos[6] = 0x02;
 		break;
+	case EPS_MPID_FRONT3:
+		pCmdPos[5] = 0x01; pCmdPos[6] = 0x03;
+		break;
+	case EPS_MPID_FRONT4:
+		pCmdPos[5] = 0x01; pCmdPos[6] = 0x04;
+		break;
 	case EPS_MPID_CDTRAY:
 		pCmdPos[5] = 0x02; pCmdPos[6] = 0x01; 
 		break;
-	case EPS_MPID_REARMANUAL:
+	case EPS_MPID_ROLL:
+		pCmdPos[5] = 0x03; pCmdPos[6] = 0x00; 
+		break;
+	case EPS_MPID_MANUAL:
 		pCmdPos[5] = 0x02; pCmdPos[6] = 0x00; 
+		break;
+	case EPS_MPID_MANUAL2:
+		pCmdPos[5] = 0x02; pCmdPos[6] = 0x02; 
 		break;
 
 	case EPS_MPID_AUTO:
@@ -4025,12 +4275,11 @@ EPS_UINT32      retBufSize = 0;             /* Size of buffer written           
 			/* Jpeg CD print need PP  */
 			pCmdPos[5] = 0x02; pCmdPos[6] = 0x01; 
 		} else{
-			EPS_DBGPRINT(("Paper Sourcr AutoSelect\n"));
+			/*EPS_DBGPRINT(("Paper Sourcr AutoSelect\n"));*/
 			pCmdPos[5] = 0x01; pCmdPos[6] = 0xFF; /* auto select */
 		}
 		break;
 	}
-	
 	pCmdPos += sizeof(RemotePP);
 
 	/*** Remote Command - DP(duplex)                                                    */
@@ -4052,19 +4301,44 @@ EPS_UINT32      retBufSize = 0;             /* Size of buffer written           
 	SendStartJob_ADDCMD_LEN(PrintQualityCmd, printJob.attr.paletteSize)
 	MakeQualityCmd(pCmdPos - (sizeof(PrintQualityCmd) + printJob.attr.paletteSize) );
 
-	/*** ESC/PR "apf setting" Command                                                   */
-	if(EPS_CP_JPEG == printJob.attr.colorPlane){
-		SendStartJob_ADDCMD(APFSettingCmd)
-		MakeAPFCmd(pCmdPos-sizeof(APFSettingCmd));
-	}
-
-	/*** ESC/PR "Job" Command to Printer                                                */
 	if( EPS_CP_JPEG != printJob.attr.colorPlane ){	/* RGB  */
+		/*** ESC/PR "page num" Command                                                  */
+		SendStartJob_ADDCMD(PrintNumCmd)
+		MakePageNumCmd(pCmdPos - sizeof(PrintNumCmd));
+
+		/*** ESC/PR "custom" Command (media size)                                       */
+		SendStartJob_ADDCMD(CustomCmd)
+		*(pCmdPos-1) = (EPS_UINT8)(printJob.attr.mediaSizeIdx & 0xFF);
+
+		if( 3 <= printJob.printer->pmData.version ){
+			SendStartJob_ADDCMD(Chkcmd)
+		} else{
+			EPS_PRV_COMMANDS(&sendDataBuf, &pCmdPos, &sendDataBufSize)
+		}
+
+		/*** ESC/PR "Job" Command to Printer                                            */
 		SendStartJob_ADDCMD(JobCmd)
 		MakeJobCmd(pCmdPos-sizeof(JobCmd));
+
 	} else{                                         /* JPEG */
-		SendStartJob_ADDCMD(JobCmdJpg)
-		MakeJobCmd(pCmdPos-sizeof(JobCmdJpg));
+		/*** ESC/PR "apf setting" Command                                               */
+		SendStartJob_ADDCMD(APFSettingCmd)
+		MakeAPFCmd(pCmdPos-sizeof(APFSettingCmd));
+
+		if(printJob.attr.copies > 1){
+			SendStartJob_ADDCMD(CopyCmd);
+			*(--pCmdPos) = (EPS_UINT8)(printJob.attr.copies & 0xff);
+			pCmdPos++;
+		}
+
+		if(printJob.attr.mediaSizeIdx == EPS_MSID_USER){
+			SendStartJob_ADDCMD(JobCmd)				/* set user defined size */
+			MakeJobCmd(pCmdPos-sizeof(JobCmd));
+		}
+
+		/*** ESC/P-R Jpeg "Job" Command to Printer                                      */
+		SendStartJob_ADDCMD(SizeCmd)
+		MakeSizeCmd(pCmdPos-sizeof(SizeCmd));
 	}
 
 	if(bAddStartPage){
@@ -4175,6 +4449,28 @@ EPS_UINT8       array4[4] = {0, 0, 0, 0};   /* Temporary Buffer for 4 byte Big E
 
 
 /*======================================================================================*/
+/*** Set up ESC/PR "Print Num" Command                                                  */
+/*======================================================================================*/
+static void    MakePageNumCmd (
+
+        EPS_UINT8*		pBuf
+
+){
+EPS_UINT8       array2[2] = {0, 0};         /* Temporary Buffer for 2 byte Big Endian   */
+	EPS_LOG_FUNCIN;
+
+	/*** Skip Header                                                                    */
+    pBuf += ESCPR_HEADER_LENGTH;
+
+	/*** Set Attributes/Values                                                          */
+	memSetEndian(EPS_ENDIAN_BIG, EPS_2_BYTES, (EPS_INT32)printJob.attr.pageNum, array2);
+	memcpy(pBuf, array2, sizeof(array2));
+
+	EPS_RETURN_VOID;
+}
+
+
+/*======================================================================================*/
 /*** Set up ESC/PR "APF setting" Command                                                */
 /*======================================================================================*/
 static void    MakeAPFCmd (
@@ -4214,71 +4510,80 @@ EPS_UINT8       array4[4] = {0, 0, 0, 0};   /* Temporary Buffer for 4 byte Big E
 	/*** Skip Header                                                                    */
     pBuf += ESCPR_HEADER_LENGTH;
 
-	if( EPS_CP_JPEG != printJob.attr.colorPlane ){	/* RGB  */
-		/*EPS_DBGPRINT(("(%d, %d) / (%d, %d) / (%d, %d)\n",
-			 printJob.paperWidth, printJob.paperHeight,
-			 printJob.topMargin, printJob.leftMargin,
-			 printJob.printableAreaWidth, printJob.printableAreaHeight))*/
-		/*** Set Attributes/Values                                                      */
-		memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, (EPS_UINT32)printJob.paperWidth, array4);
-		memcpy(pBuf, array4, sizeof(array4));
-		pBuf += sizeof(array4);
-		memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, (EPS_UINT32)printJob.paperHeight, array4);
-		memcpy(pBuf, array4, sizeof(array4));
-		pBuf += sizeof(array4);
-		memSetEndian(EPS_ENDIAN_BIG, EPS_2_BYTES, (EPS_UINT32)printJob.topMargin, array2);
-		memcpy(pBuf, array2, sizeof(array2));
-		pBuf += sizeof(array2);
-		memSetEndian(EPS_ENDIAN_BIG, EPS_2_BYTES, (EPS_UINT32)printJob.leftMargin, array2);
-		memcpy(pBuf, array2, sizeof(array2));
-		pBuf += sizeof(array2);
-		memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, printJob.printableAreaWidth, array4);
-		memcpy(pBuf, array4, sizeof(array4));
-		pBuf += sizeof(array4);
-		memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, printJob.printableAreaHeight, array4);
-		memcpy(pBuf, array4, sizeof(array4));
-		pBuf += sizeof(array4);
-		switch( printJob.attr.inputResolution ){
-		case EPS_IR_720X720:
+	/*EPS_DBGPRINT(("(%d, %d) / (%d, %d) / (%d, %d)\n",
+		 printJob.paperWidth, printJob.paperHeight,
+		 printJob.topMargin, printJob.leftMargin,
+		 printJob.printableAreaWidth, printJob.printableAreaHeight))*/
+	/*** Set Attributes/Values                                                      */
+	memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, (EPS_UINT32)printJob.paperWidth, array4);
+	memcpy(pBuf, array4, sizeof(array4));
+	pBuf += sizeof(array4);
+	memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, (EPS_UINT32)printJob.paperHeight, array4);
+	memcpy(pBuf, array4, sizeof(array4));
+	pBuf += sizeof(array4);
+	memSetEndian(EPS_ENDIAN_BIG, EPS_2_BYTES, (EPS_UINT32)printJob.topMargin, array2);
+	memcpy(pBuf, array2, sizeof(array2));
+	pBuf += sizeof(array2);
+	memSetEndian(EPS_ENDIAN_BIG, EPS_2_BYTES, (EPS_UINT32)printJob.leftMargin, array2);
+	memcpy(pBuf, array2, sizeof(array2));
+	pBuf += sizeof(array2);
+	memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, printJob.printableAreaWidth, array4);
+	memcpy(pBuf, array4, sizeof(array4));
+	pBuf += sizeof(array4);
+	memSetEndian(EPS_ENDIAN_BIG, EPS_4_BYTES, printJob.printableAreaHeight, array4);
+	memcpy(pBuf, array4, sizeof(array4));
+	pBuf += sizeof(array4);
+	switch( printJob.attr.inputResolution ){
+	case EPS_IR_720X720:
+		*pBuf++ = 0x01;
+		break;
+	case EPS_IR_300X300:
+		*pBuf++ = 0x02;
+		break;
+	case EPS_IR_600X600:
+		*pBuf++ = 0x03;
+		break;
+	case EPS_IR_360X360:
+	default:
+		*pBuf++ = 0x00;
+		break;
+	}
+	*pBuf   = printJob.attr.printDirection;
+	EPS_RETURN_VOID;
+}
+
+static void    MakeSizeCmd (
+
+        EPS_UINT8*		pBuf
+
+){
+	EPS_LOG_FUNCIN;
+
+	/*** Skip Header                                                                    */
+    pBuf += ESCPR_HEADER_LENGTH;
+
+	/*** Set Attributes/Values                                                      */
+	*pBuf++ = (EPS_UINT8)printJob.attr.mediaSizeIdx;
+	if( EPS_IS_CDDVD( printJob.attr.mediaTypeIdx ) ){
+		*pBuf++ = 0x0A;
+	} else{
+		switch( printJob.attr.printLayout ){
+		case EPS_MLID_BORDERLESS:
 			*pBuf++ = 0x01;
 			break;
-		case EPS_IR_300X300:
-			*pBuf++ = 0x02;
-			break;
-		case EPS_IR_600X600:
-			*pBuf++ = 0x03;
-			break;
-		case EPS_IR_360X360:
-		default:
-			*pBuf++ = 0x00;
-			break;
-		}
-		*pBuf   = printJob.attr.printDirection;
-
-	} else{												/* JPEG  */
-		/*** Set Attributes/Values                                                      */
-		*pBuf++ = (EPS_UINT8)printJob.attr.mediaSizeIdx;
-		if( EPS_IS_CDDVD( printJob.attr.mediaTypeIdx ) ){
+		case EPS_MLID_CDLABEL:
 			*pBuf++ = 0x0A;
-		} else{
-			switch( printJob.attr.printLayout ){
-			case EPS_MLID_BORDERLESS:
-				*pBuf++ = 0x01;
-				break;
-			case EPS_MLID_CDLABEL:
-				*pBuf++ = 0x0A;
-				break;
-			case EPS_MLID_DIVIDE16:
-				*pBuf++ = 0x90;
-				break;
-			default: /* FIXED, CUSTOM */
-				*pBuf++ = 0x00;
-			}
+			break;
+		case EPS_MLID_DIVIDE16:
+			*pBuf++ = 0x90;
+			break;
+		default: /* FIXED, CUSTOM */
+			*pBuf++ = 0x00;
 		}
-		*pBuf++ = printJob.attr.cdDimIn;
-		*pBuf++ = printJob.attr.cdDimOut;
-		*pBuf   = printJob.attr.printDirection;
 	}
+	*pBuf++ = printJob.attr.cdDimIn;
+	*pBuf++ = printJob.attr.cdDimOut;
+	*pBuf   = printJob.attr.printDirection;
 
 	EPS_RETURN_VOID;
 }
@@ -4411,8 +4716,10 @@ EPS_ERR_CODE  SendCommand (
 		putc(*(Buffer + i), outfp);
 	}
 	*pSize = BuffLen;
+
 	return EPS_ERR_NONE;
 #endif	
+
 /*** Declare Variable Local to Routine                                                  */
     EPS_ERR_CODE  Ret = EPS_ERR_NONE;
     EPS_INT32  retStatus;
@@ -4464,7 +4771,7 @@ EPS_ERR_CODE  SendCommand (
 			if(gStatusCount == EPS_ROOP_NUM){
 				gStatusCount = 0;
 				if ((Ret = MonitorStatus(NULL) ) != EPS_ERR_NONE){
-					EPS_DBGPRINT(("MonitorStatus=%d\n", Ret));
+					/*EPS_DBGPRINT(("MonitorStatus=%d\n", Ret));*/
 
 					if(Ret == EPS_JOB_CANCELED){
 						EPS_RETURN( Ret );
@@ -4494,7 +4801,7 @@ EPS_ERR_CODE  SendCommand (
 					printJob.resetReq = TRUE;
 					EPS_RETURN( Ret );
 				} else if (Ret != EPS_COM_TINEOUT){
-					EPS_DBGPRINT(("PRINT--> Print Failed [%d]\r\n",Ret));
+					/*EPS_DBGPRINT(("PRINT--> Print Failed [%d]\r\n",Ret));*/
 					EPS_RETURN( EPS_ERR_COMM_ERROR );
 				} else if(sendSize > sentSize){
 					Buffer  += sentSize;
@@ -4605,7 +4912,6 @@ static void     AdjustBasePoint (
     
     printJob.offset_x = 0;
     printJob.offset_y = 0;
-    
 
 /*** Adjust the base point for custum border printing mode                              */
 /*** (In case that left margin = 42 and top margin = 42 are NOT inputed)                */
@@ -4677,7 +4983,9 @@ static EPS_ERR_CODE     PrintLine (
 ){
     EPS_RECT        AdjBandRec;     /* Rectangle after BasePointAdjustment              */
     EPS_BANDBMP     InBmp;          /* Input band data                                  */
+
 	EPS_LOG_FUNCIN;
+
     /* Initialize input image structure */
     InBmp.bits       = line->data;
     InBmp.widthBytes = line->bytesPerLine;
@@ -4687,7 +4995,7 @@ static EPS_ERR_CODE     PrintLine (
     AdjBandRec.left   = line->rect.left   + printJob.offset_x;
     AdjBandRec.bottom = line->rect.bottom + printJob.offset_y;
     AdjBandRec.right  = line->rect.right  + printJob.offset_x;
-    
+
     /* band is not visible */
     if ((EPS_UINT32)AdjBandRec.bottom > printJob.printableAreaHeight){
         EPS_RETURN( EPS_ERR_NONE );
@@ -4771,7 +5079,6 @@ static EPS_ERR_CODE     SendLine (
     sdBuf    = sendDataBuf;
     compData = tmpLineBuf;
 
-
 /*    EPS_DBGPRINT(("MakeOneRasterData: T,B,L,R [%d,%d,%d,%d]\r\n", 
             pBandRec->top, pBandRec->bottom, pBandRec->left, pBandRec->right));
 */
@@ -4800,18 +5107,12 @@ static EPS_ERR_CODE     SendLine (
 	}
 
 	/*** RunLength Encode */
-	
 	compDataSize = RunLengthEncode(srcAddr,
                             compData,
                             linePixelSize,
                             printJob.bpp,
                             &compFlag);
 
-	//compFlag = EPS_RLE_COMPRESS_NOT_DONE;
-	if(compDataSize < 0){
-		//return compDataSize;
-	}
-	
 	/* Set Parameter Length */
     paramSize = (EPS_UINT32)(ESCPR_SEND_DATA_LENGTH + compDataSize);
     cmdSize   = ESCPR_HEADER_LENGTH + paramSize;
@@ -4822,7 +5123,7 @@ static EPS_ERR_CODE     SendLine (
     /* Header */
     memcpy(sdBuf, SendDataCmd, sizeof(SendDataCmd));
     cpyCount += sizeof(SendDataCmd);
-
+    
     /* Parameter Length */
     memSetEndian(EPS_ENDIAN_LITTLE, EPS_4_BYTES, (EPS_UINT32)paramSize, array4);
     memcpy(sdBuf + cpyCount, array4, sizeof(array4));
@@ -4831,7 +5132,7 @@ static EPS_ERR_CODE     SendLine (
     /* Command Name */
     memcpy(sdBuf + cpyCount, SendDataName, sizeof(SendDataName));
     cpyCount += sizeof(SendDataName);
-
+    
     /* lXoffset */
     memSetEndian(EPS_ENDIAN_BIG, EPS_2_BYTES, (EPS_UINT32)pBandRec->left, array2);
     memcpy((sdBuf + cpyCount), array2, sizeof(array2));
@@ -4854,7 +5155,7 @@ static EPS_ERR_CODE     SendLine (
     memSetEndian(EPS_ENDIAN_BIG, EPS_2_BYTES, (EPS_UINT32)compDataSize, array2);
     memcpy((sdBuf + cpyCount), array2, sizeof(array2));
     cpyCount += sizeof(array2);
-
+    
     /* RGB Raster Data */
     memcpy((sdBuf + cpyCount), compData, compDataSize);
     cpyCount += compDataSize;
@@ -4862,7 +5163,6 @@ static EPS_ERR_CODE     SendLine (
     if (cmdSize != cpyCount) {
         EPS_RETURN( EPS_ERR_OPR_FAIL );
     }
-    
     
     /* Send Print Quality Command to Printer */
 /*** -----------------------------------------------------*/
@@ -4922,6 +5222,7 @@ static EPS_ERR_CODE     SendLine (
 #endif /*  ESCPR_DEBUG_IMAGE_LOG */
 
     retBufSize = 0;
+
     retStatus = SendCommand(sdBuf, cmdSize, &retBufSize, TRUE);
     if (!((retStatus == EPS_ERR_NONE) && (cmdSize == retBufSize))) {
         EPS_RETURN( retStatus );
@@ -4974,7 +5275,7 @@ static EPS_UINT16    RunLengthEncode (
 	EPS_BOOL     bCompress   = TRUE;
 
 	EPS_LOG_FUNCIN;
-int i_index = 0;
+
     while (srcCnt < pixel) {
         /* In case of replay data                                                       */
         if ((srcCnt + 1 < pixel) && (!memcmp(pSrcPos, pSrcPos + bpp, bpp))) {
@@ -4984,7 +5285,7 @@ int i_index = 0;
                    (!memcmp(pSrcPos + (repCnt - 1) * bpp, pSrcPos + repCnt * bpp, bpp))    ) {
                 repCnt++;
             }
-		
+
             /* Renewal compressed data size counter */
             retCnt += 1 + bpp;
 
@@ -4998,28 +5299,19 @@ int i_index = 0;
 
 			/* Set replay count and data                                                */
             /* Set data counter                     */
-             if(pDstPos == NULL || (pDstPos+1) == NULL || (pDstPos + bpp) == NULL || pSrcPos == NULL ||( pSrcPos + bpp * repCnt) == NULL){
-            	return i_index * (-1);
-            }
             *pDstPos++ = (EPS_UINT8)(0xFF - repCnt + 2 );
-            
+
             /* Set data                             */
             memcpy(pDstPos, pSrcPos, bpp);
 
             /* Renewal data size counter            */
             srcCnt += repCnt;
-            i_index += bpp * repCnt;
 
             /* Renewal original data address        */
-            if((pSrcPos + bpp * repCnt) == NULL){
-            	return i_index * (-1);
-            }
             pSrcPos += bpp * repCnt;
 
             /* Renewal compressed data address      */
             pDstPos += bpp;
-
-
         }
 
         /* In case of non replay data                                                   */
@@ -5046,19 +5338,14 @@ int i_index = 0;
 			}
 
 			/* Set data counter                     */
-			if(pDstPos == NULL || (pDstPos +1) == NULL){
-				return i_index *(-1);
-			}
             *pDstPos++ = (EPS_UINT8)(repCnt - 1);
+
             /* Renewal data size counter            */
 
             /* Size of non replay data (byte)       */
             srcCnt  += repCnt;
             copySize = (EPS_UINT32)(repCnt * bpp);
-		if(pDstPos == NULL || (pDstPos +1) == NULL || (pDstPos + copySize) == NULL || (pSrcPos + copySize) == NULL || pSrcPos == NULL){
-            			return i_index * (-1);
-            		}
-            		
+
             /* Set data                             */
             memcpy(pDstPos, pSrcPos, copySize);
 
@@ -5067,7 +5354,6 @@ int i_index = 0;
 
             /* Renewal compressed data address      */
             pDstPos += copySize;
-            i_index += copySize;
         }
     }
 
@@ -5083,244 +5369,92 @@ int i_index = 0;
 }
 
 
+
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:   CreateMediaInfo()                                                   */
+/* Function name:   GetSupportedMedia()                                                 */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
-/* Name:            Type:               Description:									*/
-/* innerPrinter     EPS_PRINTER_INN*    I: printer that it has original structure		*/
-/* pmString			EPS_INT8*			I: PM reply string								*/
-/* pmSize			EPS_INT32			I: size of PM reply string						*/
+/* Name:            Type:                   Description:                                */
+/* innerPrinter     EPS_PRINTER_INN*        I: Pointer to a PrinterInfo                 */
 /*                                                                                      */
 /* Return value:                                                                        */
+/*      << Normal >>                                                                    */
 /*      EPS_ERR_NONE                    - Success                                       */
+/*      << Error >>                                                                     */
+/*      EPS_ERR_COMM_ERROR              - Communication Error                           */
+/*      EPS_ERR_NOT_OPEN_IO             - Cannot Open I/O Portal                        */
+/*      EPS_ERR_NOT_CLOSE_IO            - Cannot Close I/O Portal                       */
+/*      EPS_ERR_PROTOCOL_NOT_SUPPORTED  - Unsupported function Error                    */
 /*      EPS_ERR_OPR_FAIL                - Internal Error                                */
-/*      EPS_ERR_MEMORY_ALLOCATION       - Alloc memory failed                           */
+/*      EPS_ERR_MEMORY_ALLOCATION       - Failed to allocate memory                     */
 /*                                                                                      */
 /* Description:                                                                         */
-/*      Marge paper source to EPS_SUPPORTED_MEDIA.                                      */
+/*      Get supported media information from printer and save those data in             */
+/*      "supportedMedia" structure.                                                     */
 /*                                                                                      */
 /*******************************************|********************************************/
-EPS_ERR_CODE    CreateMediaInfo(
-	
-		EPS_PRINTER_INN*	innerPrinter,
-		EPS_UINT8*			pmString,
-		EPS_INT32			pmSize
-	
+EPS_ERR_CODE     GetSupportedMedia (
+
+        EPS_PRINTER_INN* innerPrinter
+
 ){
-	EPS_ERR_CODE	retStatus = EPS_ERR_NONE;
-    EPS_UINT8*      cmdField;                   /* Pointer of pm command field          */
-    EPS_INT32       pmIdx;                      /* pm string index                      */
-    EPS_UINT32      idx;                        /* Index                                */
-    EPS_INT32       sIdx = 0;                   /* Media size index                     */
-    EPS_INT32       tIdx = 0;                   /* Media type index                     */
-    EPS_INT32       num_mType = 0;              /* Media type number                    */
-    EPS_INT32       num_mSize = 0;              /* Media size number                    */
-	EPS_BOOL		extPaper = FALSE;			/* extend paper source is exist         */
+/*** Declare Variable Local to Routine                                                  */
+    EPS_ERR_CODE    retStatus;                  /* Return status of internal calls      */
+    EPS_UINT8*      pmString = NULL;            /* Retrieved PM data from printer       */
+    EPS_INT32       pmSize = 0;
+	EPS_BOOL		paperSourceInfo = FALSE;
 
 	EPS_LOG_FUNCIN;
 
-	/*** Is this really "PM" data                                                       */
-	cmdField = (EPS_UINT8*)strstr((const char*)pmString,"PM");
-	if (cmdField == NULL ) {
-		EPS_DBGPRINT(("Get Model Info faild : ModelInfo = [%s]\r\n",pmString));
-		EPS_RETURN( EPS_ERR_OPR_FAIL );
-	}
-EPS_DUMP(pmString, 256);
+/*** Initialize Local Variables                                                         */
+    retStatus = EPS_ERR_NONE;
 
-#if _VALIDATE_SUPPORTED_MEDIA_DATA_
-	if(innerPrinter->supportedMedia.numSizes != -1){
-		/*** "Filter" Raw "PM" data (Remake the correct pm stirng)                      */
-		retStatus = _SP_ChangeSpec_UpdatePMReply(innerPrinter, pmString, pmSize);
-		if (retStatus != EPS_ERR_NONE) {
-			EPS_RETURN( retStatus );
-		}
+	if( !EPS_IS_BI_PROTOCOL(innerPrinter->protocol) ){
+        EPS_RETURN( EPS_ERR_NEED_BIDIRECT );
 	}
+
+	/* Clear the prev value                                                             */
+	prtClearPrinterAttribute(innerPrinter);
+
+	/*** ESC/Page divergence ***/
+	if(EPS_LANG_ESCPR != innerPrinter->language ){
+		/*** Get PM from Printer                                                        */
+		retStatus = prtGetInfo(innerPrinter, EPS_CBTCOM_PM, &pmString, &pmSize);
+
+#ifdef GCOMSW_CMD_ESCPAGE
+		if( EPS_ERR_NONE == retStatus ) {
+			/*** Create Media Infomation                                                */
+			retStatus = pageCreateMediaInfo(innerPrinter, pmString, pmSize);
+		}
 #else
-/*** "Filter" Raw "PM" data (Remake the correct pm stirng)                              */
-    retStatus = _SP_ChangeSpec_UpdatePMReply(innerPrinter, pmString, pmSize);
-    if (retStatus != EPS_ERR_NONE) {
-        EPS_RETURN( EPS_ERR_OPR_FAIL );  /* Invalid format */
-    }
+		retStatus = EPS_ERR_LANGUAGE_NOT_SUPPORTED;
 #endif
 
-/*** Create the structure of the support media                                          */
-	innerPrinter->supportedMedia.resolution = EPS_IR_360X360;	/* default support */
-
-    /*** Count "Paper Size" field  & check format */
-	pmIdx = EPS_PM_HEADER_LEN;				/* skip the command header of pm string     */
-    while( pmIdx < EPS_PM_MAXSIZE ) {
-        switch(pmString[pmIdx]) {
-		case 'R':
-			if( 720 == ((pmString[pmIdx+1] << 8) + pmString[pmIdx+2]) ){
-				innerPrinter->supportedMedia.resolution |= EPS_IR_720X720;
-			} else if( 600 == ((pmString[pmIdx+1] << 8) + pmString[pmIdx+2]) ){
-				innerPrinter->supportedMedia.resolution |= EPS_IR_300X300 | EPS_IR_600X600;
-			} else if( 300 == ((pmString[pmIdx+1] << 8) + pmString[pmIdx+2]) ){
-				innerPrinter->supportedMedia.resolution |= EPS_IR_300X300;
-			}
-			pmIdx += 6;
-			break;
-
-		case 'M':
-			innerPrinter->supportedMedia.JpegSizeLimit = 
-				(pmString[pmIdx+1] << 24) + (pmString[pmIdx+2] << 16) + (pmString[pmIdx+3] << 8) + pmString[pmIdx+4]; 
-			innerPrinter->JpgMax = innerPrinter->supportedMedia.JpegSizeLimit;
-			pmIdx += 6;
-			break;
-
-		case 'S':
-			/* move T field */
-			if(pmIdx < EPS_PM_MAXSIZE-2){
-				pmIdx += 2;
-			} else{
-				EPS_RETURN( EPS_ERR_OPR_FAIL );
-			}
-
-			num_mSize++;
-
-			for(; pmIdx < EPS_PM_MAXSIZE-4; pmIdx += 4) {	/* 4 = T x x / */
-				if(pmString[pmIdx] == '/'){
-					pmIdx += 1;
-					break;
-				} else if(pmString[pmIdx] != 'T') {
-					EPS_RETURN( EPS_ERR_OPR_FAIL );
+	} else {
+		/*** Get PM from Printer                                                        */
+		retStatus = prtGetInfo(innerPrinter, EPS_CBTCOM_PM3, &pmString, &pmSize);
+		if ( EPS_ERR_NONE == retStatus ){
+			retStatus = epspmCreateMediaInfo3(innerPrinter, pmString, pmSize);
+		} else if(EPS_ERR_PRINTER_NOT_SUPPORTED == retStatus){
+			retStatus = prtGetInfo(innerPrinter, EPS_CBTCOM_PM, &pmString, &pmSize);
+			if ( EPS_ERR_NONE == retStatus ){
+				/*** Create Media Infomation                                            */
+				retStatus = epspmCreateMediaInfo(innerPrinter, pmString, pmSize, &paperSourceInfo);
+				if( EPS_ERR_NONE == retStatus && TRUE == paperSourceInfo ){
+					retStatus = GetPaperSource(innerPrinter);
 				}
 			}
-			if(pmIdx >= EPS_PM_MAXSIZE-4){
-				EPS_RETURN( EPS_ERR_OPR_FAIL );
-			}
-			break;
-
-		default:
-			EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
 		}
-
-		/* If we run into an occurrence of carriage return followed by line feed,
-		 * we have found the terminating characters of the string. */
-		if(pmString[pmIdx] == 0x0D && pmString[pmIdx+1] == 0x0A) {
-			break;
-		}
-	}                      
-	if(pmIdx >= EPS_PM_MAXSIZE){
-		EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
-	}
-    
-    /* Allocate memory for the media size list. */
-    innerPrinter->supportedMedia.sizeList =
-            (EPS_MEDIA_SIZE*)EPS_ALLOC( sizeof(EPS_MEDIA_SIZE) * num_mSize );   
-    if( innerPrinter->supportedMedia.sizeList == NULL ){
-        EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION );
-    }
-	memset(innerPrinter->supportedMedia.sizeList, 0, sizeof(EPS_MEDIA_SIZE) * num_mSize);
-    innerPrinter->supportedMedia.numSizes = num_mSize;
-    
-	pmIdx = EPS_PM_HEADER_LEN;				/* skip the command header of pm string     */
-    for(sIdx = 0; sIdx < num_mSize; sIdx++) {
-		if(pmString[pmIdx] == 'M' || pmString[pmIdx] == 'R') {
-			pmIdx += 6;
-			sIdx--;
-			continue;
-		}
-
-        innerPrinter->supportedMedia.sizeList[sIdx].mediaSizeID = pmString[pmIdx+1];
-/*		EPS_DBGPRINT(("Size=%d\r\n", pmString[pmIdx+1]));*/
-		pmIdx += 2;
-
-        /* For the given paper type, iterate through the paper type to get the number
-         * of media types contained in it */
-        num_mType = 0;
-		for(idx = pmIdx; idx < EPS_PM_MAXSIZE-4; idx += 4) {
-			if(pmString[idx] == '/'){
-				idx += 1;
-				break;
-			}
-			num_mType++;
-		}
-
-        /* Allocate memory for the media type array. */
-        innerPrinter->supportedMedia.sizeList[sIdx].typeList = 
-            (EPS_MEDIA_TYPE*)EPS_ALLOC( sizeof(EPS_MEDIA_TYPE) * num_mType );
-        
-        if (innerPrinter->supportedMedia.sizeList[sIdx].typeList == NULL) {
-            EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION );
-        }
-        
-		memset(innerPrinter->supportedMedia.sizeList[sIdx].typeList, 0, sizeof(EPS_MEDIA_TYPE) * num_mType);
-        innerPrinter->supportedMedia.sizeList[sIdx].numTypes = num_mType;
-
-		for(tIdx = 0; tIdx < num_mType; tIdx++) {
-            innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].mediaTypeID       = pmString[pmIdx+1];
-/*            EPS_DBGPRINT(("\tType=%d (%02X)\r\n", pmString[pmIdx+1], pmString[pmIdx+2]));*/
-                               
-            /* Bitwise OR with 10000000 - Check for borderless */
-            if( pmString[pmIdx+2] & 0x80 ){
-                innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].layout |= EPS_MLID_BORDERLESS;
-            }
-            /* Bitwise OR with 01000000 - Check for border "disable" mode */
-            if( !(pmString[pmIdx+2] & 0x40) ){
-				innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].layout |= EPS_MLID_BORDERS;
-            }
-
-            /* set quality */
-            innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].quality |= (pmString[pmIdx+2] & EPS_MQID_ALL);
-
-			/* set duplex */
-            if( pmString[pmIdx+2] & 0x10 &&
-				obsEnableDuplex(innerPrinter->supportedMedia.sizeList[sIdx].mediaSizeID) ){
-				innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].duplex = EPS_DUPLEX_ENABLE;/*EPS_DUPLEX_SHORT*/;
-			} else{
-				innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].duplex = EPS_DUPLEX_DISABLE;
-			}
-
-			/* Bitwise OR with 00001000 - Check for extend paper source */
-#if _VALIDATE_SUPPORTED_MEDIA_DATA_
-            if( pmString[pmIdx+2] & 0x08 ){
-                extPaper = TRUE;
-			} else {
-				/* DEFAULT. All printer support rear paper source */
-				innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].paperSource = EPS_MPID_REAR;
-			}
-
-			/* param2 value check */
-			if( !(pmString[pmIdx+2] & (0x01 | 0x02 | 0x04)) ){
-				printf("\n\n!!!!!!!!!  Quality is not described. !!!!!!!!!\n"
-						"SizeID=0x%02X / TypeID=0x%02X / param2=0x%02X\n", 
-						innerPrinter->supportedMedia.sizeList[sIdx].mediaSizeID,
-						pmString[pmIdx+1], pmString[pmIdx+2]);
-			} 
-			if( !(pmString[pmIdx+2] & 0x80) && (pmString[pmIdx+2] & 0x40) ){
-				printf("\n\n!!!!!!!!!  Layout is not described. !!!!!!!!!\n"
-						"SizeID=0x%02X / TypeID=0x%02X / param2=0x%02X\n", 
-						innerPrinter->supportedMedia.sizeList[sIdx].mediaSizeID,
-						pmString[pmIdx+1], pmString[pmIdx+2]);
-			}
-
-#else
-            if( pmString[pmIdx+2] & 0x08 ){
-                extPaper = TRUE;
-			}
-			/* DEFAULT. All printer support rear paper source */
-			innerPrinter->supportedMedia.sizeList[sIdx].typeList[tIdx].paperSource = EPS_MPID_REAR;
-#endif
-			pmIdx += 4;	/* move next field */
-		}
-		pmIdx += 1;	/* skip terminater */
-	}
-
-/*** Add extend infomation                                                              */
-	if( EPS_ERR_NONE == retStatus && TRUE == extPaper ){
-		retStatus = GetPaperSource(innerPrinter);
 		if( EPS_ERR_NONE != retStatus){
-			prtClearSupportedMedia(innerPrinter);
+			prtClearPrinterAttribute(innerPrinter);
 		}
 	}
+	EPS_SAFE_RELEASE(pmString);
 
-	serAppendMedia(&innerPrinter->supportedMedia);
-
-	EPS_RETURN( retStatus );
+/*** Return to Caller                                                                   */
+    EPS_RETURN( retStatus );
 }
 
 
@@ -5347,223 +5481,22 @@ EPS_ERR_CODE    GetPaperSource(
 	
 ){
 	EPS_ERR_CODE	ret = EPS_ERR_NONE;
-    EPS_UINT8       pmString[EPS_PM_MAXSIZE];   /* Retrieved PM data from printer       */
-    EPS_INT32       pmSize = EPS_PM_MAXSIZE;
-    EPS_UINT32      pmIdx;                      /* pm string index                      */
-    EPS_INT32       sIdx = 0;                   /* Media size index                     */
-    EPS_INT32       tIdx = 0;                   /* Media type index                     */
-	EPS_MEDIA_SIZE  *pMSize = NULL;
+    EPS_UINT8*      pmString = NULL;            /* Retrieved PM data from printer       */
+    EPS_INT32       pmSize = 0;
 
 	EPS_LOG_FUNCIN;
 
-	/* Clear the Printer Model Information (Media data or "PM" data)                    */
-    memset(pmString, 0, EPS_PM_MAXSIZE);
-
 /*** Get PM2 from Printer                                                               */
-	ret = prtGetPMString(innerPrinter, 2, pmString, &pmSize);
+	ret = prtGetInfo(innerPrinter, EPS_CBTCOM_PM2, &pmString, &pmSize);
 	if(ret == EPS_ERR_PROTOCOL_NOT_SUPPORTED){
 		EPS_RETURN( EPS_ERR_NONE );
 	} else if(ret != EPS_ERR_NONE){
 		EPS_RETURN( ret );
 	}
 
-	/*** Is this really "PM" data                                                       */
-	if( strstr((const char*)pmString, "PM") == NULL ) {
-		EPS_DBGPRINT(("Get Model Info faild : ModelInfo = [%s]\r\n", pmString));
-		EPS_RETURN( EPS_ERR_OPR_FAIL );
-	}
+	ret = epspmMargePaperSource(innerPrinter, pmString, pmSize);
 
-	/* Delete the command header of pm string                                           */
-	pmIdx = EPS_PM_HEADER_LEN;				/* skip the command header of pm string     */
-
-/*** Check to make sure the PM reply has a valid beginning                              */
-    if(pmString[pmIdx] != 'S' && pmString[pmIdx+2] != 'T') {
-        EPS_RETURN( EPS_ERR_OPR_FAIL );
-    }
-    
-/*** Create the structure of the support media                                          */
-    /*** Count "Paper Size" field  & check format */
-    for(; pmIdx < EPS_PM_MAXSIZE-7; ) {		/* 7 = S x T x x // */
-        if(pmString[pmIdx] != 'S') {
-			EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
-		}
-		
-		/* search size ID */
-		pmIdx++;
-		pMSize = NULL;
-	    for(sIdx = 0; sIdx < innerPrinter->supportedMedia.numSizes; sIdx++){
-			if(pmString[pmIdx] == innerPrinter->supportedMedia.sizeList[sIdx].mediaSizeID){
-				pMSize = &innerPrinter->supportedMedia.sizeList[sIdx];
-/*				EPS_DBGPRINT(("Size = %d\n", innerPrinter->supportedMedia.sizeList[sIdx].mediaSizeID))*/
-				break;
-			}
-		}
-
-		pmIdx++;	/* move next field */
-
-		while( pmIdx < EPS_PM_MAXSIZE-4 ){	/* 4 = T x x / */
-			if(pmString[pmIdx] == 'T'){
-				if(NULL != pMSize){
-					/* search type ID */
-					pmIdx++;
-					for(tIdx = 0; tIdx < pMSize->numTypes; tIdx++){
-						if(pmString[pmIdx] == pMSize->typeList[tIdx].mediaTypeID){
-							pMSize->typeList[tIdx].paperSource = pmString[pmIdx+1];
-#if !_VALIDATE_SUPPORTED_MEDIA_DATA_
-							pMSize->typeList[tIdx].paperSource &= EPS_MPID_ALL_ESCPR;
-#endif
-							pmIdx += 3;
-							break;
-						}
-					}
-					if(tIdx >= pMSize->numTypes){
-						/* Skip unknown T */
-#if _VALIDATE_SUPPORTED_MEDIA_DATA_
-						printf("\n\n!!!!!!!!! pm2 contains TypeID(0x%02X) that doesn't exist in pm1.  !!!!!!!!!\n", pmString[pmIdx]);
-#endif
-						pmIdx += 3;
-					}
-				} else{
-					/* Skip unknown S */
-#if _VALIDATE_SUPPORTED_MEDIA_DATA_
-						printf("\n\n!!!!!!!!! pm2 contains SizeID(0x%02X) that doesn't exist in pm1.  !!!!!!!!!\n", pmString[pmIdx]);
-#endif
-					pmIdx += 4;
-				}
-			} else if(pmString[pmIdx] == '/') {
-				pmIdx++;
-				break;
-			} else{
-				EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
-			}
-		}
-		if(pmIdx >= EPS_PM_MAXSIZE-4){
-			EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
-		}
-		
-		/* If we run into an occurrence of carriage return followed by line feed,
-		 * we have found the terminating characters of the string. */
-		if(pmString[pmIdx] == 0x0D && pmString[pmIdx+1] == 0x0A) {
-			break;
-		}
-	}                      
-	if(pmIdx >= EPS_PM_MAXSIZE){
-		EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
-	}
-
-	EPS_RETURN( ret );
-}
-
-
-/*******************************************|********************************************/
-/*                                                                                      */
-/* Function name:   GetJpgMax()                                                         */
-/*                                                                                      */
-/* Arguments                                                                            */
-/* ---------                                                                            */
-/* Name:            Type:                  Description:                                 */
-/* innerPrinter     EPS_PRINTER_INN*       IO: printer that it has original structure   */
-/*                                                                                      */
-/* Return value:                                                                        */
-/*      EPS_ERR_NONE                    - Success                                       */
-/*      EPS_ERR_OPR_FAIL                - Internal Error                                */
-/*                                                                                      */
-/* Description:                                                                         */
-/*      Marge paper source to EPS_SUPPORTED_MEDIA.                                      */
-/*                                                                                      */
-/*******************************************|********************************************/
-EPS_ERR_CODE    GetJpgMax(
-	
-		EPS_PRINTER_INN*		printer
-	
-){
-	EPS_ERR_CODE	ret = EPS_ERR_NONE;
-    EPS_UINT8       pmString[EPS_PM_MAXSIZE];   /* Retrieved PM data from printer       */
-    EPS_INT32       pmSize = EPS_PM_MAXSIZE;
-    EPS_UINT32      pmIdx;                      /* pm string index                      */
-
-	EPS_LOG_FUNCIN;
-
-	if( !EPS_IS_BI_PROTOCOL(printJob.printer->protocol) ){	/* Uni direction */
-		/* set unlimited(2GB) */
-		printer->JpgMax = EPS_JPEG_SIZE_UNLIMIT;
-		EPS_RETURN( EPS_ERR_NONE )
-	}
-
-	/* Clear the Printer Model Information (Media data or "PM" data)                    */
-    memset(pmString, 0, EPS_PM_MAXSIZE);
-
-/*** Get PM1 from Printer                                                               */
-	ret = prtGetPMString(printer, 1, pmString, &pmSize);
-	if(ret == EPS_ERR_PROTOCOL_NOT_SUPPORTED){
-		/* set unlimited(2GB) */
-		printer->JpgMax = EPS_JPEG_SIZE_UNLIMIT;
-		EPS_RETURN( EPS_ERR_NONE )
-	} else if(ret != EPS_ERR_NONE){
-		EPS_RETURN( ret );
-	}
-
-/*** "Filter" Raw "PM" data (Remake the correct pm stirng)                              */
-    ret = _SP_ChangeSpec_UpdatePMReply(printer, pmString, pmSize);
-    if (ret != EPS_ERR_NONE) {
-        EPS_RETURN( EPS_ERR_OPR_FAIL );  /* Invalid format */
-    }
-
-	/*** Is this really "PM" data                                                       */
-	if( strstr((const char*)pmString, "PM") == NULL ) {
-		EPS_DBGPRINT(("Get Model Info faild : ModelInfo = [%s]\r\n", pmString));
-		EPS_RETURN( EPS_ERR_OPR_FAIL );
-	}
-
-	/* Delete the command header of pm string                                           */
-	pmIdx = EPS_PM_HEADER_LEN;				/* skip the command header of pm string     */
-    while( pmIdx < EPS_PM_MAXSIZE ) {
-        switch(pmString[pmIdx]) {
-		case 'M':
-			printer->JpgMax = 
-				(pmString[pmIdx+1] << 24) + (pmString[pmIdx+2] << 16) + (pmString[pmIdx+3] << 8) + pmString[pmIdx+4]; 
-
-			pmIdx += 6;
-			break;
-
-		case 'R':
-			pmIdx += 6;
-			break;
-
-		case 'S':
-			/* move T field */
-			if(pmIdx < EPS_PM_MAXSIZE-2){
-				pmIdx += 2;
-			} else{
-				EPS_RETURN( EPS_ERR_OPR_FAIL );
-			}
-
-			for(; pmIdx < EPS_PM_MAXSIZE-4; pmIdx += 4) {	/* 4 = T x x / */
-				if(pmString[pmIdx] == '/'){
-					pmIdx += 1;
-					break;
-				} else if(pmString[pmIdx] != 'T') {
-					EPS_RETURN( EPS_ERR_OPR_FAIL );
-				}
-			}
-			if(pmIdx >= EPS_PM_MAXSIZE-4){
-				EPS_RETURN( EPS_ERR_OPR_FAIL );
-			}
-			break;
-
-		default:
-			EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
-		}
-
-		/* If we run into an occurrence of carriage return followed by line feed,
-		 * we have found the terminating characters of the string. */
-		if(pmString[pmIdx] == 0x0D && pmString[pmIdx+1] == 0x0A) {
-			break;
-		}
-	}                      
-	if(pmIdx >= EPS_PM_MAXSIZE || 0 == printer->JpgMax){
-		EPS_RETURN( EPS_ERR_OPR_FAIL ); /* bad format */
-	}
+	EPS_SAFE_RELEASE(pmString);
 
 	EPS_RETURN( ret );
 }
@@ -5594,90 +5527,16 @@ EPS_ERR_CODE    DuplSupportedMedia(
 	
 ){
 	EPS_ERR_CODE	ret = EPS_ERR_NONE;
-    EPS_INT32       idx;
 
 	EPS_LOG_FUNCIN;
 
-	ClearSupportedMedia();
-
-	g_supportedMedia.JpegSizeLimit = innerPrinter->supportedMedia.JpegSizeLimit;
-	g_supportedMedia.resolution = innerPrinter->supportedMedia.resolution;
-    g_supportedMedia.numSizes = innerPrinter->supportedMedia.numSizes;
-    g_supportedMedia.sizeList = (EPS_MEDIA_SIZE*)EPS_ALLOC( sizeof(EPS_MEDIA_SIZE) * innerPrinter->supportedMedia.numSizes );
-	if( g_supportedMedia.sizeList ){
-		for(idx = 0; idx < innerPrinter->supportedMedia.numSizes; idx++) {
-			g_supportedMedia.sizeList[idx].mediaSizeID = innerPrinter->supportedMedia.sizeList[idx].mediaSizeID;
-			g_supportedMedia.sizeList[idx].numTypes    = innerPrinter->supportedMedia.sizeList[idx].numTypes;
-			g_supportedMedia.sizeList[idx].typeList = 
-                    (EPS_MEDIA_TYPE*)EPS_ALLOC( sizeof(EPS_MEDIA_TYPE) * innerPrinter->supportedMedia.sizeList[idx].numTypes );
-			if( g_supportedMedia.sizeList[idx].typeList ){
-				memcpy(g_supportedMedia.sizeList[idx].typeList, 
-						innerPrinter->supportedMedia.sizeList[idx].typeList,
-						sizeof(EPS_MEDIA_TYPE) * innerPrinter->supportedMedia.sizeList[idx].numTypes);
-			} else{
-				ret = EPS_ERR_MEMORY_ALLOCATION;
-				break;
-			}
-		}
-	} else{
-		ret = EPS_ERR_MEMORY_ALLOCATION;
-	}
-
-	if(EPS_ERR_NONE == ret){
-		/* Copy to out param */
-        pMedia->JpegSizeLimit = g_supportedMedia.JpegSizeLimit;
- 		pMedia->resolution = g_supportedMedia.resolution;
-		pMedia->numSizes = g_supportedMedia.numSizes;
-        pMedia->sizeList = g_supportedMedia.sizeList;
-
-	} else{
-		/* If error occur, unwind. */
-		for(idx = 0; idx < g_supportedMedia.numSizes; idx++) {
-			EPS_SAFE_RELEASE(g_supportedMedia.sizeList[idx].typeList);
-		}
-		EPS_SAFE_RELEASE(g_supportedMedia.sizeList);
-		g_supportedMedia.numSizes = 0;
-	}
+	/* Copy to out param */
+    pMedia->JpegSizeLimit =  innerPrinter->supportedMedia.JpegSizeLimit;
+	pMedia->resolution =  innerPrinter->supportedMedia.resolution;
+	pMedia->numSizes =  innerPrinter->supportedMedia.numSizes;
+    pMedia->sizeList =  innerPrinter->supportedMedia.sizeList;
 
 	EPS_RETURN( ret );
-}
-
-
-/*******************************************|********************************************/
-/*                                                                                      */
-/* Function name:     ClearSupportedMedia()                                             */
-/*                                                                                      */
-/* Arguments                                                                            */
-/* ---------                                                                            */
-/* Name:            Type:                   Description:                                */
-/* (none)                                                                               */
-/*                                                                                      */
-/* Return value:                                                                        */
-/*      void                                                                            */
-/*                                                                                      */
-/* Description:                                                                         */
-/*      Crean up inside list of supported media structure.                              */
-/*                                                                                      */
-/*******************************************|********************************************/
-void ClearSupportedMedia(
-							
-	void
-
-){
-    EPS_INT32       idx;
-
-	EPS_LOG_FUNCIN;
-
-	/* Clear "supportedMedia"                                              */
-	if( NULL != g_supportedMedia.sizeList){
-		for(idx = 0; idx < g_supportedMedia.numSizes; idx++) {
-			EPS_SAFE_RELEASE(g_supportedMedia.sizeList[idx].typeList);
-		}
-		EPS_SAFE_RELEASE(g_supportedMedia.sizeList);
-		g_supportedMedia.numSizes = 0;
-	}
-
-	EPS_RETURN_VOID;
 }
 
 /*_______________________________   epson-escpr-api.c   ________________________________*/
