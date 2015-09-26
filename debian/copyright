@@ -1,21 +1,41 @@
-Format: http://anonscm.debian.org/viewvc/dep/web/deps/dep5.mdwn?revision=174
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: epson-inkjet-printer-escpr
-Upstream-Contact: http://avasys.jp/eng/linux_driver/download/lsb/epson-inkjet/escpr/
-Source: http://linux.avasys.jp/drivers/lsb/epson-inkjet/stable/SRPMS/epson-inkjet-printer-escpr-*.src.rpm
+Source: http://download.ebz.epson.net/dsc/search/01/search/
 
-Files: * 
-Copyright: 1996-2008 Free Software Foundation, Inc.
-	   2000-2009 AVASYS CORPORATION.
-	   2000-2011 Seiko Epson Corporation
+Files: *
+Copyright: 2000-2009 AVASYS CORPORATION.
+           2000-2011 Seiko Epson Corporation
+License: GPL-2+
+
+Files: ltmain.sh
+Copyright: 1996-2001, 2003-2011, Free Software Foundation, Inc.
+License: GPL-2+
+
+Files: debian/*
+Copyright: 2011-2015 Didier Raboud <odyx@debian.org>
 License: GPL-2+
 
 Files: install-sh
 Copyright: 1994 X Consortium
 License: Expat
-
-Files: debian/*
-Copyright: 2011 Didier Raboud <odyx@debian.org>
-License: GPL-2+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included
+ in all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 License: GPL-2+
  This program is free software; you can redistribute it
@@ -38,23 +58,3 @@ License: GPL-2+
  On Debian systems, the full text of the GNU General Public
  License version 2 can be found in the file
  `/usr/share/common-licenses/GPL-2'.
-
-License: Expat
- Permission is hereby granted, free of charge, to any person obtaining
- a copy of this software and associated documentation files (the
- "Software"), to deal in the Software without restriction, including
- without limitation the rights to use, copy, modify, merge, publish,
- distribute, sublicense, and/or sell copies of the Software, and to
- permit persons to whom the Software is furnished to do so, subject to
- the following conditions:
- .
- The above copyright notice and this permission notice shall be included
- in all copies or substantial portions of the Software.
- .
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
- CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
- SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
