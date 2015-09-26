@@ -92,6 +92,9 @@ extern EPS_ERR_CODE pageSendLeftovers		(void);
 extern EPS_ERR_CODE pageCreateMediaInfo  	(EPS_PRINTER_INN* printer, EPS_UINT8* pmString,
 											 EPS_INT32 pmSize							);
 extern void			pageClearSupportedMedia	(EPS_PRINTER_INN* printer					);
+extern EPS_ERR_CODE pageGetPrintAreaInfoFromTable(const EPS_JOB_ATTRIB*,
+                                                 EPS_UINT32*, EPS_UINT32*, EPS_LAYOUT_INFO*);
+extern EPS_ERR_CODE pageCreatePrintAreaInfoFromTable (EPS_UINT32,EPS_PRINT_AREA_INFO*   );
 
     /*** Get Printable Area                                                             */
     /*** -------------------------------------------------------------------------------*/

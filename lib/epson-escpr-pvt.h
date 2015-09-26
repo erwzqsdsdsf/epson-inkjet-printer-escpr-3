@@ -32,13 +32,22 @@ extern "C" {
 #include "epson-typedefs.h"
 #include "epson-escpr-def.h"
 
+#ifdef GCOMSW_EXTENTION
+#include "epson-escpr-extention.h"
+#endif
+#ifdef GCOMSW_PRIVATE
+#include "epson-escpr-closed.h"
+#endif
+
 /*------------------------------------- Data Types -------------------------------------*/
 /*******************************************|********************************************/
 typedef void*          EPS_HANDLE;		/* handle                                       */
 
 /*--------------------------------------  Macros   -------------------------------------*/
 /*******************************************|********************************************/
-
+#ifndef EPS_PRV_COMMANDS
+#define EPS_PRV_COMMANDS(p1, p2, p3)
+#endif
 
 /*-----------------------------------  Definitions  ------------------------------------*/
 /*******************************************|********************************************/
@@ -52,7 +61,8 @@ typedef void*          EPS_HANDLE;		/* handle                                   
 
 	/*** Definitions for pm string data                                                 */
     /*** -------------------------------------------------------------------------------*/
-#define EPS_PM_MAXSIZE					512
+#define EPS_PM_MAXSIZE					1024
+#define EPS_PM_BASESIZE					512
 #define EPS_PM_HEADER_LEN               9
 #define EPS_PM2_HEADER_LEN              10
 #define EPS_PM_TERMINATOR_LEN           2
@@ -102,7 +112,9 @@ typedef void*          EPS_HANDLE;		/* handle                                   
 #define EPS_CBTCOM_DI                   15
 #define EPS_CBTCOM_PM2                  16
 #define EPS_CBTCOM_RJ                   17
-
+#define EPS_CBTCOM_CD                   18
+#define EPS_CBTCOM_PM3                  19
+#define EPS_CBTCOM_VI5                  20
 
     /*** CBT Error Code                                                                 */
     /*** -------------------------------------------------------------------------------*/
@@ -173,6 +185,7 @@ typedef struct _tagEPS_STATUS_INFO_ {
     EPS_INT32   nInkError;
     EPS_INT32   nColor[EPS_INK_NUM];
     EPS_INT32   nColorType[EPS_INK_NUM];
+    EPS_INT32   nColorStatus[EPS_INK_NUM];
 } EPS_STATUS_INFO;
 
     /*** Basic Rect Object                                                              */
@@ -207,8 +220,9 @@ typedef struct _tagEPS_BASEPOINT_ {
     /*** "pm" Command Reply Data                                                        */
     /*** -------------------------------------------------------------------------------*/
 typedef struct _tagEPS_PM_DATA_ {
-    EPS_INT32   state;
-    EPS_UINT8   pmString[EPS_PM_MAXSIZE];
+    EPS_INT32   version;
+    EPS_INT32   length;
+    EPS_UINT8*  pmString;
 } EPS_PM_DATA;
 
 
@@ -221,19 +235,21 @@ typedef struct _tagEPS_PRINTER_INN_ {
 	EPS_INT8        modelName[EPS_NAME_BUFFSIZE];         
 	EPS_INT8		friendlyName[EPS_NAME_BUFFSIZE];
 	EPS_INT8        location[EPS_ADDR_BUFFSIZE];
-	/* unused EPS_INT8		serial[EPS_NAME_BUFFSIZE];*/
+	EPS_INT8		serialNo[EPS_ADDR_BUFFSIZE];
 	EPS_INT8		printerID[EPS_PRNID_BUFFSIZE];
 	/* unused EPS_BOOL		needUpgrade; */
 	EPS_HANDLE		protocolInfo;
 	EPS_UINT16	    printPort;
 
 	EPS_UINT32		language;				/* print language */
+	EPS_UINT32		egID;					/* error group id */
 	EPS_INT8        macAddress[EPS_ADDR_BUFFSIZE];
 
 	/*** Supported Media                                                                */
     /*** -------------------------------------------------------------------------------*/
     EPS_SUPPORTED_MEDIA supportedMedia;
     EPS_INT32       JpgMax;
+	EPS_PRINT_AREA_INFO	printAreaInfo;
 
     /*** Original PM reply                                                              */
     /*** -------------------------------------------------------------------------------*/
@@ -306,8 +322,8 @@ typedef struct _tagEPS_PRINT_JOB_ {
     /*** -------------------------------------------------------------------------------*/
     EPS_INT32   topMargin;                  /* Media/Border-Mode Top    Margin          */
     EPS_INT32   leftMargin;                 /* Media/Border-Mode Left   Margin          */
-    EPS_INT32   bottomMargin;               /* Media/Border-Mode Bottom Margin          */
-    EPS_INT32   rightMargin;                /* Media/Border-Mode Right  Margin          */
+    /*EPS_INT32   bottomMargin;                Media/Border-Mode Bottom Margin          */
+    /*EPS_INT32   rightMargin;                 Media/Border-Mode Right  Margin          */
 
     /*** Printable                                                                      */
     /*** -------------------------------------------------------------------------------*/
@@ -344,18 +360,6 @@ typedef struct _tagEPS_PRINT_JOB_ {
 	EPS_BOOL		bComm;
 	EPS_BOOL        transmittable;			/* possible to transmit */
 	EPS_BOOL		bJpgLimit;
-
-#if 0 /* DEL */
-	/*** Additional data                                                                */
-    /*** -------------------------------------------------------------------------------*/
-	EPS_UINT32		additional;
-	struct {								/* QR Code */
-		EPS_INT32   cellNum;
-		EPS_UINT8*	bits;
-		EPS_INT32	dpc;					/* Dots per Cell */
-		EPS_RECT	rc;
-	} qrcode;
-#endif
 
 	/*** Misc                                                                           */
     /*** -------------------------------------------------------------------------------*/

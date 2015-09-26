@@ -36,7 +36,7 @@ extern void			rawSetupSTFunctions	(const EPS_PRINTER_INN*							);
 extern EPS_UINT16	rawGetDefautiPort	(void                                           );
 
 /* Discovery message related Functions */
-extern EPS_ERR_CODE rawFindStart        (EPS_SOCKET*, const EPS_INT8*, EPS_BOOL         );
+extern EPS_ERR_CODE rawFindStart        (EPS_SOCKET*, const EPS_INT8*, EPS_BOOL, const EPS_UINT8*);
 extern EPS_ERR_CODE rawFind             (EPS_SOCKET, EPS_PRINTER_INN**                  );
 extern EPS_ERR_CODE rawFindEnd          (EPS_SOCKET                                     );
 extern EPS_ERR_CODE rawProbePrinterByID (EPS_INT8*, EPS_UINT32, EPS_PRINTER_INN**       );
@@ -53,10 +53,9 @@ extern EPS_ERR_CODE rawMechCommand      (const EPS_PRINTER_INN*, EPS_INT32      
 
 /* Printer status Functions */
 extern EPS_ERR_CODE rawGetStatus        (EPS_STATUS_INFO*, EPS_BOOL*, EPS_BOOL*         );
-extern EPS_ERR_CODE rawGetInkInfo       (EPS_STATUS_INFO*                               );
 extern EPS_ERR_CODE rawGetJobStatus     (EPS_STATUS_INFO*                               );
-extern EPS_ERR_CODE rawGetPMString      (const EPS_PRINTER_INN*, EPS_INT32, 
-										 EPS_UINT8*, EPS_INT32*                         );
+extern EPS_ERR_CODE rawGetInfo          (const EPS_PRINTER_INN*, EPS_INT32, 
+										 EPS_UINT8**, EPS_INT32*                        );
 
 #ifdef __cplusplus
 } /* extern "C" */

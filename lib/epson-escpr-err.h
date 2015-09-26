@@ -42,6 +42,7 @@ extern "C" {
 #define EPS_JOB_CANCELED                         40     /* Printing job is canceled by user                 */
 #define EPS_OUT_OF_BOUNDS                        41     /* Print band is in out of printable area           */
 #define EPS_FIND_CANCELED                        42     /* Find printer is canceled by user                 */
+#define EPS_TEMPORARY_VALUE                      43     /* output value is temporary                        */
 
 /*-----------------------  Error Return Value of ESC/P-R Lib API  ----------------------*/
 /*******************************************|********************************************/
@@ -62,6 +63,7 @@ enum EPS_RUN_TIME_ERROR {
     EPS_ERR_INVALID_VERSION                 = -1013,    /* Invalid structure version                        */
 	EPS_ERR_INVALID_DATATYPE                = -1014,    /* Invalid data type                                */
 	EPS_ERR_LANGUAGE_NOT_SUPPORTED          = -1015,    /* Unsupported function Error (language)            */
+	EPS_ERR_PRINTER_NOT_SUPPORTED           = -1016,    /* Unsupported function Error (printer model)       */
 
     /*** Library Status Error                                                           */
     /*** -------------------------------------------------------------------------------*/
@@ -96,6 +98,8 @@ enum EPS_RUN_TIME_ERROR {
     EPS_ERR_INV_FNCP_FINDFIRST			    = -1215,    /* Invalid function pointer "findFirst"             */
     EPS_ERR_INV_FNCP_FINDNEXT		        = -1216,    /* Invalid function pointer "findNext"              */
     EPS_ERR_INV_FNCP_FINDCLOSE	            = -1217,    /* Invalid function pointer "findClose"             */
+    EPS_ERR_INV_FNCP_GETDEVICEID	        = -1218,    /* Invalid function pointer "getDeviceID"           */
+    EPS_ERR_INV_FNCP_SOFTRESET	            = -1219,    /* Invalid function pointer "softReset"             */
 
     EPS_ERR_INV_FNCP_NETSOCKET              = -1221,    /* Invalid function pointer "socket"                */
     EPS_ERR_INV_FNCP_NETCLOSE               = -1222,    /* Invalid function pointer "close"                 */
@@ -128,7 +132,7 @@ enum EPS_RUN_TIME_ERROR {
 	EPS_ERR_PRINTER_NOT_SET                 = -1351,    /* Target printer is not specified                  */
 	EPS_ERR_INV_PRINT_LANGUAGE              = -1352,    /* Invalid Argument "printer.language"              */
 
-    /*** Page Attribution Error (epsStartJob(), epsGetPrintableArea())                 */
+    /*** Page Attribution Error (epsStartJob(), epsGetPrintableArea(), epsGetPrintableAreaInfo()) */
     /*** -------------------------------------------------------------------------------*/
     EPS_ERR_INV_MEDIA_SIZE                  = -1400,    /* Invalid Media Size                               */
     EPS_ERR_INV_MEDIA_TYPE                  = -1401,    /* Invalid Media Type                               */
@@ -185,6 +189,7 @@ enum EPS_RUN_TIME_ERROR {
     /*** -------------------------------------------------------------------------------*/
     EPS_ERR_INV_ARG_STATUS                  = -1700,    /* Invalid argument "status"                        */
     EPS_ERR_INV_ARG_INKINFO                 = -1710,    /* Invalid argument "inkInfo"                       */
+    EPS_ERR_INV_ARG_SUPPLYINFO              = -1711,    /* Invalid argument "supplyInfo"                       */
 
 	/*** epsGetSupportedMedia() Error                                                   */
     /*** -------------------------------------------------------------------------------*/
@@ -194,6 +199,13 @@ enum EPS_RUN_TIME_ERROR {
     /*** -------------------------------------------------------------------------------*/
     EPS_ERR_INV_ARG_PRINTABLE_WIDTH         = -1800,    /* Invalid argument "printableWidth"                */
     EPS_ERR_INV_ARG_PRINTABLE_HEIGHT        = -1801,    /* Invalid argument "printableHeight"               */
+
+    /*** epsGetPrintAreaInfo(), epsGetPrintAreaInfoAll() Error                          */
+    /*** -------------------------------------------------------------------------------*/
+	EPS_ERR_INV_ARG_LAYOUT_MARGIN           = -1850,    /* Invalid Argument "margin"                        */
+	EPS_ERR_INV_ARG_PRINTAREA_INFO          = -1851,    /* Invalid Argument "printAreaInfo"                 */
+    EPS_ERR_INV_ARG_PAPER_WIDTH             = -1852,    /* Invalid argument "paperWidth"                    */
+    EPS_ERR_INV_ARG_PAPER_HEIGHT            = -1853,    /* Invalid argument "paperHeight"                   */
 
     /*** epsSetAdditionalData() Error                                                   */
     /*** -------------------------------------------------------------------------------*/
@@ -283,8 +295,32 @@ enum EPS_PRINTER_ERROR {
 	EPS_PRNERR_CDDVDCONFIG                         ,
 	EPS_PRNERR_CDREXIST_MAINTE                     ,
 
-    /* Status Error                                                                     */
-    EPS_PRNERR_BUSY								= 100,
+	/* append for 2012 Model  */
+	EPS_PRNERR_FEEDERCLOSE						   ,
+
+	/* append for 2013 Model  */
+	EPS_PRNERR_3DMEDIA_FACE                        ,   /* Improper insert face at 3D printing media  */
+	EPS_PRNERR_3DMEDIA_DIRECTION                   ,   /* Improper insert direction at 3D printing media  */
+	EPS_PRNERR_MANUALFEED_SET_PAPER                ,   /* Set a paper into Manual Feed */
+	EPS_PRNERR_MANUALFEED_SET_PAPER_NOLCD          ,
+	EPS_PRNERR_MANUALFEED_FAILED                   ,   /* Non feed at Manual Feed */
+	EPS_PRNERR_MANUALFEED_FAILED_NOLCD             ,
+	EPS_PRNERR_MANUALFEED_EXCESSIVE                ,   /* Excessive inserting paper on Manual Feed */
+	EPS_PRNERR_MANUALFEED_EXCESSIVE_NOLCD          ,
+	EPS_PRNERR_CDDVDCONFIG_STARTBUTTON             ,   /* restart with start button */
+	EPS_PRNERR_CDDVDCONFIG_FEEDBUTTON              ,   /* restart with feed  button */
+	EPS_PRNERR_INTERRUPT_BY_INKEND                 ,
+
+	/* append for 2014 Model  */
+	EPS_PRNERR_ROLLPAPER_TOOSHORT                  ,
+	EPS_PRNERR_NO_BATTERY                          ,
+	EPS_PRNERR_LOW_BATTERY_FNC                     ,
+	EPS_PRNERR_BATTERY_CHARGING                    ,
+	EPS_PRNERR_BATTERY_TEMPERATURE_HIGH            ,
+	EPS_PRNERR_BATTERY_TEMPERATURE_LOW             ,
+
+	/* Status Error                                                                     */
+    EPS_PRNERR_BUSY							   = 100,
     EPS_PRNERR_FACTORY								,
     /* Communication Error                                                              */
     EPS_PRNERR_COMM									,
@@ -296,8 +332,9 @@ enum EPS_PRINTER_ERROR {
 	EPS_PRNERR_CDGUIDECLOSE                         ,   /* CDR guide close              */ 
 /*    EPS_PRNERR_OVERHEAT								   OVERHEAT is not an error     */
     EPS_PRNERR_JPG_LIMIT	                        ,   /* Jpeg print data size limit   */	
-	EPS_PRNERR_DISABEL_CLEANING                         /* can not start Head Cleaning  */
-												
+	EPS_PRNERR_DISABEL_CLEANING                     ,   /* can not start Head Cleaning  */
+
+    EPS_PRNERR_ANY							   = 200,
 };
 
     /*** Ink Cartridge Error                                                            */
@@ -306,6 +343,18 @@ enum EPS_PRINTER_ERROR {
 #define EPS_INK_FAIL                             (-2)
 #define EPS_INK_NOTAVAIL                         (-3)
 #define EPS_INK_NOREAD                           (-4)
+#define EPS_INK_OBSOLETE                         (-5)
+	
+
+    /*** Ink Cartridge Status                                                           */
+    /*** -------------------------------------------------------------------------------*/
+#define EPS_INK_ST_NORMAL                        (0)
+#define EPS_INK_ST_LOW                           (1)
+#define EPS_INK_ST_END                           (2)
+#define EPS_INK_ST_NOTPRESENT                    EPS_INK_NOTPRESENT
+#define EPS_INK_ST_FAIL                          EPS_INK_FAIL
+#define EPS_INK_ST_NOTAVAIL                      EPS_INK_NOTAVAIL
+#define EPS_INK_ST_NOREAD                        EPS_INK_NOREAD
 
     /*** Notifification Reply Values                                                    */
     /*** -------------------------------------------------------------------------------*/

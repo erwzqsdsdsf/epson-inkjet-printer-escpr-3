@@ -28,6 +28,7 @@ extern "C" {
 /*------------------------------------  Includes   -------------------------------------*/
 /*******************************************|********************************************/
 #include "epson-typedefs.h"
+#include "epson-escpr-pvt.h"
 
 
 /*----------------------------------  Generic Macros   ---------------------------------*/
@@ -35,12 +36,12 @@ extern "C" {
 
    /*** CD/DVD Sizing Information                                                      */
     /*** -------------------------------------------------------------------------------*/
-#define CDDVD_OFFSET_X(r, d)    (EPS_INT32)(elGetDots(r, (EPS_FLOAT)(14.0 + (EPS_FLOAT)(EPS_CDDIM_OUT_DEF - d)/2)) + elGetDots(r, 3))
-#define CDDVD_OFFSET_Y(r, d)    (EPS_INT32)(elGetDots(r, (EPS_FLOAT)( 6.5 + (EPS_FLOAT)(EPS_CDDIM_OUT_DEF - d)/2)) + elGetDots(r, 3))
+#define CDDVD_OFFSET_X(r, d)    (EPS_INT32)(elGetDots(r, (140 + (EPS_CDDIM_OUT_DEF*10 - d*10)/2)) + elGetDots(r, 30))
+#define CDDVD_OFFSET_Y(r, d)    (EPS_INT32)(elGetDots(r, ( 65 + (EPS_CDDIM_OUT_DEF*10 - d*10)/2)) + elGetDots(r, 30))
 
 /*----------------------------  API Function Declarations   ----------------------------*/
 /*******************************************|********************************************/
-extern EPS_INT32	elGetDots		(EPS_UINT8 inputResolution, EPS_FLOAT length		);
+extern EPS_INT32	elGetDots		(EPS_UINT8 inputResolution, EPS_UINT32 millimeter   );
 
 #ifdef GCOMSW_EL_CDLABEL
 extern EPS_ERR_CODE elCDClipping	(const EPS_UINT8*, EPS_UINT8*, EPS_UINT8, EPS_RECT* );

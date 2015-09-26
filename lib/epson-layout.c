@@ -19,8 +19,7 @@
 /*                                                                                      */
 /*                                Public Function Calls                                 */
 /*                              --------------------------                              */
-/*      EPS_ERR_CODE elAppendQRCode		(qrcode                                 );      */
-/*		EPS_ERR_CODE elComposeQrcode	(pSrc, pDst, bpp, pRec                  );      */
+/*		EPS_ERR_CODE elGetDots	        (resolution, millimeter                 );      */
 /*      EPS_ERR_CODE elCDClipping	    (pSrc, pDst, bpp, pRec                  );      */
 /*                                                                                      */
 /*******************************************|********************************************/
@@ -58,8 +57,9 @@ extern EPS_PRINT_JOB   printJob;
 
 /*--------------------------  Local Functions Declaration   ----------------------------*/
 /*******************************************|********************************************/
+#ifdef GCOMSW_EL_CDLABEL
 static EPS_UINT32 isqrt(EPS_UINT32 x);
-
+#endif
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%|%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%|%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -77,7 +77,7 @@ static EPS_UINT32 isqrt(EPS_UINT32 x);
 /* ---------                                                                            */
 /* Name:        Type:               Description:                                        */
 /* resolution   EPS_UINT8			I: resolution	                                    */
-/* length       EPS_INT32           I: length			                                */
+/* millimeter   EPS_UINT32          I: length(millimeter x 10)                          */
 /*                                                                                      */
 /* Return value:                                                                        */
 /*      Dot num                                                                         */
@@ -89,25 +89,25 @@ static EPS_UINT32 isqrt(EPS_UINT32 x);
 EPS_INT32     elGetDots (
 
         EPS_UINT8 resolution, 
-		EPS_FLOAT millimeter
+		EPS_UINT32 millimeter
 
 ){
 	EPS_INT32 dots = 0;
 
 	if(resolution == EPS_IR_360X360){	/* EPS_IR_360X360 == 0 */
-		dots = (EPS_INT32)(millimeter * 14.1732);	/* 0.03937 * 360 = 14.1732 */
+		dots = (EPS_INT32)(millimeter * 14173);	/* 0.03937 * 360 = 14.1732 -> x1000 */
 	} else if( resolution & EPS_IR_720X720 ){
-		dots = (EPS_INT32)(millimeter * 28.3464);	/* 0.03937 * 720 = 28.3464 */
+		dots = (EPS_INT32)(millimeter * 28346);	/* 0.03937 * 720 = 28.3464 -> x1000 */
 	} else if( resolution & EPS_IR_300X300 ){
-		dots = (EPS_INT32)(millimeter * 11.811);	/* 0.03937 * 300 = 11.811 */
+		dots = (EPS_INT32)(millimeter * 11811);	/* 0.03937 * 300 = 11.811  -> x1000 */
 	} else if( resolution & EPS_IR_600X600 ){
-		dots = (EPS_INT32)(millimeter * 23.622);	/* 0.03937 * 600 = 23.622 */
+		dots = (EPS_INT32)(millimeter * 23622);	/* 0.03937 * 600 = 23.622  -> x1000 */
 	} else{
 		/* default 360dpi */
-		dots = (EPS_INT32)(millimeter * 14.1732);	/* 0.03937 * 360 = 14.1732 */
+		dots = (EPS_INT32)(millimeter * 14173);	/* 0.03937 * 360 = 14.1732 -> x1000 */
 	}
 
-	return dots;
+	return dots/10000;	/* input:10 times, inche:1000 times  */
 }
 
 
@@ -139,7 +139,7 @@ EPS_ERR_CODE     elCDClipping (
         EPS_RECT*        pRec
 
 ){
-#define GET_RADIUS(mm)		(EPS_INT32)(elGetDots(printJob.attr.inputResolution, mm)/2)
+#define GET_RADIUS(mm)		(EPS_INT32)(elGetDots(printJob.attr.inputResolution, mm*10)/2)
 #define X_OF_SECANT(r, y)   ((EPS_INT32)isqrt((r-y) * (r+y)))
 
 	EPS_LINE_SEGMENT segOut, segIn;

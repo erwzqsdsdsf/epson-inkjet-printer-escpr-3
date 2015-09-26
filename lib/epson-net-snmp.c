@@ -24,7 +24,7 @@
 /*      EPS_ERR_CODE snmpFindEnd	        (sock                               );      */
 /*      EPS_ERR_CODE snmpProbeByID          (printerUUID, timeout, printer      );      */
 /*      EPS_ERR_CODE snmpGetStatus          (sock, address, pstInfo             );      */
-/*      EPS_ERR_CODE snmpGetPMString        (printer, pString, bufSize          );      */
+/*      EPS_ERR_CODE snmpInfoCommand        (printer, cmd, pString, bufSize     );      */
 /*      EPS_ERR_CODE snmpMechCommand        (printer, Command                   );      */
 /*      EPS_ERR_CODE snmpOpenSocket			(sock                               );      */
 /*		EPS_ERR_CODE snmpCloseSocket		(sock                               );      */
@@ -47,6 +47,9 @@
 	#ifdef GCOMSW_CMD_ESCPAGE_S
 	#include "epson-escpage-s.h"
 	#endif
+	#ifdef GCOMSW_CMD_PCL
+	#include "epson-pcl.h"
+	#endif
 #endif
 
 /*-----------------------------------  Definitions  ------------------------------------*/
@@ -58,24 +61,8 @@
 #endif
 
 #define SNMP_PORT_NUM			(161)				/* Protocol port number				*/
-#define SNMP_MAX_BUF			(512)				/* Communication buffer size		*/
+#define SNMP_MAX_BUF			(1024)				/* Communication buffer size		*/
 #define SNMP_MAX_OID			(128)				/* max oid size		                */
-
-/* SNMP variables                                                                       */
-#define ASN_VT_INTEGER			(0x02)				/* integer                          */
-#define ASN_VT_OCTET_STRING		(0x04)				/* octet stream                     */
-#define ASN_VT_NULL				(0x05)				/* null                             */
-#define ASN_VT_OBJECT_ID		(0x06)				/* OID                              */
-#define ASN_VT_SEQUENCE			(0x30)				/* sequence                         */
-
-/* SNMP message                                                                         */
-#define ASN_PDU_GET				(EPS_UINT8)(0xA0)   /* GetRequest                       */
-#define ASN_PDU_GET_NEXT		(EPS_UINT8)(0xA1)   /* GetNextRequest                   */
-#define ASN_PDU_RESP			(EPS_UINT8)(0xA2)   /* Response                         */
-#define ASN_PDU_SET				(EPS_UINT8)(0xA3)   /* SetRequest                       */
-#define ASN_PDU_TRAP			(EPS_UINT8)(0xA4)   /* Trap                             */
-#define ASN_PDU_TRAP_RSP		(EPS_UINT8)(0xC2)   /* TrapResponse                     */
-
 
 #define SNMP_VERSION			(0)
 #define SNMP_COMMUNITY_STR		"public"
@@ -105,26 +92,6 @@
 #define MIB_PRERR_COVEROPEN		(1 << 3)
 #define MIB_PRERR_PAPERJAM		(1 << 2)
 
-/*---------------------------  Data Structure Declarations   ---------------------------*/
-/*******************************************|********************************************/
-/* SNMP variant type */
-typedef struct tag_ASN_VARIANT {       
-	EPS_INT8	type;
-	EPS_UINT32	length;
-	union{
-		EPS_INT32	v_long;            /* Integer                                       */
-		EPS_INT8*	v_str;             /* OCTET_STRING, ASN_VT_OBJECT_ID                */
-	} val;				
-}ASN_VARIANT;
-
-/* If type is OBJECT_ID, ParseField() alloc heap.   									*/
-#define EPS_REREASE_VARIANT( v )				\
-	{											\
-		if( ASN_VT_OBJECT_ID == (v).type ){		\
-			EPS_SAFE_RELEASE( (v).val.v_str );	\
-		}										\
-		(v).type = ASN_VT_NULL;					\
-	}
 
 
 /*----------------------------  ESC/P-R Lib Global Variables  --------------------------*/
@@ -137,8 +104,6 @@ extern EPS_CMN_FUNC		epsCmnFnc;
 	/*** Find                                                                           */
 extern EPS_BOOL			g_FindBreak;			/* Find printer end flag                */
 
-	/* CPU Endian-ness                                                                  */
-extern EPS_INT16		cpuEndian;
 
 /* { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) 
      interfaces(2) ifTable(2) ifEntry(1) 6 } */
@@ -148,6 +113,9 @@ static EPS_INT8 s_oidPhysAddress[]  = "1.3.6.1.2.1.2.2.1.6";
 	 tcp(6) tcpConnTable(13) tcpConnEntry(1) 3 } */
 static EPS_INT8 s_oidTcpConnLocalPort[]= "1.3.6.1.2.1.6.13.1.3";
 
+/* { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) 
+     printmib(43) prtInterpreter(15) prtInterpreterTable(1) prtInterpreterEntry(1) prtInterpreterDescription(5) } */
+static EPS_INT8 s_oidInterpreterDescription[]	= "1.3.6.1.2.1.43.15.1.1.5";
 
 #ifdef GCOMSW_CMD_ESCPAGE
 /* { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) 
@@ -172,11 +140,17 @@ static EPS_INT8 s_oidMarkerColorant[] = "1.3.6.1.2.1.43.12.1.1.4";
 static EPS_INT8 s_oidMarkerLevel[]	= "1.3.6.1.2.1.43.11.1.1.9";
 
 /* { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) 
+     printmib(43) prtMarkerSupplies(11) prtMarkerSuppliesTable(1) prtMarkerSuppliesEntry(1)
+	 prtMarkerSuppliesMaxCapacity(8) } */
+static EPS_INT8 s_oidMarkerMaxLevel[]	= "1.3.6.1.2.1.43.11.1.1.8";
+
+/* { iso(1) org(3) dod(6) internet(1) mgmt(2) mib-2(1) 
      printmib(43) prtInput(8) prtInputTable(2) prtInputEntry(1) prtInputName(13) } */
 static EPS_INT8 s_oidInputName[]	= "1.3.6.1.2.1.43.8.2.1.13";
 #endif
 
 static EPS_INT8 s_oidPrvPrinter[]		= "1.3.6.1.4.1.1248.1.2.2.1.1.1.1";
+static EPS_INT8 s_oidPwgPrinter[]		= "1.3.6.1.4.1.2699.1.2.1.2.1.1.3";
 static EPS_INT8 s_oidPrvBonjourName[]	= "1.3.6.1.4.1.1248.1.1.3.1.14.4.1.2";
 static EPS_INT8 s_oidPrvStatus[]		= "1.3.6.1.4.1.1248.1.2.2.1.1.1.4";
 static EPS_INT8 s_oidPrvCtrl[]			= "1.3.6.1.4.1.1248.1.2.2.44.1.1.2";
@@ -186,16 +160,18 @@ static EPS_INT8 g_TrnBuff[SNMP_MAX_BUF];
 
 /*--------------------------  Public Functions Declaration   ---------------------------*/
 /*******************************************|********************************************/
-static EPS_ERR_CODE snmpGetStatus	(EPS_SOCKET, const EPS_INT8*, EPS_STATUS_INFO*      );
+static EPS_ERR_CODE snmpGetStatus	(EPS_SOCKET, const EPS_INT8*, EPS_UINT32, EPS_STATUS_INFO*);
 static EPS_ERR_CODE snmpGetInkInfo	(const EPS_INT8*, EPS_STATUS_INFO*                  );
-static EPS_ERR_CODE snmpGetPMString (const EPS_PRINTER_INN*, EPS_INT32, 
-									 EPS_UINT8*, EPS_INT32*                             );
+static EPS_ERR_CODE snmpInfoCommand (const EPS_PRINTER_INN*, EPS_INT32, 
+									 EPS_UINT8**, EPS_INT32*                            );
 static EPS_ERR_CODE snmpMechCommand (const EPS_PRINTER_INN*, EPS_INT32                  );
 #ifdef GCOMSW_CMD_ESCPAGE
-static EPS_ERR_CODE snmpGetStatus_Page(EPS_SOCKET, const EPS_INT8*, EPS_STATUS_INFO*    );
+static EPS_ERR_CODE snmpGetStatus_Page(EPS_SOCKET, const EPS_INT8*, EPS_UINT32, EPS_STATUS_INFO*);
 static EPS_ERR_CODE snmpGetInkInfo_Page(const EPS_INT8*, EPS_STATUS_INFO*               );
-static EPS_ERR_CODE snmpGetPMString_Page(const EPS_PRINTER_INN*, EPS_INT32, 
-									 EPS_UINT8*, EPS_INT32*                             );
+static EPS_ERR_CODE snmpInfoCommand_Page(const EPS_PRINTER_INN*, EPS_INT32, 
+									 EPS_UINT8**, EPS_INT32*                            );
+static EPS_ERR_CODE snmpInfoCommand_PagePM(const EPS_PRINTER_INN*, EPS_INT32,
+                                     EPS_UINT8**, EPS_INT32*                            );
 static EPS_ERR_CODE snmpMechCommand_Page(const EPS_PRINTER_INN*, EPS_INT32              );
 #endif
 
@@ -203,34 +179,34 @@ static EPS_ERR_CODE snmpMechCommand_Page(const EPS_PRINTER_INN*, EPS_INT32      
 /*******************************************|********************************************/
 static EPS_ERR_CODE SnmpTransact    (const EPS_INT8*, EPS_INT32, const EPS_INT8*, 
 									 EPS_UINT8, ASN_VARIANT* pdu                        );
-static EPS_ERR_CODE SnmpTransactS   (EPS_SOCKET, const EPS_INT8*, EPS_INT32, 
-									 const EPS_INT8*, EPS_UINT8, ASN_VARIANT*           );
 
 static EPS_ERR_CODE SnmpFindRecv    (EPS_SOCKET, EPS_UINT16, EPS_INT32, 
 									 const EPS_INT8*, const EPS_INT8*, EPS_PRINTER_INN**);
+static EPS_BOOL isFindCanceled      ();
+static EPS_ERR_CODE BlkInfoCommand  (const EPS_PRINTER_INN*, EPS_INT32, 
+									 EPS_UINT8**, EPS_INT32*                            );
 
 static EPS_ERR_CODE mibGetPhysAddress(const EPS_INT8*, EPS_INT8*, EPS_UINT32            );
 static EPS_ERR_CODE mibConfirmPrintPort(const EPS_INT8*, EPS_UINT16						);
+static EPS_ERR_CODE mibGetLanguage	(const EPS_INT8*, EPS_UINT32*						);
 #ifdef GCOMSW_CMD_ESCPAGE_S
 static EPS_ERR_CODE mibGetMaxMediaXFeedDir(const EPS_INT8* address, EPS_UINT32* val		);
 #endif
-static EPS_ERR_CODE GetPDU          (EPS_INT8*, EPS_INT32, EPS_UINT8, const EPS_INT8*, 
-									 ASN_VARIANT*, EPS_INT8*, EPS_INT32                 );
 
 #ifdef GCOMSW_CMD_ESCPAGE
 static EPS_INT32 GetColorID         (EPS_INT8*                                          );
 #endif
 static EPS_ERR_CODE SnmpWalkMib     (EPS_SOCKET, const EPS_INT8*, const EPS_INT8*, ASN_VARIANT*);
-static EPS_UINT8    GetRequestId    (void                                               );
 static EPS_ERR_CODE ParseLength     (EPS_INT8**, EPS_INT32*, EPS_UINT32*                );
-static EPS_ERR_CODE ParseField      (EPS_INT8**, EPS_INT32*, ASN_VARIANT*               );
+static EPS_ERR_CODE ParseResponse   (EPS_INT8*, EPS_INT32, EPS_INT32, const EPS_INT8*, 
+									 ASN_VARIANT*, EPS_INT8*, EPS_INT32                 );
 
-static EPS_ERR_CODE CreateCommand   (EPS_INT8*, EPS_UINT8, EPS_UINT8, const EPS_INT8*, EPS_INT32*);
+static EPS_ERR_CODE CreateCommand   (EPS_INT8*, EPS_UINT8, const EPS_INT8*, EPS_INT32, 
+	                                 const EPS_SNMP_VARBIND*, EPS_INT32, EPS_INT32*     );
 static EPS_INT8*    MakeLength      (EPS_INT32, EPS_INT8*                               );
-static EPS_INT8*    MakeIntField    (EPS_INT32, EPS_INT8*                               );
-static EPS_INT8*    MakeStrField    (const EPS_INT8*, EPS_INT8*                         );
 static EPS_ERR_CODE MakeOidField    (const EPS_INT8*, EPS_INT8**                        );
 static EPS_ERR_CODE MakeSequens     (EPS_INT8*, EPS_UINT32*, EPS_BOOL                   );
+static EPS_UINT32   LengthOfLength  (EPS_UINT32                                         );
 
 static EPS_UINT16   IntToBer        (EPS_INT32, EPS_INT8*                               );
 static EPS_INT32    BerToInt        (EPS_INT8*, EPS_INT32                               );
@@ -275,15 +251,16 @@ void	snmpSetupSTFunctions (
 	if( EPS_LANG_ESCPR != printer->language ){
 		fnc->GetStatus		= snmpGetStatus_Page;
 		fnc->GetInkInfo		= snmpGetInkInfo_Page;
-		fnc->GetPMString    = snmpGetPMString_Page;
+		fnc->InfoCommand    = snmpInfoCommand_Page;
 		fnc->MechCommand    = snmpMechCommand_Page;
 	} 
 	else
 #endif
 	{
+		fnc->egID           = printer->egID;
 		fnc->GetStatus		= snmpGetStatus;
 		fnc->GetInkInfo		= snmpGetInkInfo;
-		fnc->GetPMString    = snmpGetPMString;
+		fnc->InfoCommand    = snmpInfoCommand;
 		fnc->MechCommand    = snmpMechCommand;
 	}
 
@@ -372,53 +349,130 @@ EPS_ERR_CODE snmpFindStart (
 
 		EPS_SOCKET*		sock,
 		const EPS_INT8*	address,
-		EPS_BOOL        multi
+		EPS_BOOL        multi,
+		const EPS_UINT8*  ifName
 
 ){
 	EPS_ERR_CODE ret = EPS_ERR_NONE;
-	EPS_UINT8	nRqID = 0;
+	EPS_SNMP_VARBIND	request;
+	EPS_INT32	nRqID = 0;
 	EPS_INT32	nSize = 0;
 	ASN_VARIANT pdu;
-
 	EPS_INT32 i = 0;					/* Temporary counter for number of discoveries	*/
 
+#if LCOMSW_BINDIF_IF_NEED
+	EPS_BOOL	useBind = FALSE;
+	EPS_INT32	r = 0;
+#endif
 	EPS_LOG_FUNCIN
 
-	/* Create UDP broadcast socket														*/
-	if(EPS_INVALID_SOCKET == *sock){	/* First Time */
-		*sock = epsNetFnc.socket( EPS_PF_INET, EPS_SOCK_DGRAM, EPS_PROTOCOL_UDP );
-		if( EPS_INVALID_SOCKET == *sock ){
-			EPS_RETURN( EPS_ERR_COMM_ERROR )
+#if !LCOMSW_USE_MULTI_IF
+	(void)ifName; /* unused */
+#endif
+
+#if LCOMSW_BINDIF_IF_NEED
+	for (r = 0; r < 2; r++)
+	{
+#endif
+		/* Create UDP broadcast socket														*/
+		if(EPS_INVALID_SOCKET == *sock){	/* First Time */
+			*sock = epsNetFnc.socket( EPS_PF_INET, EPS_SOCK_DGRAM, EPS_PROTOCOL_UDP );
+			if( EPS_INVALID_SOCKET == *sock ){
+				EPS_RETURN( EPS_ERR_COMM_ERROR )
+			}
+
+#if LCOMSW_USE_MULTI_IF
+			if(NULL != ifName){
+				if(EPS_SOCKET_SUCCESS != epsNetFnc.bindInterface( *sock, ifName ) ){
+					epsNetFnc.close( *sock );
+					*sock = EPS_INVALID_SOCKET;
+					EPS_RETURN( EPS_ERR_COMM_ERROR )
+				}
+			}
+#elif LCOMSW_BINDIF_IF_NEED 
+			if(TRUE == useBind){
+				if(EPS_SOCKET_SUCCESS != epsNetFnc.bindInterface( *sock ) ){
+					epsNetFnc.close( *sock );
+					*sock = EPS_INVALID_SOCKET;
+					EPS_RETURN( EPS_ERR_COMM_ERROR )
+				}
+				useBind = FALSE;
+			}
+#endif			
+			if(multi){
+				if( EPS_SOCKET_SUCCESS != epsNetFnc.setBroadcast(*sock) ){
+					/* If error occurr, close socket										*/
+					epsNetFnc.close( *sock );
+					*sock = EPS_INVALID_SOCKET;
+					EPS_RETURN( EPS_ERR_COMM_ERROR )
+				}
+			}
 		}
 
-		if(multi){
-			if( EPS_SOCKET_SUCCESS != epsNetFnc.setBroadcast(*sock) ){
+		/* Create Epson mib command													        */
+		memset(&pdu, 0, sizeof(pdu));
+		nRqID = snmpGetRequestId();
+		request.identifire = s_oidPrvPrinter;
+		request.value.type = ASN_VT_NULL;
+		if( EPS_ERR_NONE != (ret = CreateCommand(g_TrnBuff, ASN_PDU_GET_NEXT, SNMP_COMMUNITY_STR,
+												nRqID, &request, 1, &nSize)) ){
+			epsNetFnc.close( *sock );
+			EPS_RETURN( ret )
+		}
+		/* Send																				*/
+		for (i = 0; i < EPSNET_NUM_DISCOVERIES; i++) {
+			if ( 0 >= epsNetFnc.sendTo(*sock, (char*)g_TrnBuff, nSize,  
+										   address, SNMP_PORT_NUM, 0)){
 				/* If error occurr, close socket											*/
 				epsNetFnc.close( *sock );
 				*sock = EPS_INVALID_SOCKET;
+#if LCOMSW_BINDIF_IF_NEED
+				ret = EPS_ERR_COMM_ERROR;
+				if (0 == i && NULL != epsNetFnc.bindInterface) {
+					useBind = TRUE;
+				}
+				break;
+#else
 				EPS_RETURN( EPS_ERR_COMM_ERROR )
+#endif
 			}
 		}
-	}
+#if LCOMSW_BINDIF_IF_NEED
+		if(useBind){
+			continue;
+		}
+#endif
 
-	/* Create  command															        */
-	memset(&pdu, 0, sizeof(pdu));
-	nRqID = GetRequestId();
-	if( EPS_ERR_NONE != (ret = CreateCommand(g_TrnBuff, ASN_PDU_GET_NEXT, nRqID,
-										s_oidPrvPrinter, &nSize)) ){
-		EPS_RETURN( ret )
-	}
-
-	/* Send																				*/
-	for (i = 0; i < EPSNET_NUM_DISCOVERIES; i++) {
-		if ( 0 >= epsNetFnc.sendTo(*sock, (char*)g_TrnBuff, nSize,  
-									   address, SNMP_PORT_NUM, 0)){
-				/* If error occurr, close socket											*/
+		/* Create PWG mib command													        */
+		memset(&pdu, 0, sizeof(pdu));
+		nRqID = snmpGetRequestId();
+		request.identifire = s_oidPwgPrinter;
+		if( EPS_ERR_NONE != (ret = CreateCommand(g_TrnBuff, ASN_PDU_GET_NEXT, SNMP_COMMUNITY_STR,
+												nRqID, &request, 1, &nSize)) ){
 			epsNetFnc.close( *sock );
-			*sock = EPS_INVALID_SOCKET;
-			EPS_RETURN( EPS_ERR_COMM_ERROR )
+			EPS_RETURN( ret )
+		}
+		/* Send																				*/
+		for (i = 0; i < EPSNET_NUM_DISCOVERIES; i++) {
+			if ( 0 >= epsNetFnc.sendTo(*sock, (char*)g_TrnBuff, nSize,  
+										   address, SNMP_PORT_NUM, 0)){
+				/* If error occurr, close socket											*/
+				epsNetFnc.close( *sock );
+				*sock = EPS_INVALID_SOCKET;
+#if LCOMSW_USE_MULTI_IF
+				ret = EPS_ERR_COMM_ERROR;
+				break;
+#else
+				EPS_RETURN( EPS_ERR_COMM_ERROR )
+#endif
+			}
+		}
+#if LCOMSW_BINDIF_IF_NEED
+		if(FALSE == useBind){
+			break;
 		}
 	}
+#endif
 	
 	EPS_RETURN( ret )
 }
@@ -453,12 +507,26 @@ EPS_ERR_CODE snmpFind(
 		EPS_PRINTER_INN**   printer
 		
 ){
+	EPS_ERR_CODE ret = EPS_ERR_NONE;
+	EPS_ERR_CODE lastRet = EPS_ERR_NONE;
+	
 	EPS_LOG_FUNCIN
 
-	EPS_RETURN( SnmpFindRecv(sock, printPort, printProtocol, NULL, NULL, printer) )
+	ret = SnmpFindRecv(sock, printPort, printProtocol, NULL, NULL, printer);
+	lastRet = ret;
+	/* Until an effective value is provided from epson mib or PWG mib */
+	while(EPS_ERR_PRINTER_NOT_USEFUL == ret){
+		if(isFindCanceled()){
+			break;
+		}
+		ret = SnmpFindRecv(sock, printPort, printProtocol, NULL, NULL, printer);
+	}
+	if(EPS_COM_NOT_RECEIVE != ret){
+		lastRet = ret;
+	}
+
+	EPS_RETURN( lastRet )
 }
-
-
 
 /*******************************************|********************************************/
 /*                                                                                      */
@@ -547,18 +615,26 @@ EPS_ERR_CODE   snmpProbeByID (
 ){
 /*** Declare Variable Local to Routine                                                  */
     EPS_ERR_CODE    ret = EPS_ERR_NONE;				/* Return status of internal calls  */
-	EPS_SOCKET	    sock = EPS_INVALID_SOCKET;
+	EPS_SOCKET*	    socks = NULL;
 	EPS_UINT32	    tmStart, tmNow, tmSpan, tmReq;
 	EPS_INT8		compName[EPS_NAME_BUFFSIZE];
 	EPS_INT8		compSysName[EPS_NAME_BUFFSIZE];
     EPS_INT8*		pPos = NULL;
     EPS_INT32		nSegCnt = 0;
+	EPS_BOOL		bBreak = FALSE;
 
-EPS_LOG_FUNCIN
+	EPS_INT32		ifNum = 0;
+	EPS_INT32		ifCnt = 0;
+	EPS_UINT8*		ifBuf = NULL;
+#if LCOMSW_USE_MULTI_IF
+	EPS_UINT32		ifBufSize = 0;
+#endif
+
+	EPS_LOG_FUNCIN
 
 /*** Initialize Local & global Variables                                                */
 	if(epsCmnFnc.getTime){
-		tmStart = tmReq = epsCmnFnc.getTime();
+		tmStart = tmReq = tmNow = epsCmnFnc.getTime();
 	} else{
 		timeout = tmStart = tmNow = tmReq = 0;
 	}
@@ -581,52 +657,88 @@ EPS_LOG_FUNCIN
 		EPS_RETURN( EPS_ERR_INV_ARG_PRINTER_ID )
 	}
 
+#if LCOMSW_USE_MULTI_IF
+	ifNum = epsNetFnc.enumInterface(NULL, ifBufSize);
+	if(ifNum > 0){
+		ifBufSize = ifNum * EPS_IFNAME_LEN;
+		ifBuf = (EPS_UINT8*)EPS_ALLOC(ifBufSize);
+		if(NULL == ifBuf){
+			EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
+		}
+		memset(ifBuf, 0, ifBufSize);
+		ifNum = epsNetFnc.enumInterface(ifBuf, ifBufSize);
+	}
+	if(ifNum <= 0){
+		EPS_SAFE_RELEASE( ifBuf );
+		EPS_RETURN( EPS_ERR_COMM_ERROR )
+	}
+#else
+	ifNum = 1;
+#endif
+
+	socks = (EPS_SOCKET*)EPS_ALLOC(sizeof(EPS_SOCKET)*ifNum);
+	for(ifCnt = 0; ifCnt < ifNum; ifCnt++){
+		*(socks+ifCnt) = EPS_INVALID_SOCKET;
+	}
+
 /*** probe message broadcast                                                            */
-	ret = snmpFindStart( &sock, EPSNET_UDP_BROADCAST_ADDR, TRUE );
-	if(EPS_ERR_NONE != ret){
-		goto snmpProbeByID_END;
+	for(ifCnt = 0; ifCnt < ifNum; ifCnt++){
+		ret = snmpFindStart( socks+ifCnt, EPSNET_UDP_BROADCAST_ADDR, TRUE, ifBuf+(ifCnt*EPS_IFNAME_LEN) );
+		if(EPS_ERR_NONE != ret){
+			goto snmpProbeByID_END;
+		}
 	}
 
 /*** Check response                                                                     */
 	ret = EPS_ERR_PRINTER_NOT_FOUND;
-	while( EPS_ERR_PRINTER_NOT_FOUND == ret ||
-		   EPS_ERR_PRINTER_NOT_USEFUL== ret )
+	while( FALSE == bBreak )
 	{
-		ret = SnmpFindRecv(sock, printPort, printProtocol, compSysName, compName, printer);
-
-		/* epsCancelFindPriter() */
-		if( epsCmnFnc.lockSync && epsCmnFnc.unlockSync ){
-			if( 0 == epsCmnFnc.lockSync() ){
-				if( g_FindBreak ){
-					epsCmnFnc.unlockSync();
-					break;
-				}
-				epsCmnFnc.unlockSync();
-			}
-		}
-
-		/* Timeout */
-		if(timeout > 0){
-			tmNow = epsCmnFnc.getTime();
-			tmSpan = (EPS_UINT32)(tmNow - tmStart);
-			/*EPS_DBGPRINT( ("TM %u - %u <> %u\n", tmNow, tmStart, tmSpan) )*/
-			if( tmSpan >= timeout ){
+		for(ifCnt = 0; ifCnt < ifNum; ){
+			ret = SnmpFindRecv( *(socks+ifCnt), printPort, printProtocol, compSysName, compName, printer);
+			
+			if( EPS_COM_NOT_RECEIVE == ret ){
+				ifCnt++;	/* next interface */
+			} else if(EPS_ERR_PRINTER_NOT_FOUND == ret ){
+			} else if(EPS_ERR_PRINTER_NOT_USEFUL == ret ){
+			} else{
+				bBreak = TRUE;
 				break;
 			}
+
+			/* epsCancelFindPriter() */
+			if( isFindCanceled() ){
+				bBreak = TRUE;
+				break;
+			}
+
+			/* Timeout */
+			if(timeout > 0){
+				tmNow = epsCmnFnc.getTime();
+				tmSpan = (EPS_UINT32)(tmNow - tmStart);
+				/*EPS_DBGPRINT( ("TM %u - %u <> %u\n", tmNow, tmStart, tmSpan) )*/
+				if( tmSpan >= timeout ){
+					bBreak = TRUE;
+					break;
+				}
+			}
 		}
+		if(bBreak)break;
 
 		/*EPS_DBGPRINT( ("TM %u - %u <> %u\n", tmNow, tmStart, tmSpan) )*/
 		if( EPS_COM_NOT_RECEIVE == ret ){
+			ret = EPS_ERR_PRINTER_NOT_FOUND;
 			/* beef up */
 			if( EPSNET_FIND_REREQUEST_TIME <= (EPS_UINT32)(tmNow - tmReq) ){
 				/*EPS_DBGPRINT( ("beef up\n") )*/
-				ret = snmpFindStart( &sock, EPSNET_UDP_BROADCAST_ADDR, TRUE );
-				if(EPS_ERR_NONE != ret){
-					goto snmpProbeByID_END;
+				for(ifCnt = 0; ifCnt < ifNum; ifCnt++){
+					ret = snmpFindStart( socks+ifCnt, EPSNET_UDP_BROADCAST_ADDR, TRUE, ifBuf+(ifCnt*EPS_IFNAME_LEN) );
+					if(EPS_ERR_NONE != ret){
+						bBreak = TRUE;
+						break;
+					}
 				}
 			}
 
-			ret = EPS_ERR_PRINTER_NOT_FOUND;
 		} else{
 			tmReq = tmNow;
 		}
@@ -639,7 +751,11 @@ EPS_LOG_FUNCIN
 
 /*** Return to Caller																	*/
 snmpProbeByID_END:
-	snmpFindEnd(sock);
+	for(ifCnt = 0; ifCnt < ifNum; ifCnt++){
+		snmpFindEnd(*(socks+ifCnt));
+	}
+	EPS_SAFE_RELEASE( ifBuf );
+	EPS_SAFE_RELEASE( socks );
  
 	if( EPS_ERR_NONE != ret ){
 		EPS_SAFE_RELEASE( *printer );
@@ -673,6 +789,7 @@ EPS_ERR_CODE snmpGetStatus(
 								 
 		EPS_SOCKET sock, 
 		const EPS_INT8* address, 
+		EPS_UINT32 egID,
 		EPS_STATUS_INFO* pstInfo
 		
 ){
@@ -685,24 +802,25 @@ EPS_LOG_FUNCIN
 	memset(&pdu, 0, sizeof(pdu));
 
 	for(retry = 0; retry < EPSNET_STAT_RETRY; retry++){
-		ret = SnmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT, 
-							s_oidPrvStatus, ASN_PDU_GET_NEXT, &pdu);
+		ret = snmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT, 
+							s_oidPrvStatus, ASN_PDU_GET_NEXT, SNMP_COMMUNITY_STR,
+							NULL, &pdu);
 		if(EPS_ERR_NONE == ret ){
 			break;
 		}
-		EPS_REREASE_VARIANT( pdu );
-		EPS_DBGPRINT(("GetStatus retry %d\n", retry))
+		EPS_SNMP_REREASE_VARIANT( pdu );
+		/*EPS_DBGPRINT(("GetStatus retry %d\n", retry))*/
 	}
 
 	if( EPS_ERR_NONE == ret ){
 		if(ASN_VT_OCTET_STRING == pdu.type){
-			ret = serAnalyzeStatus(pdu.val.v_str, pstInfo);
+			ret = serAnalyzeStatus(pdu.val.v_str, egID, pstInfo);
 		} else{
 			ret = EPS_ERR_COMM_ERROR;
 		}
 	}
 
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	EPS_RETURN( ret )
 }
@@ -712,6 +830,7 @@ EPS_ERR_CODE snmpGetStatus_Page(
 								 
 		EPS_SOCKET sock, 
 		const EPS_INT8* address, 
+		EPS_UINT32 egID,
 		EPS_STATUS_INFO* pstInfo
 		
 ){
@@ -722,25 +841,27 @@ EPS_ERR_CODE snmpGetStatus_Page(
 
 	EPS_LOG_FUNCIN
 
+	(void)egID;
+
+	memset(pstInfo, 0, sizeof(EPS_STATUS_INFO) );
 	pstInfo->nState = EPS_ST_IDLE;
 	pstInfo->nError = EPS_PRNERR_NOERROR;
 	pstInfo->nWarn  = EPS_PRNWARN_NONE;
 	pstInfo->nCancel= EPS_CAREQ_NOCANCEL;
 	pstInfo->nInkNo = 0;
-	memset(pstInfo->nColorType, 0, sizeof(pstInfo->nColorType) );
-	memset(pstInfo->nColor, 0, sizeof(pstInfo->nColor) );
 
 	memset(&pdu, 0, sizeof(pdu));
 
 	/* get Device Status */
 	for(retry = 0; retry < EPSNET_STAT_RETRY; retry++){
-		ret = SnmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT, 
-							s_oidDevStatus, ASN_PDU_GET_NEXT, &pdu);
+		ret = snmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT, 
+							s_oidDevStatus, ASN_PDU_GET_NEXT, SNMP_COMMUNITY_STR,
+							NULL, &pdu);
 		if(EPS_ERR_NONE == ret ){
 			break;
 		}
-		EPS_REREASE_VARIANT( pdu );
-		EPS_DBGPRINT(("GetStatus retry %d\n", retry))
+		EPS_SNMP_REREASE_VARIANT( pdu );
+		/*EPS_DBGPRINT(("GetStatus retry %d\n", retry))*/
 	}
 	if( EPS_ERR_NONE == ret && ASN_VT_INTEGER == pdu.type){
 		devstat = pdu.val.v_long;
@@ -748,17 +869,18 @@ EPS_ERR_CODE snmpGetStatus_Page(
 		ret = EPS_ERR_COMM_ERROR;
 		goto snmpGetStatus_END;
 	}
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	/* get Printer Status */
 	for(retry = 0; retry < EPSNET_STAT_RETRY; retry++){
-		ret = SnmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT,
-							s_oidPrinterStatus, ASN_PDU_GET_NEXT, &pdu);
+		ret = snmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT,
+							s_oidPrinterStatus, ASN_PDU_GET_NEXT, SNMP_COMMUNITY_STR,
+							NULL, &pdu);
 		if(EPS_ERR_NONE == ret ){
 			break;
 		}
-		EPS_REREASE_VARIANT( pdu );
-		EPS_DBGPRINT(("GetStatus retry %d\n", retry))
+		EPS_SNMP_REREASE_VARIANT( pdu );
+		/*EPS_DBGPRINT(("GetStatus retry %d\n", retry))*/
 	}
 	if( EPS_ERR_NONE == ret && ASN_VT_INTEGER == pdu.type){
 		prnstat = pdu.val.v_long;
@@ -766,7 +888,7 @@ EPS_ERR_CODE snmpGetStatus_Page(
 		ret = EPS_ERR_COMM_ERROR;
 		goto snmpGetStatus_END;
 	}
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	/*EPS_DBGPRINT(("%d / %d\n", devstat, prnstat))*/
 	switch(devstat){
@@ -813,17 +935,18 @@ EPS_ERR_CODE snmpGetStatus_Page(
 	if( EPS_ST_ERROR == pstInfo->nState ){
 		/* get error reason */
 		for(retry = 0; retry < EPSNET_STAT_RETRY; retry++){
-			ret = SnmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT, 
-								s_oidPrinterError, ASN_PDU_GET_NEXT, &pdu);
+			ret = snmpTransactS(sock, address, EPSNET_STAT_RECV_TIMEOUT, 
+								s_oidPrinterError, ASN_PDU_GET_NEXT, SNMP_COMMUNITY_STR,
+								NULL, &pdu);
 			if(EPS_ERR_NONE == ret ){
 				break;
 			}
-			EPS_REREASE_VARIANT( pdu );
-			EPS_DBGPRINT(("GetStatus retry %d\n", retry))
+			EPS_SNMP_REREASE_VARIANT( pdu );
+			/*EPS_DBGPRINT(("GetStatus retry %d\n", retry))*/
 		}
 
 		if( EPS_ERR_NONE == ret && ASN_VT_OCTET_STRING == pdu.type){
-			EPS_DBGPRINT(("0x%02X\n", pdu.val.v_str[0]))
+			/*EPS_DBGPRINT(("0x%02X\n", pdu.val.v_str[0]))*/
 			if( pdu.val.v_str[0] & MIB_PRERR_NOPAPER ){
 				pstInfo->nError = EPS_PRNERR_PAPEROUT;
 			} else if( pdu.val.v_str[0] & MIB_PRERR_NOINK ){
@@ -842,7 +965,7 @@ EPS_ERR_CODE snmpGetStatus_Page(
 	}
 
 snmpGetStatus_END:
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	EPS_RETURN( ret )
 }
@@ -884,13 +1007,13 @@ EPS_ERR_CODE snmpGetInkInfo(
 
 	if( EPS_ERR_NONE == ret ){
 		if(ASN_VT_OCTET_STRING == pdu.type){
-			ret = serAnalyzeStatus(pdu.val.v_str, pstInfo);
+			ret = serAnalyzeStatus(pdu.val.v_str, 0, pstInfo);
 		} else{
 			ret = EPS_ERR_COMM_ERROR;
 		}
 	}
 
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	EPS_RETURN( ret )
 }
@@ -906,6 +1029,7 @@ EPS_ERR_CODE snmpGetInkInfo_Page(
 	EPS_SOCKET	soc;
 	ASN_VARIANT pdu;
 	EPS_INT32   i;
+	EPS_INT32	nMax[EPS_INK_NUM];
 
 	EPS_LOG_FUNCIN
 
@@ -919,16 +1043,16 @@ EPS_ERR_CODE snmpGetInkInfo_Page(
 	}
 
 	/* walk MarkerName record */
-	i = 0;
 	ret = SnmpWalkMib(soc, address, s_oidMarkerColorant, &pdu);
-	while(EPS_ERR_NONE == ret){
+	for(i = 0; EPS_ERR_NONE == ret && i < EPS_INK_NUM; i++){
 		if(ASN_VT_OCTET_STRING == pdu.type){
 			pdu.val.v_str[pdu.length] = '\0';
-			pstInfo->nColorType[i++] = GetColorID(pdu.val.v_str);
+			/*EPS_DBGPRINT(("%s\n", pdu.val.v_str));*/
+			pstInfo->nColorType[i] = GetColorID(pdu.val.v_str);
 		}
 
 		/* next */
-		EPS_REREASE_VARIANT( pdu );
+		EPS_SNMP_REREASE_VARIANT( pdu );
 		ret = SnmpWalkMib(soc, address, NULL, &pdu);
 	}
 	if(EPS_COM_NEXT_RECORD == ret){
@@ -940,17 +1064,34 @@ EPS_ERR_CODE snmpGetInkInfo_Page(
 
 	pstInfo->nInkNo = i;
 
-	/* walk MarkerLevel record */
-	i = 0;
-	EPS_REREASE_VARIANT( pdu );
-	ret = SnmpWalkMib(soc, address, s_oidMarkerLevel, &pdu);
-	while(EPS_ERR_NONE == ret){
+	/* walk MaxLevel record */
+	for(i = 0; i < EPS_INK_NUM; i++)nMax[i] = 100;
+	ret = SnmpWalkMib(soc, address, s_oidMarkerMaxLevel, &pdu);
+	for(i = 0; EPS_ERR_NONE == ret && i < pstInfo->nInkNo; i++){
 		if(ASN_VT_INTEGER == pdu.type){
-			pstInfo->nColor[i++] = serInkLevelNromalize(pdu.val.v_long);
+			/*EPS_DBGPRINT(("%d\n", pdu.val.v_long));*/
+			nMax[i] = pdu.val.v_long;
 		}
 
 		/* next */
-		EPS_REREASE_VARIANT( pdu );
+		EPS_SNMP_REREASE_VARIANT( pdu );
+		ret = SnmpWalkMib(soc, address, NULL, &pdu);
+	}
+	ret = EPS_ERR_NONE;	/* ignore error */
+
+	/* walk MarkerLevel record */
+	EPS_SNMP_REREASE_VARIANT( pdu );
+	ret = SnmpWalkMib(soc, address, s_oidMarkerLevel, &pdu);
+	for(i = 0; EPS_ERR_NONE == ret && i < pstInfo->nInkNo; i++){
+		if(ASN_VT_INTEGER == pdu.type && nMax[i] > 0){
+			/*EPS_DBGPRINT(("%d\n", pdu.val.v_long));*/
+			pstInfo->nColor[i] = pdu.val.v_long * 100 / nMax[i];
+		} else{
+			pstInfo->nColor[i] = 0;
+		}
+
+		/* next */
+		EPS_SNMP_REREASE_VARIANT( pdu );
 		ret = SnmpWalkMib(soc, address, NULL, &pdu);
 	}
 	if(EPS_COM_NEXT_RECORD == ret){
@@ -962,7 +1103,7 @@ EPS_ERR_CODE snmpGetInkInfo_Page(
 
 snmpGetInkInfo_END:
 	snmpCloseSocket(&soc);
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	EPS_RETURN( ret )
 }
@@ -971,7 +1112,7 @@ snmpGetInkInfo_END:
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     snmpGetPMString()	        										*/
+/* Function name:     snmpInfoCommand()	        										*/
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
@@ -990,11 +1131,11 @@ snmpGetInkInfo_END:
 /*		PM String : pString                                                             */
 /*                                                                                      */
 /*******************************************|********************************************/
-EPS_ERR_CODE snmpGetPMString(
+EPS_ERR_CODE snmpInfoCommand(
 								  
 		const EPS_PRINTER_INN*	printer, 
- 		EPS_INT32               type,
-        EPS_UINT8*              pString,
+ 		EPS_INT32               cmd,
+        EPS_UINT8**             pString,
 		EPS_INT32*              bufSize
 
 ){
@@ -1004,47 +1145,264 @@ EPS_ERR_CODE snmpGetPMString(
 
 	EPS_LOG_FUNCIN
 
-	memset(&pdu, 0, sizeof(pdu));
-
 	/* Create GetPM command                                                             */
-	if(1 == type){
+	switch(cmd){
+    case EPS_CBTCOM_ST:
+		sprintf(cOid, "%s.1.%d.%d.%d.%d.%d", s_oidPrvCtrl, 's', 't', 0x01, 0x00, 0x01);
+		break;
+    case EPS_CBTCOM_PM:
 		sprintf(cOid, "%s.1.%d.%d.%d.%d.%d", s_oidPrvCtrl, 'p', 'm', 0x01, 0x00, 0x01);
-	} else if(2 == type){
+		break;
+    case EPS_CBTCOM_PM2:
 		sprintf(cOid, "%s.1.%d.%d.%d.%d.%d", s_oidPrvCtrl, 'p', 'm', 0x01, 0x00, 0x02);
-	} else{
+		break;
+    case EPS_CBTCOM_PM3:
+		ret = BlkInfoCommand(printer, cmd, pString, bufSize);
+		EPS_RETURN( ret )
+		break;
+    case EPS_CBTCOM_CD:
+		sprintf(cOid, "%s.1.%d.%d.%d.%d.%d", s_oidPrvCtrl, 'c', 'd', 0x01, 0x00, 0x00);
+		break;
+	case EPS_CBTCOM_VI5:
+		sprintf(cOid, "%s.1.%d.%d.%d.%d.%d", s_oidPrvCtrl, 'v', 'i', 0x01, 0x00, 0x05);
+        break;
+	default:
 		EPS_RETURN( EPS_ERR_OPR_FAIL )
 	}
 
-	ret = SnmpTransact(printer->location, EPSNET_RECV_TIMEOUT,  cOid, ASN_PDU_GET, &pdu);
+	memset(&pdu, 0, sizeof(pdu));
+
+	ret = SnmpTransact(printer->location, EPSNET_RECV_TIMEOUT, cOid, ASN_PDU_GET, &pdu);
 
 	if( EPS_ERR_NONE == ret ){
 		if(ASN_VT_OCTET_STRING == pdu.type){
-			*bufSize = Min((EPS_UINT32)*bufSize, pdu.length-1);
-			memcpy(pString, pdu.val.v_str+1, *bufSize);
+			*bufSize = pdu.length-1;
+			if(NULL == *pString){
+				*pString = (EPS_UINT8*)EPS_ALLOC(*bufSize);
+				if(NULL == *pString){
+					EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
+				}
+			}
+
+			memcpy(*pString, pdu.val.v_str+1, *bufSize);
 		} else{
 			ret = EPS_ERR_COMM_ERROR;
 		}
 	}
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	EPS_RETURN( ret )
 }
 
-#ifdef GCOMSW_CMD_ESCPAGE
-EPS_ERR_CODE snmpGetPMString_Page(
+
+EPS_ERR_CODE BlkInfoCommand(
 								  
 		const EPS_PRINTER_INN*	printer, 
- 		EPS_INT32               type,
-        EPS_UINT8*              pString,
+ 		EPS_INT32               cmd,
+        EPS_UINT8**             pResult,
+		EPS_INT32*              bufSize
+
+){
+	EPS_ERR_CODE ret = EPS_ERR_NONE;
+	EPS_SOCKET  sock = EPS_INVALID_SOCKET;
+	ASN_VARIANT pdu;
+	EPS_INT8	cOid[SNMP_MAX_OID];
+    EPS_INT32 packetSize = 0;
+    EPS_INT32 packetNum = 0;
+    EPS_INT32 rspSize = 0;
+    EPS_INT32 totalRespSize = 0;
+    EPS_INT32 n = 0;
+
+	EPS_LOG_FUNCIN
+
+	if(NULL == *pResult && 0 == *bufSize){
+		*pResult = (EPS_UINT8*)EPS_ALLOC(EPS_PM_BASESIZE);
+		if(NULL == *pResult){
+			EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
+		}
+		*bufSize = EPS_PM_BASESIZE;
+	}
+
+	ret = snmpOpenSocket(&sock);
+	if(EPS_ERR_NONE != ret){
+		EPS_RETURN( ret );
+	}
+
+	/* step 1: get reply size */
+	switch(cmd){
+    case EPS_CBTCOM_PM3:
+		sprintf(cOid, "%s.1.%d.%d.%d.%d.%d.%d.%d.%d.%d", s_oidPrvCtrl, 'p', 'm', 0x05, 0x00, 0x03,
+						0x00, 0x00, (*bufSize) & 0xFF, ((*bufSize) >> 8) & 0xFF );
+		break;
+	default:
+		EPS_RETURN( EPS_ERR_OPR_FAIL )
+	}
+
+	memset(&pdu, 0, sizeof(pdu));
+
+	ret = snmpTransactS(sock, printer->location, EPSNET_RECV_TIMEOUT, 
+						cOid, ASN_PDU_GET, "public", NULL, &pdu);
+	if(EPS_ERR_NONE != ret){
+		snmpCloseSocket(&sock);
+		EPS_SAFE_RELEASE(*pResult);
+		*bufSize = 0;
+		EPS_RETURN( ret );
+	}
+	if( ASN_VT_OCTET_STRING != pdu.type ){
+		ret = EPS_ERR_COMM_ERROR;
+	} else if(pdu.length < 8
+		|| 0 == memcmp(&pdu.val.v_str[1], "pm:;\x0C", 5)
+		|| 0 == memcmp(&pdu.val.v_str[1], "pm:NA;\x0C", 7))
+	{
+		ret = EPS_ERR_PRINTER_NOT_SUPPORTED;
+	} else if(pdu.length < 10 
+		|| 0 == memcmp(&pdu.val.v_str[1], "pm:BUSY;\x0C", 9) )
+	{
+		ret = EPS_ERR_COMM_ERROR;
+	} else if(pdu.length < 14){ /* unknown response */
+		ret = EPS_ERR_PRINTER_NOT_SUPPORTED;
+	}
+
+	if(EPS_ERR_NONE != ret){
+		snmpCloseSocket(&sock);
+		EPS_SAFE_RELEASE(*pResult);
+		*bufSize = 0;
+		EPS_RETURN( ret );
+	}
+	
+	packetNum = ((EPS_UINT32)pdu.val.v_str[9] & 0xFF) + ((EPS_UINT32)pdu.val.v_str[10]<<8);
+	packetSize= ((EPS_UINT32)pdu.val.v_str[11] & 0xFF) + ((EPS_UINT32)pdu.val.v_str[12]<<8);
+
+	EPS_MEM_GROW(EPS_UINT8*, *pResult, bufSize, packetNum*packetSize )
+	if(NULL == *pResult){
+		EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
+	}
+
+	/* step 2: send command */
+	for(n = 1; n <= packetNum && EPS_ERR_NONE == ret; n++ ){
+		if(EPS_CBTCOM_PM3 == cmd){
+			sprintf(cOid, "%s.1.%d.%d.%d.%d.%d.%d.%d.%d.%d", s_oidPrvCtrl, 'p', 'm', 
+							0x05, 0x00, 0x03,
+							(n)  & 0xFF, ((n)  >> 8) & 0xFF, 
+							(packetSize) & 0xFF, ((packetSize) >> 8) & 0xFF);
+		} else{
+			ret = EPS_ERR_OPR_FAIL;
+			break;
+		}
+
+		ret = snmpTransactS(sock, printer->location, EPSNET_RECV_TIMEOUT, 
+						cOid, ASN_PDU_GET, "public", NULL, &pdu);
+		if( EPS_ERR_NONE != ret ){
+			break;
+		}
+		if( ASN_VT_OCTET_STRING != pdu.type ){
+			ret = EPS_ERR_COMM_ERROR;
+			break;
+		} else if(pdu.length < 8
+			|| 0 == memcmp(&pdu.val.v_str[1], "pm:;\x0C", 5)
+			|| 0 == memcmp(&pdu.val.v_str[1], "pm:NA;\x0C", 7))
+		{
+			ret = EPS_ERR_PRINTER_NOT_SUPPORTED;
+			break;
+		} else if(pdu.length < 10 
+			|| 0 == memcmp(&pdu.val.v_str[1], "pm:BUSY;\x0C", 9) )
+		{
+			ret = EPS_ERR_COMM_ERROR;
+			break;
+		}
+
+		rspSize = ((EPS_UINT32)pdu.val.v_str[17] & 0xFF) + ((EPS_UINT32)pdu.val.v_str[18]<<8);
+		if(*bufSize < rspSize + totalRespSize){
+			ret = EPS_ERR_OPR_FAIL; /* buffer not enough */
+			break;
+		}
+
+		memcpy(*pResult+totalRespSize, pdu.val.v_str+23, rspSize);
+		totalRespSize += rspSize;
+
+		EPS_SNMP_REREASE_VARIANT( pdu );
+	}
+	snmpCloseSocket(&sock);
+
+	if(EPS_ERR_NONE == ret){
+		*bufSize = totalRespSize;
+	} else{
+		EPS_SAFE_RELEASE(*pResult);
+		*bufSize = 0;
+	}
+
+	EPS_RETURN( ret )
+}
+
+
+#ifdef GCOMSW_CMD_ESCPAGE
+EPS_ERR_CODE snmpInfoCommand_Page(
+								  
+		const EPS_PRINTER_INN*	printer, 
+ 		EPS_INT32               cmd,
+        EPS_UINT8**             pString,
+		EPS_INT32*              bufSize
+
+){
+	EPS_ERR_CODE ret = EPS_ERR_NONE;
+
+	EPS_LOG_FUNCIN
+	switch(cmd){
+    case EPS_CBTCOM_ST:
+		{
+			EPS_STATUS_INFO pstInfo;
+			ret = snmpGetInkInfo_Page(printer->location, &pstInfo);
+			if(EPS_ERR_NONE == ret){
+				EPS_INT32 bufferSize = 15 + 3 * pstInfo.nInkNo;
+				EPS_INT32 i;
+				EPS_UINT8* p;
+				if(NULL == *pString && 0 == *bufSize){
+					*pString = (EPS_UINT8*)EPS_ALLOC(bufferSize);
+					if(NULL == *pString){
+						EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
+					}
+				}
+				*bufSize = bufferSize;
+
+				memcpy(*pString, "\x40\x42\x44\x43\x20\x53\x54\x32\x0D\x0A\x22\x00"
+								 "\x0F\x00\x03", 15);
+				*(*pString+13) = 1 + 3 * pstInfo.nInkNo;
+				p = *pString+15;
+				for(i = 0; i < pstInfo.nInkNo; i++){
+					*(p++) = 0;
+					*(p++) = pstInfo.nColorType[i];
+					*(p++) = pstInfo.nColor[i];
+				}
+			}
+		}
+		break;
+    case EPS_CBTCOM_PM:
+    case EPS_CBTCOM_PM2:
+		ret = snmpInfoCommand_PagePM(printer, cmd, pString, bufSize);
+		break;
+	default:
+		EPS_RETURN( EPS_ERR_PROTOCOL_NOT_SUPPORTED )
+	}
+    
+	EPS_RETURN( ret )
+}
+
+EPS_ERR_CODE snmpInfoCommand_PagePM(
+								  
+		const EPS_PRINTER_INN*	printer, 
+ 		EPS_INT32               cmd,
+        EPS_UINT8**             pString,
 		EPS_INT32*              bufSize
 
 ){
 	EPS_ERR_CODE ret = EPS_ERR_NONE;
 	ASN_VARIANT pdu;
 	EPS_SOCKET	soc;
-	EPS_UINT32 paperSource = EPS_MPID_AUTO;
+	EPS_UINT32 paperSource = EPS_MPID_NOT_SPEC;
 
 	EPS_LOG_FUNCIN
+
+	(void)cmd;
 
 	/* walk MarkerLevel record for enum paper tray */
 	*bufSize = 0;
@@ -1056,21 +1414,36 @@ EPS_ERR_CODE snmpGetPMString_Page(
 	ret = SnmpWalkMib(soc, printer->location, s_oidInputName, &pdu);
 	while(EPS_ERR_NONE == ret){
 		if(ASN_VT_OCTET_STRING == pdu.type){
-			if( strncmp(pdu.val.v_str, "MP Tray", pdu.length) == 0 ){
+			/*EPS_DBGPRINT(("%s", pdu.val.v_str));*/
+			if( strncmp(pdu.val.v_str, "MP Tray", Min(pdu.length, 7)) == 0 ||
+				strncmp(pdu.val.v_str, "MSI", Min(pdu.length, 3)) == 0)
+			{
 				paperSource |= EPS_MPID_MPTRAY;
-			} else if( strncmp(pdu.val.v_str, "LC1", pdu.length) == 0 ){
+			} else if( strncmp(pdu.val.v_str, "LC1", Min(pdu.length, 3)) == 0 || 
+						strncmp(pdu.val.v_str, "Tray 1", Min(pdu.length, 6)) == 0 ||
+						strncmp(pdu.val.v_str, "TRAY 1", Min(pdu.length, 6)) == 0)
+			{
 				paperSource |= EPS_MPID_FRONT1;
-			} else if( strncmp(pdu.val.v_str, "LC2", pdu.length) == 0 ){
+			} else if( strncmp(pdu.val.v_str, "LC2", Min(pdu.length, 3)) == 0 || 
+						strncmp(pdu.val.v_str, "Tray 2", Min(pdu.length, 6)) == 0 ||
+						strncmp(pdu.val.v_str, "TRAY 2", Min(pdu.length, 6)) == 0)
+			{
 				paperSource |= EPS_MPID_FRONT2;
-			} else if( strncmp(pdu.val.v_str, "LC3", pdu.length) == 0 ){
+			} else if( strncmp(pdu.val.v_str, "LC3", Min(pdu.length, 3)) == 0 || 
+						strncmp(pdu.val.v_str, "Tray 3", Min(pdu.length, 6)) == 0 ||
+						strncmp(pdu.val.v_str, "TRAY 3", Min(pdu.length, 6)) == 0)
+			{
 				paperSource |= EPS_MPID_FRONT3;
-			} else if( strncmp(pdu.val.v_str, "LC4", pdu.length) == 0 ){
+			} else if( strncmp(pdu.val.v_str, "LC4", Min(pdu.length, 3)) == 0 || 
+						strncmp(pdu.val.v_str, "Tray 4", Min(pdu.length, 6)) == 0 ||
+						strncmp(pdu.val.v_str, "TRAY 4", Min(pdu.length, 6)) == 0)
+			{
 				paperSource |= EPS_MPID_FRONT4;
 			}
 		}
 
 		/* next */
-		EPS_REREASE_VARIANT( pdu );
+		EPS_SNMP_REREASE_VARIANT( pdu );
 		ret = SnmpWalkMib(soc, printer->location, NULL, &pdu);
 	}
 
@@ -1083,8 +1456,14 @@ EPS_ERR_CODE snmpGetPMString_Page(
 	snmpCloseSocket(&soc);
 
 	if(EPS_ERR_NONE == ret){
+		if(NULL == *pString && 0 == *bufSize){
+			*pString = (EPS_UINT8*)EPS_ALLOC(sizeof(EPS_UINT32));
+			if(NULL == *pString){
+				EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )
+			}
+		}
 		*bufSize = sizeof(EPS_UINT32);
-		memcpy(pString, &paperSource, sizeof(EPS_UINT32));
+		memcpy(*pString, &paperSource, sizeof(EPS_UINT32));
 	}
 		
 	EPS_RETURN( ret )
@@ -1140,7 +1519,7 @@ EPS_LOG_FUNCIN
 	ret = SnmpTransact(printer->location, EPSNET_RECV_TIMEOUT, cOid, ASN_PDU_GET, &pdu);
 
 	if( EPS_ERR_NONE == ret ){
-		EPS_DBGPRINT(("%s\n", pdu.val.v_str+1))
+		/*EPS_DBGPRINT(("%s\n", pdu.val.v_str+1))*/
 		if( (ASN_VT_OCTET_STRING == pdu.type) &&
 			(strstr(pdu.val.v_str+1,"OK") != NULL) ){
 			ret = EPS_ERR_NONE;
@@ -1149,7 +1528,7 @@ EPS_LOG_FUNCIN
 		}
 	}
 
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	EPS_RETURN( ret )
 }
@@ -1219,7 +1598,7 @@ EPS_LOG_FUNCIN
 		EPS_RETURN( ret )
 	}
 
-	ret = SnmpTransactS(soc, address, recvtimeout, oid, request, pdu);
+	ret = snmpTransactS(soc, address, recvtimeout, oid, request, SNMP_COMMUNITY_STR, NULL, pdu);
 
 	snmpCloseSocket(&soc);
 
@@ -1227,29 +1606,40 @@ EPS_LOG_FUNCIN
 }
 
 
-static EPS_ERR_CODE SnmpTransactS(
+EPS_ERR_CODE snmpTransactS(
 								 
 		EPS_SOCKET sock, 
 		const EPS_INT8* address, 
 		EPS_INT32  recvtimeout,
 		const EPS_INT8* oid, 
-		EPS_UINT8       request,
-		ASN_VARIANT* pdu
+		EPS_UINT8       command,
+		const EPS_INT8* community, 
+		const ASN_VARIANT* requestVal,
+		ASN_VARIANT* responseVal
 		
 ){
 	EPS_ERR_CODE ret = EPS_ERR_NONE;
-	EPS_UINT8	nRqID = 0;
+	EPS_SNMP_VARBIND	request;
+	EPS_INT32	nRqID = 0;
 	EPS_INT32	nSize = 0;
 	EPS_INT32	nRecvSize = 0;
 
 EPS_LOG_FUNCIN
 
-	memset(pdu, 0, sizeof(ASN_VARIANT));
+	if(NULL != responseVal){
+		memset(responseVal, 0, sizeof(ASN_VARIANT));
+	}
 
 	/* Create GetStatus command															*/
-	nRqID = GetRequestId();
-	if( EPS_ERR_NONE != (ret = CreateCommand(g_TrnBuff, request, nRqID,
-										oid, &nSize)) ){
+	nRqID = snmpGetRequestId();
+	request.identifire = oid;
+	if(NULL == requestVal){
+		request.value.type = ASN_VT_NULL;
+	} else{
+		request.value = *requestVal;
+	}
+	if( EPS_ERR_NONE != (ret = CreateCommand(g_TrnBuff, command, community,
+										nRqID, &request, 1, &nSize)) ){
 		EPS_RETURN( ret )
 	}
 
@@ -1261,17 +1651,19 @@ EPS_LOG_FUNCIN
 
 	ret = EPS_COM_READ_MORE;
 	while(ret == EPS_COM_READ_MORE){
-		/* Wireless network always send pair message and receive. 
+		/* Wireless network send pair message and receive. 
 		   This behave make probrem that receive befor message. If it occur, try receive once.*/
 		nRecvSize = epsNetFnc.receive( sock, g_TrnBuff, SNMP_MAX_BUF, recvtimeout ); 
 		if( 0 >= nRecvSize ){							/* Error Occur or Not Recieve   */
 			EPS_RETURN( EPS_ERR_COMM_ERROR )
 		}
-		ret = GetPDU(g_TrnBuff, nRecvSize, nRqID, oid, pdu, NULL, 0);
+		ret = ParseResponse(g_TrnBuff, nRecvSize, nRqID, oid, responseVal, NULL, 0);
 	}
 
 	if( EPS_ERR_NONE != ret ){
-		EPS_REREASE_VARIANT( *pdu );
+		if(NULL != responseVal){
+			EPS_SNMP_REREASE_VARIANT( *responseVal );
+		}
 		if(EPS_COM_NEXT_RECORD == ret){
 			ret = EPS_ERR_COMM_ERROR;
 		}
@@ -1312,7 +1704,8 @@ static EPS_ERR_CODE SnmpWalkMib(
 		
 ){
 	EPS_ERR_CODE ret = EPS_ERR_NONE;
-	EPS_UINT8	nRqID = 0;
+	EPS_SNMP_VARBIND	request;
+	EPS_INT32	nRqID = 0;
 	EPS_INT32	nSize = 0;
 	EPS_INT32	nRecvSize = 0;
 	static EPS_INT8    orgObjID[SNMP_OBJID_LEN];
@@ -1323,12 +1716,14 @@ EPS_LOG_FUNCIN
 	memset(pdu, 0, sizeof(ASN_VARIANT));
 
 	/* Create command */
-	nRqID = GetRequestId();
+	nRqID = snmpGetRequestId();
 	if( oid ){
 		strcpy(orgObjID, oid);
 		strcpy(nextObjID, oid);
 	}
-	ret = CreateCommand(g_TrnBuff, ASN_PDU_GET_NEXT, nRqID, nextObjID, &nSize);
+	request.identifire = nextObjID;
+	request.value.type = ASN_VT_NULL;
+	ret = CreateCommand(g_TrnBuff, ASN_PDU_GET_NEXT, SNMP_COMMUNITY_STR, nRqID, &request, 1, &nSize);
 	if( EPS_ERR_NONE != ret){
 		EPS_RETURN( ret )
 	}
@@ -1347,11 +1742,11 @@ EPS_LOG_FUNCIN
 		if( 0 >= nRecvSize ){							/* Error Occur or Not Recieve   */
 			EPS_RETURN( EPS_ERR_COMM_ERROR )
 		}
-		ret = GetPDU(g_TrnBuff, nRecvSize, nRqID, orgObjID, pdu, nextObjID, SNMP_OBJID_LEN);
+		ret = ParseResponse(g_TrnBuff, nRecvSize, nRqID, orgObjID, pdu, nextObjID, SNMP_OBJID_LEN);
 	}
 
 	if( EPS_ERR_NONE != ret ){
-		EPS_REREASE_VARIANT( *pdu );
+		EPS_SNMP_REREASE_VARIANT( *pdu );
 	}
 
 	EPS_RETURN( ret )
@@ -1390,45 +1785,49 @@ static EPS_ERR_CODE mibGetPhysAddress(
 	ASN_VARIANT  pdu;
 	EPS_UINT8    *p;
 	EPS_UINT32	 i;
+	EPS_SOCKET	 sckTmp;
 
 	EPS_LOG_FUNCIN
 
-	memset(&pdu, 0, sizeof(pdu));
-	ret = SnmpTransact(address, EPSNET_RECV_TIMEOUT, s_oidPhysAddress, ASN_PDU_GET_NEXT, &pdu);
-
+	ret = snmpOpenSocket(&sckTmp);
 	if( EPS_ERR_NONE != ret ){
-		ret = EPS_ERR_COMM_ERROR;
-		goto mibGetPhysAddress_END;
-	}
-	if(ASN_VT_OCTET_STRING != pdu.type){
-		ret = EPS_ERR_COMM_ERROR;
-		goto mibGetPhysAddress_END;
+		EPS_RETURN( EPS_ERR_COMM_ERROR )
 	}
 
-	/* convert to string */
-	p = (EPS_UINT8*)val;
-	vallen -= 2;
-	for(i = 0; i < pdu.length && i < vallen; i++ ){
-		*p = ((EPS_UINT8)pdu.val.v_str[i] >> 4);
-		if(*p < 10){
-			*p += 0x30;
-		} else{
-			*p += 0x37;
+	/* walk Tcp port record */
+	ret = SnmpWalkMib(sckTmp, address, s_oidPhysAddress, &pdu);
+	while(EPS_ERR_NONE == ret){
+		if(ASN_VT_OCTET_STRING == pdu.type && pdu.length > 0){
+			/* convert to string */
+			p = (EPS_UINT8*)val;
+			vallen -= 2;
+			for(i = 0; i < pdu.length && i < vallen; i++ ){
+				*p = ((EPS_UINT8)pdu.val.v_str[i] >> 4);
+				if(*p < 10){
+					*p += 0x30;
+				} else{
+					*p += 0x37;
+				}
+				p++;
+
+				*p = ((EPS_UINT8)pdu.val.v_str[i] & 0x0F);
+				if(*p < 10){
+					*p += 0x30;
+				} else{
+					*p += 0x37;
+				}
+				p++;
+			}
+			*p = '\0';
+			break;
 		}
-		p++;
-
-		*p = ((EPS_UINT8)pdu.val.v_str[i] & 0x0F);
-		if(*p < 10){
-			*p += 0x30;
-		} else{
-			*p += 0x37;
-		}
-		p++;
+		/* next */
+		EPS_SNMP_REREASE_VARIANT( pdu );
+		ret = SnmpWalkMib(sckTmp, address, NULL, &pdu);
 	}
-	*p = '\0';
 
-mibGetPhysAddress_END:
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
+	snmpCloseSocket(&sckTmp);
 
 	EPS_RETURN( ret )
 }
@@ -1475,17 +1874,74 @@ static EPS_ERR_CODE mibConfirmPrintPort(
 	ret = SnmpWalkMib(sckTmp, address, s_oidTcpConnLocalPort, &pdu);
 	while(EPS_ERR_NONE == ret){
 		if(ASN_VT_INTEGER == pdu.type){
-			EPS_DBGPRINT(("pdu.val.v_long = %d, %d\n", printPort, pdu.val.v_long));
+			/*EPS_DBGPRINT(("pdu.val.v_long = %d, %d\n", printPort, pdu.val.v_long));*/
 			if( printPort == pdu.val.v_long) {
 				break;
 			}
 		}
 		/* next */
-		EPS_REREASE_VARIANT( pdu );
+		EPS_SNMP_REREASE_VARIANT( pdu );
 		ret = SnmpWalkMib(sckTmp, address, NULL, &pdu);
 	}
 
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
+	snmpCloseSocket(&sckTmp);
+
+	EPS_RETURN( ret )
+}
+
+/*******************************************|********************************************/
+/*                                                                                      */
+/* Function name:     mibGetLanguage() 													*/
+/*                                                                                      */
+/* Arguments                                                                            */
+/* ---------                                                                            */
+/* Name:        Type:               Description:                                        */
+/* printPort	EPS_UINT16		    I: print port                                       */
+/*                                                                                      */
+/* Return value:																		*/
+/*      EPS_ERR_NONE					- Success			                            */
+/*      EPS_ERR_MEMORY_ALLOCATION       - Failed to allocate memory                     */
+/*      EPS_ERR_COMM_ERROR              - Communication Error                           */
+/*      EPS_COM_TINEOUT                 - Receive timeout                               */
+/*      EPS_COM_NEXT_RECORD             - got next recode                               */
+/*                                                                                      */
+/* Description:                                                                         */
+/*      Confirm whether can use Print-port.												*/
+/*                                                                                      */
+/*******************************************|********************************************/
+static EPS_ERR_CODE mibGetLanguage(
+						
+		const EPS_INT8*		address, 
+		EPS_UINT32*			lang
+		
+){
+	EPS_ERR_CODE ret = EPS_ERR_NONE;
+	EPS_SOCKET	 sckTmp;
+	ASN_VARIANT  pdu;
+
+	EPS_LOG_FUNCIN
+		
+	ret = snmpOpenSocket(&sckTmp);
+	if( EPS_ERR_NONE != ret ){
+		EPS_RETURN( EPS_ERR_COMM_ERROR )
+	}
+
+	ret = SnmpWalkMib(sckTmp, address, s_oidInterpreterDescription, &pdu);
+	while(EPS_ERR_NONE == ret){
+		if(ASN_VT_OCTET_STRING == pdu.type && pdu.length > 0){
+			pdu.val.v_str[pdu.length] = '\0';
+			/*EPS_DBGPRINT(("lang = %s\n", pdu.val.v_str));*/
+			if( serCheckLang(pdu.val.v_str, lang) ) {
+				break;
+			}
+		}
+		/* next */
+		EPS_SNMP_REREASE_VARIANT( pdu );
+		ret = SnmpWalkMib(sckTmp, address, NULL, &pdu);
+	}
+
+	EPS_SNMP_REREASE_VARIANT( pdu );
 	snmpCloseSocket(&sckTmp);
 
 	EPS_RETURN( ret )
@@ -1545,7 +2001,7 @@ static EPS_ERR_CODE mibGetMaxMediaXFeedDir(
 	*val = pdu.val.v_long;
 
 mibGetMaxMediaXFeedDir_END:
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 
 	EPS_RETURN( ret )
 }
@@ -1596,7 +2052,10 @@ static EPS_ERR_CODE SnmpFindRecv(
 	EPS_UINT16  nFromPort = 0;							/* Remote Port					*/
 	EPS_INT32	cmdLevel = 0;
 	EPS_INT8    idString[EPS_PRNID_BUFFSIZE];
-	EPS_INT8    devidString[SNMP_MAX_BUF];
+	EPS_INT8    infoBuf[SNMP_MAX_BUF];
+	EPS_UINT8*	pInfoBuf = (EPS_UINT8*)&infoBuf[0];
+	EPS_INT32   infoBufSize = SNMP_MAX_BUF;
+	EPS_INT32   devIdRes = 0;
 
 	EPS_LOG_FUNCIN
 
@@ -1618,17 +2077,18 @@ static EPS_ERR_CODE SnmpFindRecv(
 		goto SnmpFindRecv_END;
 	}
 	/* Existing check */
-	EPS_DBGPRINT(("%s\n", sFromAdder))
+	/*EPS_DBGPRINT(("rcv : %s\n", sFromAdder))*/
 	if( prtIsRegistered(sFromAdder, NULL, printProtocol) ){
 		ret = EPS_ERR_PRINTER_NOT_FOUND;
 		goto SnmpFindRecv_END;
 	}
 
 	/* parse value */
-	ret = GetPDU(pRecvBuf, nRecvSize, 0, s_oidPrvPrinter, &pdu, NULL, 0);
+	ret = ParseResponse(pRecvBuf, nRecvSize, 0, NULL, &pdu, NULL, 0);
 	if( EPS_COM_ERR_REPLY   == ret ||
 		EPS_COM_READ_MORE   == ret ||
 		EPS_COM_NEXT_RECORD == ret ||
+		EPS_ERR_PRINTER_NOT_SUPPORTED == ret ||
 		EPS_ERR_COMM_ERROR  == ret ){
 		ret = EPS_ERR_PRINTER_NOT_USEFUL;
 	}
@@ -1639,9 +2099,9 @@ static EPS_ERR_CODE SnmpFindRecv(
 		ret = EPS_ERR_PRINTER_NOT_USEFUL;
 		goto SnmpFindRecv_END;
 	}
-	memset(devidString, 0, sizeof(devidString));
-	strncpy(devidString, pdu.val.v_str, Min(pdu.length, SNMP_MAX_BUF-1));
-	devidString[Min(pdu.length, SNMP_MAX_BUF-1)] = 0;
+	memset(infoBuf, 0, sizeof(infoBuf));
+	strncpy(infoBuf, pdu.val.v_str, Min(pdu.length, SNMP_MAX_BUF-1));
+	infoBuf[Min(pdu.length, SNMP_MAX_BUF-1)] = 0;
 
 	/* Create printer data															    */
 	*printer = (EPS_PRINTER_INN*)EPS_ALLOC( sizeof(EPS_PRINTER_INN) );
@@ -1651,11 +2111,21 @@ static EPS_ERR_CODE SnmpFindRecv(
 	}
 	memset( *printer, 0, sizeof(EPS_PRINTER_INN) );
 
-	if( !serParseDeviceID(devidString, (*printer)->manufacturerName, (*printer)->modelName, 
-										&cmdLevel, &(*printer)->language) ){
+	devIdRes = serParseDeviceID(infoBuf, (EPS_INT32)strlen(infoBuf),
+								(*printer)->manufacturerName, (*printer)->modelName, 
+								&cmdLevel, &(*printer)->language,  &(*printer)->egID);
+	if( -1 == devIdRes ){
 		ret = EPS_ERR_PRINTER_NOT_USEFUL;				/* Not ESC/P-R,ESC/Page Printer */
 		goto SnmpFindRecv_END;
+	} else if( 0 == devIdRes ){
+		ret = mibGetLanguage(sFromAdder, &(*printer)->language);
+		if( EPS_ERR_NONE != ret ){
+			ret = EPS_ERR_PRINTER_NOT_USEFUL;
+			goto SnmpFindRecv_END;
+		}
+		cmdLevel = 1; /* default support */
 	}
+
 	if( EPS_PROTOCOL_LPR != printProtocol ){
 		if( EPS_LANG_ESCPR != (*printer)->language ){
 			ret = EPS_ERR_PRINTER_NOT_USEFUL;	/* Page Printer Not support via Raw */
@@ -1663,26 +2133,36 @@ static EPS_ERR_CODE SnmpFindRecv(
 		}
 	}
 
-	switch(cmdLevel){
-	case 0: /* Support all. For Uin communication  */
-	case 2:
+	if(0 == cmdLevel){
+		cmdLevel = 0xFFFFFFFF;	/* Support all. For Uin communication  */
+	}
+	(*printer)->supportFunc |= EPS_SPF_RGBPRINT; /* RGB print */
+	if(cmdLevel & 0x0002){
 		(*printer)->supportFunc |= EPS_SPF_JPGPRINT; /* Jpeg print */
-	case 1:
-		(*printer)->supportFunc |= EPS_SPF_RGBPRINT; /* RGB print */
 	}
 
 	(*printer)->protocol = printProtocol;
 	(*printer)->printPort = printPort;
 	strcpy( (*printer)->location, sFromAdder );
 
+	if( isFindCanceled() ){
+		ret = EPS_ERR_PRINTER_NOT_FOUND;
+		goto SnmpFindRecv_END;
+	}
+
 	/* confirm whether can use Print-port */
 	if( 0 != printPort && EPS_LANG_ESCPR == (*printer)->language){
-		EPS_DBGPRINT(("mibConfirmPrintPort\n"))
+		/*EPS_DBGPRINT(("mibConfirmPrintPort\n"))*/
 		ret = mibConfirmPrintPort(sFromAdder, printPort);
 		if( EPS_ERR_NONE != ret ){
 			ret = EPS_ERR_PRINTER_NOT_USEFUL;
 			goto SnmpFindRecv_END;
 		}
+	}
+
+	if( isFindCanceled() ){
+		ret = EPS_ERR_PRINTER_NOT_FOUND;
+		goto SnmpFindRecv_END;
 	}
 
 	/* Get mac address */
@@ -1691,7 +2171,6 @@ static EPS_ERR_CODE SnmpFindRecv(
 		ret = EPS_ERR_PRINTER_NOT_USEFUL;
 		goto SnmpFindRecv_END;
 	}
-	
 	if( NULL != compSysName && NULL != compName){
 		/* compaire name */
 		if( strcmp(compSysName, (*printer)->macAddress) ||
@@ -1702,8 +2181,35 @@ static EPS_ERR_CODE SnmpFindRecv(
 		}
 	}
 
+	/* Get serial number */
+	if( EPS_LANG_ESCPR == (*printer)->language ){
+		/* from st */
+		ret = SnmpTransact(sFromAdder, EPSNET_STAT_RECV_TIMEOUT, 
+							s_oidPrvStatus, ASN_PDU_GET_NEXT, &pdu);
+		if(EPS_ERR_NONE == ret){
+			ret = serGetSerialNoFormST(pdu.val.v_str, (*printer)->serialNo, EPS_ADDR_BUFFSIZE);
+		}
+		
+		if(EPS_ERR_NONE != ret){
+			/* from cd */
+			memset(infoBuf, 0, sizeof(infoBuf));
+			infoBufSize = sizeof(infoBuf);
+			ret = snmpInfoCommand( *printer, EPS_CBTCOM_CD, &pInfoBuf, &infoBufSize);
+			if(EPS_ERR_NONE == ret){
+				/*ret = */serGetSerialNo(infoBuf, infoBufSize, (*printer)->serialNo);
+			} else{
+				ret = EPS_ERR_NONE; /* ignoure */
+			}
+		}
+	}
+
+	if( isFindCanceled() ){
+		ret = EPS_ERR_PRINTER_NOT_FOUND;
+		goto SnmpFindRecv_END;
+	}
+
 	/* Get friendly name */
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 	ret = SnmpTransact(sFromAdder, EPSNET_RECV_TIMEOUT, s_oidPrvBonjourName, ASN_PDU_GET_NEXT, &pdu);
 	if( EPS_ERR_NONE == ret && ASN_VT_OCTET_STRING == pdu.type){
 		if(pdu.length < EPS_NAME_BUFFSIZE-1){
@@ -1726,16 +2232,39 @@ static EPS_ERR_CODE SnmpFindRecv(
 		}
 	}
 #endif
+#ifdef GCOMSW_CMD_PCL
+	if( EPS_LANG_PCL == (*printer)->language ){
+		EPS_STATUS_INFO stInfo;
+		(*printer)->language = EPS_LANG_PCL_COLOR;	/* default: color */
+		if(EPS_ERR_NONE == snmpGetInkInfo_Page((*printer)->location, &stInfo) ){
+			if(1 == stInfo.nInkNo ){
+				(*printer)->language = EPS_LANG_PCL;/* mono */
+			}
+		}
+	}
+#endif
 
 /*** Return to Caller                                                                   */
 SnmpFindRecv_END:
-	EPS_REREASE_VARIANT( pdu );
+	EPS_SNMP_REREASE_VARIANT( pdu );
 	EPS_SAFE_RELEASE( pRecvBuf );
 	if(EPS_ERR_NONE != ret){
 		EPS_SAFE_RELEASE( *printer );
 	}
 
 	EPS_RETURN( ret )
+}
+
+static EPS_BOOL isFindCanceled()
+{
+	EPS_BOOL canceled = FALSE;
+	if( epsCmnFnc.lockSync && epsCmnFnc.unlockSync ){
+		if( 0 == epsCmnFnc.lockSync() ){
+			canceled = g_FindBreak;
+			epsCmnFnc.unlockSync();
+		}
+	}
+	return canceled;
 }
 
 
@@ -1748,7 +2277,7 @@ SnmpFindRecv_END:
 /* Name:        Type:               Description:                                        */
 /* pBuf	        EPS_INT8*           O: SNMP request buffer                              */
 /* nPDUType     EPS_UINT8           I: PDU type                                         */
-/* nRqID        EPS_UINT8           I: SNMP request ID                                  */
+/* nRqID        EPS_INT32           I: SNMP request ID                                  */
 /* psIdentifire EPS_INT8*           I: MIB number string                                */
 /* pDataSize    EPS_INT32*          O: SNMP request buffer size                         */
 /*                                                                                      */
@@ -1764,53 +2293,100 @@ static EPS_ERR_CODE  CreateCommand(
 								   
 		EPS_INT8*   pBuff, 
 		EPS_UINT8   nPDUType, 
-		EPS_UINT8   nRqID, 
-		const EPS_INT8*   psIdentifire, 
+		const EPS_INT8*   community, 
+		EPS_INT32   nRqID, 
+		const EPS_SNMP_VARBIND*   reqObjs, 
+		EPS_INT32   objNum,
+		EPS_INT32*  pDataSize
+		
+){
+	EPS_ERR_CODE ret = EPS_ERR_NONE;
+	EPS_INT8*	pPos = pBuff;
+
+	/* version */
+	pPos = snmpMakeIntField(SNMP_VERSION, pPos);
+	/* Community */
+	pPos = snmpMakeStrField(community, (EPS_UINT32)strlen(community), pPos);
+
+	ret = snmpCreatePDU(pPos, nPDUType, nRqID, reqObjs, objNum, pDataSize);
+		
+	/* Set All Seupence */
+	*pDataSize += (EPS_INT32)(pPos - pBuff);
+	ret = MakeSequens(pBuff, (EPS_UINT32*)pDataSize, TRUE);
+
+	return ret;
+}
+
+EPS_ERR_CODE  snmpCreatePDU(
+								   
+		EPS_INT8*   pBuff, 
+		EPS_UINT8   nPDUType, 
+		EPS_INT32   nRqID, 
+		const EPS_SNMP_VARBIND*   reqObjs, 
+		EPS_INT32   objNum,
 		EPS_INT32*  pDataSize
 		
 ){
 	EPS_ERR_CODE ret = EPS_ERR_NONE;
 	EPS_INT8*	pPos = pBuff;
 	EPS_INT8*	pPDUTop = NULL;
+	EPS_INT8*	pObjectsTop = NULL;
 	EPS_INT8*	pObjTop = NULL;
 	EPS_UINT32	nLen = 0;
+	EPS_INT32	n = 0;
 
-	/* version */
-	pPos = MakeIntField(SNMP_VERSION, pPos);
-	/* Community */
-	pPos = MakeStrField(SNMP_COMMUNITY_STR, pPos);
 	/* PDU Type */
 	*(pPos++) = nPDUType;
 	pPDUTop = pPos;
 
 	/* Request ID */
-	pPos = MakeIntField(nRqID, pPos);
-	/* Error Index */
-	pPos = MakeIntField(0, pPos);
+	pPos = snmpMakeIntField(nRqID, pPos);
 	/* Error Status */
-	pPos = MakeIntField(0, pPos);
-	pObjTop = pPos;
+	pPos = snmpMakeIntField(0, pPos);
+	/* Error Index */
+	pPos = snmpMakeIntField(0, pPos);
+	pObjectsTop = pPos;
 
-	/* OID */
-	ret = MakeOidField(psIdentifire, &pPos);
-	/* Value(NULL) */
-	*(pPos++) = ASN_VT_NULL;
-	*(pPos++) = (EPS_INT8)(0);
+	for(n = 0; n < objNum; n++){
+		pObjTop = pPos;
+		/* OID */
+		ret = MakeOidField(reqObjs->identifire, &pPos);
+		switch(reqObjs->value.type){
+		case ASN_VT_INTEGER:
+			pPos = snmpMakeIntField(reqObjs->value.val.v_long, pPos);
+			break;
+		case ASN_VT_OCTET_STRING:
+			pPos = snmpMakeStrField(reqObjs->value.val.v_str, reqObjs->value.length, pPos);
+			break;
+		case ASN_VT_OBJECT_ID:
+			ret = MakeOidField(reqObjs->value.val.v_str, &pPos);
+			break;
+
+		case ASN_VT_SEQUENCE:
+			/* break; not imple */
+		case ASN_VT_NULL:
+		default:
+			*(pPos++) = ASN_VT_NULL;
+			*(pPos++) = (EPS_INT8)(0);
+			break;
+		}
+
+		/* Set Object Seupence */
+		nLen = (EPS_UINT32)(pPos - pObjTop);
+		ret = MakeSequens(pObjTop, &nLen, TRUE);
+		pPos = pObjTop + nLen;
+
+		reqObjs++;
+	}
+	/* Set Object Seupence */
+	nLen = (EPS_UINT32)(pPos - pObjectsTop);
+	ret = MakeSequens(pObjectsTop, &nLen, TRUE);
 
 	/* Set Object Seupence */
-	nLen = (EPS_UINT32)(pPos - pObjTop);
-	ret = MakeSequens(pObjTop, &nLen, TRUE);
-	ret = MakeSequens(pObjTop, &nLen, TRUE);
-
-	/* Set Object Seupence */
-	nLen = (EPS_UINT32)(pObjTop - pPDUTop) + nLen;
+	nLen += (EPS_UINT32)(pObjectsTop - pPDUTop);
 	ret = MakeSequens(pPDUTop, &nLen, FALSE);
 
-	/* Set All Seupence */
-	nLen = (EPS_UINT32)(pPDUTop - pBuff) + nLen;
-	ret = MakeSequens(pBuff, &nLen, TRUE);
-
-	*pDataSize = nLen;
+	*pDataSize = (EPS_INT32)(pPDUTop - pBuff) + nLen;
 
 	return 	ret;
 }
@@ -1818,18 +2394,18 @@ static EPS_ERR_CODE  CreateCommand(
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     GetPDU()                                                          */
+/* Function name:     ParseResponse()                                                   */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
 /* Name:        Type:               Description:                                        */
 /* pBuf	        EPS_INT8*           I: SNMP reply buffer                                */
 /* nBufSize     EPS_INT32           I: SNMP reply buffer size                           */
-/* nRqID        EPS_UINT8           I: SNMP request ID                                  */
+/* nRqID        EPS_INT32           I: SNMP request ID                                  */
 /* pObjID       EPS_INT8*           I: requested OID                                    */
 /* pPDU         ASN_VARIANT*        O: PDU field structure                              */
 /* pResObjID    EPS_INT8*           O: response OID                                     */
-/* nResObjIDSize EPS_INT8*          I: size of pResObjID buffer                         */
+/* nResObjIDSizeEPS_INT32           I: size of pResObjID buffer                         */
 /*                                                                                      */
 /* Return value:                                                                        */
 /*      EPS_ERR_NONE					- Success	                                    */
@@ -1840,11 +2416,10 @@ static EPS_ERR_CODE  CreateCommand(
 /*      Get PDU from SNMP reply.                                                        */
 /*                                                                                      */
 /*******************************************|********************************************/
-static EPS_ERR_CODE GetPDU(
-						   
+static EPS_ERR_CODE ParseResponse(
 		EPS_INT8*   pBuf, 
 		EPS_INT32   nBufSize,
-		EPS_UINT8   nRqID, 
+		EPS_INT32   nRqID, 
 		const EPS_INT8*   pObjID, 
 		ASN_VARIANT *pPDU,
 		EPS_INT8*   pResObjID, 
@@ -1853,7 +2428,7 @@ static EPS_ERR_CODE GetPDU(
 ){
 	EPS_ERR_CODE ret = EPS_ERR_NONE;
 	EPS_UINT32	nAllSize = 0;
-	EPS_UINT32	nSeqSize = 0;
+	EPS_SNMP_PDU response;
 	ASN_VARIANT	vField;
 	EPS_INT32   nDataSize = nBufSize;
 	const EPS_INT8 *pOrg, *pRes;
@@ -1862,8 +2437,8 @@ static EPS_ERR_CODE GetPDU(
 	if(EPS_ERR_NONE != r ){											\
 		EPS_RETURN( r )												\
 	} else 	if( ASN_VT_INTEGER != v.type || n != v.val.v_long ){	\
-		EPS_DBGPRINT(("type=%d / value=%d\n", v.type, v.val.v_long)) \
-		EPS_REREASE_VARIANT( v );									\
+		/*EPS_DBGPRINT(("type=%d / value=%d\n", v.type, v.val.v_long))*/ \
+		EPS_SNMP_REREASE_VARIANT( v );									\
 		EPS_RETURN( EPS_ERR_COMM_ERROR )							\
 	}
 
@@ -1881,18 +2456,96 @@ EPS_LOG_FUNCIN
 	}
 
 	/* check version */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
+	ret = snmpParseField( &pBuf, &nDataSize, &vField );
 	SNMP_CHECK_INTVALUE( ret, vField, SNMP_VERSION );
 
 	/* check community */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
+	ret = snmpParseField( &pBuf, &nDataSize, &vField );
+#if 0 /* skip */
 	if( ASN_VT_OCTET_STRING != vField.type 
 		|| NULL == memStrStrWithLen(vField.val.v_str, vField.length, SNMP_COMMUNITY_STR) ){
-		EPS_REREASE_VARIANT( vField );
+		EPS_SNMP_REREASE_VARIANT( vField );
 		EPS_RETURN( EPS_ERR_COMM_ERROR )
 	}
-	EPS_REREASE_VARIANT( vField );
-	
+#endif
+	EPS_SNMP_REREASE_VARIANT( vField );
+
+	ret = snmpParsePDU(pBuf, nBufSize, &response);
+	if( EPS_ERR_NONE != ret ){
+		EPS_SNMP_REREASE_PDU(response)
+		EPS_RETURN( ret )
+	}
+
+	/* check Request ID */
+	if(nRqID != 0 && nRqID != response.requestID){				
+		if(nRqID > response.requestID ) {
+			/* The data in front of one was received.->retry */
+			ret = EPS_COM_READ_MORE;
+		} else{
+			ret = EPS_ERR_COMM_ERROR;
+		}
+		EPS_SNMP_REREASE_PDU(response)
+		EPS_RETURN( ret )
+	}
+	/* check Error */
+	if(SNMP_ERR_SUCH_NAME == response.errorStatus ){
+		EPS_SNMP_REREASE_PDU(response)
+		EPS_RETURN( EPS_ERR_PRINTER_NOT_SUPPORTED )
+	} else if( SNMP_ERR_NONE != response.errorStatus ){
+		EPS_SNMP_REREASE_PDU(response)
+		EPS_RETURN( EPS_ERR_COMM_ERROR )
+	}
+
+	/* Check response MIB ID */
+	if(pObjID){
+		pOrg = pObjID;
+		pRes = response.var->identifire;
+		while(*pOrg != '\0' && *pRes != '\0'){
+			if( *pOrg++ < *pRes++ ){
+				/*if( strchr(pOrg, '.') != NULL){*/
+					ret = EPS_COM_NEXT_RECORD;
+				/*}  else{ next item } */
+				break;
+			}
+		}
+	}
+	if( pResObjID ){
+		memset(pResObjID, 0, nResObjIDSize);
+		memcpy(pResObjID, response.var->identifire, Min(nResObjIDSize-1, (EPS_INT32)strlen(response.var->identifire)));
+	}
+	/*EPS_DBGPRINT(("\nORG : %s\nRES : %s\n", pObjID, vField.val.v_str))*/
+
+	if(NULL != pPDU){
+		*pPDU = response.var->value;
+	}
+	EPS_SNMP_REREASE_PDU(response)
+
+	EPS_RETURN( ret )
+}
+
+
+EPS_ERR_CODE snmpParsePDU(
+						   
+		EPS_INT8*   pBuf, 
+		EPS_INT32   nBufSize,
+		EPS_SNMP_PDU* pdu
+
+){
+	EPS_ERR_CODE ret = EPS_ERR_NONE;
+	EPS_UINT32	nSeqSize = 0;
+	ASN_VARIANT	vField;
+	EPS_INT32   nDataSize = nBufSize;
+	EPS_INT8    *pVar, *pVarTop, *pVarEnd;
+	EPS_INT32	n = 0;
+
+EPS_LOG_FUNCIN
+
+	memset(pdu, 0, sizeof(EPS_SNMP_PDU));
+
+	vField.length = 0;
+	vField.type = ASN_VT_NULL;
+	vField.val.v_str = NULL;
+
 	/* check PDU Type */
 	if( (EPS_UINT8)(*pBuf) != ASN_PDU_RESP ){
 		EPS_RETURN( EPS_ERR_COMM_ERROR )
@@ -1904,71 +2557,78 @@ EPS_LOG_FUNCIN
 		EPS_RETURN( ret )
 	}
 
-	/* check Request ID */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
-	if(nRqID != vField.val.v_long)
-	{				
-		if(EPS_ERR_NONE != ret )
-		{											
-			EPS_RETURN( ret )
-		} 
-		else if( ASN_VT_INTEGER != vField.type || 
-			(nRqID != 0 && nRqID > vField.val.v_long ) )
-		{	
-			/* The data in front of one was received.->retry */
-			EPS_REREASE_VARIANT( vField );								
-			EPS_RETURN( EPS_COM_READ_MORE )
+	/* Request ID */
+	ret = snmpParseField( &pBuf, &nDataSize, &vField );
+	if(EPS_ERR_NONE != ret ){
+		EPS_RETURN( ret )	
+	}
+	pdu->requestID = vField.val.v_long;
+	if( ASN_VT_INTEGER != vField.type ){	
+		/* The data in front of one was received.->retry */
+		EPS_RETURN( EPS_COM_READ_MORE )
+	}
+
+	/* ErrorStatus */
+	ret = snmpParseField( &pBuf, &nDataSize, &vField );
+	if(EPS_ERR_NONE != ret ){
+		EPS_RETURN( ret )	
+	}
+	pdu->errorStatus = vField.val.v_long;
+
+	/* ErrorIndex */
+	ret = snmpParseField( &pBuf, &nDataSize, &vField );
+	if(EPS_ERR_NONE != ret ){
+		EPS_RETURN( ret )	
+	}
+	pdu->errorIndex = vField.val.v_long;
+
+	/* varBind Length */
+	ret = snmpParseField( &pBuf, &nDataSize, &vField );
+	if(EPS_ERR_NONE != ret ){
+		EPS_RETURN( ret )	
+	}
+	/* varBind count */
+	pVar = pVarTop = pBuf;
+	pVarEnd = pBuf + vField.length;
+	while(pVarEnd > pVar){
+		/* skip Sequence Head */
+		ret = snmpParseField( &pVar, &nDataSize, &vField );
+		if(EPS_ERR_NONE != ret ){
+			EPS_RETURN( ret )	
 		}
+		pVar += vField.length;
+		pdu->varNum++;
+	}
+	pdu->var = (EPS_SNMP_VARBIND*)EPS_ALLOC( sizeof(EPS_SNMP_VARBIND) * pdu->varNum );
+	if(NULL == pdu->var ){
+		EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION )	
 	}
 
-	/* check Error */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
-	SNMP_CHECK_INTVALUE( ret, vField, SNMP_ERR_NONE );
-
-	/* skip Error Index */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
-	if(EPS_ERR_NONE != ret ){
-		EPS_RETURN( ret )	
-	}
-	/* skip Sequence Head */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
-	if(EPS_ERR_NONE != ret ){
-		EPS_RETURN( ret )	
-	}
-	ret = ParseField( &pBuf, &nDataSize, &vField );
-	if(EPS_ERR_NONE != ret ){
-		EPS_RETURN( ret )	
-	}
-
-	/* Get MIB ID */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
-	/*EPS_DBGPRINT(("\nORG : %s\nRES : %s\n", pObjID, vField.val.v_str))*/
-
-	/* Check response MIB ID */
-	pOrg = pObjID;
-	pRes = vField.val.v_str;
-    while(*pOrg != '\0' && *pRes != '\0'){
-		if( *pOrg++ < *pRes++ ){
-			/*if( strchr(pOrg, '.') != NULL){*/
-				ret = EPS_COM_NEXT_RECORD;
-			/*}  else{ next item } */
-			break;
+	/* get varBind list */
+	pVar = pVarTop;
+	nDataSize = (EPS_INT32)(pVarEnd - pVarTop);
+	for(n = 0; n < pdu->varNum; n++){
+		/* skip Sequence Head */
+		ret = snmpParseField( &pVar, &nDataSize, &vField );
+		if(EPS_ERR_NONE != ret ){
+			EPS_RETURN( ret )	
 		}
-    }
-	if( pResObjID ){
-		memset(pResObjID, 0, nResObjIDSize);
-		memcpy(pResObjID, vField.val.v_str, Min(nResObjIDSize-1, (EPS_INT32)strlen(vField.val.v_str)));
-	}
-	
-	EPS_REREASE_VARIANT( vField );
-	if( EPS_ERR_NONE != ret){
-		EPS_RETURN( ret )
-	}
 
-	/* get valiable */
-	ret = ParseField( &pBuf, &nDataSize, &vField );
+		/* Get MIB ID */
+		ret = snmpParseField( &pVar, &nDataSize, &vField );
+		if(EPS_ERR_NONE != ret ){
+			EPS_RETURN( ret )	
+		}
+		pdu->var[n].identifire = vField.val.v_str;
+		/*EPS_DBGPRINT(("\nORG : %s\nRES : %s\n", pObjID, vField.val.v_str))*/
 
-	*pPDU = vField;
+		/* get valiable */
+		ret = snmpParseField( &pVar, &nDataSize, &vField );
+		if(EPS_ERR_NONE != ret ){
+			EPS_RETURN( ret )	
+		}
+		pdu->var[n].value = vField;
+	}
 
 	EPS_RETURN( ret )
 }
@@ -1976,7 +2636,7 @@ EPS_LOG_FUNCIN
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     ParseField()                                                      */
+/* Function name:     snmpParseField()                                                  */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
@@ -1994,7 +2654,7 @@ EPS_LOG_FUNCIN
 /*      Parse PDU field.  And move next area.                                           */
 /*                                                                                      */
 /*******************************************|********************************************/
-static EPS_ERR_CODE ParseField(
+EPS_ERR_CODE snmpParseField(
 							   
 		EPS_INT8**      pSrc, 
 		EPS_INT32*		pDataSize,
@@ -2047,10 +2707,10 @@ static EPS_ERR_CODE ParseField(
 		break;
 
 	case ASN_VT_SEQUENCE:
+	default:
 		pVal->val.v_str = *pSrc;
 		return ret;	/* Not move next */
 		break;
-
 	}
 
 	*pSrc += pVal->length;	/* Move next field */
@@ -2062,7 +2722,7 @@ static EPS_ERR_CODE ParseField(
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     MakeIntField()                                                    */
+/* Function name:     snmpMakeIntField()                                                */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
@@ -2077,20 +2737,22 @@ static EPS_ERR_CODE ParseField(
 /*      Make BER integer field.  And move next area.                                    */
 /*                                                                                      */
 /*******************************************|********************************************/
-static EPS_INT8* MakeIntField(
+EPS_INT8* snmpMakeIntField(
 							  
 		EPS_INT32 nSrc, 
 		EPS_INT8* pDst
 		
 ){
 	EPS_INT16	nLen = 0;
+	EPS_INT32	nLengthLen = 0;
 
 	/* Field type */
 	*(pDst++) = ASN_VT_INTEGER;
 
 	/* Field value */
 	nLen = IntToBer(nSrc, pDst);
-	memmove(pDst+nLen, pDst , nLen);
+	nLengthLen = LengthOfLength(nLen);
+	memmove(pDst+nLengthLen, pDst, nLen);
 
 	/* Field length */
 	pDst = MakeLength( nLen, pDst );
@@ -2102,7 +2764,7 @@ static EPS_INT8* MakeIntField(
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     MakeStrField()                                                    */
+/* Function name:     snmpMakeStrField()                                                */
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
@@ -2117,14 +2779,13 @@ static EPS_INT8* MakeIntField(
 /*      Make BER string field.  And move next area.                                     */
 /*                                                                                      */
 /*******************************************|********************************************/
-static EPS_INT8* MakeStrField(
+EPS_INT8* snmpMakeStrField(
 							  
 		const EPS_INT8* pSrc, 
+		EPS_UINT32		nLen,
 		EPS_INT8*       pDst
 		
 ){
-	EPS_UINT32	nLen = (EPS_UINT32)strlen(pSrc);
-
 	/* Field type */
 	*(pDst++) = ASN_VT_OCTET_STRING;
 
@@ -2198,7 +2859,7 @@ static EPS_ERR_CODE MakeOidField(
 /* Name:        Type:               Description:                                        */
 /* pSrc	        EPS_INT8*           I: PDU buffer(point to length field)                */
 /* pSize        EPS_UINT32*         O: pointer for length                               */
-/* bNeedType    EPS_BOOL            I: pointer for length                               */
+/* bNeedType    EPS_BOOL            I: add pdu type                                     */
 /*                                                                                      */
 /* Return value:                                                                        */
 /*      EPS_ERR_NONE					- Success	                                    */
@@ -2208,7 +2869,7 @@ static EPS_ERR_CODE MakeOidField(
 /*      Make BER Sequens. And move next area.                                           */
 /*                                                                                      */
 /*******************************************|********************************************/
-static EPS_ERR_CODE MakeSequens(
+EPS_ERR_CODE MakeSequens(
 								
 		EPS_INT8*   pSrc, 
 		EPS_UINT32* pSize, 
@@ -2219,17 +2880,7 @@ static EPS_ERR_CODE MakeSequens(
 	EPS_INT8	nLengthLen = 0;
 
 	/* Length field length calculation */
-	if(*pSize <= 0x7F){
-		nLengthLen = 1;
-	} else{
-		if( EPS_ENDIAN_LITTLE == cpuEndian ){
-			nLengthLen = (sizeof(EPS_INT32) / sizeof(EPS_INT8)) - 1;
-			for(; nLengthLen > -1 && 0x00 == *((EPS_UINT8*)pSize + nLengthLen); nLengthLen--);
-		} else{ 
-			EPS_INT8 nLim = sizeof(EPS_INT32) / sizeof(EPS_INT8);
-			for(; nLengthLen < nLim && 0x00 == *((EPS_INT8*)pSize + nLengthLen); nLengthLen++);
-		}
-	}
+	nLengthLen = LengthOfLength(*pSize);
 
 	if( bNeedType ){
 		memmove(pSrc + nLengthLen + 1, pSrc, *pSize);	/* 1 = Field type */
@@ -2253,6 +2904,27 @@ static EPS_ERR_CODE MakeSequens(
 	return ret;
 }
 
+static EPS_UINT32 LengthOfLength(
+								
+		EPS_UINT32 length
+
+){
+	EPS_INT8	nLengthLen = 0;
+	EPS_INT32	n = 0;
+
+	if(length <= 0x7F){
+		nLengthLen = 1;
+	} else{
+		for(n = sizeof(EPS_UINT32)*8-1; n >= 0; n--){
+			if( (length >> n) & 1 ){
+				break;
+			}
+		}
+		nLengthLen = ((n+1) >> 3) + (((n+1)&0x07)?1:0) + 1;
+	}
+
+	return nLengthLen;
+}
 
 /*******************************************|********************************************/
 /*                                                                                      */
@@ -2292,19 +2964,9 @@ static EPS_ERR_CODE ParseLength(
 
 		(*pSrc)++;	(*pDataSize)--;
 
-		if( EPS_ENDIAN_LITTLE == cpuEndian ){
-			for(n = nLenLength-1; n >= 0; n--){
-				*((EPS_INT8*)&(*pLength) + n) = *(*pSrc)++;	
-				(*pDataSize)--;
-			}
-		} else{
-			for(n = sizeof(EPS_UINT32) - nLenLength; (EPS_UINT8)n < sizeof(EPS_UINT32); n++){
-				*((EPS_INT8*)&(*pLength) + n) = *(*pSrc)++;
-				(*pDataSize)--;
-				if(*pDataSize <= 0){	/* data size not enough */
-					return EPS_ERR_COMM_ERROR;
-				}
-			}
+		for(n = 0; n < nLenLength; n++){
+			*pLength |= (*(*pSrc)++ & 0xFF) << (8 * (nLenLength-n-1) );
+			(*pDataSize)--;
 		}
 	} else{
 		*pLength = *(*pSrc)++;
@@ -2342,32 +3004,18 @@ static EPS_INT8* MakeLength(
 		EPS_INT8* pDst
 
 ){
-	if(nLength <= 0x7F){
+	EPS_INT32 n;
+	EPS_UINT32 nLenOfLen = LengthOfLength(nLength);
+
+	if(1 == nLenOfLen){
 		*(pDst++) = (EPS_INT8)nLength;
 	} else{
-
-		if( EPS_ENDIAN_LITTLE == cpuEndian ){
-			EPS_INT8	n = (sizeof(EPS_INT32) / sizeof(EPS_INT8)) - 1;
-
-			/* set length */
-			for(; n > -1 && 0x00 == *((EPS_INT8*)&nLength + n); n--);
-			*(pDst++) = (EPS_INT8)(0x80 & (n+1));
-
-			for(; n > -1; n--){
-				*(pDst++) = *((EPS_INT8*)&nLength + n);
+		*(pDst++) = (EPS_INT8)(0x80 | (nLenOfLen-1));
+		for(n = 3; n >= 0; n--){
+			if(0 != (nLength >> (n*8))){
+				*(pDst++) = (nLength >> (n*8));
 			}
-		} else{
-			EPS_INT8 nLim = sizeof(EPS_INT32) / sizeof(EPS_INT8);
-			EPS_INT8 n = 0;
-
-			/* set length */
-			for(; n < nLim && 0x00 == *((EPS_INT8*)&nLength + n); n++);
-			*(pDst++) = (EPS_INT8)(0x80 & (nLim-n));
-
-			for(; n < nLim; n++){
-				*(pDst++) = *((EPS_INT8*)&nLength + n);
-			}
-		}	
+		}
 	}
 
 	return pDst;
@@ -2565,52 +3213,29 @@ static EPS_UINT16 IntToBer(
 
 ){
 	EPS_UINT16	nCnt = 0;
+	EPS_INT32	n;
+	EPS_UINT8	b;
 
-	if( EPS_ENDIAN_LITTLE == cpuEndian ){
-		EPS_INT8	n = (sizeof(EPS_INT32) / sizeof(EPS_INT8)) - 1;
-
-		for(; n > -1; n--){
-			if( 0 == nCnt){
-				/* An unnecessary bit is thrown away. */
-				if( 0xff == (EPS_INT32)*((EPS_UINT8*)&nSrc + n) ){
-					if( n > 0 &&
-						*((EPS_UINT8*)&nSrc + n-1) & 0x80 ){
-						continue;
-					}
-				} else if( 0x00 == *((EPS_UINT8*)&nSrc + n) ){
-					if( n > 0 &&
-						!(*((EPS_UINT8*)&nSrc + n-1) & 0x80) ){
-						continue;
-					}
+	for(n = 0; n < 3; n++){
+		b = (nSrc >> 8*(3-n)) & 0xFF;
+		if( 0 != b ){
+			if(nSrc < 0){
+				if( !(0xFF == b && (nSrc >> 8*(2-n)) & 0x80) ){
+					break;
 				}
+			} else{
+				break;
 			}
-
-			*(pDst++) = *((EPS_UINT8*)&nSrc + n);
-			nCnt++;
 		}
-	} else{
-		EPS_INT8	nMax = (sizeof(EPS_INT32) / sizeof(EPS_INT8));
-		EPS_INT8	n = 0;
+	}
 
-		for(; n < nMax; n++){
-			if( 0 == nCnt){
-				/* An unnecessary bit is thrown away. */
-				if( 0xff == *((EPS_UINT8*)&nSrc + n) ){
-					if( n < nMax-1 &&
-						*((EPS_UINT8*)&nSrc + n+1) & 0x80 ){
-						continue;
-					}
-				} else if( 0x00 == *((EPS_UINT8*)&nSrc + n) ){
-					if( n < nMax-1 &&
-						!(*((EPS_UINT8*)&nSrc + n+1) & 0x80) ){
-						continue;
-					}
-				}
-			}
+	nCnt = 4 - n;
+	if(nSrc > 0 && nCnt < 4 && (nSrc >> 8*(nCnt-1)) & 0x80){
+		nCnt++;
+	}
 
-			*(pDst++) = *((EPS_UINT8*)&nSrc + n);
-			nCnt++;
-		}
+	for(n = nCnt-1; n > -1; n--){
+		*(pDst++) = (nSrc >> (8*n)) & 0xFF;
 	}
 
 	return nCnt;
@@ -2641,64 +3266,42 @@ static EPS_INT32 BerToInt(
 
 ){
 	EPS_INT32	nDst = 0;
+	EPS_INT32	n = 0;
 
-	if( EPS_ENDIAN_LITTLE == cpuEndian ){
-		EPS_INT8	nMax = (sizeof(EPS_INT32) / sizeof(EPS_INT8)) - 1;
-		EPS_INT32	n = 0;
-		EPS_INT32	m = nLen - 1;
-
-		for(; n < nMax && m > -1; n++, m--){
-			*((EPS_INT8*)&nDst + n) = *(pSrc+m);
-		}
-
-		if( n < nMax ){
-			if( *(pSrc) & 0x80 ){
-				memset(((EPS_INT8*)&nDst + n), 0xff, nMax-(n-1));
-			} else{
-				memset(((EPS_INT8*)&nDst + n), 0x00, nMax-(n-1));
-			}
-		}
-	} else{
-		EPS_INT8	nDstSize = (sizeof(EPS_INT32) / sizeof(EPS_INT8));
-		EPS_INT32	n = nDstSize-nLen;
-		EPS_INT32	m = 0;
-
-		if( *(pSrc) & 0x80 ){
-			memset(&nDst, 0xff, nDstSize-nLen);
-		} else{
-			memset(&nDst, 0x00, nDstSize-nLen);
-		}
-
-		for(; n < nDstSize && m < nLen; n++, m++){
-			*((EPS_INT8*)&nDst + n) = *(pSrc+m);
+	if(*pSrc & 0x80){
+		for(n = sizeof(EPS_INT32)-1; n >= nLen; n--){
+			nDst |= 0xFF << (8 * n);
 		}
 	}
 
+	for(n = 0; n < nLen; n++){
+		nDst |= (*(pSrc+n) & 0xFF) << (8 * (nLen-n-1) );
+	}
 	return nDst;
 }	
 
 
 /*******************************************|********************************************/
 /*                                                                                      */
-/* Function name:     GetRequestId()		    										*/
+/* Function name:     snmpGetRequestId()	    										*/
 /*                                                                                      */
 /* Arguments                                                                            */
 /* ---------                                                                            */
 /* (none)										                                        */
 /*                                                                                      */
 /* Return value:                                                                        */
-/*      EPS_INT16	: RequestID									                        */
+/*      EPS_INT32	: RequestID									                        */
 /*                                                                                      */
 /* Description:                                                                         */
 /*      Generate SNMP request ID (value is between from 1 to 127).                      */
 /*                                                                                      */
 /*******************************************|********************************************/
-static EPS_UINT8 GetRequestId(void)
+EPS_INT32 snmpGetRequestId(void)
 {
-	static EPS_UINT8 nId = 1;
+	static EPS_INT32 nId = 1;
 
 	nId++;		
-	if( (char)0x7f < nId ){
+	if( 0x7fffffff <= nId ){
 		nId = 1;
 	}
 

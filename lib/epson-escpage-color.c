@@ -980,7 +980,7 @@ static EPS_ERR_CODE BandEmit(
 	strcpy(p, "\x1D""0X");
 	p += strlen(p);
 
-	EPS_DBGPRINT(("Emit Y pos = %d \r\n", emitRowCount));
+	/*EPS_DBGPRINT(("Emit Y pos = %d \r\n", emitRowCount));*/
 	sprintf(p, "\x1D%dY", emitRowCount);
 	p += strlen(p);
 

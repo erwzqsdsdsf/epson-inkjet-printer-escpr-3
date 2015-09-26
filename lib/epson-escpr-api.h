@@ -34,6 +34,7 @@ extern "C" {
 
 /* GCOMSW_DEBUG 		Enable Debug monde.                                             */
 
+/*#define GCOMSW_UPDATE_PAGE_REMAINDER 0	*/
 
 /*------------------------------------  Includes   -------------------------------------*/
 /*******************************************|********************************************/
@@ -41,6 +42,8 @@ extern "C" {
 #include "epson-escpr-def.h"
 #include "epson-escpr-err.h"
 #include "epson-escpr-media.h"
+
+#include "epson-escpr-pvt.h"
 
 
 /*----------------------------------  Generic Macros   ---------------------------------*/
@@ -67,7 +70,11 @@ extern EPS_ERR_CODE epsStartJob          (const EPS_JOB_ATTRIB*                 
 extern EPS_ERR_CODE epsStartPage         (const EPS_PAGE_ATTRIB*                        );
 extern EPS_ERR_CODE epsSendData          (EPS_PRN_DATA*									);
 extern EPS_ERR_CODE epsPrintBand         (const EPS_UINT8*, EPS_UINT32, EPS_UINT32*     );
+#if GCOMSW_UPDATE_PAGE_REMAINDER
+extern EPS_ERR_CODE epsEndPage           (EPS_INT32                                     );
+#else
 extern EPS_ERR_CODE epsEndPage           (EPS_BOOL                                      );
+#endif
 extern EPS_ERR_CODE epsEndJob            (void                                          );
 extern EPS_ERR_CODE epsCancelJob         (EPS_INT32                                     );
 extern EPS_ERR_CODE epsContinueJob       (void                                          );
@@ -85,6 +92,7 @@ extern EPS_ERR_CODE epsCancelFindPrinter (void                                  
     /*** -------------------------------------------------------------------------------*/
 extern EPS_ERR_CODE epsGetStatus         (EPS_STATUS*                                   );
 extern EPS_ERR_CODE epsGetInkInfo        (EPS_INK_INFO*                                 );
+extern EPS_ERR_CODE epsGetSupplyInfo     (EPS_SUPPLY_INFO*                              );
 
     /*** Get Supported Media Function                                                   */
     /*** -------------------------------------------------------------------------------*/
@@ -93,6 +101,11 @@ extern EPS_ERR_CODE epsGetSupportedMedia (EPS_SUPPORTED_MEDIA*                  
     /*** Get Printable Area                                                             */
     /*** -------------------------------------------------------------------------------*/
 extern EPS_ERR_CODE epsGetPrintableArea  (EPS_JOB_ATTRIB*, EPS_UINT32*, EPS_UINT32*     );
+extern EPS_ERR_CODE epsGetPrintAreaInfo  (const EPS_JOB_ATTRIB*, EPS_UINT32*, EPS_UINT32*,
+		                                  EPS_LAYOUT_INFO*                            );
+extern EPS_ERR_CODE epsGetPrintAreaInfoAll(EPS_UINT32, EPS_PRINT_AREA_INFO*             );
+extern EPS_ERR_CODE epsGetUsersizeRange  (EPS_UINT8, EPS_UINT32*, EPS_UINT32*, 
+										  EPS_UINT32*, EPS_UINT32*                      );
 
     /*** Maintenance Command function                                                   */
     /*** -------------------------------------------------------------------------------*/

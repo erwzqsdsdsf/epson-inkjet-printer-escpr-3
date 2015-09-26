@@ -23,6 +23,9 @@
 #ifdef GCOMSW_CMD_ESCPAGE_S
 #include "epson-escpage-s.h"
 #endif
+#ifdef GCOMSW_CMD_PCL
+#include "epson-pcl.h"
+#endif
 #include "epson-escpage.h"
 
 /*-----------------------------  Local Macro Definitions -------------------------------*/
@@ -37,7 +40,7 @@
 /*******************************************|********************************************/
 const static EPS_UINT8 sbEJL_ESC_SOH[] = "\x1B\x01";					/* Escape and start of heading <ESC><SOH> */
 const static EPS_UINT8 sbEJL[]		= "@EJL";							/* EJL command */
-const static EPS_UINT8 sbEJL_SP[]	= "\x20";							/* Space <SP> */
+/*const static EPS_UINT8 sbEJL_SP[]	= "\x20";							   Space <SP> */
 const static EPS_UINT8 sbEJL_LF[]	= "\x0A";							/* Line Feed <LF> */
 const static EPS_UINT8 sbEJL_EN[]	= "@EJL""\x20""EN""\x20""LA=ESC/PAGE";		/* EJL ENTER command */
 const static EPS_UINT8 sbEJL_EN_C[]	= "@EJL""\x20""EN""\x20""LA=ESC/PAGE-COLOR";/* EJL ENTER command */
@@ -68,6 +71,7 @@ const EPS_PAGE_MEDIA_NAME pageMediaType[]  = {
 
 /* Paper Source */
 const EPS_PAGE_MEDIA_NAME pagePaperSource[]  = {
+	{ EPS_MPID_NOT_SPEC,	"AU" },
 	{ EPS_MPID_AUTO,		"AU" },
 	{ EPS_MPID_MPTRAY,		"MP" },
 	{ EPS_MPID_FRONT1,		"LC1" },
@@ -134,6 +138,12 @@ EPS_ERR_CODE pageInitJob(
 	const EPS_PAGE_MEDIASIZE *mediaSizeEnt = NULL;
 
 	EPS_LOG_FUNCIN
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		EPS_RETURN( PCL_InitJob(jobAttr) );
+	}
+#endif
 
 /*** Validate input parameters                                                          */
 	/*** Structure version                                                              */
@@ -295,6 +305,12 @@ EPS_ERR_CODE pageAllocBuffer(void)
 		ret = pageS_AllocBuffer();
 	} else
 #endif
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCL_AllocBuffer();	
+	} else
+#endif
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
 		/** ESC/Page-Color **/
 		ret = pageAllocBuffer_C();
@@ -330,6 +346,12 @@ void pageRelaseBuffer(void)
 #ifdef GCOMSW_CMD_ESCPAGE_S
 	if(printJob.printer && EPS_LANG_ESCPAGE_S == printJob.printer->language){
 		pageS_RelaseBuffer();
+	} else
+#endif
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language)){
+		PCL_RelaseBuffer();
 	} else
 #endif
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
@@ -375,6 +397,13 @@ EPS_ERR_CODE pageStartJob(void)
 		ret = pageS_StartJob();
 	} else
 #endif
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+		(EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCL_StartJob(&printJob.attr);
+	} else 
+#endif
+
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
 		/** ESC/Page-Color **/
 		ret = pageStartJob_C();
@@ -418,6 +447,12 @@ EPS_ERR_CODE pageEndJob()
 		ret = pageS_EndJob();
 	} else
 #endif	
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+		(EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCL_EndJob();
+	} else 
+#endif
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
 		/** ESC/Page-Color **/
 		ret = pageEndJob_C();
@@ -461,6 +496,12 @@ EPS_ERR_CODE pageStartPage()
 		ret = pageS_StartPage();
 	} else
 #endif
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCL_StartPage();
+	} else 
+#endif
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
 		/** ESC/Page-Color **/
 		ret = pageStartPage_C();
@@ -503,6 +544,12 @@ EPS_ERR_CODE pageEndPage()
 	if(printJob.printer && EPS_LANG_ESCPAGE_S == printJob.printer->language){
 		ret = pageS_EndPage();
 	} else
+#endif
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCL_EndPage();
+	} else 
 #endif
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
 		/** ESC/Page-Color **/
@@ -548,6 +595,12 @@ EPS_ERR_CODE pageColorRow(
 		ret = pageS_ColorRow(pInBmp, pBandRec);
 	} else
 #endif
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCL_Row(pInBmp, pBandRec);
+	} else 
+#endif
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
 		/** ESC/Page-Color **/
 		ret = pageColorRow_C(pInBmp, pBandRec);
@@ -592,6 +645,12 @@ EPS_ERR_CODE pageSendLeftovers(
 #ifdef GCOMSW_CMD_ESCPAGE_S
 	if(printJob.printer && EPS_LANG_ESCPAGE_S == printJob.printer->language){
 		ret = pageS_SendLeftovers();
+	} else
+#endif
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCLSendLeftovers();
 	} else
 #endif
 	if( EPS_CM_COLOR == printJob.attr.colorMode ){
@@ -646,7 +705,7 @@ EPS_ERR_CODE pageCreateMediaInfo (
 		for(j = 0; j < num_mType; j++){
 			n = i * num_mType + j;
 			typeList[n].mediaTypeID = pageMediaType[j].id;
-			typeList[n].paperSource = paperSource;
+			typeList[n].paperSource = (1 >= memGetBitCount(paperSource))?EPS_MPID_AUTO:(paperSource | EPS_MPID_AUTO);
 			typeList[n].layout		= EPS_MLID_BORDERS;
 #if EPS_PAGE_LOWRES_MODE
 			typeList[n].quality		= EPS_MQID_DRAFT | EPS_MQID_NORMAL;
@@ -675,8 +734,9 @@ EPS_ERR_CODE pageCreateMediaInfo (
 	printer->supportedMedia.resolution = EPS_IR_150X150 | EPS_IR_300X300 | EPS_IR_600X600;
 #endif
 
-#if GCOMSW_CMD_ESCPAGE_S
-	if(printJob.printer && EPS_LANG_ESCPAGE_S == printJob.printer->language){
+#if defined(GCOMSW_CMD_ESCPAGE_S) || defined (GCOMSW_CMD_PCL)
+	if(printJob.printer && 
+	   (EPS_LANG_ESCPAGE_S == printJob.printer->language || EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language)){
 		pageS_UpdateSupportedMedia( &printer->supportedMedia );
 	}
 #endif
@@ -714,6 +774,14 @@ EPS_ERR_CODE    pageGetPrintableArea (
 
 	EPS_LOG_FUNCIN
 
+#ifdef GCOMSW_CMD_PCL
+	if(printJob.printer && 
+	   (EPS_LANG_PCL == printJob.printer->language || EPS_LANG_PCL_COLOR == printJob.printer->language) ){
+		ret = PCL_GetPrintableArea(jobAttr, printableWidth, printableHeight);
+		EPS_RETURN( ret );
+	}
+#endif
+
 /*** Validate/Confirm Page Attribute Data                                               */
     /*** Media Size                                                                     */
 	for(sizeIdx = 0; sizeIdx < num_mSize; sizeIdx++){
@@ -739,11 +807,6 @@ EPS_ERR_CODE    pageGetPrintableArea (
 
 	*printableWidth		= pageMediaSize[sizeIdx].print_area_x_border;
 	*printableHeight	= pageMediaSize[sizeIdx].print_area_y_border;
-#ifdef GCOMSW_CMD_ESCPAGE_S
-	if(printJob.printer && EPS_LANG_ESCPAGE_S == printJob.printer->language){
-		pageS_FeedExchange(jobAttr, printableWidth, printableHeight);
-	}
-#endif
 
 	if(EPS_IR_300X300 == jobAttr->inputResolution){
 		*printableWidth  /= 2;
@@ -755,6 +818,151 @@ EPS_ERR_CODE    pageGetPrintableArea (
 	}
 
  	EPS_RETURN( ret )
+}
+
+
+/*******************************************|********************************************/
+/*                                                                                      */
+/* Function name:   pageCreatePrintAreaInfoFromTable()                                  */
+/*                                                                                      */
+/* Arguments                                                                            */
+/* ---------                                                                            */
+/* Name:            Type:                  Description:                                 */
+/* resolution       EPS_UINT32             I : input resolution                         */
+/* printAreaInfo    EPS_PRINT_AREA_INFO    O : print area information structure         */
+/*                                                                                      */
+/* Return value:                                                                        */
+/*      EPS_ERR_NONE                    - Success                                       */
+/*      EPS_ERR_INV_MEDIA_SIZE          - Invalid Media Size                            */
+/*      EPS_ERR_INV_BORDER_MODE         - Invalid Border Mode                           */
+/*      EPS_ERR_INV_INPUT_RESOLUTION    - Invalid Input Resolution                      */
+/*      EPS_ERR_MEMORY_ALLOCATION       - Alloc memory failed                           */
+/*                                                                                      */
+/* Description:                                                                         */
+/*                                                                                      */
+/*******************************************|********************************************/
+EPS_ERR_CODE    pageGetPrintAreaInfoFromTable(
+	
+		const EPS_JOB_ATTRIB* jobAttr,
+        EPS_UINT32*         paperWidth,
+        EPS_UINT32*         paperHeight,
+		EPS_LAYOUT_INFO*	layoutInfo
+
+){
+	EPS_ERR_CODE	ret = EPS_ERR_NONE;
+	EPS_INT32		num_mSize = dim(pageMediaSize);
+	EPS_INT32		sizeIdx = 0;
+	EPS_INT32			factor = 1;                     /* Scaling factor for dpi           */
+
+	EPS_LOG_FUNCIN
+
+/*** Validate/Confirm Page Attribute Data                                               */
+    /*** Media Size                                                                     */
+	for(sizeIdx = 0; sizeIdx < num_mSize; sizeIdx++){
+		if(pageMediaSize[sizeIdx].id == jobAttr->mediaSizeIdx){
+			break;
+		}
+	}
+	if(sizeIdx >= num_mSize){
+        EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE )
+	}
+
+    /*** Border Mode                                                                    */
+	if( jobAttr->printLayout != EPS_MLID_BORDERS ){
+        EPS_RETURN( EPS_ERR_INV_BORDER_MODE )
+	}
+
+    /*** Input Image Resolution                                                         */
+    if (! ( (jobAttr->inputResolution    == EPS_IR_150X150 ) ||
+			(jobAttr->inputResolution    == EPS_IR_300X300 ) ||
+			(jobAttr->inputResolution    == EPS_IR_600X600 ) ) ){
+        EPS_RETURN( EPS_ERR_INV_INPUT_RESOLUTION )
+	}
+
+	switch(jobAttr->inputResolution){
+	case EPS_IR_150X150:
+	    factor = 4;
+		break;
+	case EPS_IR_300X300:
+		factor = 2;
+		break;
+	case EPS_IR_600X600:
+		break;
+	default:
+        EPS_RETURN( EPS_ERR_INV_INPUT_RESOLUTION )
+	}
+
+	*paperWidth		= pageMediaSize[sizeIdx].paper_x / factor;
+	*paperHeight	= pageMediaSize[sizeIdx].paper_y / factor;
+
+	layoutInfo->layout = EPS_MLID_BORDERS;
+	layoutInfo->margin.top    = 
+	layoutInfo->margin.bottom = (pageMediaSize[sizeIdx].paper_y - pageMediaSize[sizeIdx].print_area_y_border) / 2 / factor;
+	layoutInfo->margin.left   = 
+	layoutInfo->margin.right  = (pageMediaSize[sizeIdx].paper_x - pageMediaSize[sizeIdx].print_area_x_border) / 2 / factor;
+	if(EPS_IR_150X150 == jobAttr->inputResolution){
+		layoutInfo->margin.left   = 
+		layoutInfo->margin.right  += 1;
+	}
+    EPS_RETURN( ret )
+}
+
+
+EPS_ERR_CODE    pageCreatePrintAreaInfoFromTable(
+	
+		EPS_UINT32					resolution,
+		EPS_PRINT_AREA_INFO*		printAreaInfo
+	
+){
+	EPS_ERR_CODE	ret = EPS_ERR_NONE;
+	EPS_INT32		sizeNum, i;
+	EPS_LAYOUTSIZE_INFO *pSize;
+	const EPS_PAGE_MEDIASIZE* pMI = pageMediaSize;
+	EPS_INT32			factor = 1;                     /* Scaling factor for dpi           */
+
+	EPS_LOG_FUNCIN;
+
+	switch(resolution){
+	case EPS_IR_150X150:
+	    factor = 4;
+		break;
+	case EPS_IR_300X300:
+		factor = 2;
+		break;
+	case EPS_IR_600X600:
+		break;
+	default:
+        EPS_RETURN( EPS_ERR_INV_INPUT_RESOLUTION )
+	}
+
+	sizeNum = dim(pageMediaSize);
+	pSize = (EPS_LAYOUTSIZE_INFO*)EPS_ALLOC(sizeof(EPS_LAYOUTSIZE_INFO) * sizeNum);
+	if( pSize == NULL ){
+        EPS_RETURN( EPS_ERR_MEMORY_ALLOCATION );
+    }
+	memset(pSize, 0, sizeof(EPS_LAYOUTSIZE_INFO) * sizeNum);
+	printAreaInfo->sizeList = pSize;
+	printAreaInfo->numSizes = sizeNum;
+
+	for(i = 0; i < sizeNum; i++){
+		pSize->mediaSizeID = pMI->id;
+		pSize->numLayouts = 1;
+		pSize->layoutList = (EPS_LAYOUT_INFO*)EPS_ALLOC(sizeof(EPS_LAYOUT_INFO));
+
+		pSize->paperWidth  = pMI->paper_x / factor;
+		pSize->paperHeight = pMI->paper_y / factor;
+
+		pSize->layoutList[0].layout = EPS_MLID_BORDERS;
+		pSize->layoutList[0].margin.top    = 
+		pSize->layoutList[0].margin.bottom = (pMI->paper_y - pMI->print_area_y_border) / 2 / factor;
+		pSize->layoutList[0].margin.left   = 
+		pSize->layoutList[0].margin.right  = (pMI->paper_x - pMI->print_area_x_border) / 2 / factor;
+
+		pSize++;
+		pMI++;
+	}
+
+	EPS_RETURN( ret );
 }
 
 

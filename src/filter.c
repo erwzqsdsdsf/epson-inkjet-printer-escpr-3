@@ -1,7 +1,7 @@
 /*
  * Epson Inkjet Printer Driver (ESC/P-R) for Linux
  * Copyright (C) 2002-2005 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2002-2013.
+ * Copyright (C) Seiko Epson Corporation 2002-2015.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,6 @@
 #include "epson-escpr-def.h"
 #include "epson-escpr-media.h"
 #include "epson-protocol.h"
-#include "epson-escpr-pvt.h"
 #include "epson-escpr-api.h"
 #include "epson-escpr-services.h"
 #include "epson-escpr-mem.h"
@@ -47,32 +46,18 @@
 #include "optBase.h"
 #include "linux_cmn.h"
 
-#define PATH_MAX 256
-#define NAME_MAX 41
-
 #define WIDTH_BYTES(bits) (((bits) + 31) / 32 * 4)
 
 #define PIPSLITE_FILTER_VERSION "* epson-escpr is a part of " PACKAGE_STRING
 
-#define PIPSLITE_FILTER_USAGE "Usage: $ epson-escpr model width_pixel height_pixel Ink PageSize MediaType Duplex InputSlot"
-
-typedef struct rtp_filter_option {
-	char model[NAME_MAX];
-	char model_low[NAME_MAX];
-	char ink[NAME_MAX];
-	char media[NAME_MAX];
-	char quality[NAME_MAX];
-	char duplex[NAME_MAX];
-	char inputslot[NAME_MAX];
-} filter_option_t;
-
+#define PIPSLITE_FILTER_USAGE "Usage: $ epson-escpr model width_pixel height_pixel Ink PageSize MediaType Duplex InputSlot Brightness Contrast Saturation"
 
 FILE* outfp = NULL;
 
 /* static functions */
-static int set_pips_parameter (filter_option_t *, ESCPR_OPT *, ESCPR_PRINT_QUALITY *);
+static int set_pips_parameter (filter_option_t *, EPS_OPT *);
 static int getMediaTypeID(char *);
-static ESCPR_BYTE4 print_spool_fnc(void* , const ESCPR_UBYTE1*, ESCPR_UBYTE4);
+static EPS_INT32 print_spool_fnc(void* , const EPS_UINT8*, EPS_UINT32);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 const int band_line = 1;
@@ -105,10 +90,6 @@ EPS_JOB_ATTRIB     jobAttr;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
 EPS_ERR_CODE epsInitLib(){
 	EPS_CMN_FUNC cmnFuncPtrs;
 	memset(&cmnFuncPtrs, 0, sizeof(EPS_CMN_FUNC));
@@ -159,11 +140,10 @@ EPS_ERR_CODE epsInitJob(){
 /*** Change ESC/P-R Lib Status                                                          */
 	libStatus = EPS_STATUS_INITIALIZED;
 	EPS_PRINTER_INN*    printer = printJob.printer;
-	printer->pmData.state = EPS_PM_STATE_NOT_FILTERED;
+//	printer->pmData.state = EPS_PM_STATE_NOT_FILTERED;
 	printer->language = EPS_LANG_ESCPR;
 	return EPS_ERR_NONE;
 }
-
 
 EPS_ERR_CODE epsInitVariable(){
 	sendDataBufSize = (EPS_INT32)(ESCPR_HEADER_LENGTH    +
@@ -219,6 +199,7 @@ static int  getMediaSizeID(char *media_name){
 int
 main (int argc, char *argv[])
 {
+
 	filter_option_t fopt;
 
 	long width_pixel, height_pixel;
@@ -244,12 +225,10 @@ main (int argc, char *argv[])
 	char *point;
 
 	/* library options */
-	ESCPR_OPT printOpt;
-	ESCPR_PRINT_QUALITY printQuality;
-	//ESCPR_PRINT_JOB printJob;
-	ESCPR_BANDBMP bandBmp;
-	ESCPR_RECT bandRect;
-	
+	EPS_OPT printOpt;
+	EPS_BANDBMP bandBmp;
+	EPS_RECT bandRect;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	memset (&jobAttr, 0, sizeof(jobAttr));
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -263,7 +242,7 @@ main (int argc, char *argv[])
 	DEBUG_START;
 	err_init (argv[0]);
 
-	if (argc != 10)
+	if (argc != 13)
 	{
 		for ( i = 1; i < argc; i++ ) {
 			if ( (0 == strncmp(argv[i], "-v", (strlen("-v")+1)) )
@@ -289,10 +268,9 @@ main (int argc, char *argv[])
 
 	/* set filter options */
 	memset (&fopt, 0, sizeof (filter_option_t));
-	memset (&printOpt, 0, sizeof (ESCPR_OPT));
-	memset (&printQuality, 0, sizeof(ESCPR_PRINT_QUALITY));
-	memset (&bandBmp, 0, sizeof(ESCPR_BANDBMP));
-	memset (&bandRect, 0, sizeof(ESCPR_RECT));
+	memset (&printOpt, 0, sizeof (EPS_OPT));
+	memset (&bandBmp, 0, sizeof(EPS_BANDBMP));
+	memset (&bandRect, 0, sizeof(EPS_RECT));
 
 	strncpy (fopt.model, argv[1], NAME_MAX);
 	for (i = 0; i < NAME_MAX - 1 && fopt.model[i] != '\0' ; i ++)
@@ -308,6 +286,9 @@ main (int argc, char *argv[])
 	strncpy (fopt.quality, argv[7], NAME_MAX);
 	strncpy (fopt.duplex, argv[8], NAME_MAX);
 	strncpy (fopt.inputslot, argv[9], NAME_MAX);
+	strncpy (fopt.brightness, argv[10], NAME_MAX);
+	strncpy (fopt.contrast, argv[11], NAME_MAX);
+	strncpy (fopt.saturation, argv[12], NAME_MAX);
 	
 	debug_msg("all para\n");
 	for(i = 0; i< argc; i++){
@@ -315,9 +296,9 @@ main (int argc, char *argv[])
 	}
 
 	outfp = stdout;
-	printOpt.fpspoolfunc = (ESCPR_FPSPOOLFUNC)print_spool_fnc;
+	printOpt.fpspoolfunc = (EPS_FPSPOOLFUNC)print_spool_fnc;
 	
-	if (set_pips_parameter (&fopt, &printOpt, &printQuality))
+	if (set_pips_parameter (&fopt, &printOpt))
 		err_fatal ("Cannot get option of PIPS."); /* exit */
 		
 	point = fopt.media;
@@ -333,7 +314,7 @@ main (int argc, char *argv[])
 		jobAttr.printLayout = EPS_MLID_BORDERS;
 		debug_msg("border\n");
 	}
-	
+
 	eps_toupper(fopt.media);
 	jobAttr.mediaSizeIdx = getMediaSizeID(paper);
 
@@ -358,10 +339,11 @@ main (int argc, char *argv[])
 		byte_par_pixel = 3;
 	else
 		byte_par_pixel = 1;
-	
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	epsInitLib();
 	epsInitJob();
+
 	debug_msg("mediasizeIDx = %d\n", 	jobAttr.mediaSizeIdx);
 	err = SetupJobAttrib(&jobAttr);
 	if (err){
@@ -380,7 +362,6 @@ main (int argc, char *argv[])
 		debug_msg ("pageAllocBuffer() success\n");
 	}
 
-
 	EPS_PRINTER_INN curPrinter;
 	memset(&curPrinter, 0, sizeof(curPrinter));
 	curPrinter.language = EPS_LANG_ESCPR;
@@ -389,10 +370,11 @@ main (int argc, char *argv[])
 	printJob.printer = &curPrinter;
 
 	prtSetupJobFunctions(printJob.printer, &jobFnc);
-	
+
 	debug_msg("call SendStartJob function\n");
 
 	err = SendStartJob(FALSE);
+
 	if (err){
 		debug_msg("Error occurred in \"pageStartJob\": %d\n", err);
 		err_fatal ("Error occurred in \"pageStartJob\".");	/* exit */
@@ -408,11 +390,11 @@ main (int argc, char *argv[])
 	print_area_y = printJob.printableAreaHeight;
 
 	/* setup band struct */
-	bandBmp.WidthBytes = WIDTH_BYTES (print_area_x * 3 * 8 );
+	bandBmp.widthBytes = WIDTH_BYTES (print_area_x * 3 * 8 );
 
-	band = (unsigned char *)mem_new (char, bandBmp.WidthBytes * band_line);
-	memset (band, 0xff, bandBmp.WidthBytes * band_line);
-	bandBmp.Bits = band;
+	band = (unsigned char *)mem_new (char, bandBmp.widthBytes * band_line);
+	memset (band, 0xff, bandBmp.widthBytes * band_line);
+	bandBmp.bits = band;
 
 	bandRect.left = 0;
 	bandRect.right = printJob.printableAreaWidth;
@@ -421,7 +403,6 @@ main (int argc, char *argv[])
 
 	/* debug */
 	DEBUG_JOB_STRUCT (printJob);
-	DEBUG_QUALITY_STRUCT (printQuality);
 
 	x_mag = (double)print_area_x / width_pixel;
 	y_mag = (double)print_area_y / height_pixel;
@@ -429,11 +410,11 @@ main (int argc, char *argv[])
  	bytes_per_line = WIDTH_BYTES(width_pixel * byte_par_pixel * 8 );
 	debug_msg("bytes_per_line = %d\n", bytes_per_line);
 	image_raw = mem_new0 (char, bytes_per_line);
-	//epsStartJob(&jobAttr);
+
 	int page_count = 0;
+
 	while ((read_size = read (STDIN_FILENO, image_raw, bytes_per_line)) > 0)
 	{
-		debug_msg("step 100.0\n");
 		long x_count, y_count;
 		int band_line_count;
 #if (HAVE_PPM)
@@ -444,7 +425,6 @@ main (int argc, char *argv[])
 		band_line_count = 0;
 		bandRect.top = 0;
 
-		//err = escprInitPage ();
 		err = epsStartPage(NULL);
 #if (HAVE_PPM)
 		sprintf(ppmfilename, "/tmp/px-b750f-page%d.ppm", page_count);
@@ -458,26 +438,23 @@ main (int argc, char *argv[])
 		page_count++;
 		if (err)
 			err_fatal ("Error occurred in \"PINIT_FUNC\"."); /* exit */
-		debug_msg("step 100.1\n");
 		debug_msg("ppm image width = %d; height = %d\n", bytes_per_line/3, (int)print_area_y);
 		printJob.verticalOffset = 0;
 		debug_msg("start page %d ======================\n", page_count);
 		if (jobAttr.duplex ==  EPS_DUPLEX_LONG && ((page_count % 2) == 0))
 		{
-			char* pagebuf = malloc((int)(print_area_y) * (bandBmp.WidthBytes));
+			char* pagebuf = malloc((int)(print_area_y) * (bandBmp.widthBytes));
 			char* startpage = pagebuf;
 			long int posbuf = 0;
 
 			for (i = 0; i < print_area_y; i ++)
 			{
 				char *line;
-				//debug_msg("step 10\n");
-				line = (char *)(band + (bandBmp.WidthBytes * band_line_count));
+				line = (char *)(band + (bandBmp.widthBytes * band_line_count));
 				while ((0 == y_count) || ((i > (y_mag * y_count) - 1) && (y_count < height_pixel))) {
 					while ((0 == err) && (read_size < bytes_per_line)) {
 						int rsize;
 						rsize = read(STDIN_FILENO, image_raw + read_size, bytes_per_line - read_size);
-						//debug_msg("step 11\n");
 						if (rsize <= 0) {
 							if ((errno != EINTR) && (errno != EAGAIN) && (errno != EIO)) {
 								err = -1;
@@ -501,7 +478,6 @@ main (int argc, char *argv[])
 					copybyte = 3;
 				if (x_mag == 1)
 				{
-					//debug_msg("step 12\n");
 					if ( 1 == byte_par_pixel )
 					{
 						int k;
@@ -516,7 +492,6 @@ main (int argc, char *argv[])
 				}
 				else
 				{
-					//debug_msg("step 13\n");
 					x_count = 0;
 					for (j = 0; j < print_area_x; j ++)
 					{
@@ -529,13 +504,12 @@ main (int argc, char *argv[])
 							byte_par_pixel);
 					}
 				}
-				//debug_msg("step 14\n");
 				band_line_count ++;
 				if (band_line_count >= band_line)
 				{
 					bandRect.bottom = bandRect.top + band_line_count;
 					printHeight = 1;
-					memcpy(pagebuf, bandBmp.Bits, bandBmp.WidthBytes);
+					memcpy(pagebuf, bandBmp.bits, bandBmp.widthBytes);
 #if (HAVE_PPM)
 					fp = fopen(ppmfilename, "a+");
 					int i=0;	
@@ -545,21 +519,20 @@ main (int argc, char *argv[])
 					fprintf(fp, "\n");
 					fclose(fp);
 #endif
-					pagebuf+= bandBmp.WidthBytes;
-					posbuf+=bandBmp.WidthBytes;
+					pagebuf+= bandBmp.widthBytes;
+					posbuf+=bandBmp.widthBytes;
 
 					band_line_count -= printHeight;
-					bandBmp.Bits += band_line_count;
+					bandBmp.bits += band_line_count;
 					
 					bandRect.top = bandRect.bottom;
 				}
 			}
-			//debug_msg("step 15\n");
 			if (band_line_count > 0)
 			{
 				bandRect.bottom = bandRect.top + band_line_count;
 				printHeight = 1;
-				memcpy(pagebuf, bandBmp.Bits, bandBmp.WidthBytes);
+				memcpy(pagebuf, bandBmp.bits, bandBmp.widthBytes);
 #if (HAVE_PPM)
 				fp = fopen(ppmfilename, "a+");
 				int i=0;	
@@ -569,35 +542,35 @@ main (int argc, char *argv[])
 				fprintf(fp, "\n");
 				fclose(fp);
 #endif
-				pagebuf+= bandBmp.WidthBytes;
-				posbuf+= bandBmp.WidthBytes;
+				pagebuf+= bandBmp.widthBytes;
+				posbuf+= bandBmp.widthBytes;
 				band_line_count -= printHeight;
-				bandBmp.Bits += band_line_count;
+				bandBmp.bits += band_line_count;
 			}
 		
 			int revert = 0;
-			int pos = posbuf - bandBmp.WidthBytes ;
-			char *rever_buf = malloc(bandBmp.WidthBytes + 1000);
+			int pos = posbuf - bandBmp.widthBytes ;
+			char *rever_buf = malloc(bandBmp.widthBytes + 1000);
 			for (revert = print_area_y; revert > 0; revert--)
 			{
 				if (3 != byte_par_pixel)
 				{
 					int k = 0;
-					for (k = bandBmp.WidthBytes/3; k >= 0; k--)
+					for (k = bandBmp.widthBytes/3; k >= 0; k--)
 					{
-						memcpy(rever_buf + k*3, startpage + pos + (bandBmp.WidthBytes) - k*3, 3);
+						memcpy(rever_buf + k*3, startpage + pos + (bandBmp.widthBytes) - k*3, 3);
 					}
 				}
 				else
 				{
 					int k = 0;
-					for (k = bandBmp.WidthBytes/3; k >= 0; k--)
+					for (k = bandBmp.widthBytes/3; k >= 0; k--)
 					{
-						memcpy(rever_buf + k*3, startpage + pos + (bandBmp.WidthBytes - 6) - k*3, 3);
+						memcpy(rever_buf + k*3, startpage + pos + (bandBmp.widthBytes - 6) - k*3, 3);
 					}
 				}
-				PrintBand (rever_buf, bandBmp.WidthBytes, &printHeight);
-				pos -= bandBmp.WidthBytes;
+				PrintBand (rever_buf, bandBmp.widthBytes, &printHeight);
+				pos -= bandBmp.widthBytes;
 			}
 
 			debug_msg("free rever\n");
@@ -624,7 +597,7 @@ main (int argc, char *argv[])
 			{
 				char *line;
 	
-				line = (char *)(band + (bandBmp.WidthBytes * band_line_count));
+				line = (char *)(band + (bandBmp.widthBytes * band_line_count));
 				while ((0 == y_count) || ((i > (y_mag * y_count) - 1) && (y_count < height_pixel))) {
 					while ((0 == err) && (read_size < bytes_per_line)) {
 						int rsize;
@@ -711,7 +684,7 @@ main (int argc, char *argv[])
 					bandRect.bottom = bandRect.top + band_line_count;
 
 					printHeight = band_line_count;
-					PrintBand (bandBmp.Bits, bandBmp.WidthBytes, &printHeight);
+					PrintBand (bandBmp.bits, bandBmp.widthBytes, &printHeight);
 #if (HAVE_PPM)
 					fp = fopen(ppmfilename, "a+");
 					int i=0;	
@@ -722,9 +695,9 @@ main (int argc, char *argv[])
 					fclose(fp);
 #endif
 					debug_msg("printHeight = %d\n", printHeight);
-					debug_msg("WidthByte = %d\n", bandBmp.WidthBytes);
+					debug_msg("widthByte = %d\n", bandBmp.widthBytes);
 					band_line_count -= printHeight;
-					bandBmp.Bits += band_line_count;
+					bandBmp.bits += band_line_count;
 					bandRect.top = bandRect.bottom;
 				}
 				
@@ -734,7 +707,7 @@ main (int argc, char *argv[])
 			{
 				bandRect.bottom = bandRect.top + band_line_count;
 				
-				err = PrintBand (bandBmp.Bits, bandBmp.WidthBytes, &printHeight);
+				err = PrintBand (bandBmp.bits, bandBmp.widthBytes, &printHeight);
 				debug_msg("printHeight = %d\n", printHeight);
 				if(err)
 					err_fatal ("Error occurred in \"OUT_FUNC\"."); /* exit */
@@ -748,7 +721,7 @@ main (int argc, char *argv[])
 				fclose(fp);
 #endif
 				band_line_count -= printHeight;
-				bandBmp.Bits += band_line_count;
+				bandBmp.bits += band_line_count;
 			}
 			
 			err = epsEndPage(FALSE);
@@ -762,7 +735,6 @@ main (int argc, char *argv[])
 /* 2004.04.15 for 'error' */	
 quit:;
 	if( cancel ){
-		//escprTerminatePage (ESCPR_END_PAGE);
 		err = epsEndPage(FALSE);
 	}
      
@@ -780,13 +752,16 @@ quit:;
 
 
 static int
-set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PRINT_QUALITY *printQuality)
+set_pips_parameter (filter_option_t *filter_opt_p, EPS_OPT *printOpt)
 {
-	char *mediaType;
-	char *quality;
-	char *ink;
-	char *duplex;
-	char *inputslot;
+	char *mediaType = NULL;
+	char *quality = NULL;
+	char *ink = NULL;
+	char *duplex = NULL;
+	char *inputslot = NULL;
+	char *brightness = NULL;
+	char *contrast = NULL;
+	char *saturation = NULL;
 
 	/* Some model's ppd don't support duplex or inputslot option.*/
 	if (strlen (filter_opt_p->media) == 0
@@ -803,32 +778,25 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 	mediaType = str_clone (filter_opt_p->quality, strlen(filter_opt_p->quality) - strlen(quality));
 
 	/* Media Type ID */
-	printQuality->MediaTypeID = getMediaTypeID(mediaType); 
 	jobAttr.mediaTypeIdx = getMediaTypeID(mediaType);
 	debug_msg(" mediaType = %s\n", mediaType);
 
 	/* Print MediaType */
 	jobAttr.printQuality = EPS_MQID_DRAFT;
 	if(strcmp(quality, "_DRAFT") == 0 || strcmp(quality, "_SUPERDRAFT") == 0){
-		printQuality->PrintQuality = ESCPR_PQ_DRAFT;
 		jobAttr.printQuality = EPS_MQID_DRAFT; 
 	}else if(strcmp(quality, "_NORMAL") == 0){
-		printQuality->PrintQuality = ESCPR_PQ_NORMAL;
 		jobAttr.printQuality = EPS_MQID_NORMAL; 
 	}else{
-		printQuality->PrintQuality = ESCPR_PQ_HIGH;		  
-		//jobAttr.printQuality = EPS_MQID_DRAFT; 
 		jobAttr.printQuality = EPS_MQID_HIGH;
 	}
 
 	/* Ink */
 	ink = str_clone (filter_opt_p->ink, strlen (filter_opt_p->ink));
  	if (strcmp (ink, "COLOR") == 0){ 
- 		printQuality->ColorMono = ESCPR_CM_COLOR; 
  		jobAttr.colorMode =  EPS_CM_COLOR;
  	}
  	else{ 
- 		printQuality->ColorMono = ESCPR_CM_MONOCHROME;
  		jobAttr.colorMode =  EPS_CM_MONOCHROME; 
  	}
 
@@ -881,34 +849,38 @@ set_pips_parameter (filter_option_t *filter_opt_p, ESCPR_OPT *printOpt, ESCPR_PR
 		debug_msg("Auto Selection\n");
  		jobAttr.paperSource =  EPS_MPID_AUTO;
  	}
- 	
- 	
+ 
+	/* Brightness */
+	brightness = str_clone (filter_opt_p->brightness, strlen (filter_opt_p->brightness));
+ 	jobAttr.brightness =  atoi(brightness) * 2;
+
+	/* Contrast */
+	contrast = str_clone (filter_opt_p->contrast, strlen (filter_opt_p->contrast));
+ 	jobAttr.contrast =  atoi(contrast) * 2;
+
+	/* Saturation */
+	saturation = str_clone (filter_opt_p->saturation, strlen (filter_opt_p->saturation));
+ 	jobAttr.saturation =  atoi(saturation) * 2;
+
 	/* Others */
-	printQuality->Brightness = 0;
-	printQuality->Contrast = 0;
-	printQuality->Saturation = 0;
-	printQuality->ColorPlane = ESCPR_CP_FULLCOLOR; /* default for epson-escpr */
-	printQuality->PaletteSize = 0;                 /* cause ColorPlane is FULLCOLOR */
-	printQuality->PaletteData = NULL;
-	
-	jobAttr.brightness = 0;
-	jobAttr.contrast = 0;
-	jobAttr.saturation = 0;
 	jobAttr.apfAutoCorrect = EPS_APF_ACT_STANDARD;
 	jobAttr.sharpness = 0;
-	jobAttr.colorPlane = ESCPR_CP_FULLCOLOR;
+	jobAttr.colorPlane = EPS_CP_FULLCOLOR;
 	jobAttr.paletteSize = 0;
 	jobAttr.paletteData = NULL;
 	jobAttr.copies = 1;
 	jobAttr.feedDirection = EPS_FEEDDIR_PORTRAIT;      /* paper feed direction  hardcode */
-//	jobAttr.paperSource = EPS_MPID_AUTO;
 	jobAttr.printDirection = 0;
+
 
 	/* free alloced memory */
 	mem_free(mediaType);
 	mem_free(ink);
 	mem_free(duplex);
 	mem_free(inputslot);
+	mem_free(brightness);
+	mem_free(contrast);
+	mem_free(saturation);
 	
 	return 0;
 }
@@ -927,7 +899,7 @@ static int  getMediaTypeID(char *rsc_name)
   return 0;
 }
 
-ESCPR_BYTE4 print_spool_fnc(void* hParam, const ESCPR_UBYTE1* pBuf, ESCPR_UBYTE4 cbBuf) 
+EPS_INT32 print_spool_fnc(void* hParam, const EPS_UINT8* pBuf, EPS_UINT32 cbBuf) 
 {
 	long int i;
 	for (i = 0; i < cbBuf; i++)

@@ -36,7 +36,7 @@ extern void			lprSetupSTFunctions	(const EPS_PRINTER_INN*							);
 extern EPS_UINT16	lprGetDefautiPort	(void                                           );
 
 /* Discovery message related Functions */
-extern EPS_ERR_CODE lprFindStart        (EPS_SOCKET*, const EPS_INT8*, EPS_BOOL         );
+extern EPS_ERR_CODE lprFindStart        (EPS_SOCKET*, const EPS_INT8*, EPS_BOOL, const EPS_UINT8*);
 extern EPS_ERR_CODE lprFind             (EPS_SOCKET, EPS_PRINTER_INN**                  );
 extern EPS_ERR_CODE lprFindEnd          (EPS_SOCKET                                     );
 extern EPS_ERR_CODE lprProbePrinterByID (EPS_INT8*, EPS_UINT32, EPS_PRINTER_INN**       );
@@ -53,10 +53,9 @@ extern EPS_ERR_CODE lprMechCommand      (const EPS_PRINTER_INN*, EPS_INT32      
 
 /* Printer status Functions */
 extern EPS_ERR_CODE lprGetStatus        (EPS_STATUS_INFO*, EPS_BOOL*, EPS_BOOL*         );
-extern EPS_ERR_CODE lprGetInkInfo       (EPS_STATUS_INFO*                               );
 extern EPS_ERR_CODE lprGetJobStatus     (EPS_STATUS_INFO*                               );
-extern EPS_ERR_CODE lprGetPMString      (const EPS_PRINTER_INN*, EPS_INT32, 
-										 EPS_UINT8*, EPS_INT32*                         );
+extern EPS_ERR_CODE lprGetInfo          (const EPS_PRINTER_INN*, EPS_INT32, 
+										 EPS_UINT8**, EPS_INT32*                        );
 
 
 #ifdef __cplusplus

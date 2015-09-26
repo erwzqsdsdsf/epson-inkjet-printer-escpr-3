@@ -61,6 +61,7 @@ libescpr_la_SOURCES = \
 	epson-escpr-err.h \
 	epson-escpr-media.h \
 	epson-escpr-mem.c epson-escpr-mem.h \
+	epson-escpr-pm.c epson-escpr-pm.h \
 	epson-escpr-pvt.h \
 	epson-escpr-services.c epson-escpr-services.h \
 	epson-layout.c epson-layout.h \
@@ -69,8 +70,7 @@ libescpr_la_SOURCES = \
 	epson-net-snmp.c epson-net-snmp.h \
 	epson-protocol.c epson-protocol.h \
 	epson-typedefs.h \
-	epson-usb.c epson-usb.h \
-	escpr_def.h \
-	escpr_osdep.h 
+	epson-usb.c epson-usb.h
+
 libescpr_la_LDFLAGS = -O2 -version-info 1:0:0
 

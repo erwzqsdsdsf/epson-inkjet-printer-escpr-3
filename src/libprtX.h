@@ -1,7 +1,7 @@
 /*
  * Epson Inkjet Printer Driver (ESC/P-R) for Linux
  * Copyright (C) 2002-2005 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2002-2013.
+ * Copyright (C) Seiko Epson Corporation 2002-2015.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,28 +25,46 @@
 #  include <config.h>
 #endif
 
+#define NAME_MAX 41
+
 #include "pipsDef.h"
-#include "escpr_def.h"
+#include "../lib/epson-escpr-pvt.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-#define DLL_PRT_INIT  "escprInitJob"
-#define DLL_PAGE_INIT "escprInitPage"
-#define DLL_BAND_OUT  "escprBandOut"
-#define DLL_PAGE_END  "escprTerminatePage"
-#define DLL_PRT_END   "escprDestroyJob"
-#define DLL_FILTER_PMREPLY "escprFilterPMReply"
-	
-	typedef void *handle_t;
-	typedef int (*INIT_FUNC) (const ESCPR_OPT *, const ESCPR_PRINT_QUALITY *, const ESCPR_PRINT_JOB*);
-	typedef int (*PINIT_FUNC) (void);
-	typedef int (*OUT_FUNC) (const ESCPR_BANDBMP *, ESCPR_RECT *);
-	typedef int (*PEND_FUNC) (const ESCPR_UBYTE1);
-	typedef int (*END_FUNC) (void);  
-	typedef int (*FILTER_PMPEPLY_FUNC) (ESCPR_UBYTE1 *);
-	
+/*** Index of printing quality                                                      */
+/*** -------------------------------------------------------------------------------*/
+typedef EPS_INT32 (* EPS_FPSPOOLFUNC)(void* hParam, 
+        const EPS_UINT8* pBuf, EPS_UINT32 cbBuf);
+
+typedef struct tagEPS_OPT{
+    EPS_FPSPOOLFUNC    fpspoolfunc;    /* pointer to spool function */
+}EPS_OPT;
+
+typedef struct rtp_filter_option {
+	char model[NAME_MAX + 1];
+	char model_low[NAME_MAX + 1];
+	char ink[NAME_MAX + 1];
+	char media[NAME_MAX + 1];
+	char quality[NAME_MAX + 1];
+	char duplex[NAME_MAX + 1];
+	char inputslot[NAME_MAX + 1];
+	char brightness[NAME_MAX + 1];
+	char contrast[NAME_MAX + 1];
+	char saturation[NAME_MAX + 1];
+} filter_option_t;
+
+
+typedef void *handle_t;
+typedef int (*INIT_FUNC) (const EPS_OPT *, const EPS_PRINT_JOB*);
+typedef int (*PINIT_FUNC) (void);
+typedef int (*OUT_FUNC) (const EPS_BANDBMP *, EPS_RECT *);
+typedef int (*PEND_FUNC) (const EPS_UINT8);
+typedef int (*END_FUNC) (void);  
+typedef int (*FILTER_PMPEPLY_FUNC) (EPS_UINT8 *);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

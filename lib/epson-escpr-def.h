@@ -18,8 +18,8 @@
 /*                           Epson ESC/PR External Definitions                          */
 /*                                                                                      */
 /*******************************************|********************************************/
-#ifndef __EPSON_ESCPR_DEF_2_H__
-#define __EPSON_ESCPR_DEF_2_H__
+#ifndef __EPSON_ESCPR_DEF_H__
+#define __EPSON_ESCPR_DEF_H__
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -27,6 +27,12 @@ extern "C" {
 /*------------------------------------  Includes   -------------------------------------*/
 /*******************************************|********************************************/
 #include "epson-typedefs.h"
+
+/*------------------------------  Local Compiler Switch  -------------------------------*/
+/*******************************************|********************************************/
+/* Network Intarface bind option. following items are only either one in effect. */
+#define LCOMSW_BINDIF_IF_NEED		0	/* 1: bind interface when send find packet error*/
+#define LCOMSW_USE_MULTI_IF			0	/* 1: bind multi interface                      */
 
 /*------------------------------------- Data Types -------------------------------------*/
 /*******************************************|********************************************/
@@ -36,9 +42,16 @@ extern "C" {
 
 /*-----------------------------------  Definitions  ------------------------------------*/
 /*******************************************|********************************************/
+
+#define EPS_IFNAME_LEN	(16)
+
     /*** Maximum Ink Cartridge Number                                                   */
     /*** -------------------------------------------------------------------------------*/
 #define EPS_INK_NUM                 20
+
+    /*** Maximum PaperSource Number                                                     */
+    /*** -------------------------------------------------------------------------------*/
+#define EPS_PAPERSOURCE_NUM         20
 
     /*** Buffer size for manufacter name and model name                                 */
     /*** -------------------------------------------------------------------------------*/
@@ -279,7 +292,24 @@ enum EPS_COLOR {
 	EPS_COLOR_ORANGE,
 	EPS_COLOR_GREEN,
 	EPS_COLOR_WHITE,
-	EPS_COLOR_CLEAN
+	EPS_COLOR_CLEAN,
+
+	/* add ver5.4*/
+	EPS_COLOR_COMPOSITE,
+};
+
+    /*** Power info                                                                     */
+    /*** -------------------------------------------------------------------------------*/
+enum EPS_POWER_SOUECE {
+    EPS_POWER_SOUECE_NOT_SUPPORTED = -1,
+    EPS_POWER_SOUECE_UNKNOWN       = 0,
+    EPS_POWER_SOUECE_AC,
+    EPS_POWER_SOUECE_BATTERY,
+};
+
+enum EPS_CHARGE_STATE {
+    EPS_CHARGE_STATE_NONE,
+    EPS_CHARGE_STATE_CHARGING,
 };
 
 
@@ -307,6 +337,8 @@ typedef struct _tagEPS_PRINTER_ {
 	/* ver 5.0 */
 	EPS_UINT32			language;				/* print language */
 	EPS_INT8            macAddress[EPS_ADDR_BUFFSIZE];
+	/* ver 5.2 */
+	EPS_INT8            serialNo[EPS_ADDR_BUFFSIZE];
 } EPS_PRINTER;
 
 	
@@ -361,12 +393,19 @@ typedef struct _tagEPS_JOB_ATTRIB_ {
 	EPS_INT32			duplex;             /* Duplex print                             */
 	EPS_INT32           copies;             /* copies count                             */
 	EPS_INT32           feedDirection;      /* paper feed direction                     */
+
+	/* -------------------------------------------------------------------------------- */
+	/* Ver 4                                                                            */
+	EPS_UINT32			userDefWidth;       /* user defined width                       */
+	EPS_UINT32			userDefHeight;      /* user defined height                      */
+	EPS_INT32			pageNum;            /* amount of pages                          */
 } EPS_JOB_ATTRIB;
 
 #define EPS_JOB_ATTRIB_VER_1		1
 #define EPS_JOB_ATTRIB_VER_2		2
 #define EPS_JOB_ATTRIB_VER_3		3
-#define EPS_JOB_ATTRIB_VER_CUR	EPS_JOB_ATTRIB_VER_3
+#define EPS_JOB_ATTRIB_VER_4		4
+#define EPS_JOB_ATTRIB_VER_CUR	EPS_JOB_ATTRIB_VER_4
 
 
 	/*** Page Attributes                                                                */
@@ -377,24 +416,6 @@ typedef struct _tagEPS_PAGE_ATTRIB_ {
 #define EPS_PAGE_ATTRIB_VERS_0	0
 #define EPS_PAGE_ATTRIB_VER_CUR	EPS_PAGE_ATTRIB_VER_0
 
-
-	/*** Additional Data                                                                */
-    /*** -------------------------------------------------------------------------------*/
-#if 0 /* DEL */
-typedef struct _tagEPS_QRCODE_ {
-	EPS_UINT16			version;		/* structure version                            */	
-	EPS_INT8*			source;  		/* source buffer                                */
-	EPS_UINT16			srcLength; 		/* source size                                  */
-	EPS_INT32			xPos;			/* Left position                                */
-	EPS_INT32			yPos;			/* Top position                                 */
-	EPS_UINT32			width;  		/* width                                        */
-} EPS_QRCODE;
-#define EPS_QRCODE_VER_1	1
-#define EPS_QRCODE_VER_CUR	EPS_QRCODE_VER_1
-
-#define EPS_ADDDATA_NONE		0x00
-#define EPS_ADDDATA_QRCODE		0x01
-#endif
 
 	/*** Print Data                                                                     */
     /*** -------------------------------------------------------------------------------*/
@@ -432,7 +453,33 @@ typedef struct _tagEPS_INK_INFO_ {
     EPS_INT32           number;
     EPS_INT32           colors[EPS_INK_NUM];
     EPS_INT32           remaining[EPS_INK_NUM];
+    EPS_INT32           status[EPS_INK_NUM];
 } EPS_INK_INFO;
+
+    /*** Paper setting infomation                                                       */
+    /*** -------------------------------------------------------------------------------*/
+typedef struct _tagEPS_PAPERSOURCE_INFO_ {
+    EPS_INT32			number;
+    EPS_UINT32          id[EPS_PAPERSOURCE_NUM];
+    EPS_INT32           mediaSizeID[EPS_PAPERSOURCE_NUM];
+    EPS_INT32           mediaTypeID[EPS_PAPERSOURCE_NUM];
+} EPS_PAPERSOURCE_INFO;
+
+    /*** Power source infomation                                                        */
+    /*** -------------------------------------------------------------------------------*/
+typedef struct _tagEPS_POWERSOURCE_INFO_ {
+    EPS_UINT32			type;
+    EPS_UINT32          chargeState;
+    EPS_INT32           remaining;
+} EPS_POWERSOURCE_INFO;
+
+    /*** supplies infomation                                                            */
+    /*** -------------------------------------------------------------------------------*/
+typedef struct _tagEPS_SUPPLY_INFO_ {
+	EPS_INK_INFO			ink;
+	EPS_PAPERSOURCE_INFO	paperSource;
+    EPS_POWERSOURCE_INFO	powerSource;
+} EPS_SUPPLY_INFO;
 
 	/*** Supported Media Information                                                    */
     /*** -------------------------------------------------------------------------------*/
@@ -470,7 +517,37 @@ typedef struct _tagEPS_SUPPORTED_MEDIA_ {
     EPS_UINT32          resolution;			/* supported input resolution */
 }EPS_SUPPORTED_MEDIA;
 
-        /* USB device infomation                                                        */
+
+	/*** Print Area Information                                                         */
+    /*** -------------------------------------------------------------------------------*/
+typedef struct _tagEPS_MARGIN_ {
+    EPS_INT32   top;
+    EPS_INT32   left;
+    EPS_INT32   bottom;
+    EPS_INT32   right;
+} EPS_MARGIN;
+
+typedef struct _tagEPS_LAYOUT_INFO_ {
+    EPS_UINT32          layout;
+    EPS_MARGIN          margin;
+}EPS_LAYOUT_INFO;
+
+typedef struct _tagEPS_LAYOUTSIZE_INFO_ {
+    EPS_INT32           mediaSizeID;
+    EPS_UINT32          paperWidth;
+    EPS_UINT32          paperHeight;
+    EPS_INT32           numLayouts;
+    EPS_LAYOUT_INFO*    layoutList;
+}EPS_LAYOUTSIZE_INFO;
+
+typedef struct _tagEPS_PRINT_AREA_INFO_ {
+    EPS_INT32				numSizes;
+    EPS_LAYOUTSIZE_INFO*	sizeList;
+}EPS_PRINT_AREA_INFO;
+
+
+	/*** USB device Information                                                         */
+    /*** -------------------------------------------------------------------------------*/
 typedef struct _tagEPS_USB_DEVICE_ {
     EPS_UINT32          vid;		/* vender ID */
     EPS_UINT32          pid;		/* product ID */
@@ -534,7 +611,8 @@ typedef EPS_FILEDSC (*EPS_OpenPortal    )(const EPS_USB_DEVICE*                 
 typedef EPS_INT32   (*EPS_ClosePortal   )(EPS_FILEDSC                                   );
 typedef EPS_INT32   (*EPS_ReadPortal    )(EPS_FILEDSC, EPS_UINT8*, EPS_INT32, EPS_INT32*);
 typedef EPS_INT32   (*EPS_WritePortal   )(EPS_FILEDSC, const EPS_UINT8*, EPS_INT32, EPS_INT32*);
-typedef EPS_INT32   (*EPS_GetDeviceID   )(EPS_FILEDSC, EPS_INT8*                        );
+typedef EPS_INT32   (*EPS_GetDeviceID   )(EPS_FILEDSC, EPS_INT8*, EPS_INT32*            );
+typedef EPS_INT32   (*EPS_SoftReset     )(EPS_FILEDSC                                   );
 
 
     /*** Sockets Function Definitions                                                   */
@@ -556,7 +634,12 @@ typedef EPS_INT32	(*EPS_NetReceiveFrom       )(EPS_SOCKET, void*, EPS_INT32,
 typedef EPS_INT32	(*EPS_NetGetSockName       )(EPS_SOCKET, EPS_INT8*, EPS_UINT16*     );
 typedef EPS_INT32	(*EPS_NetSetMulticastTTL   )(EPS_SOCKET, EPS_INT32                  );
 typedef EPS_INT32	(*EPS_NetSetBroadCast      )(EPS_SOCKET                             );
-
+#if LCOMSW_USE_MULTI_IF
+typedef EPS_INT32	(*EPS_NetEnumInterface     )(EPS_UINT8*, EPS_UINT32                 );
+typedef EPS_INT32	(*EPS_NetBindInterface     )(EPS_SOCKET, const EPS_UINT8*           );
+#elif LCOMSW_BINDIF_IF_NEED
+typedef EPS_INT32	(*EPS_NetBindInterface     )(EPS_SOCKET                             );
+#endif
 
     /*** External Function Definitions                                                  */
     /*** -------------------------------------------------------------------------------*/
@@ -587,6 +670,8 @@ typedef struct _tagEPS_USB_FUNC_ {
 	EPS_FindFirstPort	findFirst;          /* Find usb device start Function           */
 	EPS_FindNextPort	findNext;           /* Find next usb device Function            */
 	EPS_FindClose		findClose;          /* Find process end Function                */
+    EPS_GetDeviceID     getDeviceID;        /* Get Device ID Function                   */
+	EPS_SoftReset       softReset;          /* USB soft reset Function                  */
 } EPS_USB_FUNC;
 
 #define EPS_USBFUNC_VER_1		1
@@ -610,6 +695,12 @@ typedef struct _tagEPS_NET_FUNC_ {
 	EPS_NetGetSockName      getsockname;        /* getsockname Function                 */
 	EPS_NetSetMulticastTTL  setMulticastTTL;    /* Set Multicast TTL Function           */
 	EPS_NetSetBroadCast     setBroadcast;       /* Set enable broadcast Function        */
+#if LCOMSW_USE_MULTI_IF
+	EPS_NetEnumInterface    enumInterface;
+	EPS_NetBindInterface    bindInterface;
+#elif LCOMSW_BINDIF_IF_NEED 
+	EPS_NetBindInterface    bindInterface;
+#endif
 } EPS_NET_FUNC;
 #define EPS_NETFUNC_VER_1		1
 #define EPS_NETFUNC_VER_CUR		EPS_USBFUNC_VER_1

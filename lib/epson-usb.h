@@ -50,10 +50,11 @@ extern EPS_ERR_CODE usbResetPrinter     (void                                   
 
 extern EPS_ERR_CODE usbGetStatus        (EPS_STATUS_INFO*, EPS_BOOL*, EPS_BOOL*         );
 extern EPS_ERR_CODE usbGetJobStatus     (EPS_STATUS_INFO*							    );
-extern EPS_ERR_CODE usbGetPMString      (const EPS_PRINTER_INN*, EPS_INT32,
-                                         EPS_UINT8*, EPS_INT32*                         );
+extern EPS_ERR_CODE usbGetInfo          (const EPS_PRINTER_INN*, EPS_INT32,
+                                         EPS_UINT8**, EPS_INT32*                        );
 
 extern EPS_ERR_CODE usbMechCommand      (EPS_INT32                                      );
+extern EPS_ERR_CODE usbInfoCommand		(const EPS_PRINTER_INN*, EPS_INT32, EPS_UINT8**, EPS_INT32* );
 
 #ifdef    __cplusplus
 }
