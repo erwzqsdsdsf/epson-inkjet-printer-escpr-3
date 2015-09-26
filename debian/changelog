@@ -1,3 +1,23 @@
+epson-inkjet-printer-escpr (1.5.2-1) unstable; urgency=medium
+
+  * New 1.5.2 upstream release
+    - Added ppd files of following models
+     - EP-808A Series
+     - EP-978A3 Series
+     - PF-81 Series
+     - ET-2500 Series
+     - ET-2550 Series
+     - ET-4500 Series
+     - ET-4550 Series
+    - Supported following options
+     - Brightness
+     - Contrast
+     - Saturation
+    - Updated ESC/P-R library to version 5.4
+  * Update get-orig-source target to be more tolerant
+
+ -- Didier Raboud <odyx@debian.org>  Sat, 26 Sep 2015 17:31:19 +0200
+
 epson-inkjet-printer-escpr (1.4.5-1) unstable; urgency=medium
 
   * New 1.4.5 upstream version
