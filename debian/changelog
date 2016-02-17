@@ -1,3 +1,29 @@
+epson-inkjet-printer-escpr (1.6.3-1) unstable; urgency=medium
+
+  * New 1.6.3 upstream release
+    - Supported new models
+    - For some models, we changed the ppd description, "*DefaultMediaType" from
+      PLAIN_DRAFT to PLAIN_NORMAL
+    - For some models, we added PLAIN_NORMAL and ENV_NORMAL as media type
+    - Added ppd files of following models
+     - PM-400 Series
+     - L805 Series
+     - WF-6530 Series
+     - EP-10VA Series
+     - PX-M860F
+     - PX-S860
+     - WP-M4011 Series
+     - WP-M4015 Series
+     - WP-M4095 Series
+     - WP-M4521 Series
+     - WP-M4525 Series
+     - WP-M4595 Series
+    - Speeding up of multiple page printing
+  * Refresh copyright file
+  * Try harder to merge upstream versions with a debian/ directory
+
+ -- Didier Raboud <odyx@debian.org>  Wed, 17 Feb 2016 21:57:09 +0100
+
 epson-inkjet-printer-escpr (1.5.2-1) unstable; urgency=medium
 
   * New 1.5.2 upstream release
