@@ -32,7 +32,7 @@
 
 *OpenUI *MediaType/Print Quality: PickOne
 *OrderDependency: 20 AnySetup *MediaType
-*DefaultMediaType: PLAIN_DRAFT
+*DefaultMediaType: PLAIN_NORMAL
 *MediaType PLAIN_HIGH/plain papers-High: "<</HWResolution[360 360]>>setpagedevice"
 *MediaType PLAIN_NORMAL/plain papers-Standard-Vivid: "<</HWResolution[360 360]>>setpagedevice"
 *MediaType PLAIN_DRAFT/plain papers-Standard: "<</HWResolution[360 360]>>setpagedevice"

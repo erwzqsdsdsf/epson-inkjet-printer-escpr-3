@@ -237,6 +237,12 @@ static const EPS_UINT8 PrintNumCmd[] = {
                             's', 'e', 't', 'n',
                             0x00, 0x00};
 
+static const EPS_UINT8 PrintNumCmd2[] = {
+	                        0x1B, 'p', 0x01, 0x00, 0x00, 0x00,
+                            's', 'e', 't', 'n',
+                           0x00};
+
+
     /*** ESC/P-R Commands (custom setting)                                              */
     /*** -------------------------------------------------------------------------------*/
 static const EPS_UINT8 CustomCmd[]       = {
@@ -1100,7 +1106,8 @@ epsStartJob_END:
 /*******************************************|********************************************/
 EPS_ERR_CODE    epsStartPage (
 
-        const EPS_PAGE_ATTRIB* pageAttr
+        const EPS_PAGE_ATTRIB* pageAttr,
+		EPS_UINT32 PageNum
 
 ){
 /*** Declare Variable Local to Routine                                                  */
@@ -1191,6 +1198,11 @@ EPS_LOG_FUNCIN;
 
 				memcpy(sendDataBuf, StartPage, sizeof(StartPage));
 				retStatus = SendCommand(sendDataBuf, sizeof(StartPage), &retBufSize, TRUE);
+
+				memcpy(sendDataBuf, PrintNumCmd2, sizeof(PrintNumCmd2));
+				sendDataBuf[sizeof(PrintNumCmd2)-1] = PageNum;
+				retStatus = SendCommand(sendDataBuf, sizeof(PrintNumCmd2), &retBufSize, TRUE);
+
 			}
 		} else{
 			/*** ESC/Page ***/
@@ -1283,6 +1295,7 @@ EPS_ERR_CODE    epsPrintBand (
         EPS_UINT32  *heightPixels           /* Height of image (image lines)            */
 
 ) {
+
 /*** Declare Variable Local to Routine                                                  */
 	EPS_ERR_CODE    retStatus;
 	EPS_PRN_DATA	prnData;
@@ -1471,6 +1484,7 @@ EPS_LOG_FUNCIN;
 				pCmd = sendDataBuf;
 				memcpy(pCmd, EndPage, sizeof(EndPage));
 #if GCOMSW_UPDATE_PAGE_REMAINDER
+
 				if( 0 >= nextPage ){
 					if (EPS_DUPLEX_NONE != printJob.attr.duplex && 
 						0 == (printJob.pageCount & 0x01)) {
@@ -1898,7 +1912,7 @@ EPS_ERR_CODE epsContinueJob (
 /*** Send leftovers data                                                                */
 	switch(printJob.contData.savePoint){
 		case EPS_SAVEP_START_PAGE:
-			retStatus = epsStartPage(NULL);
+			retStatus = epsStartPage(NULL,0);
 			break;
 		case EPS_SAVEP_END_PAGE:
 			retStatus = epsEndPage(printJob.contData.nextPage);
@@ -3236,7 +3250,6 @@ EPS_ERR_CODE    PrintBand (
         EPS_UINT32  *heightPixels           /* Height of image (image lines)            */
 
 ) {
-
 /*** Declare Variable Local to Routine                                                  */
 EPS_ERR_CODE    retStatus;
 EPS_UINT32      idx = 0;                    /* Generl loop/index variable               */
@@ -4303,12 +4316,12 @@ EPS_UINT32      retBufSize = 0;             /* Size of buffer written           
 
 	if( EPS_CP_JPEG != printJob.attr.colorPlane ){	/* RGB  */
 		/*** ESC/PR "page num" Command                                                  */
-		SendStartJob_ADDCMD(PrintNumCmd)
-		MakePageNumCmd(pCmdPos - sizeof(PrintNumCmd));
+//		SendStartJob_ADDCMD(PrintNumCmd)
+//		MakePageNumCmd(pCmdPos - sizeof(PrintNumCmd));
 
 		/*** ESC/PR "custom" Command (media size)                                       */
-		SendStartJob_ADDCMD(CustomCmd)
-		*(pCmdPos-1) = (EPS_UINT8)(printJob.attr.mediaSizeIdx & 0xFF);
+//		SendStartJob_ADDCMD(CustomCmd)
+//		*(pCmdPos-1) = (EPS_UINT8)(printJob.attr.mediaSizeIdx & 0xFF);
 
 		if( 3 <= printJob.printer->pmData.version ){
 			SendStartJob_ADDCMD(Chkcmd)

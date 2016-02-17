@@ -32,7 +32,7 @@
 
 *OpenUI *MediaType/Media Type: PickOne
 *OrderDependency: 20 AnySetup *MediaType
-*DefaultMediaType: PLAIN_DRAFT
+*DefaultMediaType: PLAIN_NORMAL
 *MediaType PLAIN_HIGH/Plain Paper <2F> Bright White Paper-Quality: "<</HWResolution[360 360]>>setpagedevice"
 *MediaType PLAIN_NORMAL/Plain Paper <2F> Bright White Paper: "<</HWResolution[360 360]>>setpagedevice"
 *MediaType PLAIN_DRAFT/Plain Paper <2F> Bright White Paper-Speed: "<</HWResolution[360 360]>>setpagedevice"
