@@ -52,6 +52,7 @@ static void sigterm_handler (int sig);
 
 int cancel_flg;
 
+#define CUPS_READ_LINE	128
 #define DEBUG_PATH "/tmp/eps_wrapper.txt"
 
 #if (HAVE_DEBUG)
@@ -161,6 +162,7 @@ main (int argc, char *argv[])
 		debug_msg("PPD file not found, or PPD file is broken. Cannot get option of PIPS.");
 		return 1;
 	}
+
 	/* Print start */
 	ras = cupsRasterOpen (fd, CUPS_RASTER_READ);
 	if (ras == NULL)
@@ -171,11 +173,112 @@ main (int argc, char *argv[])
 	}
 
 	pfp = NULL;
-	while (cupsRasterReadHeader (ras, &header) && !cancel_flg)
+
+	int total_read = 0;
+	int total_read_cache = 0;
+	char *page_raw;      //2ページ分のバッファ
+	char *page_raw_cache;//2ページ分のキャッシュ
+
+	static BOOL first_fwrite = TRUE;
+	static BOOL cache_exist = FALSE;
+
+	int pageNum = 0;
+	while (1)
 	{
+		int ret;
+		ret = cupsRasterReadHeader (ras, &header);
+
+		if (ret == 0 || cancel_flg) //データをすべて読み終わった
+		{
+
+			if(cache_exist){//cacheがあればcacheを送信
+				int pageNum_cache = 2;
+				if(first_fwrite){//最初のfwriteだけ、ページ数を送信
+					fwrite (&pageNum_cache, 1, 1, pfp);
+					first_fwrite = FALSE;
+				}	
+
+				switch (pageNum){
+				case 1:
+					page_raw_cache[0] = 2;
+					page_raw_cache[total_read_cache/2 + 1] = 1;
+					break;
+				case 2:
+					page_raw_cache[0] = 99;
+					page_raw_cache[total_read_cache/2 + 1] = 99;
+					break;
+				default:
+					break;
+				}				
+
+				fwrite (page_raw_cache, total_read_cache + pageNum_cache, 1, pfp);				
+				cache_exist = FALSE;
+				total_read_cache = 0;
+			}
+			
+			//バッファを送信
+			switch (pageNum){
+			case 1:
+				page_raw[0] = 0;
+				break;
+			case 2:
+				page_raw[0] = 1;
+				page_raw[total_read/2 + 1] = 0;
+				break;
+			default:
+				break;
+			}
+
+			if(first_fwrite){//最初のfwriteだけ、ページ数を送信
+				fwrite (&pageNum, 1, 1, pfp);
+				first_fwrite = FALSE;
+			}	
+
+			fwrite (page_raw, total_read + pageNum, 1, pfp);
+
+
+			break;
+
+    	}else{
+			if(pageNum == 2){ //全部読み終わってないとき、２ページ分たまったら
+				total_read_cache = total_read;
+
+				if(cache_exist){//cacheがあればcacheを送信
+					int pageNum_cache = 2;
+					if(first_fwrite){//最初のfwriteだけ、ページ数を送信
+						fwrite (&pageNum_cache, 1, 1, pfp);
+						first_fwrite = FALSE;
+					}	
+
+					switch (pageNum){
+					case 1:
+						page_raw_cache[0] = 99;
+						page_raw_cache[total_read_cache/2 + 1] = 99;
+						break;
+					case 2:
+						page_raw_cache[0] = 2;
+						page_raw_cache[total_read_cache/2 + 1] = 99;
+						break;
+					default:
+						break;
+					}				
+
+					fwrite (page_raw_cache, total_read_cache + pageNum_cache, 1, pfp);				
+					cache_exist = FALSE;
+				}
+
+				//バッファをキャッシュへコピー
+				memcpy(page_raw_cache, page_raw, total_read_cache + pageNum + 1);
+				cache_exist = TRUE;
+			
+				total_read = 0;
+				pageNum = 0;
+	
+			}
+		}
+
 		int image_bytes;
 		char *image_raw;
-		int write_size = 0;
 
 		if (pfp == NULL)
 		{
@@ -207,36 +310,56 @@ main (int argc, char *argv[])
 				perror ("popen");
 				return 1;
 			}
+
+			// +1 .. left page num (2 / 1 / 0) , *2 .. 2page分のバッファ
+			image_bytes = (WIDTH_BYTES(header.cupsBytesPerLine * 8 ) * header.cupsHeight + 1) * 2; 
+			page_raw = (char *)calloc (sizeof (char), image_bytes);
+			page_raw_cache = (char *)calloc (sizeof (char), image_bytes);
+
 		}
 
-		image_bytes = WIDTH_BYTES(header.cupsBytesPerLine * 8);
+		image_bytes = WIDTH_BYTES(header.cupsBytesPerLine * 8 ) * CUPS_READ_LINE;
 		image_raw = (char *)calloc (sizeof (char), image_bytes);
 
-		for (i = 0; i < header.cupsHeight && !cancel_flg; i ++)
+
+		int left_lines = header.cupsHeight;	
+		while(!cancel_flg)		
 		{
-			if (!cupsRasterReadPixels (ras, (unsigned char*)image_raw, header.cupsBytesPerLine))
-			{
-				fprintf (stderr, "cupsRasterReadPixels");
-				debug_msg("cupsRasterReadPixels error");
-				return 1;
+			int cups_read_lines;
+			if(left_lines >= CUPS_READ_LINE){
+				cups_read_lines = CUPS_READ_LINE;
+			}else{
+				cups_read_lines = left_lines;
 			}
+
+			int readpixels;
+			readpixels = cupsRasterReadPixels (ras, (unsigned char*)image_raw, header.cupsBytesPerLine * cups_read_lines);
+
+			if (readpixels == 0)
+			{	
+				// 1ページ分読み込み完了
+				break;
+			}
+
+			memcpy((page_raw + pageNum +1) + total_read, image_raw, readpixels);
+			total_read += readpixels;
 	
-			write_size = fwrite (image_raw, image_bytes, 1, pfp);
+			left_lines -= CUPS_READ_LINE;
 
-			if (write_size != 1)
-			{
-				perror ("fwrite");
-				debug_msg("fwrite error");
-				return 8;
-			}
-		}
-		
-		free (image_raw);
-	}
+		}//while (pixel data)
 
+			free (image_raw);
+
+			pageNum++;
+
+	}//while (cups header)
+
+	free (page_raw);
+	free (page_raw_cache);
 
 	pclose (pfp);
 	cupsRasterClose (ras);
+
 	return 0;
 }
 

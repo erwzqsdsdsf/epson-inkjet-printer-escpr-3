@@ -87,7 +87,7 @@ extern EPS_INT32 areaHeight;
 #endif
 
 EPS_JOB_ATTRIB     jobAttr;
-
+void* context;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 EPS_ERR_CODE epsInitLib(){
@@ -212,6 +212,7 @@ main (int argc, char *argv[])
 	unsigned char *band;
 
 	long read_size = 0;
+	long read_page_no = 0;
 	int band_line;
 
 	int err = 0;
@@ -227,7 +228,9 @@ main (int argc, char *argv[])
 	/* library options */
 	EPS_OPT printOpt;
 	EPS_BANDBMP bandBmp;
-	EPS_RECT bandRect;
+
+	/* Fifo for Backend */
+	context = (void*)XFIFOOpen();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	memset (&jobAttr, 0, sizeof(jobAttr));
@@ -270,7 +273,6 @@ main (int argc, char *argv[])
 	memset (&fopt, 0, sizeof (filter_option_t));
 	memset (&printOpt, 0, sizeof (EPS_OPT));
 	memset (&bandBmp, 0, sizeof(EPS_BANDBMP));
-	memset (&bandRect, 0, sizeof(EPS_RECT));
 
 	strncpy (fopt.model, argv[1], NAME_MAX);
 	for (i = 0; i < NAME_MAX - 1 && fopt.model[i] != '\0' ; i ++)
@@ -391,15 +393,9 @@ main (int argc, char *argv[])
 
 	/* setup band struct */
 	bandBmp.widthBytes = WIDTH_BYTES (print_area_x * 3 * 8 );
-
 	band = (unsigned char *)mem_new (char, bandBmp.widthBytes * band_line);
 	memset (band, 0xff, bandBmp.widthBytes * band_line);
 	bandBmp.bits = band;
-
-	bandRect.left = 0;
-	bandRect.right = printJob.printableAreaWidth;
-	bandRect.top = 0;
-	bandRect.bottom = 0;
 
 	/* debug */
 	DEBUG_JOB_STRUCT (printJob);
@@ -407,34 +403,30 @@ main (int argc, char *argv[])
 	x_mag = (double)print_area_x / width_pixel;
 	y_mag = (double)print_area_y / height_pixel;
 	band_line = 1;
- 	bytes_per_line = WIDTH_BYTES(width_pixel * byte_par_pixel * 8 );
+ 	bytes_per_line = width_pixel * byte_par_pixel;
 	debug_msg("bytes_per_line = %d\n", bytes_per_line);
 	image_raw = mem_new0 (char, bytes_per_line);
 
 	int page_count = 0;
 
-	while ((read_size = read (STDIN_FILENO, image_raw, bytes_per_line)) > 0)
+
+	char page_num;
+
+
+	while ((read_page_no = read (STDIN_FILENO, &page_num, 1)) > 0)  // 最初に page番号を読み込み
 	{
 		long x_count, y_count;
 		int band_line_count;
-#if (HAVE_PPM)
-		char ppmfilename[30];
-		FILE *fp;
-#endif
 		y_count = 0;
 		band_line_count = 0;
-		bandRect.top = 0;
 
-		err = epsStartPage(NULL);
-#if (HAVE_PPM)
-		sprintf(ppmfilename, "/tmp/px-b750f-page%d.ppm", page_count);
-		fp = fopen(ppmfilename, "w");
-		fprintf(fp, "P3\n");
-		fprintf(fp, "%d\n",bytes_per_line/byte_par_pixel);
-		fprintf(fp, "%d\n",(int)print_area_y);
-		fprintf(fp, "255\n");
-		fclose(fp);
-#endif
+		if(page_num == 99){		
+			err = epsStartPage(NULL, 2);
+		}else{
+			err = epsStartPage(NULL, page_num);
+			page_num--;
+		}		
+
 		page_count++;
 		if (err)
 			err_fatal ("Error occurred in \"PINIT_FUNC\"."); /* exit */
@@ -507,41 +499,20 @@ main (int argc, char *argv[])
 				band_line_count ++;
 				if (band_line_count >= band_line)
 				{
-					bandRect.bottom = bandRect.top + band_line_count;
 					printHeight = 1;
 					memcpy(pagebuf, bandBmp.bits, bandBmp.widthBytes);
-#if (HAVE_PPM)
-					fp = fopen(ppmfilename, "a+");
-					int i=0;	
-					for(i=0; i<bytes_per_line/byte_par_pixel*3; i++){		
-						fprintf(fp, "%u ", (unsigned char)pagebuf[i]);
-					}
-					fprintf(fp, "\n");
-					fclose(fp);
-#endif
 					pagebuf+= bandBmp.widthBytes;
 					posbuf+=bandBmp.widthBytes;
 
 					band_line_count -= printHeight;
 					bandBmp.bits += band_line_count;
 					
-					bandRect.top = bandRect.bottom;
 				}
 			}
 			if (band_line_count > 0)
 			{
-				bandRect.bottom = bandRect.top + band_line_count;
 				printHeight = 1;
 				memcpy(pagebuf, bandBmp.bits, bandBmp.widthBytes);
-#if (HAVE_PPM)
-				fp = fopen(ppmfilename, "a+");
-				int i=0;	
-				for(i=0; i<bytes_per_line/byte_par_pixel*3; i++){		
-					fprintf(fp, "%u ", (unsigned char)pagebuf[i]);
-				}
-				fprintf(fp, "\n");
-				fclose(fp);
-#endif
 				pagebuf+= bandBmp.widthBytes;
 				posbuf+= bandBmp.widthBytes;
 				band_line_count -= printHeight;
@@ -591,7 +562,7 @@ main (int argc, char *argv[])
 			if(err)
 				err_fatal ("Error occurred in \"PEND_FUNC\".");	/* exit */
 		}
-		else
+		else //if(duplex)
 		{
 			for (i = 0; i < print_area_y; i ++)
 			{
@@ -681,8 +652,6 @@ main (int argc, char *argv[])
 				
 				if (band_line_count >= band_line)
 				{
-					bandRect.bottom = bandRect.top + band_line_count;
-
 					printHeight = band_line_count;
 					PrintBand (bandBmp.bits, bandBmp.widthBytes, &printHeight);
 #if (HAVE_PPM)
@@ -698,15 +667,13 @@ main (int argc, char *argv[])
 					debug_msg("widthByte = %d\n", bandBmp.widthBytes);
 					band_line_count -= printHeight;
 					bandBmp.bits += band_line_count;
-					bandRect.top = bandRect.bottom;
 				}
 				
 			}
 			
 			if (band_line_count > 0)
 			{
-				bandRect.bottom = bandRect.top + band_line_count;
-				
+			
 				err = PrintBand (bandBmp.bits, bandBmp.widthBytes, &printHeight);
 				debug_msg("printHeight = %d\n", printHeight);
 				if(err)
@@ -723,8 +690,10 @@ main (int argc, char *argv[])
 				band_line_count -= printHeight;
 				bandBmp.bits += band_line_count;
 			}
-			
-			err = epsEndPage(FALSE);
+
+//			err = epsEndPage(page_num - 1);
+			err = epsEndPage(0);
+
 			if(err)
 				err_fatal ("Error occurred in \"PEND_FUNC\".");	/* exit */
 		}
@@ -747,6 +716,9 @@ quit:;
 	mem_free(band);
 	mem_free(paper);
 	debug_msg("PRINT SUCCESS\n");
+
+	XFIFOClose(&context);
+
 	return 0;
 }
 
@@ -862,6 +834,10 @@ set_pips_parameter (filter_option_t *filter_opt_p, EPS_OPT *printOpt)
 	saturation = str_clone (filter_opt_p->saturation, strlen (filter_opt_p->saturation));
  	jobAttr.saturation =  atoi(saturation) * 2;
 
+	/* Get number of pages */
+	char page_num;
+	read (STDIN_FILENO, &page_num, 1);
+
 	/* Others */
 	jobAttr.apfAutoCorrect = EPS_APF_ACT_STANDARD;
 	jobAttr.sharpness = 0;
@@ -871,7 +847,8 @@ set_pips_parameter (filter_option_t *filter_opt_p, EPS_OPT *printOpt)
 	jobAttr.copies = 1;
 	jobAttr.feedDirection = EPS_FEEDDIR_PORTRAIT;      /* paper feed direction  hardcode */
 	jobAttr.printDirection = 0;
-
+	jobAttr.pageNum = page_num;
+	jobAttr.version = 4;
 
 	/* free alloced memory */
 	mem_free(mediaType);
@@ -901,8 +878,15 @@ static int  getMediaTypeID(char *rsc_name)
 
 EPS_INT32 print_spool_fnc(void* hParam, const EPS_UINT8* pBuf, EPS_UINT32 cbBuf) 
 {
+#if 0
 	long int i;
 	for (i = 0; i < cbBuf; i++)
 		putc(*(pBuf + i), outfp);
+#endif
+
+//	fwrite (pBuf, cbBuf, 1, outfp);
+
+	XFIFOWrite(context, pBuf, cbBuf);
+
 	return 1;
 }

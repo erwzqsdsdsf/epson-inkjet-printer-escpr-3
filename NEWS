@@ -1,6 +1,81 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.6.3                          (2016-01-25)
+----------------------------------------------------------------------
+* Supported new models.
+
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.6.2                          (2016-01-07)
+----------------------------------------------------------------------
+ * For following models, we changed the ppd description,
+   "*DefaultMediaType" from PLAIN_DRAFT to PLAIN_NORMAL.
+
+     - WF-3620 Series
+     - WF-2740 Series
+     - WF-4630 Series
+     - WF-4640 Series
+     - WF-5110 Series
+     - WF-5190 Series
+     - WF-5620 Series
+     - WF-5690 Series
+     - WF-6090 Series
+     - WF-6530 Series
+     - WF-6590 Series
+     - WF-7110 Series
+     - WF-7610 Series
+     - WF-7620 Series
+     - WF-8010 Series
+     - WF-8090 Series
+     - WF-8510 Series
+     - WF-8590 Series
+     - WF-R4640 Series
+     - WF-R5190 Series
+     - WF-R5690 Series
+     - WF-R8590 Series
+     - XP-211 214 216 Series
+     - XP-212 213 Series
+     - XP-215 217 Series
+     - XP-310 Series
+     - XP-312 313 315 Series
+     - XP-410 Series
+     - XP-412 413 415 Series
+
+ * For following models, we added PLAIN_NORMAL and ENV_NORMAL as media type.
+   
+     - WF-M4011 Series
+     - WF-M4015 Series
+     - WF-M4095 Series
+     - WF-M4521 Series
+     - WF-M4525 Series
+     - WF-M4595 Series
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.6.1                          (2015-10-23)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - PM-400 Series
+     - L805 Series
+     - WF-6530 Series
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.6.0                          (2015-09-29)
+----------------------------------------------------------------------
+ * Added ppd files of following models
+     - EP-10VA Series
+     - PX-M860F
+     - PX-S860
+     - WP-M4011 Series
+     - WP-M4015 Series
+     - WP-M4095 Series
+     - WP-M4521 Series
+     - WP-M4525 Series
+     - WP-M4595 Series
+
+ * Speeding up of multiple page printing
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.5.2                          (2015-08-28)
 ----------------------------------------------------------------------
  * Added ppd files of following models

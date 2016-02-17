@@ -231,6 +231,7 @@ Epson-E-820-epson-escpr-en.ppd \
 Epson-E-830_Series-epson-escpr-en.ppd \
 Epson-E-840_Series-epson-escpr-en.ppd \
 Epson-E-850_Series-epson-escpr-en.ppd \
+Epson-EP-10VA_Series-epson-escpr-en.ppd \
 Epson-EP-306_Series-epson-escpr-en.ppd \
 Epson-EP-702A-epson-escpr-en.ppd \
 Epson-EP-703A-epson-escpr-en.ppd \
@@ -238,6 +239,7 @@ Epson-EP-704A-epson-escpr-en.ppd \
 Epson-EP-705A_Series-epson-escpr-en.ppd \
 Epson-EP-706A_Series-epson-escpr-en.ppd \
 Epson-EP-707A_Series-epson-escpr-en.ppd \
+Epson-EP-708A_Series-epson-escpr-en.ppd \
 Epson-EP-774A-epson-escpr-en.ppd \
 Epson-EP-775A_Series-epson-escpr-en.ppd \
 Epson-EP-776A_Series-epson-escpr-en.ppd \
@@ -269,11 +271,16 @@ Epson-ET-2500_Series-epson-escpr-en.ppd \
 Epson-ET-2550_Series-epson-escpr-en.ppd \
 Epson-ET-4500_Series-epson-escpr-en.ppd \
 Epson-ET-4550_Series-epson-escpr-en.ppd \
+Epson-EW-M660FT_Series-epson-escpr-en.ppd \
 Epson-K200-epson-escpr-en.ppd \
 Epson-K300-epson-escpr-en.ppd \
+Epson-L375_Series-epson-escpr-en.ppd \
 Epson-L455_Series-epson-escpr-en.ppd \
+Epson-L475_Series-epson-escpr-en.ppd \
 Epson-L565_Series-epson-escpr-en.ppd \
+Epson-L575_Series-epson-escpr-en.ppd \
 Epson-L655_Series-epson-escpr-en.ppd \
+Epson-L805_Series-epson-escpr-en.ppd \
 Epson-L810_Series-epson-escpr-en.ppd \
 Epson-L850_Series-epson-escpr-en.ppd \
 Epson-M200_Series-epson-escpr-en.ppd \
@@ -297,6 +304,7 @@ Epson-ME_OFFICE_960FWD-epson-escpr-en.ppd \
 Epson-NX230_TX230-epson-escpr-en.ppd \
 Epson-NX430_TX435-epson-escpr-en.ppd \
 Epson-PF-70_Series-epson-escpr-en.ppd \
+Epson-PF-71_Series-epson-escpr-en.ppd \
 Epson-PF-81_Series-epson-escpr-en.ppd \
 Epson-PictureMate_500-epson-escpr-en.ppd \
 Epson-PictureMate_Deluxe-epson-escpr-en.ppd \
@@ -315,6 +323,7 @@ Epson-PictureMate_PM_280-epson-escpr-en.ppd \
 Epson-PictureMate_PM_290-epson-escpr-en.ppd \
 Epson-PictureMate_PM_300-epson-escpr-en.ppd \
 Epson-PictureMate_PM_310-epson-escpr-en.ppd \
+Epson-PM-400_Series-epson-escpr-en.ppd \
 Epson-PM-A750-epson-escpr-en.ppd \
 Epson-PM-A820-epson-escpr-en.ppd \
 Epson-PM-A840-epson-escpr-en.ppd \
@@ -335,6 +344,7 @@ Epson-PX-5V-epson-escpr-en.ppd \
 Epson-PX-7V-epson-escpr-en.ppd \
 Epson-PX-046A_Series-epson-escpr-en.ppd \
 Epson-PX-047A_Series-epson-escpr-en.ppd \
+Epson-PX-048A_Series-epson-escpr-en.ppd \
 Epson-PX-205_Series-epson-escpr-en.ppd \
 Epson-PX-404A-epson-escpr-en.ppd \
 Epson-PX-405A_Series-epson-escpr-en.ppd \
@@ -366,6 +376,8 @@ Epson-PX-B700-epson-escpr-en.ppd \
 Epson-PX-B750F-epson-escpr-en.ppd \
 Epson-PX-FA700-epson-escpr-en.ppd \
 Epson-PX-G5300-epson-escpr-en.ppd \
+Epson-PX-M160T_Series-epson-escpr-en.ppd \
+Epson-PX-S160T_Series-epson-escpr-en.ppd \
 Epson-PX-M350F-epson-escpr-en.ppd \
 Epson-PX-S350-epson-escpr-en.ppd \
 Epson-PX-M650A-epson-escpr-en.ppd \
@@ -374,6 +386,7 @@ Epson-PX-M740F-epson-escpr-en.ppd \
 Epson-PX-M741F-epson-escpr-en.ppd \
 Epson-PX-M840F-epson-escpr-en.ppd \
 Epson-PX-M840FX-epson-escpr-en.ppd \
+Epson-PX-M860F-epson-escpr-en.ppd \
 Epson-PX-M5040F-epson-escpr-en.ppd \
 Epson-PX-M5041F-epson-escpr-en.ppd \
 Epson-PX-M7050_Series-epson-escpr-en.ppd \
@@ -383,6 +396,7 @@ Epson-PX-S05_Series-epson-escpr-en.ppd \
 Epson-PX-S740-epson-escpr-en.ppd \
 Epson-PX-S840-epson-escpr-en.ppd \
 Epson-PX-S840X-epson-escpr-en.ppd \
+Epson-PX-S860-epson-escpr-en.ppd \
 Epson-PX-S5040-epson-escpr-en.ppd \
 Epson-PX-S7050_Series-epson-escpr-en.ppd \
 Epson-PX-S7050PS-epson-escpr-en.ppd \
@@ -550,6 +564,7 @@ Epson-WF-5190_Series-epson-escpr-en.ppd \
 Epson-WF-5620_Series-epson-escpr-en.ppd \
 Epson-WF-5690_Series-epson-escpr-en.ppd \
 Epson-WF-6090_Series-epson-escpr-en.ppd \
+Epson-WF-6530-epson-escpr-en.ppd \
 Epson-WF-6590_Series-epson-escpr-en.ppd \
 Epson-WF-7110_Series-epson-escpr-en.ppd \
 Epson-WF-7510_Series-epson-escpr-en.ppd \
@@ -610,6 +625,12 @@ Epson-WP-4545_Series-epson-escpr-en.ppd \
 Epson-WP-4590_Series-epson-escpr-en.ppd \
 Epson-WP-4592_Series-epson-escpr-en.ppd \
 Epson-WP-4595_Series-epson-escpr-en.ppd \
+Epson-WP-M4011_Series-epson-escpr-en.ppd \
+Epson-WP-M4015_Series-epson-escpr-en.ppd \
+Epson-WP-M4095_Series-epson-escpr-en.ppd \
+Epson-WP-M4521_Series-epson-escpr-en.ppd \
+Epson-WP-M4525_Series-epson-escpr-en.ppd \
+Epson-WP-M4595_Series-epson-escpr-en.ppd \
 Epson-XP-55_Series-epson-escpr-en.ppd \
 Epson-XP-200_Series-epson-escpr-en.ppd \
 Epson-XP-201_204_208_Series-epson-escpr-en.ppd \

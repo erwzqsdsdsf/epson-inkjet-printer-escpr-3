@@ -16,6 +16,8 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
+AM_LDFLAGS = -lpthread
+
 cupsfilterdir = $(CUPS_FILTER_DIR)
 ESCPR_LIB_DIR	=	../escprlib
 
@@ -43,7 +45,8 @@ epson_escpr_SOURCES = \
 	str.c str.h \
 	err.c err.h \
 	mem.c mem.h \
-	linux_cmn.h linux_cmn.c
+	linux_cmn.h linux_cmn.c \
+	xfifo.h xfifo.c
 
 epson_escpr_LDADD = \
 	$(top_builddir)/lib/libescpr.la

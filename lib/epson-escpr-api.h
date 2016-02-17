@@ -34,7 +34,7 @@ extern "C" {
 
 /* GCOMSW_DEBUG 		Enable Debug monde.                                             */
 
-/*#define GCOMSW_UPDATE_PAGE_REMAINDER 0	*/
+#define GCOMSW_UPDATE_PAGE_REMAINDER 1
 
 /*------------------------------------  Includes   -------------------------------------*/
 /*******************************************|********************************************/
@@ -67,7 +67,7 @@ extern EPS_ERR_CODE epsInitDriver        (EPS_INT32, const EPS_USB_FUNC*,
 extern EPS_ERR_CODE epsReleaseDriver     (void                                          );
 extern EPS_ERR_CODE epsSetPrinter        (const EPS_PRINTER*                            );
 extern EPS_ERR_CODE epsStartJob          (const EPS_JOB_ATTRIB*                         );
-extern EPS_ERR_CODE epsStartPage         (const EPS_PAGE_ATTRIB*                        );
+extern EPS_ERR_CODE epsStartPage         (const EPS_PAGE_ATTRIB*, EPS_UINT32            );
 extern EPS_ERR_CODE epsSendData          (EPS_PRN_DATA*									);
 extern EPS_ERR_CODE epsPrintBand         (const EPS_UINT8*, EPS_UINT32, EPS_UINT32*     );
 #if GCOMSW_UPDATE_PAGE_REMAINDER
