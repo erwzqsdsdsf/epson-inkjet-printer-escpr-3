@@ -1,3 +1,4 @@
 # Upstream backports
 
 dont_touch_debian_files.patch
+xfifo_header.patch
