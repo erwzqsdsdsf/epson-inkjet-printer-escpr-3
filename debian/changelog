@@ -1,3 +1,11 @@
+epson-inkjet-printer-escpr (1.6.3-2) unstable; urgency=medium
+
+  [ Logan Rosen ]
+  * Add patch to include xfifo.h in src/filter.c to fix implicit function
+    declaration
+
+ -- Didier Raboud <odyx@debian.org>  Tue, 23 Feb 2016 22:08:19 +0100
+
 epson-inkjet-printer-escpr (1.6.3-1) unstable; urgency=medium
 
   * New 1.6.3 upstream release
