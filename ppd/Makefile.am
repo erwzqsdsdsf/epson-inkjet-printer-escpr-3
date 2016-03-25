@@ -466,6 +466,7 @@ Epson-XP-310_Series-epson-escpr-en.ppd \
 Epson-XP-312_313_315_Series-epson-escpr-en.ppd \
 Epson-XP-320_Series-epson-escpr-en.ppd \
 Epson-XP-322_323_325_Series-epson-escpr-en.ppd \
+Epson-XP-330_Series-epson-escpr-en.ppd \
 Epson-XP-332_335_Series-epson-escpr-en.ppd \
 Epson-XP-400_Series-epson-escpr-en.ppd \
 Epson-XP-402_403_405_406_Series-epson-escpr-en.ppd \
@@ -473,6 +474,7 @@ Epson-XP-410_Series-epson-escpr-en.ppd \
 Epson-XP-412_413_415_Series-epson-escpr-en.ppd \
 Epson-XP-420_Series-epson-escpr-en.ppd \
 Epson-XP-422_423_425_Series-epson-escpr-en.ppd \
+Epson-XP-430_Series-epson-escpr-en.ppd \
 Epson-XP-432_435_Series-epson-escpr-en.ppd \
 Epson-XP-510_Series-epson-escpr-en.ppd \
 Epson-XP-520_Series-epson-escpr-en.ppd \
