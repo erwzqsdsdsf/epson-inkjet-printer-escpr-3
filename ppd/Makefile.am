@@ -369,6 +369,8 @@ Epson-WF-2540_Series-epson-escpr-en.ppd \
 Epson-WF-2630_Series-epson-escpr-en.ppd \
 Epson-WF-2650_Series-epson-escpr-en.ppd \
 Epson-WF-2660_Series-epson-escpr-en.ppd \
+Epson-WF-2750_Series-epson-escpr-en.ppd \
+Epson-WF-2760_Series-epson-escpr-en.ppd \
 Epson-WF-3010_Series-epson-escpr-en.ppd \
 Epson-WF-3520_Series-epson-escpr-en.ppd \
 Epson-WF-3530_Series-epson-escpr-en.ppd \
