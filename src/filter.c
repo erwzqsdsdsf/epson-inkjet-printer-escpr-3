@@ -1,7 +1,7 @@
 /*
  * Epson Inkjet Printer Driver (ESC/P-R) for Linux
  * Copyright (C) 2002-2005 AVASYS CORPORATION.
- * Copyright (C) Seiko Epson Corporation 2002-2015.
+ * Copyright (C) Seiko Epson Corporation 2002-2016.
  *
  *  This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,11 +31,8 @@
 #include <ctype.h>
 #include <errno.h>
 
-#include "epson-escpr-def.h"
-#include "epson-escpr-media.h"
 #include "epson-protocol.h"
 #include "epson-escpr-api.h"
-#include "epson-escpr-services.h"
 #include "epson-escpr-mem.h"
 
 #include "err.h"
@@ -409,9 +406,7 @@ main (int argc, char *argv[])
 
 	int page_count = 0;
 
-
 	char page_num;
-
 
 	while ((read_page_no = read (STDIN_FILENO, &page_num, 1)) > 0)  // 最初に page番号を読み込み
 	{
@@ -890,3 +885,4 @@ EPS_INT32 print_spool_fnc(void* hParam, const EPS_UINT8* pBuf, EPS_UINT32 cbBuf)
 
 	return 1;
 }
+
