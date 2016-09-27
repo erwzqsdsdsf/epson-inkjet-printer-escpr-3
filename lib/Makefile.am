@@ -43,7 +43,6 @@ DEFINES 		+=	-DGCOMSW_ASYNCJOB_SUPPORT
 # Use raw file print
 DEFINES 	    +=	-DGCOMSW_RAWFILE_SUPPORT
 
-
 lib_LTLIBRARIES = libescpr.la
 libescpr_la_CFLAGS = -Wall $(DEFINES)
 ## Make sure these will be cleaned even when they're not built by

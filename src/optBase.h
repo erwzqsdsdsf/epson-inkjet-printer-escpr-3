@@ -152,7 +152,7 @@ OPTION_DATA mediaTypeData[] = {
     { PM_MTID_CDDVD,         "CDDVD",    N_("CD/DVD")},
     { PM_MTID_CDDVDHIGH,     "CDDVDHIGH",     N_("CD/DVD Premium Surface")},
     { PM_MTID_PREPRINTED,    "PREPRINTED",     N_("Preprinted")},
-    { PM_MTID_THICKPAPER,    "THICKPAPER",    N_("Thick Paper")},
+    { PM_MTID_THICKPAPER,    "THICK",    N_("Thick Paper")},
     { PM_MTID_LETTERHEAD,    "LETTERHEAD",    N_("Letterhead")},
     { PM_MTID_RECYCLED,    "RECYCLED",    N_("Recycled")},
     { PM_MTID_COLORPAPER,    "COLORPAPER",    N_("Color")},
