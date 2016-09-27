@@ -820,15 +820,15 @@ set_pips_parameter (filter_option_t *filter_opt_p, EPS_OPT *printOpt)
  
 	/* Brightness */
 	brightness = str_clone (filter_opt_p->brightness, strlen (filter_opt_p->brightness));
- 	jobAttr.brightness =  atoi(brightness) * 2;
+ 	jobAttr.brightness =  atoi(brightness);
 
 	/* Contrast */
 	contrast = str_clone (filter_opt_p->contrast, strlen (filter_opt_p->contrast));
- 	jobAttr.contrast =  atoi(contrast) * 2;
+ 	jobAttr.contrast =  atoi(contrast);
 
 	/* Saturation */
 	saturation = str_clone (filter_opt_p->saturation, strlen (filter_opt_p->saturation));
- 	jobAttr.saturation =  atoi(saturation) * 2;
+ 	jobAttr.saturation =  atoi(saturation);
 
 	/* Get number of pages */
 	char page_num;
