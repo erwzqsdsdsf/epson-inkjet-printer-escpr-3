@@ -1,9 +1,19 @@
-Description: The upstream buildsystem touches files under debian/, forbid him to do so.
-Author: Didier Raboud <odyx@debian.org>
+From 328e6b19da1e0b39a2acbedb7f04d7260b1a2943 Mon Sep 17 00:00:00 2001
+From: Didier Raboud <odyx@debian.org>
+Date: Tue, 27 Sep 2016 10:42:31 +0200
+Subject: The upstream buildsystem touches files under debian/, forbid him to
+ do so.
+
 Last-Update: 2011-10-21
+---
+ Makefile.am | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 86c6255..557aa6d 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -23,10 +23,6 @@
+@@ -23,10 +23,6 @@ SUBDIRS = \
  
  ACLOCAL_AMFLAGS = -I m4
  
@@ -14,7 +24,7 @@ Last-Update: 2011-10-21
  debian/control: $(srcdir)/Makefile $(srcdir)/debian/control.in
  	rm -f $@ $@.tmp; \
  	sed -e 's|[@]PACKAGE_BUGREPORT[@]|$(PACKAGE_BUGREPORT)|' \
-@@ -65,14 +61,6 @@
+@@ -65,14 +61,6 @@ EXTRA_DIST = \
  	README \
  	README.ja \
  	bootstrap \
