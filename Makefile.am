@@ -23,10 +23,6 @@ SUBDIRS = \
 
 ACLOCAL_AMFLAGS = -I m4
 
-noinst_DATA = \
-	debian/control \
-	debian/rules
-
 debian/control: $(srcdir)/Makefile $(srcdir)/debian/control.in
 	rm -f $@ $@.tmp; \
 	sed -e 's|[@]PACKAGE_BUGREPORT[@]|$(PACKAGE_BUGREPORT)|' \
@@ -65,14 +61,6 @@ EXTRA_DIST = \
 	README \
 	README.ja \
 	bootstrap \
-	debian/changelog \
-	debian/compat \
-	debian/control.in \
-	debian/copyright \
-	debian/docs \
-	debian/postinst \
-	debian/postrm \
-	debian/rules.in \
 	epson-inkjet-printer-escpr.spec \
 	epson-inkjet-printer-escpr.spec.in \
 	lsb/lsb-rpm.spec \
