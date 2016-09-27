@@ -44,5 +44,5 @@ get-orig-source:
 	git rm -rf debian/
 	git checkout HEAD debian/
 	git commit -m "Merge upstream $(VERSION) version"
-	git dpm record-new-upstream --rebase-patched ../$(SOURCENAME)_$(VERSION).orig.tar.gz upstream/$(VERSION)
-	git dpm update-patches
+	git dpm record-new-upstream --rebase-patched ../$(SOURCENAME)_$(VERSION).orig.tar.gz `git rev-list -n1 upstream/$(VERSION)`
+	git dpm update-patches --allow-changes-in-debian-branch
