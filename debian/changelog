@@ -1,3 +1,25 @@
+epson-inkjet-printer-escpr (1.6.8-1) unstable; urgency=medium
+
+  * New upstream release
+    - Supported new Series:
+      + EP-709A
+      + EP-979A3
+      + ET-16500
+      + L1455
+      + L385
+      + L485
+      + PX-049A
+      + XP-240
+      + XP-243 245 247
+      + XP-342 343 345
+      + XP-440
+      + XP-442 445
+      + XP-900
+
+  * Initialize git-dpm for patches management, update get-orig-source
+
+ -- Didier Raboud <odyx@debian.org>  Tue, 27 Sep 2016 11:11:17 +0200
+
 epson-inkjet-printer-escpr (1.6.5-1) unstable; urgency=medium
 
   * New upstream release
