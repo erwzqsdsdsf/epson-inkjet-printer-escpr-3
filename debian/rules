@@ -26,11 +26,23 @@ override_dh_auto_clean:
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/tmp
 
+SOURCENAME=epson-inkjet-printer-escpr
+
 get-orig-source:
 	[ ! -z $(VERSION) ]
 	- uscan --verbose --no-symlink
-	rpm2cpio ../epson-inkjet-printer-escpr-$(VERSION)-1lsb3.2.src.rpm \
-		| cpio --to-stdout --extract epson-inkjet-printer-escpr-$(VERSION)-1lsb3.2.tar.gz > \
-		../epson-inkjet-printer-escpr_$(VERSION).orig.tar.gz
-	gbp import-orig --pristine-tar --no-merge ../epson-inkjet-printer-escpr_$(VERSION).orig.tar.gz
-	git merge --strategy-option=ours upstream/$(VERSION)
+	if [ -r ../$(SOURCENAME)-$(VERSION)-1lsb3.2.src.rpm ]; then \
+	  rpm2cpio ../$(SOURCENAME)-$(VERSION)-1lsb3.2.src.rpm \
+	    | cpio --to-stdout --extract $(SOURCENAME)-$(VERSION)-1lsb3.2.tar.gz > \
+	    ../$(SOURCENAME)_$(VERSION).orig.tar.gz ; \
+	elif [ -r ../$(SOURCENAME)-$(VERSION)-1lsb3.2.tar.gz ]; then \
+	    ln -sf ./$(SOURCENAME)-$(VERSION)-1lsb3.2.tar.gz ../$(SOURCENAME)_$(VERSION).orig.tar.gz ; \
+	fi
+	[ -r ../$(SOURCENAME)_$(VERSION).orig.tar.gz ]
+	gbp import-orig --pristine-tar --no-merge ../$(SOURCENAME)_$(VERSION).orig.tar.gz
+	- git merge --strategy-option=ours --no-commit upstream/$(VERSION)
+	git rm -rf debian/
+	git checkout HEAD debian/
+	git commit -m "Merge upstream $(VERSION) version"
+	git dpm record-new-upstream --rebase-patched ../$(SOURCENAME)_$(VERSION).orig.tar.gz upstream/$(VERSION)
+	git dpm update-patches
