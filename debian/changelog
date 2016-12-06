@@ -1,3 +1,19 @@
+epson-inkjet-printer-escpr (1.6.10-1) unstable; urgency=medium
+
+  * New upstream release:
+    - Supported new Series:
+      + EP-30VA
+      + EP-M570T
+      + EP-L364
+      + EP-L380
+      + EP-L382
+      + EP-L386
+      + EP-L486
+      + EP-L605
+  * Refresh patches
+
+ -- Didier Raboud <odyx@debian.org>  Tue, 06 Dec 2016 09:23:36 +0100
+
 epson-inkjet-printer-escpr (1.6.8-1) unstable; urgency=medium
 
   * New upstream release
