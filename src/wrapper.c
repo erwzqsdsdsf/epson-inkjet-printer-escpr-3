@@ -574,6 +574,10 @@ get_option_for_arg (const char *opt_str, filter_option_t *filter_opt_p)
 	if (opt)
 		strcpy (filter_opt_p->contrast, opt);
 
+	opt = cupsGetOption ("Saturation", opt_num, option_p);
+	if (opt)
+		strcpy (filter_opt_p->saturation, opt);
+
 	return 0;
 }
 

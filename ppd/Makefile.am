@@ -50,6 +50,7 @@ Epson-E-830_Series-epson-escpr-en.ppd \
 Epson-E-840_Series-epson-escpr-en.ppd \
 Epson-E-850_Series-epson-escpr-en.ppd \
 Epson-EP-10VA_Series-epson-escpr-en.ppd \
+Epson-EP-30VA_Series-epson-escpr-en.ppd \
 Epson-EP-306_Series-epson-escpr-en.ppd \
 Epson-EP-702A-epson-escpr-en.ppd \
 Epson-EP-703A-epson-escpr-en.ppd \
@@ -87,6 +88,7 @@ Epson-EP-977A3_Series-epson-escpr-en.ppd \
 Epson-EP-978A3_Series-epson-escpr-en.ppd \
 Epson-EP-979A3_Series-epson-escpr-en.ppd \
 Epson-EP-4004-epson-escpr-en.ppd \
+Epson-EP-M570T_Series-epson-escpr-en.ppd \
 Epson-ET-2500_Series-epson-escpr-en.ppd \
 Epson-ET-2550_Series-epson-escpr-en.ppd \
 Epson-ET-4500_Series-epson-escpr-en.ppd \
@@ -95,13 +97,19 @@ Epson-ET-16500_Series-epson-escpr-en.ppd \
 Epson-EW-M660FT_Series-epson-escpr-en.ppd \
 Epson-K200-epson-escpr-en.ppd \
 Epson-K300-epson-escpr-en.ppd \
+Epson-L364_Series-epson-escpr-en.ppd \
 Epson-L375_Series-epson-escpr-en.ppd \
+Epson-L380_Series-epson-escpr-en.ppd \
+Epson-L382_Series-epson-escpr-en.ppd \
 Epson-L385_Series-epson-escpr-en.ppd \
+Epson-L386_Series-epson-escpr-en.ppd \
 Epson-L455_Series-epson-escpr-en.ppd \
 Epson-L475_Series-epson-escpr-en.ppd \
 Epson-L485_Series-epson-escpr-en.ppd \
+Epson-L486_Series-epson-escpr-en.ppd \
 Epson-L565_Series-epson-escpr-en.ppd \
 Epson-L575_Series-epson-escpr-en.ppd \
+Epson-L605_Series-epson-escpr-en.ppd \
 Epson-L655_Series-epson-escpr-en.ppd \
 Epson-L805_Series-epson-escpr-en.ppd \
 Epson-L810_Series-epson-escpr-en.ppd \

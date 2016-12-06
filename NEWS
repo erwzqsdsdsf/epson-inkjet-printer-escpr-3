@@ -1,6 +1,19 @@
 NEWS -- an overview of user-visible changes with each release
 
 ----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.6.10                         (2016-11-16)
+----------------------------------------------------------------------
+* Supported new models.
+
+----------------------------------------------------------------------
+epson-inkjet-printer-escpr-1.6.9                          (2016-09-30)
+----------------------------------------------------------------------
+* Supported new models.
+
+* Fixed a problem that Saturation value wasn't reflected 
+  when using the lpr command.
+
+----------------------------------------------------------------------
 epson-inkjet-printer-escpr-1.6.8                          (2016-09-14)
 ----------------------------------------------------------------------
 * Supported new models.
