@@ -1,3 +1,14 @@
+epson-inkjet-printer-escpr (1.6.11-1) unstable; urgency=medium
+
+  * New upstream release:
+    - Supported new Series:
+      + ET-2600
+      + ET-2650
+      + L395
+      + L495
+
+ -- Didier Raboud <odyx@debian.org>  Tue, 24 Jan 2017 17:41:44 +0100
+
 epson-inkjet-printer-escpr (1.6.10-1) unstable; urgency=medium
 
   * New upstream release:
