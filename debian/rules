@@ -1,7 +1,7 @@
 #!/usr/bin/make -f 
 
 %:
-	dh $@ --with autoreconf --with pyppd
+	dh $@ --with autotools_dev --with autoreconf --with pyppd
 
 override_dh_autoreconf: m4
 	dh_autoreconf --as-needed
