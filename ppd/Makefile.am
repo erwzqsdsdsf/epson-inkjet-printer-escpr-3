@@ -101,8 +101,6 @@ Epson-K200-epson-escpr-en.ppd \
 Epson-K300-epson-escpr-en.ppd \
 Epson-L364_Series-epson-escpr-en.ppd \
 Epson-L375_Series-epson-escpr-en.ppd \
-Epson-L380_Series-epson-escpr-en.ppd \
-Epson-L382_Series-epson-escpr-en.ppd \
 Epson-L385_Series-epson-escpr-en.ppd \
 Epson-L386_Series-epson-escpr-en.ppd \
 Epson-L395_Series-epson-escpr-en.ppd \
@@ -491,6 +489,7 @@ Epson-XP-320_Series-epson-escpr-en.ppd \
 Epson-XP-322_323_325_Series-epson-escpr-en.ppd \
 Epson-XP-330_Series-epson-escpr-en.ppd \
 Epson-XP-332_335_Series-epson-escpr-en.ppd \
+Epson-XP-340_Series-epson-escpr-en.ppd \
 Epson-XP-342_343_345_Series-epson-escpr-en.ppd \
 Epson-XP-400_Series-epson-escpr-en.ppd \
 Epson-XP-402_403_405_406_Series-epson-escpr-en.ppd \
