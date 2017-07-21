@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 Uploaders: Didier Raboud <odyx@debian.org>
 Build-Depends: autotools-dev,
-               debhelper (>= 9),
+               debhelper (>= 10.2.5~),
                dh-autoreconf,
                libcups2-dev,
                libcupsimage2-dev,
