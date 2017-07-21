@@ -1,4 +1,4 @@
-From 4b3edb36ca6fa8a077afebe44f5f064ce6e63065 Mon Sep 17 00:00:00 2001
+From 49ab8031bfeccd9e8b9b9e6b84d28bb94c085916 Mon Sep 17 00:00:00 2001
 From: Didier Raboud <odyx@debian.org>
 Date: Tue, 27 Sep 2016 10:42:31 +0200
 Subject: The upstream buildsystem touches files under debian/, forbid him to
