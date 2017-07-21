@@ -37,6 +37,7 @@ set -e
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
         ldconfig
+		rm /usr/share/ppd/EPSON_L805.ppd
     ;;
 
     *)
