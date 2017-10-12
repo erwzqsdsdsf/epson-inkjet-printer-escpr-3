@@ -3,9 +3,7 @@ Section: text
 Priority: optional
 Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 Uploaders: Didier Raboud <odyx@debian.org>
-Build-Depends: autotools-dev,
-               debhelper (>= 10.2.5~),
-               dh-autoreconf,
+Build-Depends: debhelper (>= 10.2.5~),
                libcups2-dev,
                libcupsimage2-dev,
                pyppd (>= 1.0.1-2~)
