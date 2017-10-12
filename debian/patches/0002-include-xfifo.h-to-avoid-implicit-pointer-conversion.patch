@@ -1,4 +1,4 @@
-From de6a0e08d822b9f6c0c11bb1b05c3ce5221eb54f Mon Sep 17 00:00:00 2001
+From 531935f3263e1bc7968ed7a66beb8a8af6526ba8 Mon Sep 17 00:00:00 2001
 From: Logan Rosen <logan@ubuntu.com>
 Date: Tue, 27 Sep 2016 10:42:32 +0200
 Subject: include xfifo.h to avoid implicit pointer conversion
@@ -10,7 +10,7 @@ Last-Update: 2016-02-19
  1 file changed, 1 insertion(+)
 
 diff --git a/src/filter.c b/src/filter.c
-index 0e0abae..4b8d7c2 100644
+index 0e0abae..4b8d7c2 100755
 --- a/src/filter.c
 +++ b/src/filter.c
 @@ -42,6 +42,7 @@

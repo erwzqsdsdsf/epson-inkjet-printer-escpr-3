@@ -1,4 +1,4 @@
-From 49ab8031bfeccd9e8b9b9e6b84d28bb94c085916 Mon Sep 17 00:00:00 2001
+From c7be0d56770268a0b18edcf8d342088b0bd2cf3c Mon Sep 17 00:00:00 2001
 From: Didier Raboud <odyx@debian.org>
 Date: Tue, 27 Sep 2016 10:42:31 +0200
 Subject: The upstream buildsystem touches files under debian/, forbid him to
@@ -10,7 +10,7 @@ Last-Update: 2011-10-21
  1 file changed, 12 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
-index 86c6255..557aa6d 100644
+index 86c6255..557aa6d 100755
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -23,10 +23,6 @@ SUBDIRS = \
