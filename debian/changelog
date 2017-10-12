@@ -1,3 +1,25 @@
+epson-inkjet-printer-escpr (1.6.16-1) unstable; urgency=medium
+
+  * New upstream version 1.6.16
+    - Supported Series:
+      + EP-710A
+      + EP-810A
+      + ET-7700
+      + ET-7750
+      + EW-M970A3T
+      + L405
+      + L3050
+      + L3060
+      + L3070
+      + XP-540
+      + XP-640
+  * Bump S-V to 4.1.1 without changes needed
+  * Drop autotools_dev and autoreconf B-D and dh options, as these are default
+    in dh compat 10
+  * Update Vcs-Browser to use https
+
+ -- Didier Raboud <odyx@debian.org>  Thu, 12 Oct 2017 17:42:54 +0200
+
 epson-inkjet-printer-escpr (1.6.13-1) unstable; urgency=medium
 
   * New upstream release:
