@@ -277,7 +277,7 @@ CUPSのドキュメントを参照下さい。
 	   (~/.rpmmacrosでrpmbuild以外のディレクトリを指定することもできます。)
 
 	6.1.4 ソースtarballとspecファイルを、上記のディレクトリにコピーします。
-	   $ cp epson-inkjet-printer-escpr-1.6.16.tar.gz ~/rpmbuild/SOURCES/.
+	   $ cp epson-inkjet-printer-escpr-1.6.17.tar.gz ~/rpmbuild/SOURCES/.
 	   $ cp epson-inkjet-printer-escpr.spec ~/rpmbuild/SPECS
 	   
 	6.1.5 rpmパッケージを作成します。
@@ -290,11 +290,11 @@ CUPSのドキュメントを参照下さい。
 6.2 Debian系ディストリビューションの場合
 
 6.2.1 ダウンロードしたsrs.rpmを解凍します。
-   $ rpm2cpio epson-inkjet-printer-escpr-1.6.16-1lsb3.2.src.rpm | cpio -id
-   $ tar zxvf epson-inkjet-printer-escpr-1.6.16-1lsb3.2.tar.gz
+   $ rpm2cpio epson-inkjet-printer-escpr-1.6.17-1lsb3.2.src.rpm | cpio -id
+   $ tar zxvf epson-inkjet-printer-escpr-1.6.17-1lsb3.2.tar.gz
 
 6.2.2 configureを実行します。
-   $ cd epson-inkjet-printer-escpr-1.6.16
+   $ cd epson-inkjet-printer-escpr-1.6.17
    $ ./bootstrap && ./configure --prefix=/usr
 
 6.2.3 debパッケージを作成します。
@@ -307,11 +307,11 @@ CUPSのドキュメントを参照下さい。
 6.3 それ以外のディストリビューションの場合
 
 6.3.1 ダウンロードしたsrs.rpmを解凍します。
-   $ rpm2cpio epson-inkjet-printer-escpr-1.6.16-1lsb3.2.src.rpm | cpio -id
-   $ tar zxvf epson-inkjet-printer-escpr-1.6.16-1lsb3.2.tar.gz
+   $ rpm2cpio epson-inkjet-printer-escpr-1.6.17-1lsb3.2.src.rpm | cpio -id
+   $ tar zxvf epson-inkjet-printer-escpr-1.6.17-1lsb3.2.tar.gz
 
 6.3.2 configureを実行します。
-   $ cd epson-inkjet-printer-escpr-1.6.16
+   $ cd epson-inkjet-printer-escpr-1.6.17
    $ ./bootstrap && ./configure --prefix=/usr
 
    CUPS filterとPPDファイルのインストール先は自動判定していますが、
@@ -323,7 +323,7 @@ CUPSのドキュメントを参照下さい。
                                   例) /usr/share/ppd
                                       
 6.3.3 make, make install を実行します
-   $ cd epson-inkjet-printer-escpr-1.6.16
+   $ cd epson-inkjet-printer-escpr-1.6.17
    $ make 
    $ sudo make install
 
