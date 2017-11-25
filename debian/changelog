@@ -1,3 +1,14 @@
+epson-inkjet-printer-escpr (1.6.17-1) unstable; urgency=medium
+
+  * New upstream version 1.6.17
+    - Supported Series:
+      + ET-2610
+      + EW-M5071FT
+  * Drop debian/rules trailing spaces
+  * Set hardening=+all in DEB_BUILD_MAINT_OPTIONS
+
+ -- Didier Raboud <odyx@debian.org>  Sat, 25 Nov 2017 15:22:04 +0100
+
 epson-inkjet-printer-escpr (1.6.16-1) unstable; urgency=medium
 
   * New upstream version 1.6.16
