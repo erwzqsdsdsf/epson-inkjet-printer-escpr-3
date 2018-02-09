@@ -1,24 +1,27 @@
 Source: epson-inkjet-printer-escpr
-Section: text
-Priority: optional
 Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 Uploaders: Didier Raboud <odyx@debian.org>
+Section: text
+Priority: optional
 Build-Depends: debhelper (>= 10.2.5~),
                libcups2-dev,
                libcupsimage2-dev,
                pyppd (>= 1.0.1-2~)
-Vcs-Git: https://alioth.debian.org/anonscm/git/printing/epson-inkjet-printer-escpr.git
+Standards-Version: 4.1.3
 Vcs-Browser: https://anonscm.debian.org/cgit/printing/epson-inkjet-printer-escpr.git
+Vcs-Git: https://alioth.debian.org/anonscm/git/printing/epson-inkjet-printer-escpr.git
 Homepage: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX&productName=B700
-Standards-Version: 4.1.1
 
 Package: printer-driver-escpr
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
 Recommends: cups-ppdc
-Breaks: cups (<< 1.5.0-2~), epson-espcr (<< 1.1.0-1~), libescpr1 (<< 1.2.2)
-Replaces: epson-escpr (<< 1.1.0-1~)
 Suggests: psutils
+Breaks: cups (<< 1.5.0-2~),
+        epson-espcr (<< 1.1.0-1~),
+        libescpr1 (<< 1.2.2)
+Replaces: epson-escpr (<< 1.1.0-1~)
 Description: printer driver for Epson Inkjet that use ESC/P-R
  ESC/P-R is a common language for selected Epson printers that supports every
  media type, paper size and associated printing mode available on those
