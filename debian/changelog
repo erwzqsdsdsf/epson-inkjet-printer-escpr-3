@@ -1,3 +1,11 @@
+epson-inkjet-printer-escpr (1.6.21-1) unstable; urgency=medium
+
+  * New upstream version 1.6.21
+  * Bump S-V to 4.1.4 without changes needed
+  * Fix suc{,c}essful typo in debug message
+
+ -- Didier Raboud <odyx@debian.org>  Mon, 11 Jun 2018 20:11:15 +0200
+
 epson-inkjet-printer-escpr (1.6.17-2) unstable; urgency=medium
 
   * Bump Standards-Version to 4.1.3 without changes needed
