@@ -1,3 +1,33 @@
+epson-inkjet-printer-escpr (1.6.21) stable; urgency=low
+
+  * Please refer to ./NEWS
+
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Thu, 7 Jun 2018 11:40:00 +0900
+
+epson-inkjet-printer-escpr (1.6.20) stable; urgency=low
+
+  * Please refer to ./NEWS
+
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Wed, 28 Mar 2018 11:40:00 +0900
+
+epson-inkjet-printer-escpr (1.6.19) stable; urgency=low
+
+  * Please refer to ./NEWS
+
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Thu, 8 Dec 2017 11:35:00 +0900
+
+epson-inkjet-printer-escpr (1.6.18) stable; urgency=low
+
+  * Please refer to ./NEWS
+
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Thu, 19 Dec 2017 11:26:00 +0900
+
+epson-inkjet-printer-escpr (1.6.17) stable; urgency=low
+
+  * Please refer to ./NEWS
+
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Wed, 12 Oct 2017 15:55:00 +0900
+
 epson-inkjet-printer-escpr (1.6.16) stable; urgency=low
 
   * Please refer to ./NEWS
@@ -14,7 +44,7 @@ epson-inkjet-printer-escpr (1.6.14) stable; urgency=low
 
   * Please refer to ./NEWS
 
- -- Seiko Epson Corporation <linux-printer@epson.jp>  Thr, 27 Jun 2017 14:04:30 +0900
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Thu, 27 Jun 2017 14:04:30 +0900
 
 epson-inkjet-printer-escpr (1.6.13) stable; urgency=low
 
@@ -56,7 +86,7 @@ epson-inkjet-printer-escpr (1.6.7) stable; urgency=low
 
   * Please refer to ./NEWS
 
- -- Seiko Epson Corporation <linux-printer@epson.jp>  Thr, 17 Aug 2016 11:01:25 +0900
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Thu, 17 Aug 2016 11:01:25 +0900
 
 epson-inkjet-printer-escpr (1.6.6) stable; urgency=low
 
@@ -80,13 +110,13 @@ epson-inkjet-printer-escpr (1.6.3) stable; urgency=low
 
   * Please refer to ./NEWS
 
- -- Seiko Epson Corporation <linux-printer@epson.jp>  Thr, 25 Jan 2016 17:14:09 +0900
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Thu, 25 Jan 2016 17:14:09 +0900
 
 epson-inkjet-printer-escpr (1.6.2) stable; urgency=low
 
   * Please refer to ./NEWS
 
- -- Seiko Epson Corporation <linux-printer@epson.jp>  Thr, 6 Jan 2016 11:42:10 +0900
+ -- Seiko Epson Corporation <linux-printer@epson.jp>  Thu, 6 Jan 2016 11:42:10 +0900
 
 epson-inkjet-printer-escpr (1.6.1) stable; urgency=low
 

@@ -196,7 +196,6 @@ static int  getMediaSizeID(char *media_name){
 int
 main (int argc, char *argv[])
 {
-
 	filter_option_t fopt;
 
 	long width_pixel, height_pixel;
