@@ -551,7 +551,7 @@ main (int argc, char *argv[])
 				pagebuf = startpage;
 				free (pagebuf);
 			}
-			debug_msg("free page sucessfull\n");
+			debug_msg("free page successfull\n");
 			err = epsEndPage(FALSE);
 
 			if(err)
