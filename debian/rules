@@ -41,8 +41,8 @@ config.status: configure
 	# Add here commands to configure the package.
 	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
 		--prefix=/usr \
-		--with-cupsfilterdir=/usr/lib/cups/filter \
-		--with-cupsppddir=/usr/share/ppd
+		--with-cupsfilterdir=/opt/epson-inkjet-printer-escpr/lib/cups/filter \
+		--with-cupsppddir=/opt/epson-inkjet-printer-escpr//share/cups/model
 
 build: build-stamp
 
