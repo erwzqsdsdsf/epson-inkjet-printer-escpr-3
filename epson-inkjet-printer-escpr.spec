@@ -1,10 +1,10 @@
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.21
+%define ver     1.6.32
 %define rel     1
 
-%define cupsfilterdir   /usr/lib/cups/filter
-%define cupsppddir      /usr/share/ppd
+%define cupsfilterdir   /opt/epson-inkjet-printer-escpr/lib/cups/filter
+%define cupsppddir      /opt/epson-inkjet-printer-escpr//share/cups/model
 
 Name: %{pkg}
 Version: %{ver}
