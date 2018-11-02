@@ -3,7 +3,7 @@ Maintainer: Debian Printing Team <debian-printing@lists.debian.org>
 Uploaders: Didier Raboud <odyx@debian.org>
 Section: text
 Priority: optional
-Build-Depends: debhelper (>= 10.2.5~),
+Build-Depends: debhelper (>= 11~),
                libcups2-dev,
                libcupsimage2-dev,
                pyppd (>= 1.0.1-2~)
