@@ -17,6 +17,7 @@
 ## Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
+if LSB
 cupsppd_DATA = \
 Epson-Artisan_630-epson-escpr-en.ppd \
 Epson-Artisan_700-epson-escpr-en.ppd \
@@ -103,6 +104,7 @@ Epson-ET-2710_Series-epson-escpr-en.ppd \
 Epson-ET-2750_Series-epson-escpr-en.ppd \
 Epson-ET-4500_Series-epson-escpr-en.ppd \
 Epson-ET-4550_Series-epson-escpr-en.ppd \
+Epson-ET-4700_Series-epson-escpr-en.ppd \
 Epson-ET-7700_Series-epson-escpr-en.ppd \
 Epson-ET-7750_Series-epson-escpr-en.ppd \
 Epson-ET-16500_Series-epson-escpr-en.ppd \
@@ -134,6 +136,7 @@ Epson-L655_Series-epson-escpr-en.ppd \
 Epson-L805_Series-epson-escpr-en.ppd \
 Epson-L810_Series-epson-escpr-en.ppd \
 Epson-L850_Series-epson-escpr-en.ppd \
+Epson-L1110_Series-epson-escpr-en.ppd \
 Epson-L1455_Series-epson-escpr-en.ppd \
 Epson-L3050_Series-epson-escpr-en.ppd \
 Epson-L3060_Series-epson-escpr-en.ppd \
@@ -561,5 +564,40 @@ Epson-XP-900_Series-epson-escpr-en.ppd \
 Epson-XP-950_Series-epson-escpr-en.ppd \
 Epson-XP-960_Series-epson-escpr-en.ppd \
 Epson-XP-7100_Series-epson-escpr-en.ppd
+else
+cupsppd_DATA = \
+Epson-EP-711A_Series-epson-escpr-en.ppd \
+Epson-EP-811A_Series-epson-escpr-en.ppd \
+Epson-ET-2710_Series-epson-escpr-en.ppd \
+Epson-ET-4700_Series-epson-escpr-en.ppd \
+Epson-ET-7700_Series-epson-escpr-en.ppd \
+Epson-ET-7750_Series-epson-escpr-en.ppd \
+Epson-ET-M1100_Series-epson-escpr-en.ppd \
+Epson-ET-M1120_Series-epson-escpr-en.ppd \
+Epson-EW-M770T_Series-epson-escpr-en.ppd \
+Epson-EW-M970A3T_Series-epson-escpr-en.ppd \
+Epson-L1110_Series-epson-escpr-en.ppd \
+Epson-L3100_Series-epson-escpr-en.ppd \
+Epson-L3110_Series-epson-escpr-en.ppd \
+Epson-L3150_Series-epson-escpr-en.ppd \
+Epson-L5190_Series-epson-escpr-en.ppd \
+Epson-L7180_Series-epson-escpr-en.ppd \
+Epson-M1100_Series-epson-escpr-en.ppd \
+Epson-M1120_Series-epson-escpr-en.ppd \
+Epson-PX-S170T_Series-epson-escpr-en.ppd \
+Epson-PX-S170UT_Series-epson-escpr-en.ppd \
+Epson-XP-255_257_Series-epson-escpr-en.ppd \
+Epson-XP-352_355_Series-epson-escpr-en.ppd \
+Epson-XP-452_455_Series-epson-escpr-en.ppd \
+Epson-XP-7100_Series-epson-escpr-en.ppd
+endif
 
 EXTRA_DIST = $(cupsppd_DATA)
+
+# LSBビルド環境の場合、~/.rpmmacros %adjust_ppds が担っている処理を実施
+install-data-hook:
+if LSB
+else
+	echo "Make CUPS filter paths in the PPDs absolute"
+	sed -i 's,0 epson-escpr-wrapper,0 @CUPS_FILTER_DIR@/epson-escpr-wrapper,' $(DESTDIR)$(cupsppddir)/*.ppd
+endif

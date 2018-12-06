@@ -34,6 +34,7 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 
 %build
 %configure \
+	--host=%{_target} \
 	--with-cupsfilterdir=%{cupsfilterdir} \
 	--with-cupsppddir=%{cupsppddir}
 make

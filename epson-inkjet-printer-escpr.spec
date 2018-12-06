@@ -1,10 +1,10 @@
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.32
+%define ver     1.6.33
 %define rel     1
 
 %define cupsfilterdir   /opt/epson-inkjet-printer-escpr/lib/cups/filter
-%define cupsppddir      /opt/epson-inkjet-printer-escpr//share/cups/model
+%define cupsppddir      /opt/epson-inkjet-printer-escpr/share/cups/model
 
 Name: %{pkg}
 Version: %{ver}
@@ -34,6 +34,7 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 
 %build
 %configure \
+	--host=%{_target} \
 	--with-cupsfilterdir=%{cupsfilterdir} \
 	--with-cupsppddir=%{cupsppddir}
 make
