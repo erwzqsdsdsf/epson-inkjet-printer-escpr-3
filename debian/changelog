@@ -1,3 +1,9 @@
+epson-inkjet-printer-escpr (1.6.33-1) unstable; urgency=medium
+
+  * New upstream version 1.6.33
+
+ -- Didier Raboud <odyx@debian.org>  Thu, 06 Dec 2018 21:11:07 +0100
+
 epson-inkjet-printer-escpr (1.6.32-1) unstable; urgency=medium
 
   * New upstream version 1.6.32
