@@ -18,7 +18,7 @@
 
 AC_PREREQ(2.53)
 AC_INIT([Epson Inkjet Printer Driver (ESC/P-R) for Linux],
-	[1.6.32],
+	[1.6.33],
 	[Seiko Epson Corporation <linux-printer@epson.jp>],
 	[epson-inkjet-printer-escpr])
 dnl  keep ALL versioning info in one location
@@ -76,7 +76,7 @@ if test "xno" = "x${with_cupsppddir}"; then
       CUPS_PPD_DIR="${cups_default_prefix}/share/ppd"
    elif test "xyes" = "x$have_cups_config" ; then
       dnl `@<:@' , `@:>@' are replaced with  `[' , `]'
-      CUPS_PPD_DIR="${cups_default_prefix}/`cups-config --datadir | sed -e 's,^/@<:@^/@:>@@<:@^/@:>@*,,'`/model"
+      CUPS_PPD_DIR="${cups_default_prefix}`cups-config --datadir | sed -e 's,^/@<:@^/@:>@@<:@^/@:>@*,,'`/model"
    else
       CUPS_PPD_DIR="${cups_default_prefix}/share/cups/model"
    fi
@@ -86,6 +86,18 @@ fi
 
 AC_SUBST(CUPS_FILTER_DIR)
 AC_SUBST(CUPS_PPD_DIR)
+
+
+AC_ARG_ENABLE(lsb,
+  [AS_HELP_STRING(
+     [--enable-lsb],
+     [Turn on lsb build environment])],
+[case "${enableval}" in
+  yes) lsb=true ;;
+  no)  lsb=false ;;
+  *) AC_MSG_ERROR(bad value ${enableval} for --enable-lsb) ;;
+esac],[lsb=true])
+AM_CONDITIONAL(LSB, test x$lsb = xtrue)
 
 
 dnl Checks for header files.
@@ -122,7 +134,7 @@ AC_CHECK_LIB([cups], [ppdOpenFile])
 AC_CHECK_LIB([cupsimage], [cupsRasterOpen])
 
 # Checks for library functions.
-AC_FUNC_MALLOC
+#AC_FUNC_MALLOC avoiding rpl_malloc stupidness
 AC_FUNC_MEMCMP
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([\

@@ -40,6 +40,7 @@ config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
 	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
+		--disable-lsb \
 		--prefix=/usr \
 		--with-cupsfilterdir=@CUPS_FILTER_DIR@ \
 		--with-cupsppddir=@CUPS_PPD_DIR@
@@ -107,10 +108,10 @@ binary-arch: build install
 #	dh_perl
 	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+#	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
-	dh_builddeb
+	dh_builddeb -- -Z gzip
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install
