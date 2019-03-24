@@ -1,4 +1,4 @@
-From 856bf2c853a9ea7817b01aae8a5385912da00060 Mon Sep 17 00:00:00 2001
+From 8591ae089df1e4e0910eae5ff79e0cabff846031 Mon Sep 17 00:00:00 2001
 From: Didier Raboud <odyx@debian.org>
 Date: Tue, 27 Sep 2016 10:42:31 +0200
 Subject: The upstream buildsystem touches files under debian/, forbid him to
@@ -10,10 +10,10 @@ Last-Update: 2011-10-21
  1 file changed, 12 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
-index 86c6255..557aa6d 100644
+index cf62595..5ccbb04 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -23,10 +23,6 @@ SUBDIRS = \
+@@ -25,10 +25,6 @@ DIST_SUBDIRS = $(SUBDIRS)
  
  ACLOCAL_AMFLAGS = -I m4
  
@@ -24,7 +24,7 @@ index 86c6255..557aa6d 100644
  debian/control: $(srcdir)/Makefile $(srcdir)/debian/control.in
  	rm -f $@ $@.tmp; \
  	sed -e 's|[@]PACKAGE_BUGREPORT[@]|$(PACKAGE_BUGREPORT)|' \
-@@ -65,14 +61,6 @@ EXTRA_DIST = \
+@@ -68,14 +64,6 @@ EXTRA_DIST = \
  	README \
  	README.ja \
  	bootstrap \

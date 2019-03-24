@@ -1,4 +1,4 @@
-From 217137423caa745a8868143bb69227c02b79af7a Mon Sep 17 00:00:00 2001
+From 9e2476b47bb91a02206471587084a2984aef77f5 Mon Sep 17 00:00:00 2001
 From: Logan Rosen <logan@ubuntu.com>
 Date: Tue, 27 Sep 2016 10:42:32 +0200
 Subject: include xfifo.h to avoid implicit pointer conversion
