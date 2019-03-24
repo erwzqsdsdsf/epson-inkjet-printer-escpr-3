@@ -66,6 +66,7 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 %build
 %configure \
         --host=%{_target} \
+        @INTERNAL_PPD_OPTION@ \
         --with-cupsfilterdir=%{_cupsserverbin}/filter \
         --with-cupsppddir=%{_cupsppd}
 make pkgdatadir=%{_datadir}

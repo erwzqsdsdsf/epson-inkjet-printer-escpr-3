@@ -3759,7 +3759,10 @@ EPS_LOG_FUNCIN;
 		if (! ( ( (jobAttr->mediaSizeIdx       >= EPS_MSID_A4              ) &&
 				  (jobAttr->mediaSizeIdx       <= EPS_MSID_A5_24HOLE       )    ) ||
 				( (jobAttr->mediaSizeIdx       >= EPS_MSID_A3NOBI          ) &&
-				  (jobAttr->mediaSizeIdx       <= EPS_MSID_12X12           )    ) ||
+				  (jobAttr->mediaSizeIdx       <= EPS_MSID_8K           )    ) ||
+				( (jobAttr->mediaSizeIdx       == EPS_MSID_CHOKEI_40            )    ) ||
+				( (jobAttr->mediaSizeIdx       >= EPS_MSID_HALFCUT          ) &&
+				  (jobAttr->mediaSizeIdx       <= EPS_MSID_16X20           )    ) ||
                 ( (jobAttr->mediaSizeIdx       == EPS_MSID_USER            )    ) )  )
 		{
 			EPS_RETURN( EPS_ERR_INV_MEDIA_SIZE )
@@ -3773,10 +3776,18 @@ EPS_LOG_FUNCIN;
 
 		/*** Media Type                                                                     */
 		if (! ( ( (jobAttr->mediaTypeIdx       >= EPS_MTID_PLAIN           ) &&
-				  (jobAttr->mediaTypeIdx       <= EPS_MTID_GROSSY_ROLL_STICKER)    ) ||
+				  (jobAttr->mediaTypeIdx       <= EPS_MTID_BUSINESS_PLAIN)    ) ||
+				( (jobAttr->mediaTypeIdx       >= EPS_MTID_PLAIN_ROLL_STICKER           ) &&
+				  (jobAttr->mediaTypeIdx       <= EPS_MTID_GROSSY_ROLL_STICKER     )    ) ||
+				( (jobAttr->mediaTypeIdx       >= EPS_MTID_THICKPAPER1           ) &&
+				  (jobAttr->mediaTypeIdx       <= EPS_MTID_THICKPAPER3     )    ) ||
+				( (jobAttr->mediaTypeIdx       >= EPS_MTID_HIGH_QUALITY_PLAIN           ) &&
+				  (jobAttr->mediaTypeIdx       <= EPS_MTID_BS_HALFGLOSSY_DS     )    ) ||
 				( (jobAttr->mediaTypeIdx       >= EPS_MTID_CDDVD           ) &&
 				  (jobAttr->mediaTypeIdx       <= EPS_MTID_CDDVDGLOSSY     )    ) ||
-				( (jobAttr->mediaTypeIdx       == EPS_MTID_CLEANING        )    )    ) ){
+				( (jobAttr->mediaTypeIdx       == EPS_MTID_CLEANING        )    ) ||
+				( (jobAttr->mediaTypeIdx       == EPS_MTID_PLOOFING_WHITE_MAT        )    ) ||
+				( (jobAttr->mediaTypeIdx       == EPS_MTID_AUTO_PLAIN        )    )    ) ){
 			EPS_RETURN( EPS_ERR_INV_MEDIA_TYPE )
 		}
 		/*** Print Quality                                                                  */

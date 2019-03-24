@@ -94,6 +94,7 @@ Epson-EP-978A3_Series-epson-escpr-en.ppd \
 Epson-EP-979A3_Series-epson-escpr-en.ppd \
 Epson-EP-4004-epson-escpr-en.ppd \
 Epson-EP-M570T_Series-epson-escpr-en.ppd \
+Epson-ET-1110_Series-epson-escpr-en.ppd \
 Epson-ET-2500_Series-epson-escpr-en.ppd \
 Epson-ET-2550_Series-epson-escpr-en.ppd \
 Epson-ET-2600_Series-epson-escpr-en.ppd \
@@ -101,6 +102,7 @@ Epson-ET-2610_Series-epson-escpr-en.ppd \
 Epson-ET-2650_Series-epson-escpr-en.ppd \
 Epson-ET-2700_Series-epson-escpr-en.ppd \
 Epson-ET-2710_Series-epson-escpr-en.ppd \
+Epson-ET-2720_Series-epson-escpr-en.ppd \
 Epson-ET-2750_Series-epson-escpr-en.ppd \
 Epson-ET-4500_Series-epson-escpr-en.ppd \
 Epson-ET-4550_Series-epson-escpr-en.ppd \
@@ -272,6 +274,7 @@ Epson-PX-S5040-epson-escpr-en.ppd \
 Epson-PX-S7050_Series-epson-escpr-en.ppd \
 Epson-PX-S7050PS-epson-escpr-en.ppd \
 Epson-PX-S7050X-epson-escpr-en.ppd \
+Epson-ST-2000_Series-epson-escpr-en.ppd \
 Epson-Stylus_CX2800-epson-escpr-en.ppd \
 Epson-Stylus_CX2900-epson-escpr-en.ppd \
 Epson-Stylus_CX3700-epson-escpr-en.ppd \
@@ -437,7 +440,7 @@ Epson-WF-5190_Series-epson-escpr-en.ppd \
 Epson-WF-5620_Series-epson-escpr-en.ppd \
 Epson-WF-5690_Series-epson-escpr-en.ppd \
 Epson-WF-6090_Series-epson-escpr-en.ppd \
-Epson-WF-6530-epson-escpr-en.ppd \
+Epson-WF-6530_Series-epson-escpr-en.ppd \
 Epson-WF-6590_Series-epson-escpr-en.ppd \
 Epson-WF-7110_Series-epson-escpr-en.ppd \
 Epson-WF-7510_Series-epson-escpr-en.ppd \
@@ -568,6 +571,7 @@ else
 cupsppd_DATA = \
 Epson-EP-711A_Series-epson-escpr-en.ppd \
 Epson-EP-811A_Series-epson-escpr-en.ppd \
+Epson-ET-1110_Series-epson-escpr-en.ppd \
 Epson-ET-2710_Series-epson-escpr-en.ppd \
 Epson-ET-4700_Series-epson-escpr-en.ppd \
 Epson-ET-7700_Series-epson-escpr-en.ppd \
@@ -586,6 +590,7 @@ Epson-M1100_Series-epson-escpr-en.ppd \
 Epson-M1120_Series-epson-escpr-en.ppd \
 Epson-PX-S170T_Series-epson-escpr-en.ppd \
 Epson-PX-S170UT_Series-epson-escpr-en.ppd \
+Epson-ST-2000_Series-epson-escpr-en.ppd \
 Epson-XP-255_257_Series-epson-escpr-en.ppd \
 Epson-XP-352_355_Series-epson-escpr-en.ppd \
 Epson-XP-452_455_Series-epson-escpr-en.ppd \

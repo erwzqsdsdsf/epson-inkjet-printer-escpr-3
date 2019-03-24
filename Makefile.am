@@ -19,7 +19,9 @@
 SUBDIRS = \
 	lib \
 	ppd \
+	@INTERNAL_PPD@ \
 	src
+DIST_SUBDIRS = $(SUBDIRS)
 
 ACLOCAL_AMFLAGS = -I m4
 
@@ -40,6 +42,7 @@ debian/rules: $(srcdir)/Makefile $(srcdir)/debian/rules.in
 	sed -e 's|[@]CUPS_FILTER_DIR[@]|$(CUPS_FILTER_DIR)|' \
 	    -e 's|[@]CUPS_PPD_DIR[@]|$(CUPS_PPD_DIR)|' \
 	    -e 's|[@]PACKAGE_TARNAME[@]|$(PACKAGE_TARNAME)|' \
+	    -e 's|[@]INTERNAL_PPD_OPTION[@]|$(INTERNAL_PPD_OPTION)|' \
 	    '$(top_srcdir)/$@.in' > $@.tmp; \
 	mv $@.tmp $@; \
 	chmod +x $@

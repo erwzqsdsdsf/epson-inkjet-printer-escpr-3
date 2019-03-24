@@ -88,21 +88,29 @@ enum eOUTPUT_FORMAT
 #define	    PM_MSID_YOKEI_3             0x1A
 #define	    PM_MSID_YOKEI_4             0x1B
 #define	    PM_MSID_2L                  0x1C
-#define	    PM_MSID_ENV_10              0x1D
-#define	    PM_MSID_ENV_C6              0x1E
-#define	    PM_MSID_ENV_DL              0x1F
-#define	    PM_MSID_NEWENV              0x20
-#define	    PM_MSID_BUZCARD_89X50       0x21
-#define     PM_MSID_BUZCARD_89X55       0x22
+#define	    PM_MSID_ENV_10              0x1D	// ENV_10_P
+#define	    PM_MSID_ENV_C6              0x1E	// ENV_C6_P
+#define	    PM_MSID_ENV_DL              0x1F	// ENV_DL_P
+#define	    PM_MSID_NEWENV              0x20	// NEWENV_P
+#define	    PM_MSID_BUZCARD_89X55       0x21	// MEISHI [ 89.000, 55.000]
+#define     PM_MSID_BUZCARD_89X50       0x22	// [ 89.000, 50.000]
 #define	    PM_MSID_CARD_54X86          0x23
 #define	    PM_MSID_BUZCARD_55X91       0x24
-#define     PM_MSID_ALBUM_A5            0x25
-#define	    PM_MSID_ALBUM_L             0x26
+#define     PM_MSID_ALBUM_L             0x25	// [127.000,198.000]
+#define	    PM_MSID_ALBUM_A5            0x26	// [210.000,321.000]
 #define	    PM_MSID_PALBUM_L_L          0x27
 #define	    PM_MSID_PALBUM_2L           0x28
 #define	    PM_MSID_PALBUM_A5_L         0x29
 #define	    PM_MSID_PALBUM_A4           0x2A
-#define	    PM_MSID_4X7                 0x2B
+#define	    PM_MSID_4X7                 0x2B	// HIVISION
+
+#define	    PM_MSID_KAKU_2              0x2C	// Lib5.6 [240.000,332.000]
+#define	    PM_MSID_ENV_C4_P            0x2D	// Lib5.6 [229.000,324.000]
+#define	    PM_MSID_B6                  0x2E	// Lib5.6 [128.000,182.000]
+#define	    PM_MSID_KAKU_20             0x2F	// Lib5.6 [229.000,324.000]
+#define	    PM_MSID_A5_24HOLE           0x30	// Lib5.6 [148.000,210.000]
+#define	    PM_MSID_CHOKEI_40           0x34	// Lib5.6 [ 90.000,225.000]
+
 #define	    PM_MSID_A3NOBI              0x3D
 #define	    PM_MSID_A3                  0x3E
 #define	    PM_MSID_B4                  0x3F
@@ -113,7 +121,20 @@ enum eOUTPUT_FORMAT
 #define	    PM_MSID_USC                 0x44
 #define     PM_MSID_10X12               0x45
 #define     PM_MSID_12X12               0x46
+
+#define     PM_MSID_SP1			        0x47	// Lib5.6 [210.000,270.000]
+#define     PM_MSID_SP2                 0x48	// Lib5.6 [210.000,149.000]
+#define     PM_MSID_SP3                 0x49	// Lib5.6 [100.000,170.000]
+#define     PM_MSID_SP4                 0x4A	// Lib5.6 [130.000,182.000]
+#define     PM_MSID_SP5                 0x4B	// Lib5.6 [192.000,132.000]
+#define     PM_MSID_16K                 0x4C	// Lib5.6 [195.000,270.000]
+#define     PM_MSID_8K                  0x4D	// Lib5.6 [270.000,390.000]
+
 #define	    PM_MSID_USER                0x63
+
+#define	    PM_MSID_HALFCUT             0x80	// Lib5.6 [356.000,432.000]
+#define	    PM_MSID_16X20               0x81	// Lib5.6 [406.400,508.000]
+
 #define	    PM_MSID_UNKNOWN             -2
 
 
@@ -168,15 +189,46 @@ enum eOUTPUT_FORMAT
 /* add Wed Jan 28 2009 ^ */
 /* del Wed Jan 28 2009 #define	    PM_MTID_GPHOTO              0x2B*/
 /* del Wed Jan 28 2009 #define	    PM_MTID_PHOTOEGCP           0x2C*/
-#define	    PM_MTID_CDDVD               0x5B
-#define	    PM_MTID_CDDVDHIGH           0x5C
-#define	    PM_MTID_HAGAKIATENA         0x20
-#define	    PM_MTID_THICKPAPER          0x2F
+//#define	    PM_MTID_HAGAKIATENA         0x20	// defined twice
+
+#define	    PM_MTID_MEDICINEBAG         0x2E	// Lib5.6  "Medicine bag\0"
+
+#define	    PM_MTID_THICKPAPER	        0x2F
+
+#define	    PM_MTID_BROCHURE            0x30	// Lib5.6 "Brochure & Flyer Paper Glossy Double-sided\0"
+#define	    PM_MTID_MATTE_DS            0x31	// Lib5.6 "EPSON Matte Double-sided\0"
+#define	    PM_MTID_BSMATTE_DS          0x32	// Lib5.6 "EPSON Bussines card Matte Double-sided\0"
+#define	    PM_MTID_3D                  0x33	// Lib5.6 "3D media\0"
+#define	    PM_MTID_LCPP                0x34	// Lib5.6 "Photo Paper Glossy\0"
+
 #define	    PM_MTID_PREPRINTED          0x35
 #define	    PM_MTID_LETTERHEAD          0x36
-#define	    PM_MTID_RECYCLED	          0x37
-#define	    PM_MTID_COLORPAPER          0x38
+#define	    PM_MTID_RECYCLED	        0x37
+#define	    PM_MTID_COLORPAPER          0x38	// COLOR
+
+#define	    PM_MTID_BUSINESS_PLAIN      0x39	// Lib5.6 "Business Plain Paper\0"
+
+#define	    PM_MTID_PLAIN_ROLL_STICKER  0x3B	// Lib5.6 "Plain Roll Sticker\0"
+#define	    PM_MTID_GROSSY_ROLL_STICKER 0x3C	// Lib5.6 "Glossy Roll Sticker\0"
+
+#define		PM_MTID_THICKPAPER1			0x41	// Lib5.6 "Thick Paper 1\0"		
+#define		PM_MTID_THICKPAPER2			0x42	// Lib5.6 "Thick Paper 2\0"		
+#define		PM_MTID_THICKPAPER3			0x43	// Lib5.6 "Thick Paper 3\0"		
+
+#define	    PM_MTID_HIGHQUALITY_PLAIN   0x46	// Lib5.6 "High Quality Plain Paper\0"
+#define	    PM_MTID_BS_HALFGLOSSY_DS    0x47	// Lib5.6 "Bussines card Harf Glossy Double-sided\0"
+
+#define	    PM_MTID_CDDVD               0x5B
+#define	    PM_MTID_CDDVDHIGH           0x5C
+
+#define	    PM_MTID_CDDVDGLOSSY         0x5D	// Lib5.6 "CD/DVD Glossy Surface\0"
+
 #define	    PM_MTID_CLEANING            0x63
+
+#define	    PM_MTID_PLOOFING_WHITE_MAT  0x8E	// Lib5.6 "Proofing Paper White Semimatte\0"
+
+#define		PM_MTID_AUTO_PLAIN			0xFD	// Lib5.6 "Auto Select(Plain Paper)"
+
 #define	    PM_MTID_UNKNOWN             -2
 
 
