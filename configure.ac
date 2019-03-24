@@ -18,7 +18,7 @@
 
 AC_PREREQ(2.53)
 AC_INIT([Epson Inkjet Printer Driver (ESC/P-R) for Linux],
-	[1.6.33],
+	[1.6.36],
 	[Seiko Epson Corporation <linux-printer@epson.jp>],
 	[epson-inkjet-printer-escpr])
 dnl  keep ALL versioning info in one location
@@ -92,13 +92,22 @@ AC_ARG_ENABLE(lsb,
   [AS_HELP_STRING(
      [--enable-lsb],
      [Turn on lsb build environment])],
-[case "${enableval}" in
-  yes) lsb=true ;;
-  no)  lsb=false ;;
-  *) AC_MSG_ERROR(bad value ${enableval} for --enable-lsb) ;;
-esac],[lsb=true])
+  [case "${enableval}" in
+    yes) lsb=true ;;
+    no)  lsb=false ;;
+    *) AC_MSG_ERROR(bad value ${enableval} for --enable-lsb) ;;
+  esac],[lsb=true])
 AM_CONDITIONAL(LSB, test x$lsb = xtrue)
 
+AC_ARG_WITH([internal],
+  [AS_HELP_STRING([--with-internal=subdir],[Turn on internal ppd])],
+  [INTERNAL_PPD=$withval
+   INTERNAL_PPD_OPTION=--with-internal=$withval
+   automake $INTERNAL_PPD/Makefile
+   AC_CONFIG_FILES([$INTERNAL_PPD/Makefile])],
+  [])
+AC_SUBST([INTERNAL_PPD])
+AC_SUBST([INTERNAL_PPD_OPTION])
 
 dnl Checks for header files.
 AC_HEADER_STDC

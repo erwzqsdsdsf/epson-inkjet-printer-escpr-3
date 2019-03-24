@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.33
+%define ver     1.6.36
 %define rel     1
 
 # used in RPM macro set for the LSB Driver Development Kit
@@ -66,6 +66,7 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 %build
 %configure \
         --host=%{_target} \
+         \
         --with-cupsfilterdir=%{_cupsserverbin}/filter \
         --with-cupsppddir=%{_cupsppd}
 make pkgdatadir=%{_datadir}
