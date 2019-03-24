@@ -1,3 +1,10 @@
+epson-inkjet-printer-escpr (1.6.36-1) experimental; urgency=medium
+
+  * New upstream version 1.6.36
+  * Upload to experimental as buster's frozen
+
+ -- Didier Raboud <odyx@debian.org>  Sun, 24 Mar 2019 13:13:26 +0100
+
 epson-inkjet-printer-escpr (1.6.33-1) unstable; urgency=medium
 
   * New upstream version 1.6.33
