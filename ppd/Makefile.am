@@ -104,6 +104,7 @@ Epson-ET-2700_Series-epson-escpr-en.ppd \
 Epson-ET-2710_Series-epson-escpr-en.ppd \
 Epson-ET-2720_Series-epson-escpr-en.ppd \
 Epson-ET-2750_Series-epson-escpr-en.ppd \
+Epson-ET-2760_Series-epson-escpr-en.ppd \
 Epson-ET-4500_Series-epson-escpr-en.ppd \
 Epson-ET-4550_Series-epson-escpr-en.ppd \
 Epson-ET-4700_Series-epson-escpr-en.ppd \
@@ -146,6 +147,7 @@ Epson-L3070_Series-epson-escpr-en.ppd \
 Epson-L3100_Series-epson-escpr-en.ppd \
 Epson-L3110_Series-epson-escpr-en.ppd \
 Epson-L3150_Series-epson-escpr-en.ppd \
+Epson-L3160_Series-epson-escpr-en.ppd \
 Epson-L4150_Series-epson-escpr-en.ppd \
 Epson-L4160_Series-epson-escpr-en.ppd \
 Epson-L5190_Series-epson-escpr-en.ppd \
@@ -264,6 +266,7 @@ Epson-PX-M7050_Series-epson-escpr-en.ppd \
 Epson-PX-M7050FP-epson-escpr-en.ppd \
 Epson-PX-M7050FX-epson-escpr-en.ppd \
 Epson-PX-S05_Series-epson-escpr-en.ppd \
+Epson-PX-S06_Series-epson-escpr-en.ppd \
 Epson-PX-S170T_Series-epson-escpr-en.ppd \
 Epson-PX-S170UT_Series-epson-escpr-en.ppd \
 Epson-PX-S740-epson-escpr-en.ppd \
@@ -427,6 +430,8 @@ Epson-WF-2650_Series-epson-escpr-en.ppd \
 Epson-WF-2660_Series-epson-escpr-en.ppd \
 Epson-WF-2750_Series-epson-escpr-en.ppd \
 Epson-WF-2760_Series-epson-escpr-en.ppd \
+Epson-WF-2830_Series-epson-escpr-en.ppd \
+Epson-WF-2850_Series-epson-escpr-en.ppd \
 Epson-WF-3010_Series-epson-escpr-en.ppd \
 Epson-WF-3520_Series-epson-escpr-en.ppd \
 Epson-WF-3530_Series-epson-escpr-en.ppd \
@@ -566,6 +571,8 @@ Epson-XP-860_Series-epson-escpr-en.ppd \
 Epson-XP-900_Series-epson-escpr-en.ppd \
 Epson-XP-950_Series-epson-escpr-en.ppd \
 Epson-XP-960_Series-epson-escpr-en.ppd \
+Epson-XP-2100_Series-epson-escpr-en.ppd \
+Epson-XP-4100_Series-epson-escpr-en.ppd \
 Epson-XP-7100_Series-epson-escpr-en.ppd
 else
 cupsppd_DATA = \
@@ -573,6 +580,8 @@ Epson-EP-711A_Series-epson-escpr-en.ppd \
 Epson-EP-811A_Series-epson-escpr-en.ppd \
 Epson-ET-1110_Series-epson-escpr-en.ppd \
 Epson-ET-2710_Series-epson-escpr-en.ppd \
+Epson-ET-2720_Series-epson-escpr-en.ppd \
+Epson-ET-2760_Series-epson-escpr-en.ppd \
 Epson-ET-4700_Series-epson-escpr-en.ppd \
 Epson-ET-7700_Series-epson-escpr-en.ppd \
 Epson-ET-7750_Series-epson-escpr-en.ppd \
@@ -584,16 +593,22 @@ Epson-L1110_Series-epson-escpr-en.ppd \
 Epson-L3100_Series-epson-escpr-en.ppd \
 Epson-L3110_Series-epson-escpr-en.ppd \
 Epson-L3150_Series-epson-escpr-en.ppd \
+Epson-L3160_Series-epson-escpr-en.ppd \
 Epson-L5190_Series-epson-escpr-en.ppd \
 Epson-L7180_Series-epson-escpr-en.ppd \
 Epson-M1100_Series-epson-escpr-en.ppd \
 Epson-M1120_Series-epson-escpr-en.ppd \
+Epson-PX-S06_Series-epson-escpr-en.ppd \
 Epson-PX-S170T_Series-epson-escpr-en.ppd \
 Epson-PX-S170UT_Series-epson-escpr-en.ppd \
 Epson-ST-2000_Series-epson-escpr-en.ppd \
+Epson-WF-2830_Series-epson-escpr-en.ppd \
+Epson-WF-2850_Series-epson-escpr-en.ppd \
 Epson-XP-255_257_Series-epson-escpr-en.ppd \
 Epson-XP-352_355_Series-epson-escpr-en.ppd \
 Epson-XP-452_455_Series-epson-escpr-en.ppd \
+Epson-XP-2100_Series-epson-escpr-en.ppd \
+Epson-XP-4100_Series-epson-escpr-en.ppd \
 Epson-XP-7100_Series-epson-escpr-en.ppd
 endif
 
