@@ -1,7 +1,6 @@
 ## Makefile.am -- an automake template for a Makefile.in file
 ## EPSON ESC/P-R Printer Driver for Linux
-## Copyright (C) 2000-2008 AVASYS CORPORATION.
-## Copyright (C) Seiko Epson Corporation 2000-2015.
+### Copyright (C) Seiko Epson Corporation 2000-2015.
 ##  This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 2 of the License, or
@@ -63,6 +62,7 @@ Epson-EP-708A_Series-epson-escpr-en.ppd \
 Epson-EP-709A_Series-epson-escpr-en.ppd \
 Epson-EP-710A_Series-epson-escpr-en.ppd \
 Epson-EP-711A_Series-epson-escpr-en.ppd \
+Epson-EP-712A_Series-epson-escpr-en.ppd \
 Epson-EP-774A-epson-escpr-en.ppd \
 Epson-EP-775A_Series-epson-escpr-en.ppd \
 Epson-EP-776A_Series-epson-escpr-en.ppd \
@@ -77,6 +77,7 @@ Epson-EP-807A_Series-epson-escpr-en.ppd \
 Epson-EP-808A_Series-epson-escpr-en.ppd \
 Epson-EP-810A_Series-epson-escpr-en.ppd \
 Epson-EP-811A_Series-epson-escpr-en.ppd \
+Epson-EP-812A_Series-epson-escpr-en.ppd \
 Epson-EP-901A-epson-escpr-en.ppd \
 Epson-EP-901F-epson-escpr-en.ppd \
 Epson-EP-902A-epson-escpr-en.ppd \
@@ -113,6 +114,7 @@ Epson-ET-7750_Series-epson-escpr-en.ppd \
 Epson-ET-16500_Series-epson-escpr-en.ppd \
 Epson-ET-M1100_Series-epson-escpr-en.ppd \
 Epson-ET-M1120_Series-epson-escpr-en.ppd \
+Epson-EW-052A_Series-epson-escpr-en.ppd \
 Epson-EW-M571T_Series-epson-escpr-en.ppd \
 Epson-EW-M5071FT_Series-epson-escpr-en.ppd \
 Epson-EW-M660FT_Series-epson-escpr-en.ppd \
@@ -421,6 +423,7 @@ Epson-TX420_NX420-epson-escpr-en.ppd \
 Epson-TX720_Artisan720-epson-escpr-en.ppd \
 Epson-TX820_Artisan830-epson-escpr-en.ppd \
 Epson-WF-100_Series-epson-escpr-en.ppd \
+Epson-WF-110_Series-epson-escpr-en.ppd \
 Epson-WF-2510_Series-epson-escpr-en.ppd \
 Epson-WF-2520_Series-epson-escpr-en.ppd \
 Epson-WF-2530_Series-epson-escpr-en.ppd \
@@ -430,6 +433,7 @@ Epson-WF-2650_Series-epson-escpr-en.ppd \
 Epson-WF-2660_Series-epson-escpr-en.ppd \
 Epson-WF-2750_Series-epson-escpr-en.ppd \
 Epson-WF-2760_Series-epson-escpr-en.ppd \
+Epson-WF-2810_Series-epson-escpr-en.ppd \
 Epson-WF-2830_Series-epson-escpr-en.ppd \
 Epson-WF-2850_Series-epson-escpr-en.ppd \
 Epson-WF-3010_Series-epson-escpr-en.ppd \
@@ -572,6 +576,7 @@ Epson-XP-900_Series-epson-escpr-en.ppd \
 Epson-XP-950_Series-epson-escpr-en.ppd \
 Epson-XP-960_Series-epson-escpr-en.ppd \
 Epson-XP-2100_Series-epson-escpr-en.ppd \
+Epson-XP-3100_Series-epson-escpr-en.ppd \
 Epson-XP-4100_Series-epson-escpr-en.ppd \
 Epson-XP-7100_Series-epson-escpr-en.ppd
 else
@@ -602,12 +607,15 @@ Epson-PX-S06_Series-epson-escpr-en.ppd \
 Epson-PX-S170T_Series-epson-escpr-en.ppd \
 Epson-PX-S170UT_Series-epson-escpr-en.ppd \
 Epson-ST-2000_Series-epson-escpr-en.ppd \
+Epson-WF-110_Series-epson-escpr-en.ppd \
+Epson-WF-2810_Series-epson-escpr-en.ppd \
 Epson-WF-2830_Series-epson-escpr-en.ppd \
 Epson-WF-2850_Series-epson-escpr-en.ppd \
 Epson-XP-255_257_Series-epson-escpr-en.ppd \
 Epson-XP-352_355_Series-epson-escpr-en.ppd \
 Epson-XP-452_455_Series-epson-escpr-en.ppd \
 Epson-XP-2100_Series-epson-escpr-en.ppd \
+Epson-XP-3100_Series-epson-escpr-en.ppd \
 Epson-XP-4100_Series-epson-escpr-en.ppd \
 Epson-XP-7100_Series-epson-escpr-en.ppd
 endif

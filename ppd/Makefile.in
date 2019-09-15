@@ -14,6 +14,8 @@
 
 @SET_MAKE@
 
+### Copyright (C) Seiko Epson Corporation 2000-2015.
+
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -304,12 +306,15 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_FALSE@Epson-PX-S170T_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-PX-S170UT_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-ST-2000_Series-epson-escpr-en.ppd \
+@LSB_FALSE@Epson-WF-110_Series-epson-escpr-en.ppd \
+@LSB_FALSE@Epson-WF-2810_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-WF-2830_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-WF-2850_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-XP-255_257_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-XP-352_355_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-XP-452_455_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-XP-2100_Series-epson-escpr-en.ppd \
+@LSB_FALSE@Epson-XP-3100_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-XP-4100_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-XP-7100_Series-epson-escpr-en.ppd
 
@@ -358,6 +363,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-EP-709A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-710A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-711A_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-EP-712A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-774A-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-775A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-776A_Series-epson-escpr-en.ppd \
@@ -372,6 +378,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-EP-808A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-810A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-811A_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-EP-812A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-901A-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-901F-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-902A-epson-escpr-en.ppd \
@@ -408,6 +415,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-ET-16500_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-ET-M1100_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-ET-M1120_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-EW-052A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EW-M571T_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EW-M5071FT_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EW-M660FT_Series-epson-escpr-en.ppd \
@@ -716,6 +724,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-TX720_Artisan720-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-TX820_Artisan830-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-100_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-WF-110_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-2510_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-2520_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-2530_Series-epson-escpr-en.ppd \
@@ -725,6 +734,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-WF-2660_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-2750_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-2760_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-WF-2810_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-2830_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-2850_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-WF-3010_Series-epson-escpr-en.ppd \
@@ -867,6 +877,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-XP-950_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-XP-960_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-XP-2100_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-XP-3100_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-XP-4100_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-XP-7100_Series-epson-escpr-en.ppd
 
