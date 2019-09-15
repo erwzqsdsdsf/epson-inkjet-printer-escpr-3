@@ -1,8 +1,14 @@
-epson-inkjet-printer-escpr (1.7.3-1) UNRELEASED; urgency=medium
+epson-inkjet-printer-escpr (1.7.3-1) unstable; urgency=low
 
-  * Update to new upstream version 1.7.3.
+  * New upstream version 1.7.3, to unstable
 
- -- Didier Raboud <odyx@debian.org>  Sun, 15 Sep 2019 10:20:17 +0200
+  * Convert from git dpm to debrebase
+  * Use secure URI in debian/watch.
+  * Set upstream metadata fields: Bug-Submit.
+  * Bump S-V to 4.4 without changes needed
+  * Bump debhelper from old 11 to 12.
+
+ -- Didier Raboud <odyx@debian.org>  Sun, 15 Sep 2019 10:42:26 +0200
 
 epson-inkjet-printer-escpr (1.6.41-1) experimental; urgency=medium
 
