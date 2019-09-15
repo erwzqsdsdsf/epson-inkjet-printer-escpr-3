@@ -42,7 +42,6 @@
 #include "libprtX.h"
 #include "optBase.h"
 #include "linux_cmn.h"
-#include "xfifo.h"
 
 #define WIDTH_BYTES(bits) (((bits) + 31) / 32 * 4)
 
@@ -551,7 +550,7 @@ main (int argc, char *argv[])
 				pagebuf = startpage;
 				free (pagebuf);
 			}
-			debug_msg("free page successfull\n");
+			debug_msg("free page sucessfull\n");
 			err = epsEndPage(FALSE);
 
 			if(err)
