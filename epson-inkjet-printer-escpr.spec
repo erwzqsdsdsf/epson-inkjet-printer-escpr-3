@@ -1,6 +1,6 @@
 
 %define pkg     epson-inkjet-printer-escpr
-%define ver     1.6.41
+%define ver     1.7.3
 %define rel     1
 
 %define cupsfilterdir   /opt/epson-inkjet-printer-escpr/lib/cups/filter
