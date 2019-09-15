@@ -42,9 +42,4 @@ get-orig-source:
 	fi
 	[ -r ../$(SOURCENAME)_$(VERSION).orig.tar.gz ]
 	gbp import-orig --pristine-tar --no-merge ../$(SOURCENAME)_$(VERSION).orig.tar.gz
-	- git merge --strategy-option=ours --no-commit upstream/$(VERSION)
-	git rm -rf debian/
-	git checkout HEAD debian/
-	git commit -m "Merge upstream $(VERSION) version"
-	git dpm record-new-upstream --rebase-patched ../$(SOURCENAME)_$(VERSION).orig.tar.gz `git rev-list -n1 upstream/$(VERSION)`
-	git dpm update-patches --allow-changes-in-debian-branch
+	git debrebase new-upstream $(VERSION)
