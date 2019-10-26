@@ -7,7 +7,7 @@ Build-Depends: libcups2-dev,
                libcupsimage2-dev,
                pyppd (>= 1.0.1-2~),
                debhelper-compat (= 12)
-Standards-Version: 4.4.0
+Standards-Version: 4.4.1
 Vcs-Browser: https://salsa.debian.org/printing-team/epson-inkjet-printer-escpr
 Vcs-Git: https://salsa.debian.org/printing-team/epson-inkjet-printer-escpr.git
 Homepage: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX&productName=B700
