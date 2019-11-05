@@ -160,6 +160,8 @@ Epson-M200_Series-epson-escpr-en.ppd \
 Epson-M205_Series-epson-escpr-en.ppd \
 Epson-M1100_Series-epson-escpr-en.ppd \
 Epson-M1120_Series-epson-escpr-en.ppd \
+Epson-M2110_Series-epson-escpr-en.ppd \
+Epson-M2120_Series-epson-escpr-en.ppd \
 Epson-ME-301_Series-epson-escpr-en.ppd \
 Epson-ME-303_Series-epson-escpr-en.ppd \
 Epson-ME-400_Series-epson-escpr-en.ppd \
@@ -605,6 +607,8 @@ Epson-L5190_Series-epson-escpr-en.ppd \
 Epson-L7180_Series-epson-escpr-en.ppd \
 Epson-M1100_Series-epson-escpr-en.ppd \
 Epson-M1120_Series-epson-escpr-en.ppd \
+Epson-M2110_Series-epson-escpr-en.ppd \
+Epson-M2120_Series-epson-escpr-en.ppd \
 Epson-PX-S06_Series-epson-escpr-en.ppd \
 Epson-PX-S170T_Series-epson-escpr-en.ppd \
 Epson-PX-S170UT_Series-epson-escpr-en.ppd \
