@@ -292,6 +292,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_FALSE@Epson-ET-7750_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-ET-M1100_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-ET-M1120_Series-epson-escpr-en.ppd \
+@LSB_FALSE@Epson-ET-M2120_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-EW-M770T_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-EW-M970A3T_Series-epson-escpr-en.ppd \
 @LSB_FALSE@Epson-L1110_Series-epson-escpr-en.ppd \
@@ -353,6 +354,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-E-830_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-E-840_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-E-850_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-EC-C110_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-10VA_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-30VA_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EP-306_Series-epson-escpr-en.ppd \
@@ -419,6 +421,7 @@ cupsppddir = $(CUPS_PPD_DIR)/epson-inkjet-printer-escpr
 @LSB_TRUE@Epson-ET-16500_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-ET-M1100_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-ET-M1120_Series-epson-escpr-en.ppd \
+@LSB_TRUE@Epson-ET-M2120_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EW-052A_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EW-M571T_Series-epson-escpr-en.ppd \
 @LSB_TRUE@Epson-EW-M5071FT_Series-epson-escpr-en.ppd \

@@ -6,7 +6,6 @@ Please visit our website for the latest information.
 Please refer to follows for the information about this driver
 http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 
-
 Contents
 1  License Agreement
 2  Revision History
@@ -24,7 +23,6 @@ Contents
     6.2  For Debian based distributions
     6.3  Other distributions
 
-
 -------------------------------------------------------------------------------
 1  License Agreement
 -------------------------------------------------------------------------------
@@ -35,7 +33,6 @@ Refer to the file "COPYING" for more information about the GPL.
 2  Revision History
 -------------------------------------------------------------------------------
 See ./NEWS.
-
 
 -------------------------------------------------------------------------------
 3  Product Description
