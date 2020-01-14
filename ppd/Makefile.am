@@ -49,6 +49,7 @@ Epson-E-820-epson-escpr-en.ppd \
 Epson-E-830_Series-epson-escpr-en.ppd \
 Epson-E-840_Series-epson-escpr-en.ppd \
 Epson-E-850_Series-epson-escpr-en.ppd \
+Epson-EC-C110_Series-epson-escpr-en.ppd \
 Epson-EP-10VA_Series-epson-escpr-en.ppd \
 Epson-EP-30VA_Series-epson-escpr-en.ppd \
 Epson-EP-306_Series-epson-escpr-en.ppd \
@@ -115,6 +116,7 @@ Epson-ET-7750_Series-epson-escpr-en.ppd \
 Epson-ET-16500_Series-epson-escpr-en.ppd \
 Epson-ET-M1100_Series-epson-escpr-en.ppd \
 Epson-ET-M1120_Series-epson-escpr-en.ppd \
+Epson-ET-M2120_Series-epson-escpr-en.ppd \
 Epson-EW-052A_Series-epson-escpr-en.ppd \
 Epson-EW-M571T_Series-epson-escpr-en.ppd \
 Epson-EW-M5071FT_Series-epson-escpr-en.ppd \
@@ -596,6 +598,7 @@ Epson-ET-7700_Series-epson-escpr-en.ppd \
 Epson-ET-7750_Series-epson-escpr-en.ppd \
 Epson-ET-M1100_Series-epson-escpr-en.ppd \
 Epson-ET-M1120_Series-epson-escpr-en.ppd \
+Epson-ET-M2120_Series-epson-escpr-en.ppd \
 Epson-EW-M770T_Series-epson-escpr-en.ppd \
 Epson-EW-M970A3T_Series-epson-escpr-en.ppd \
 Epson-L1110_Series-epson-escpr-en.ppd \
