@@ -1,3 +1,9 @@
+epson-inkjet-printer-escpr (1.7.8-1) UNRELEASED; urgency=medium
+
+  * Update to new upstream version 1.7.8.
+
+ -- Didier Raboud <odyx@debian.org>  Tue, 24 Nov 2020 19:58:18 +0100
+
 epson-inkjet-printer-escpr (1.7.7-1) unstable; urgency=medium
 
   * New upstream version 1.7.7
